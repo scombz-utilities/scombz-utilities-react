@@ -6,8 +6,6 @@ ScombZ UtilitiesをReactとTypeScriptでモダン化しよう
 
 https://zenn.dev/nado1001/articles/plasmo-browser-extension
 
-content scriptは`contents`内に記載
-backgroundはbackgrounds.tsに記載
 
 ## 環境構築
 
