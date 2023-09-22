@@ -1,4 +1,4 @@
-name: Lint
+name: ci-pr
 on:
   pull_request:
   push:
@@ -36,3 +36,16 @@ jobs:
         run: npm ci
       - name: StyleLint
         run: npm run stylelint
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set Node.js 20.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 20.x
+      - name: ci
+        run: npm ci
+      - name: Build
+        run: npm run build
