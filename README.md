@@ -1,5 +1,9 @@
 This is a [Plasmo extension](https://docs.plasmo.com/) project bootstrapped with [`plasmo init`](https://www.npmjs.com/package/plasmo).
 
+## Plasmoに関する日本語ドキュメントは以下参照
+
+https://zenn.dev/nado1001/articles/plasmo-browser-extension
+
 ## Getting Started
 
 First, run the development server:
