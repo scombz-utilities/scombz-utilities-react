@@ -14,7 +14,6 @@ https://zenn.dev/nado1001/articles/plasmo-browser-extension
 ### nodeの準備
 
 nodeのバージョンをは`20.5.1`で固定とします。
-2023年9月現在、最新のLTSではあるので普通に`brew install node`でも動きはするのですが、
 今後nodeを使い続けることと、このレポジトリ以外でのプロジェクトでバージョン違いが起こると大変なので
 [asdf](https://asdf-vm.com/)や[nodenv](https://github.com/nodenv/nodenv)などのバージョン管理ツールを使うとよいでしょう。
 このreadmeでは`nodenv`を使ったガイドを載せるので、**こちらの利用を強く推奨**します。
