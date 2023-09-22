@@ -1,28 +1,27 @@
+import Button from "@mui/material/Button"
+import Input from "@mui/material/Input"
+import Link from "@mui/material/Link"
+import Stack from "@mui/material/Stack"
+import Typography from "@mui/material/Typography"
 import { useState } from "react"
 
 function IndexPopup() {
   const [data, setData] = useState("")
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        padding: 16
-      }}>
-      <h2>
-        Welcome to your
-        <a href="https://www.plasmo.com" target="_blank">
-          {" "}
+    <Stack minWidth={240}>
+      <Typography variant="h6">
+        Welcome to your{" "}
+        <Link href="https://www.plasmo.com" target="_blank">
           Plasmo
-        </a>{" "}
+        </Link>{" "}
         Extension!
-      </h2>
-      <input onChange={(e) => setData(e.target.value)} value={data} />
-      <a href="https://docs.plasmo.com" target="_blank">
+      </Typography>
+      <Input onChange={(e) => setData(e.target.value)} value={data} />
+      <Button href="https://docs.plasmo.com" target="_blank">
         View Docs
-      </a>
-    </div>
+      </Button>
+    </Stack>
   )
 }
 

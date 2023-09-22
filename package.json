@@ -10,17 +10,34 @@
     "test": "plasmo test"
   },
   "dependencies": {
+    "@fontsource/roboto": "^5.0.8",
+    "@plasmohq/storage": "^1.8.0",
     "plasmo": "0.83.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.46.2"
   },
   "devDependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@ianvs/prettier-plugin-sort-imports": "4.1.0",
+    "@mui/material": "^5.14.10",
     "@types/chrome": "0.0.245",
     "@types/node": "20.5.9",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
-    "prettier": "3.0.3",
+    "@typescript-eslint/eslint-plugin": "^6.7.2",
+    "@typescript-eslint/parser": "^6.7.2",
+    "eslint": "^8.49.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.28.1",
+    "node-sass": "^9.0.0",
+    "prettier": "^3.0.3",
+    "stylelint": "^15.10.3",
+    "stylelint-config-recess-order": "^4.3.0",
+    "stylelint-config-standard": "^34.0.0",
+    "stylelint-config-standard-scss": "^11.0.0",
+    "stylelint-scss": "^5.2.1",
     "typescript": "5.2.2"
   },
   "manifest": {
