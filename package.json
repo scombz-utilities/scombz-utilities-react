@@ -12,7 +12,7 @@
     "build": "npm run build:chrome && npm run build:firefox",
     "test": "plasmo test",
     "eslint": "eslint '**/*.ts?(x)'",
-    "stylelint": "stylelint \"**/*.{css,scss,tsx}\""
+    "stylelint": "stylelint \"**/*.{css,scss}\""
   },
   "dependencies": {
     "@fontsource/roboto": "^5.0.8",

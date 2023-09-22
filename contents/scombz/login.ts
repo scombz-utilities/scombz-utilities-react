@@ -6,5 +6,5 @@ export const config: PlasmoCSConfig = {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  document;
+  console.log("scombz login");
 });
