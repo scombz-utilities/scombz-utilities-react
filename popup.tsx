@@ -15,7 +15,7 @@ function IndexPopup() {
         <Link href="https://www.plasmo.com" target="_blank">
           Plasmo
         </Link>{" "}
-        Extension!
+        Extension!-
       </Typography>
       <Input onChange={(e) => setData(e.target.value)} value={data} />
       <Button href="https://docs.plasmo.com" target="_blank">

@@ -26,7 +26,9 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@ianvs/prettier-plugin-sort-imports": "4.1.0",
+    "@mui/lab": "^5.0.0-alpha.145",
     "@mui/material": "^5.14.10",
+    "@plasmohq/messaging": "^0.5.0",
     "@types/chrome": "0.0.245",
     "@types/node": "20.5.9",
     "@types/react": "18.2.21",
@@ -39,6 +41,7 @@
     "eslint-plugin-react": "^7.33.2",
     "node-sass": "^9.0.0",
     "prettier": "^3.0.3",
+    "react-icons": "^4.11.0",
     "stylelint": "^15.10.3",
     "stylelint-config-recess-order": "^4.3.0",
     "stylelint-config-standard": "^34.0.0",
@@ -48,7 +51,18 @@
   },
   "manifest": {
     "host_permissions": [
-      "https://*/*"
+      "https://yudai1204.github.io/",
+      "https://scombz-utilities.com/"
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": [
+          "assets/*"
+        ],
+        "matches": [
+          "<all_urls>"
+        ]
+      }
     ]
   }
 }
