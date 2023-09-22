@@ -1,12 +1,12 @@
-import Button from "@mui/material/Button"
-import Input from "@mui/material/Input"
-import Link from "@mui/material/Link"
-import Stack from "@mui/material/Stack"
-import Typography from "@mui/material/Typography"
-import { useState } from "react"
+import Button from "@mui/material/Button";
+import Input from "@mui/material/Input";
+import Link from "@mui/material/Link";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import { useState } from "react";
 
 function IndexPopup() {
-  const [data, setData] = useState("")
+  const [data, setData] = useState("");
 
   return (
     <Stack minWidth={240}>
@@ -22,7 +22,7 @@ function IndexPopup() {
         View Docs
       </Button>
     </Stack>
-  )
+  );
 }
 
-export default IndexPopup
+export default IndexPopup;
