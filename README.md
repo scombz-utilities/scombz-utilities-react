@@ -4,6 +4,9 @@ This is a [Plasmo extension](https://docs.plasmo.com/) project bootstrapped with
 
 https://zenn.dev/nado1001/articles/plasmo-browser-extension
 
+content scriptは`contents`内に記載
+backgroundはbackgrounds.tsに記載
+
 ## Getting Started
 
 First, run the development server:

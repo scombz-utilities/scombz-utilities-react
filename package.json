@@ -10,7 +10,9 @@
     "build:chrome": "plasmo build --target=chrome-mv3",
     "build:firefox": "plasmo build --target=firefox-mv3",
     "build": "npm run build:chrome && npm run build:firefox",
-    "test": "plasmo test"
+    "test": "plasmo test",
+    "eslint": "eslint '**/*.ts?(x)'",
+    "stylelint": "stylelint \"**/*.{css,scss,tsx}\""
   },
   "dependencies": {
     "@fontsource/roboto": "^5.0.8",
