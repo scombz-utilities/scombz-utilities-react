@@ -1,4 +1,5 @@
 {
+  "plugins": ["react"],
   "extends": [
     "plugin:import/recommended",
     "plugin:import/warnings",

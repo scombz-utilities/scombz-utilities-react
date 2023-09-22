@@ -5,8 +5,6 @@ This is a [Plasmo extension](https://docs.plasmo.com/) project bootstrapped with
 First, run the development server:
 
 ```bash
-pnpm dev
-# or
 npm run dev
 ```
 
@@ -21,8 +19,6 @@ For further guidance, [visit our Documentation](https://docs.plasmo.com/)
 Run the following:
 
 ```bash
-pnpm build
-# or
 npm run build
 ```
 

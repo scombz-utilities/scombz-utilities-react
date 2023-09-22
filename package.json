@@ -5,8 +5,11 @@
   "description": "ScombZをカスタムする拡張機能",
   "author": "udai",
   "scripts": {
-    "dev": "plasmo dev",
-    "build": "plasmo build",
+    "dev": "plasmo dev --target=chrome-mv3",
+    "dev:firefox": "plasmo dev --target=firefox-mv3",
+    "build:chrome": "plasmo build --target=chrome-mv3",
+    "build:firefox": "plasmo build --target=firefox-mv3",
+    "build": "npm run build:chrome && npm run build:firefox",
     "test": "plasmo test"
   },
   "dependencies": {
@@ -31,6 +34,7 @@
     "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-react": "^7.33.2",
     "node-sass": "^9.0.0",
     "prettier": "^3.0.3",
     "stylelint": "^15.10.3",
