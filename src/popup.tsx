@@ -5,7 +5,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 
-function IndexPopup() {
+const IndexPopup = () => {
   const [data, setData] = useState("");
 
   return (
@@ -23,6 +23,6 @@ function IndexPopup() {
       </Button>
     </Stack>
   );
-}
+};
 
 export default IndexPopup;

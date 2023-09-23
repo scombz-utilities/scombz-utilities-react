@@ -1,22 +1,14 @@
-import type { PlasmoCSConfig } from "plasmo";
 import { defaultSaves } from "./settings";
 
-export const config: PlasmoCSConfig = {
-  matches: ["https://adfs.sic.shibaura-it.ac.jp/*"],
-  run_at: "document_end",
-};
-
-console.log("adfs");
-const adfsButton = document.getElementById("continueButton");
-
-const adfsPin = <HTMLInputElement>document.getElementById("pin");
-const hasAdfsButton = adfsButton !== null;
-const requiresPin = hasAdfsButton && adfsPin !== null;
-const userId = <HTMLInputElement>document.getElementById("userNameInput");
-const password = <HTMLInputElement>document.getElementById("passwordInput");
-const submit = document.getElementById("submitButton");
-
-const adfsLogic = async () => {
+export const adfsLogic = async () => {
+  console.log("adfsLogic");
+  const adfsButton = document.getElementById("continueButton");
+  const adfsPin = <HTMLInputElement>document.getElementById("pin");
+  const hasAdfsButton = adfsButton !== null;
+  const requiresPin = hasAdfsButton && adfsPin !== null;
+  const userId = <HTMLInputElement>document.getElementById("userNameInput");
+  const password = <HTMLInputElement>document.getElementById("passwordInput");
+  const submit = document.getElementById("submitButton");
   const currentData = await chrome.storage.local.get(defaultSaves);
   if (currentData.settings.autoAdfs) {
     if (requiresPin) {
@@ -47,5 +39,3 @@ const adfsLogic = async () => {
     }
   }
 };
-
-adfsLogic();
