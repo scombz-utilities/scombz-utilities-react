@@ -1,5 +1,5 @@
 import type { PlasmoCSConfig } from "plasmo";
-import { defaultSaves } from "./settings";
+import { defaultSaves } from "./util/settings";
 
 export const config: PlasmoCSConfig = {
   matches: ["https://scombz.shibaura-it.ac.jp/login*"],

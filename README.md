@@ -6,7 +6,6 @@ ScombZ UtilitiesをReactとTypeScriptでモダン化しよう
 
 https://zenn.dev/nado1001/articles/plasmo-browser-extension
 
-
 ## 環境構築
 
 注意: **Nodeのバージョンは必ず`.node-version`記載のものに合わせること**
@@ -178,6 +177,14 @@ ChromeとFireFoxに対応したビルドがそれぞれ生成されます。
 ```bash
 $ npm run build
 ```
+
+### コーディング規則
+
+基本的にすべてのコードは`src`、すべての外部ファイルは`assets`内に記載します。
+以下は`src`ディレクトリ内におけるルールです。
+content_scriptはページ単位で`contents`ディレクトリ直下に記載。
+`contents`ファイル直下に1ページにつき1つの`ts`もしくは`tsx`ファイルを設置し、コンポーネントや共通モジュールを定義する場合は`components`や`util`内に記載してimportで読み込むこと。
+Plasmoではdev環境では`contents`ディレクトリ内にあるすべてのファイルを読んでくれるが、build時には`contents`直下のファイルしか読み込まれず、明示的にimportをしない限りサブディレクトリの内部に記述したファイルはコンパイルされないことに注意。
 
 ## 主なライブラリ
 

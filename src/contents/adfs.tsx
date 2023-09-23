@@ -17,9 +17,10 @@ import {
 } from "@mui/material";
 
 import type { PlasmoCSConfig } from "plasmo";
-import React from "react";
+import React, { useEffect } from "react";
 import { MdVisibility, MdVisibilityOff, MdCloseFullscreen, MdOpenInFull } from "react-icons/md";
-import { defaultSaves } from "./settings";
+import { adfsLogic } from "./util/adfsLogic";
+import { defaultSaves } from "./util/settings";
 
 export const config: PlasmoCSConfig = {
   matches: ["https://adfs.sic.shibaura-it.ac.jp/*"],
@@ -195,6 +196,10 @@ const styleCache = createCache({
 export const getStyle = () => styleElement;
 
 const Adfs = () => {
+  useEffect(() => {
+    adfsLogic();
+  }, []);
+
   return document.getElementById("userNameInput") && document.getElementById("passwordInput") ? (
     <CacheProvider value={styleCache}>
       <SaveDialog />
