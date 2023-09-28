@@ -1,4 +1,4 @@
-import { Box, List, Drawer, Divider, ListItem, ListItemText, ListItemButton, IconButton } from "@mui/material";
+import { Box, List, Drawer, Divider, ListItem, ListItemText, ListItemButton } from "@mui/material";
 import type { PlasmoCSConfig } from "plasmo";
 import React, { useEffect, useState, useMemo } from "react";
 import { GrMenu } from "react-icons/gr";
@@ -44,7 +44,7 @@ const sideMenu = () => {
           } else {
             return (
               <ListItem key={item.name + item.iconClass} disablePadding>
-                <ListItemButton>
+                <ListItemButton href={item.url}>
                   <ListItemText primary={item.name} />
                 </ListItemButton>
               </ListItem>
@@ -60,9 +60,23 @@ const sideMenu = () => {
       <Drawer anchor={"left"} open={isOpen} onClose={toggleDrawer(false)}>
         {list()}
       </Drawer>
-      <IconButton onClick={toggleDrawer()} size="large">
-        <GrMenu />
-      </IconButton>
+      <div
+        onClick={toggleDrawer()}
+        style={{
+          position: "fixed",
+          top: "10px",
+          left: "10px",
+          zIndex: 1000,
+          cursor: "pointer",
+          width: "40px",
+          height: "40px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <GrMenu size={30} />
+      </div>
     </div>
   );
 };
