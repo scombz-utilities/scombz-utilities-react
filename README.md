@@ -14,7 +14,7 @@ https://zenn.dev/nado1001/articles/plasmo-browser-extension
 
 nodeのバージョンをは`20.5.1`で固定とします。
 [asdf](https://asdf-vm.com/)や[nodenv](https://github.com/nodenv/nodenv)などのバージョン管理ツールを使うとよいでしょう。
-このreadmeでは`nodenv`を使ったガイドを載せるので、*nodenvの利用を推奨**します。
+このreadmeでは`nodenv`を使ったガイドを載せるので、**nodenvの利用を推奨**します。
 
 ---
 
@@ -189,6 +189,7 @@ $ npm run build
 - 関数定義の際`function`は使わずアロー関数で定義します。
 - EventHandlerの命名はReactの慣習にのっとり `handle`+`対象`+`イベントのタイプ` としてください。（例: `handleSaveClick` `handleNameInput`）
 - propsに渡す際は `on`+`対象`+`イベントのタイプ` です。
+- 基本的にはJSX構文ではMUIコンポーネントを使ってください。
 
 Tips: Plasmoではdev環境では`contents`ディレクトリ内にあるすべてのファイルを読んでくれるが、build時には`contents`直下のファイルしか読み込まれず、明示的にimportをしない限りサブディレクトリの内部に記述したファイルはコンパイルされないことに注意。
 
