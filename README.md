@@ -2,7 +2,7 @@
 
 ScombZ UtilitiesをReactとTypeScriptでモダン化しよう
 
-## Plasmoに関する日本語ドキュメントは以下参照
+## Plasmoに関する日本語ドキュメントは以下参照eee
 
 https://zenn.dev/nado1001/articles/plasmo-browser-extension
 
