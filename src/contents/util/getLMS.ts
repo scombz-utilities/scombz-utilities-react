@@ -83,15 +83,10 @@ const getLMSMain = (d?: Document): undefined | TimeTableData[] => {
         (document.getElementById("kikanCd").querySelector("[selected]") as HTMLSelectElement)?.value === "10" ? 1 : 2,
     });
     // データ保存
-    chrome.storage.local.set(
-      {
-        timetableData: $timetableData,
-        specialSubj: futei,
-      },
-      () => {
-        console.log("ChromeLocalStorageに保存しました");
-      },
-    );
+    chrome.storage.local.set({
+      timetableData: $timetableData,
+      specialSubj: futei,
+    });
     return $timetableData;
   }
   return undefined;
@@ -99,6 +94,6 @@ const getLMSMain = (d?: Document): undefined | TimeTableData[] => {
 
 export const getLMSinLMSPage = () => {
   if (location.href.startsWith("https://scombz.shibaura-it.ac.jp/lms/timetable")) {
-    getLMSMain(document);
+    console.log(getLMSMain(document));
   }
 };
