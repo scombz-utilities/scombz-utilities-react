@@ -6,6 +6,10 @@ ScombZ UtilitiesをReactとTypeScriptでモダン化しよう
 
 https://zenn.dev/nado1001/articles/plasmo-browser-extension
 
+## 旧ScombZ環境は以下
+
+https://github.com/yudai1204/scombz-utilities
+
 ## 環境構築
 
 注意: **Nodeのバージョンは必ず`.node-version`記載のものに合わせること**
