@@ -60,7 +60,7 @@ const getLMSMain = (d?: Document): undefined | TimeTableData[] => {
       $timetableClassData.id = $course.getAttribute("id");
       $timetableClassData.name = $course.innerHTML;
       $timetableClassData.classroom = $course.nextElementSibling.firstElementChild.getAttribute("title");
-      const $courseTeacherList = $course.nextElementSibling.firstElementChild.querySelectorAll("span");
+      const $courseTeacherList = $course.nextElementSibling.querySelectorAll("div[data-toggle='tooltip'] > span");
       const $courseTeachers = [];
       for (const $teacher of $courseTeacherList) {
         if (!$teacher.hasAttribute("class")) {
