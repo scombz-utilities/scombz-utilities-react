@@ -4,6 +4,9 @@
   "version": "0.0.1",
   "description": "ScombZをカスタムする拡張機能",
   "author": "udai",
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "dev": "plasmo dev --target=chrome-mv3",
     "dev:firefox": "plasmo dev --target=firefox-mv3",
@@ -17,7 +20,7 @@
   "dependencies": {
     "@fontsource/roboto": "^5.0.8",
     "@plasmohq/storage": "^1.8.0",
-    "plasmo": "0.83.0",
+    "plasmo": "^0.84.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.46.2"

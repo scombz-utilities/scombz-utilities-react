@@ -16,7 +16,9 @@ https://github.com/yudai1204/scombz-utilities
 
 ### nodeの準備
 
-nodeのバージョンをは`20.5.1`で固定とします。
+nodeのバージョンをは`20.9.0`で固定とします。    
+( *補足: 初期の開発に20.5.1を使用していましたが、[node 20.9.0のサポートがLTSになった](https://nodejs.org/en/blog/release/v20.9.0)ためこちらに移行しました(2023/12/07)* )    
+
 [asdf](https://asdf-vm.com/)や[nodenv](https://github.com/nodenv/nodenv)などのバージョン管理ツールを使うとよいでしょう。
 このreadmeでは`nodenv`を使ったガイドを載せるので、**nodenvの利用を推奨**します。
 
@@ -51,14 +53,14 @@ $ source ~/.zshrc
 
 ④ `.node-version`に記載されているnodeのバージョンを確認して下さい。
 
-(記事確認時点では `v20.5.1`)
+(記事確認時点では `v20.9.0`)
 
 確認したバージョンをnodenvでインストールします。
 
-( `.node-version`に記載されているのがv20.5.1でない場合はコマンドを適切に変更してください)
+( `.node-version`に記載されているのがv20.9.0でない場合はコマンドを適切に変更してください)
 
 ```bash
-$ nodenv install 20.5.1
+$ nodenv install 20.9.0
 ```
 
 ⑤ nodenvをリフレッシュします
@@ -116,15 +118,15 @@ $ source ~/.bashrc
 
 ④ `.node-version`に記載されているnodeのバージョンを確認して下さい。
 
-(記事確認時点では `v20.5.1`)
+(記事確認時点では `v20.9.0`)
 
 確認したバージョンをnodenvでインストールします。
 
-( `.node-version`に記載されているのがv20.5.1でない場合はコマンドを適切に変更してください)
+( `.node-version`に記載されているのがv20.9.0でない場合はコマンドを適切に変更してください)
 
 ```bash
-$ nodenv install 20.5.1
-$ nodenv global 20.5.1
+$ nodenv install 20.9.0
+$ nodenv global 20.9.0
 ```
 
 ⑤ nodenvをリフレッシュします
