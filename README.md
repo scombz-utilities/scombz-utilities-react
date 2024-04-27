@@ -16,8 +16,8 @@ https://github.com/yudai1204/scombz-utilities
 
 ### nodeの準備
 
-nodeのバージョンをは`20.9.0`で固定とします。    
-( *補足: 初期の開発に20.5.1を使用していましたが、[node 20.9.0のサポートがLTSになった](https://nodejs.org/en/blog/release/v20.9.0)ためこちらに移行しました(2023/12/07)* )    
+nodeのバージョンをは`20.9.0`で固定とします。  
+( _補足: 初期の開発に20.5.1を使用していましたが、[node 20.9.0のサポートがLTSになった](https://nodejs.org/en/blog/release/v20.9.0)ためこちらに移行しました(2023/12/07)_ )
 
 [asdf](https://asdf-vm.com/)や[nodenv](https://github.com/nodenv/nodenv)などのバージョン管理ツールを使うとよいでしょう。
 このreadmeでは`nodenv`を使ったガイドを載せるので、**nodenvの利用を推奨**します。
@@ -156,13 +156,12 @@ $ npm i
 
 ### VScodeでの開発
 
-開発においてコーディングルールをeslint, stylelintに定義しています。
+開発においてコーディングルールをeslintに定義しています。
 VScodeでは自動的にルールに合っているか解析+ルールに合ったように整形を行うことができるため、以下の拡張機能をインストールしてください。
 VScodeのユーザー設定は`.vscode`ディレクトリ内に定義済みのため特に変える必要はない(はず)です。
 
 - [prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 - [eslint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-- [stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)
 
 ### 開発サーバーの立ち上げ
 
@@ -188,7 +187,6 @@ $ npm run build
 - 基本的にすべてのコードは`src`、すべての外部ファイルは`assets`内に記載します。
 - content_scriptはページ単位で`contents`ディレクトリ直下に記載してください。
 - `contents`ファイル直下に1機能につき1つの`ts`もしくは`tsx`ファイルを設置し、コンポーネントや共通モジュールを定義する場合は`components`や`util`内に記載してimportで読み込んでください。
-- コンポーネント以外での、document内のDOM操作に関するスタイリングは必ず`.css`か`.scss`ファイルなど別ファイルに分けて下さい。`.ts` `.tsx`ファイル内に記述するとStyleLintが効きません。
 - Plasmoとの相性が悪いためLintではあえて指定していませんが、基本的に変数名はキャメルケースで統一します。特別な事情がない限りスネークケースは使わないでください。
 - DOM操作は可読性のために`tsx`ではなく`ts`ファイル内に記述してください。同じ機能で`ts`と`tsx`の両方が必要になる場合、`tsx`でPlasmoの読み込みを行い`useEffect`等でtsを読み込みます。
 - ライブラリを追加する場合、共同開発者は全員が再度`npm i`をする必要が生じます。影響範囲も大きいので必ず相談をしてください。
@@ -205,6 +203,5 @@ Tips: Plasmoではdev環境では`contents`ディレクトリ内にあるすべ�
 - [MUI](https://mui.com/material-ui/)
 - react-hook-form
 - ESLint
-- StyleLint
 - Prettier
 - sass

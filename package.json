@@ -1,71 +1,61 @@
 {
   "name": "scombz-utilities",
-  "displayName": "Scombz utilities",
-  "version": "0.0.1",
+  "displayName": "Scombz Utilities Neo",
+  "version": "0.4.0",
   "description": "ScombZをカスタムする拡張機能",
   "author": "udai",
-  "engines": {
-    "node": "20.x"
-  },
   "scripts": {
-    "dev": "plasmo dev --target=chrome-mv3",
-    "dev:firefox": "plasmo dev --target=firefox-mv3",
-    "build:chrome": "plasmo build --target=chrome-mv3",
-    "build:firefox": "plasmo build --target=firefox-mv3",
-    "build": "npm run build:chrome && npm run build:firefox",
-    "test": "plasmo test",
-    "eslint": "eslint '**/*.ts?(x)'",
-    "stylelint": "stylelint \"**/*.{css,scss}\""
+    "dev": "plasmo dev",
+    "build:chrome": "plasmo build",
+    "build:firefox": "plasmo build --target=firefox-mv2",
+    "build": "plasmo build && plasmo build --target=firefox-mv2",
+    "package": "plasmo package",
+    "eslint": "eslint '**/*.ts?(x)' --fix"
   },
   "dependencies": {
-    "@fontsource/roboto": "^5.0.8",
-    "@plasmohq/storage": "^1.8.0",
-    "plasmo": "^0.84.0",
+    "@emotion/cache": "^11.11.0",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.14",
+    "@mui/lab": "^5.0.0-alpha.170",
+    "@mui/material": "^5.15.14",
+    "@plasmohq/messaging": "^0.6.2",
+    "@typescript-eslint/eslint-plugin": "^7.7.1",
+    "node-sass": "^9.0.0",
+    "plasmo": "^0.74.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-hook-form": "^7.46.2"
+    "react-icons": "^5.1.0"
   },
   "devDependencies": {
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "@ianvs/prettier-plugin-sort-imports": "4.1.0",
-    "@mui/lab": "^5.0.0-alpha.145",
-    "@mui/material": "^5.14.10",
-    "@plasmohq/messaging": "^0.5.0",
-    "@types/chrome": "0.0.245",
-    "@types/node": "20.5.9",
-    "@types/react": "18.2.21",
-    "@types/react-dom": "18.2.7",
-    "@typescript-eslint/eslint-plugin": "^6.7.2",
-    "@typescript-eslint/parser": "^6.7.2",
+    "@ianvs/prettier-plugin-sort-imports": "4.1.1",
+    "@types/chrome": "0.0.258",
+    "@types/node": "20.11.5",
+    "@types/react": "18.2.48",
+    "@types/react-dom": "18.2.18",
     "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-import": "^2.28.1",
     "eslint-plugin-react": "^7.33.2",
-    "node-sass": "^9.0.0",
-    "prettier": "^3.0.3",
-    "react-icons": "^4.11.0",
-    "stylelint": "^15.10.3",
-    "stylelint-config-recess-order": "^4.3.0",
-    "stylelint-config-standard": "^34.0.0",
-    "stylelint-config-standard-scss": "^11.0.0",
-    "stylelint-scss": "^5.2.1",
-    "typescript": "5.2.2"
+    "prettier": "3.2.4",
+    "typescript": "5.3.3"
   },
   "manifest": {
-    "host_permissions": [
-      "https://yudai1204.github.io/",
-      "https://scombz-utilities.com/"
-    ],
     "web_accessible_resources": [
       {
         "resources": [
           "assets/*"
         ],
         "matches": [
-          "<all_urls>"
+          "https://*/*"
         ]
       }
+    ],
+    "permissions": [
+      "storage"
+    ],
+    "host_permissions": [
+      "https://*/*"
     ]
   }
 }
