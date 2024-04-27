@@ -1,12 +1,17 @@
 import type { PlasmoCSConfig } from "plasmo";
-// import { defaultSaves } from "./util/settings";
+import { defaultSaves } from "./util/settings";
+import type { Settings } from "./util/settings";
 
 export const config: PlasmoCSConfig = {
   matches: ["https://scombz.shibaura-it.ac.jp/*"],
   run_at: "document_end",
 };
 
-const styleSidemenu = () => {
+const styleSidemenu = async () => {
+  const currentData = await chrome.storage.local.get(defaultSaves);
+  const settings = currentData.settings as Settings;
+  if (settings.styleSideMenu === false) return;
+
   if (document.getElementById("sidemenu") === null) {
     return;
   }

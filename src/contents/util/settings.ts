@@ -6,6 +6,8 @@ export type Settings = {
     password: string;
   };
   autoAdfs: boolean;
+  hideSideMenu: boolean;
+  styleSideMenu: boolean;
 };
 export const defaultSettings: Settings = {
   clickLogin: true,
@@ -14,6 +16,8 @@ export const defaultSettings: Settings = {
     password: "",
   },
   autoAdfs: true,
+  hideSideMenu: true,
+  styleSideMenu: true,
 };
 
 /* ScombzData */

@@ -1,5 +1,6 @@
 import type { PlasmoCSConfig } from "plasmo";
 import { defaultSaves } from "./util/settings";
+import type { Settings } from "./util/settings";
 
 export const config: PlasmoCSConfig = {
   matches: ["https://scombz.shibaura-it.ac.jp/login*"],
@@ -27,7 +28,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   currentData.scombzData.beforeLoginOshirase = oshirase?.outerHTML;
   await chrome.storage.local.set(currentData);
-  if (currentData.settings.clickLogin) {
+
+  const settings = currentData.settings as Settings;
+  if (settings.clickLogin) {
     location.href =
       "https://scombz.shibaura-it.ac.jp/saml/login?idp=http://adfs.sic.shibaura-it.ac.jp/adfs/services/trust";
   }

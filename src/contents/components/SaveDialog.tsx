@@ -15,13 +15,9 @@ import {
 } from "@mui/material";
 
 import React from "react";
-import {
-  MdVisibility,
-  MdVisibilityOff,
-  MdCloseFullscreen,
-  MdOpenInFull,
-} from "react-icons/md";
+import { MdVisibility, MdVisibilityOff, MdCloseFullscreen, MdOpenInFull } from "react-icons/md";
 import { defaultSaves } from "../util/settings";
+import type { Settings } from "../util/settings";
 
 export const openSettings = () => {
   chrome.runtime.sendMessage({ type: "open_settings" });
@@ -37,9 +33,7 @@ export const SaveDialog = () => {
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
 
@@ -53,16 +47,11 @@ export const SaveDialog = () => {
     const userPass = passRef.current?.querySelector("input")?.value;
     if (userId && userPass && userId.match(/^[A-z]{2}[0-9]{5}(@sic)?$/)) {
       const currentData = await chrome.storage.local.get(defaultSaves);
-      currentData.settings.loginData.username = userId.match(
-        /^[A-z]{2}[0-9]{5}$/
-      )
-        ? userId + "@sic"
-        : userId;
-      currentData.settings.loginData.password = userPass;
+      const settings = currentData.settings as Settings;
+      settings.loginData.username = userId.match(/^[A-z]{2}[0-9]{5}$/) ? userId + "@sic" : userId;
+      settings.loginData.password = userPass;
       await chrome.storage.local.set(currentData);
-      document
-        .getElementById("userNameInput")
-        ?.setAttribute("value", currentData.settings.loginData.username);
+      document.getElementById("userNameInput")?.setAttribute("value", settings.loginData.username);
       document.getElementById("passwordInput")?.setAttribute("value", userPass);
       setInterval(() => {
         document.getElementById("submitButton")?.click();
@@ -84,9 +73,7 @@ export const SaveDialog = () => {
         anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
       >
         <Alert severity="error">
-          <Typography variant={"subtitle1"}>
-            学籍番号またはパスワードが正しくありません。
-          </Typography>
+          <Typography variant={"subtitle1"}>学籍番号またはパスワードが正しくありません。</Typography>
         </Alert>
       </Snackbar>
       <Stack
@@ -111,11 +98,7 @@ export const SaveDialog = () => {
                 position: "relative",
               }}
             >
-              <img
-                src={chrome.runtime.getURL("assets/logo.webp")}
-                width={48}
-                height={48}
-              />
+              <img src={chrome.runtime.getURL("assets/logo.webp")} width={48} height={48} />
               <Box>
                 <Typography variant="subtitle2">
                   ScombZ Utilitiesに保存すると自動ログインできます。
@@ -133,29 +116,18 @@ export const SaveDialog = () => {
             </Box>
             <Stack gap={0.5} mb={2}>
               <FormControl sx={{ mt: 1 }} variant="outlined">
-                <InputLabel htmlFor="scombz-utilities-username">
-                  Username
-                </InputLabel>
-                <Input
-                  size="small"
-                  id="scombz-utilities-username"
-                  ref={idRef}
-                />
+                <InputLabel htmlFor="scombz-utilities-username">Username</InputLabel>
+                <Input size="small" id="scombz-utilities-username" ref={idRef} />
               </FormControl>
               <FormControl sx={{ mt: 1 }} variant="outlined">
-                <InputLabel htmlFor="scombz-utilities-password">
-                  Password
-                </InputLabel>
+                <InputLabel htmlFor="scombz-utilities-password">Password</InputLabel>
                 <Input
                   id="scombz-utilities-password"
                   ref={passRef}
                   type={showPassword ? "text" : "password"}
                   endAdornment={
                     <InputAdornment position="end">
-                      <IconButton
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                      >
+                      <IconButton onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
                         {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
                       </IconButton>
                     </InputAdornment>
@@ -201,16 +173,11 @@ export const SaveDialog = () => {
           </form>
         ) : (
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <IconButton
-              onClick={() => setOpen(true)}
-              id="scombz-utilities-open"
-            >
+            <IconButton onClick={() => setOpen(true)} id="scombz-utilities-open">
               <MdOpenInFull />
             </IconButton>
             <label htmlFor="scombz-utilities-open">
-              <Typography variant={"subtitle1"}>
-                ここを開いてScombZ Utilitiesに保存
-              </Typography>
+              <Typography variant={"subtitle1"}>ここを開いてScombZ Utilitiesに保存</Typography>
             </label>
           </Box>
         )}

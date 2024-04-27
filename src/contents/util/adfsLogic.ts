@@ -1,4 +1,5 @@
 import { defaultSaves } from "./settings";
+import type { Settings } from "./settings";
 
 export const adfsLogic = async () => {
   console.log("adfsLogic");
@@ -10,7 +11,8 @@ export const adfsLogic = async () => {
   const password = <HTMLInputElement>document.getElementById("passwordInput");
   const submit = document.getElementById("submitButton");
   const currentData = await chrome.storage.local.get(defaultSaves);
-  if (currentData.settings.autoAdfs) {
+  const settings = currentData.settings as Settings;
+  if (settings.autoAdfs) {
     if (requiresPin) {
       // 2FA
       const adfsPinTip = document.querySelector("#customAuthArea > p:nth-child(3)");
@@ -25,16 +27,10 @@ export const adfsLogic = async () => {
     } else if (hasAdfsButton) {
       console.log("adfs login");
       adfsButton.click();
-    } else if (
-      userId &&
-      password &&
-      submit &&
-      currentData.settings.loginData.username &&
-      currentData.settings.loginData.password
-    ) {
+    } else if (userId && password && submit && settings.loginData.username && settings.loginData.password) {
       if (document.getElementById("error") && document.getElementById("error").textContent.trim().length > 0) return;
-      userId.value = currentData.settings.loginData.username;
-      password.value = currentData.settings.loginData.password;
+      userId.value = settings.loginData.username;
+      password.value = settings.loginData.password;
       submit.click();
     }
   }
