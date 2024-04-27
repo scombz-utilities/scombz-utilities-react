@@ -1,0 +1,44 @@
+- 既存のシステムのそのまま移行
+
+  - [] addSubTimeTable
+  - [] adfs
+  - [] adjustTimeTable
+  - [] attendance
+  - [] autoEvaluation
+  - [] background
+  - [] changeReportButton
+  - [] clearButton
+  - [x] clickLogin
+  - [] downloadFiles
+  - [] eucjp
+  - [x] exitSideMenu
+  - [] exportCalender
+  - [] getNews
+  - [] getTaskLists
+  - [] hideComputedReport
+  - [] homepage
+  - [] layout
+  - [] layoutSubject
+  - [] modifyCoursePageTitle
+  - [] mouseEvents
+  - [] notepad
+  - [] oldScomb
+  - [] styleDialog
+  - [] styleExam
+  - [x] styleSideMenu
+  - [] styleSurveys
+  - [] supportFunctions
+  - [] syllBtn
+
+- 新規システムへの刷新
+
+  - [x] ASDF認証のダイアログ
+  - [] メニュー展開時の時間割表示
+  - [] オプション画面
+  - [] シラバス連携
+  - [] has()を使った実装
+  - [] popup
+
+- その他
+- [] 公式サイト
+- [] chrome.storageのデータ移行
