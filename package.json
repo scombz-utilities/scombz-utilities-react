@@ -1,6 +1,6 @@
 {
   "name": "scombz-utilities",
-  "displayName": "Scombz Utilities Neo",
+  "displayName": "Scombz Utilities",
   "version": "0.4.0",
   "description": "ScombZをカスタムする拡張機能",
   "author": "udai",
@@ -44,7 +44,8 @@
     "web_accessible_resources": [
       {
         "resources": [
-          "assets/*"
+          "assets/*",
+          "css/*"
         ],
         "matches": [
           "https://*/*"
