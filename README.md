@@ -16,8 +16,7 @@ https://github.com/yudai1204/scombz-utilities
 
 ### nodeの準備
 
-nodeのバージョンをは`20.9.0`で固定とします。  
-( _補足: 初期の開発に20.5.1を使用していましたが、[node 20.9.0のサポートがLTSになった](https://nodejs.org/en/blog/release/v20.9.0)ためこちらに移行しました(2023/12/07)_ )
+nodeのバージョンをは`20.11.1`で固定とします。  
 
 [asdf](https://asdf-vm.com/)や[nodenv](https://github.com/nodenv/nodenv)などのバージョン管理ツールを使うとよいでしょう。
 このreadmeでは`nodenv`を使ったガイドを載せるので、**nodenvの利用を推奨**します。
