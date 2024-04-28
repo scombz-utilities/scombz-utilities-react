@@ -11,6 +11,7 @@ export type Settings = {
   hideSideMenu: boolean;
   styleSideMenu: boolean;
   displayClassroom: boolean; // 常に教室を表示する
+  displayTime: boolean; // 常に開始終了時間を表示する
 };
 export const defaultSettings: Settings = {
   clickLogin: true,
@@ -22,6 +23,7 @@ export const defaultSettings: Settings = {
   hideSideMenu: true,
   styleSideMenu: true,
   displayClassroom: false,
+  displayTime: true,
 };
 
 /* ScombzData */
