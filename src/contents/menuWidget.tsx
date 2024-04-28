@@ -3,6 +3,7 @@ import { CacheProvider } from "@emotion/react";
 import { Box } from "@mui/material";
 import type { PlasmoCSConfig } from "plasmo";
 import { useEffect, useState } from "react";
+import { TimeTable } from "./components/TimeTable";
 
 export const config: PlasmoCSConfig = {
   matches: ["https://scombz.shibaura-it.ac.jp/*"],
@@ -36,25 +37,21 @@ const MenuWidget = () => {
 
   return document.getElementById("sidemenu") && document.getElementById("sidemenuClose") ? (
     <CacheProvider value={styleCache}>
-      {isMenuOpen ? (
-        <Box
-          onClick={() => {
-            document.getElementById("sidemenuClose")?.click();
-          }}
-          sx={{
-            backgroundColor: "#f005",
-            position: "fixed",
-            top: 0,
-            left: 300,
-            width: "calc(100% - 300px)",
-            height: "100%",
-          }}
-        >
-          Widget Area
-        </Box>
-      ) : (
-        <></>
-      )}
+      <Box
+        onClick={() => {
+          document.getElementById("sidemenuClose")?.click();
+        }}
+        sx={{
+          display: isMenuOpen ? "block" : "none",
+          position: "fixed",
+          top: 0,
+          left: 300,
+          width: "calc(100% - 300px)",
+          height: "100%",
+        }}
+      >
+        <TimeTable />
+      </Box>
     </CacheProvider>
   ) : (
     <></>

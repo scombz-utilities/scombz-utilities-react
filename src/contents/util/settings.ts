@@ -10,6 +10,7 @@ export type Settings = {
   autoAdfs: boolean;
   hideSideMenu: boolean;
   styleSideMenu: boolean;
+  displayClassroom: boolean; // 常に教室を表示する
 };
 export const defaultSettings: Settings = {
   clickLogin: true,
@@ -20,6 +21,7 @@ export const defaultSettings: Settings = {
   autoAdfs: true,
   hideSideMenu: true,
   styleSideMenu: true,
+  displayClassroom: false,
 };
 
 /* ScombzData */
