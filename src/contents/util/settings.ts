@@ -1,4 +1,10 @@
+import type { Task } from "../types/task";
 import type { TimeTable } from "../types/timetable";
+
+type Subject = {
+  name: string;
+  url: string;
+};
 
 /* Settings */
 export type Settings = {
@@ -7,6 +13,7 @@ export type Settings = {
     username: string;
     password: string;
   };
+  notifySurveySubjects: Subject[];
   autoAdfs: boolean;
   hideSideMenu: boolean;
   styleSideMenu: boolean;
@@ -19,6 +26,7 @@ export const defaultSettings: Settings = {
     username: "",
     password: "",
   },
+  notifySurveySubjects: [],
   autoAdfs: true,
   hideSideMenu: true,
   styleSideMenu: true,
@@ -39,9 +47,13 @@ export type Saves = {
   settings: Settings;
   scombzData: ScombzData;
   timetable: TimeTable;
+  tasklist: Task[];
+  surveyList: Task[];
 };
 export const defaultSaves: Saves = {
   settings: defaultSettings,
   scombzData: defaultScombzData,
   timetable: [],
+  tasklist: [],
+  surveyList: [],
 };
