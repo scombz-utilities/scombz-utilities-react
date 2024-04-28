@@ -1,3 +1,5 @@
+import type { TimeTable } from "../types/timetable";
+
 /* Settings */
 export type Settings = {
   clickLogin: boolean;
@@ -31,8 +33,11 @@ export const defaultScombzData: ScombzData = {
 /* Saves */
 export type Saves = {
   settings: Settings;
+  scombzData: ScombzData;
+  timetable: TimeTable;
 };
-export const defaultSaves = {
+export const defaultSaves: Saves = {
   settings: defaultSettings,
   scombzData: defaultScombzData,
+  timetable: [],
 };

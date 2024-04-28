@@ -42,3 +42,5 @@
 - その他
   - [ ] 公式サイト
   - [ ] chrome.storageのデータ移行
+    - 設定系は移行する必要あり
+    - TimeTableDataも必須

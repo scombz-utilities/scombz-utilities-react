@@ -93,7 +93,15 @@ const styleSidemenu = async () => {
         `,
     );
   }
-  console.log("サイドメニューのスタイルを変更しました");
+  // Background Layer
+  const version = chrome.runtime.getManifest().version;
+  document.getElementById("pageMain").insertAdjacentHTML(
+    "beforeend",
+    `
+    <div id="graylayer" onclick="document.getElementById('sidemenuClose').click();"></div>
+    <p class="usFooter">ScombZ Utilities ver.${version}<br><a style="color:#000000;" href="https://github.com/yudai1204/ScombZ-Utilities" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+    `,
+  );
   return;
 };
 

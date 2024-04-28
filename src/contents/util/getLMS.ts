@@ -1,13 +1,6 @@
-type TimeTableData = {
-  day: number;
-  time: number;
-  id?: string;
-  name: string;
-  classroom?: string;
-  teacher?: string[];
-  termYear?: number;
-  termPhase?: number;
-};
+import type { TimeTable, TimeTableData } from "../types/timetable";
+import type { Saves } from "./settings";
+import { defaultSaves } from "./settings";
 
 const han2Zenkaku = ($str: string) => {
   return $str.replace(/[０-９]/g, (s) => {
@@ -19,18 +12,17 @@ const jigenInt = ($str: string) => {
   return han2Zenkaku($str.charAt(0));
 };
 
-const getLMSMain = (d?: Document): undefined | TimeTableData[] => {
+const getLMSMain = (d?: Document): TimeTable => {
   if (d === undefined) d = document;
   // 時間割じゃなくてスケジュールだったら取得できないので取得しない
   if (!(document.getElementById("displayMode1") as HTMLInputElement)?.checked) {
-    return;
+    return [];
   }
   // データ取得
   const $courseList = document.querySelectorAll(".timetable-course-top-btn");
   if ($courseList[0]) {
     //JSON生成
     const $timetableData = [];
-    let futei = 0;
     for (const $course of $courseList) {
       const $timetableClassData: TimeTableData = {
         day: -1,
@@ -54,7 +46,6 @@ const getLMSMain = (d?: Document): undefined | TimeTableData[] => {
         if ($yobicolNum == 6) {
           $timetableClassData.day = -1;
           $timetableClassData.time = -1; // 曜日時限不定履修
-          futei++;
         }
       }
       $timetableClassData.id = $course.getAttribute("id");
@@ -82,18 +73,13 @@ const getLMSMain = (d?: Document): undefined | TimeTableData[] => {
       termPhase:
         (document.getElementById("kikanCd").querySelector("[selected]") as HTMLSelectElement)?.value === "10" ? 1 : 2,
     });
-    // データ保存
-    chrome.storage.local.set({
-      timetableData: $timetableData,
-      specialSubj: futei,
-    });
     return $timetableData;
   }
-  return undefined;
+  return [];
 };
 
-export const getLMSinLMSPage = () => {
-  if (location.href.startsWith("https://scombz.shibaura-it.ac.jp/lms/timetable")) {
-    console.log(getLMSMain(document));
-  }
+export const getLMSinLMSPage = async () => {
+  const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
+  currentData.timetable = getLMSMain();
+  chrome.storage.local.set(currentData);
 };

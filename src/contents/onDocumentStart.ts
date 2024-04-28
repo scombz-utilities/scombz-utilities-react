@@ -33,7 +33,12 @@ const hideSideMenu = () => {
     );
   }
 };
+
+document.documentElement.style.visibility = "hidden";
 document.addEventListener("DOMContentLoaded", async () => {
+  setTimeout(() => {
+    document.documentElement.style.visibility = "";
+  }, 300);
   const currentData = await chrome.storage.local.get(defaultSaves);
   const settings = currentData.settings as Settings;
   if (settings.hideSideMenu) hideSideMenu();
