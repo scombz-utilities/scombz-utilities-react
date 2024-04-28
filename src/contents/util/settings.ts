@@ -37,23 +37,25 @@ export const defaultSettings: Settings = {
 /* ScombzData */
 export type ScombzData = {
   beforeLoginOshirase: string;
+  lastTaskFetchUnixTime: number;
+  timetable: TimeTable;
+  tasklist: Task[];
+  surveyList: Task[];
 };
 export const defaultScombzData: ScombzData = {
   beforeLoginOshirase: "",
+  lastTaskFetchUnixTime: 0,
+  timetable: [],
+  tasklist: [],
+  surveyList: [],
 };
 
 /* Saves */
 export type Saves = {
   settings: Settings;
   scombzData: ScombzData;
-  timetable: TimeTable;
-  tasklist: Task[];
-  surveyList: Task[];
 };
 export const defaultSaves: Saves = {
   settings: defaultSettings,
   scombzData: defaultScombzData,
-  timetable: [],
-  tasklist: [],
-  surveyList: [],
 };

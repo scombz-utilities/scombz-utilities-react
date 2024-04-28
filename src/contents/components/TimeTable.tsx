@@ -230,7 +230,7 @@ export const TimeTable = () => {
   useEffect(() => {
     const fetchTimetable = async () => {
       const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
-      setTimetable(currentData.timetable);
+      setTimetable(currentData.scombzData.timetable);
       setDisplayClassroom(currentData.settings.displayClassroom);
       setDisplayTime(currentData.settings.displayTime);
     };

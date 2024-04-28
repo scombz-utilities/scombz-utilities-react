@@ -1,33 +1,34 @@
+import { differenceInMinutes } from "date-fns";
 import type { PlasmoCSConfig } from "plasmo";
 import { getTasksOnTaskPage, insertSurveyBtnOnSubj, getTasksByAjax, fetchSurveys } from "./util/getTaskList";
 import { defaultSaves } from "./util/settings";
 import type { Saves } from "./util/settings";
+import { FETCH_INTERVAL } from "~/constants";
 
 export const config: PlasmoCSConfig = {
   matches: ["https://scombz.shibaura-it.ac.jp/*"],
   run_at: "document_end",
 };
-
+// タスクページにアクセスしたときにタスクを取得
 if (location.href === "https://scombz.shibaura-it.ac.jp/lms/task") {
   getTasksOnTaskPage();
 }
+// 各授業ページにアンケートボタンを追加
 insertSurveyBtnOnSubj();
 
-// TODO: 10分に1回だけ自動で取得するようにする
-
-document.body.insertAdjacentHTML(
-  "afterbegin",
-  "<button id='getTasksByAjax' style='position: fixed; top:0; right:0; z-index: 10000000;'>タスクを取得</button>",
-);
-document.getElementById("getTasksByAjax").addEventListener("click", () => {
-  getTasksByAjax();
-  fetchSurveys();
-  const func = async () => {
-    const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
-    const subjects = currentData.settings.notifySurveySubjects.map((subject) => subject.name);
-    const tasks = currentData.surveyList;
-    console.log({ tasks, subjects });
-    console.log({ displayTask: tasks.filter((task) => subjects.includes(task.course)) });
-  };
-  func();
-});
+// タスクを取得
+const fetchTasks = async () => {
+  const now = new Date();
+  const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
+  const lastTaskFetch = new Date(currentData.scombzData.lastTaskFetchUnixTime);
+  console.log(differenceInMinutes(now, lastTaskFetch));
+  if (differenceInMinutes(now, lastTaskFetch) >= FETCH_INTERVAL) {
+    console.log("fetch tasks");
+    currentData.scombzData.lastTaskFetchUnixTime = now.getTime();
+    chrome.storage.local.set(currentData);
+    console.log(await getTasksByAjax());
+    console.log(await fetchSurveys());
+  }
+  return;
+};
+fetchTasks();

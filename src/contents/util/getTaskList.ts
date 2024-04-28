@@ -28,17 +28,13 @@ const getTasks = (doc: Document): Task[] => {
   return taskList;
 };
 
-export const getTasksOnTaskPage = () => {
+export const getTasksOnTaskPage = async () => {
   const taskList = getTasks(document);
-  chrome.storage.local.set(
-    {
-      tasklist: taskList,
-    },
-    () => {
-      console.log(taskList);
-      chrome.runtime.sendMessage({ action: "updateBadgeText" });
-    },
-  );
+  const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
+  currentData.scombzData.tasklist = taskList;
+  await chrome.storage.local.set(currentData);
+  chrome.runtime.sendMessage({ action: "updateBadgeText" });
+  return taskList;
 };
 
 export const getTasksByAjax = async () => {
@@ -50,15 +46,11 @@ export const getTasksByAjax = async () => {
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, "text/html");
   const taskList = getTasks(doc);
-  chrome.storage.local.set(
-    {
-      tasklist: taskList,
-    },
-    () => {
-      chrome.runtime.sendMessage({ action: "updateBadgeText" });
-      console.log(taskList);
-    },
-  );
+  const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
+  currentData.scombzData.tasklist = taskList;
+  await chrome.storage.local.set(currentData);
+  chrome.runtime.sendMessage({ action: "updateBadgeText" });
+  return taskList;
 };
 
 export const fetchSurveys = async () => {
@@ -120,15 +112,11 @@ export const fetchSurveys = async () => {
     taskListsObj.push(taskObj);
     i++;
   }
-  chrome.storage.local.set(
-    {
-      surveyList: taskListsObj,
-    },
-    () => {
-      chrome.runtime.sendMessage({ action: "updateBadgeText" });
-      console.log(taskListsObj);
-    },
-  );
+  const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
+  currentData.scombzData.surveyList = taskListsObj;
+  await chrome.storage.local.set(currentData);
+  chrome.runtime.sendMessage({ action: "updateBadgeText" });
+  return taskListsObj;
 };
 
 //アンケートを取得するかどうかの設定を科目別ページに挿入

@@ -6,3 +6,5 @@ export const CLASS_TIMES = [
   ["17:00", "18:40"],
   ["18:50", "20:30"],
 ];
+
+export const FETCH_INTERVAL = 10;
