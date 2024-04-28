@@ -80,6 +80,6 @@ const getLMSMain = (d?: Document): TimeTable => {
 
 export const getLMSinLMSPage = async () => {
   const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
-  currentData.timetable = getLMSMain();
+  currentData.scombzData.timetable = getLMSMain();
   chrome.storage.local.set(currentData);
 };

@@ -3,6 +3,7 @@ import { CacheProvider } from "@emotion/react";
 import { Box } from "@mui/material";
 import type { PlasmoCSConfig } from "plasmo";
 import { useEffect, useState } from "react";
+import { TaskList } from "./components/TaskList";
 import { TimeTable } from "./components/TimeTable";
 
 export const config: PlasmoCSConfig = {
@@ -51,6 +52,7 @@ const MenuWidget = () => {
         }}
       >
         <TimeTable />
+        <TaskList />
       </Box>
     </CacheProvider>
   ) : (
