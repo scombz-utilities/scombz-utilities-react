@@ -35,7 +35,27 @@ const MenuWidget = () => {
   }, []);
 
   return document.getElementById("sidemenu") && document.getElementById("sidemenuClose") ? (
-    <CacheProvider value={styleCache}>{isMenuOpen ? <Box>MENU IS OPEN</Box> : <Box>MENU IS CLOSED</Box>}</CacheProvider>
+    <CacheProvider value={styleCache}>
+      {isMenuOpen ? (
+        <Box
+          onClick={() => {
+            document.getElementById("sidemenuClose")?.click();
+          }}
+          sx={{
+            backgroundColor: "#f005",
+            position: "fixed",
+            top: 0,
+            left: 300,
+            width: "calc(100% - 300px)",
+            height: "100%",
+          }}
+        >
+          Widget Area
+        </Box>
+      ) : (
+        <></>
+      )}
+    </CacheProvider>
   ) : (
     <></>
   );
