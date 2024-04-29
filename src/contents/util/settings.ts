@@ -19,6 +19,7 @@ export type Settings = {
   styleSideMenu: boolean;
   displayClassroom: boolean; // 常に教室を表示する
   displayTime: boolean; // 常に開始終了時間を表示する
+  displayTodayDate: boolean; // 今日の日付を表示する
 };
 export const defaultSettings: Settings = {
   clickLogin: true,
@@ -32,6 +33,7 @@ export const defaultSettings: Settings = {
   styleSideMenu: true,
   displayClassroom: false,
   displayTime: true,
+  displayTodayDate: true,
 };
 
 /* ScombzData */
