@@ -4,6 +4,7 @@ export type Task = {
   title: string;
   link: string;
   deadline: string;
+  deadlineDate?: Date;
   startline?: string;
   id: string | null;
 };

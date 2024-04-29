@@ -1,10 +1,6 @@
+import type { Subject } from "../types/subject";
 import type { Task } from "../types/task";
 import type { TimeTable } from "../types/timetable";
-
-type Subject = {
-  name: string;
-  url: string;
-};
 
 /* Settings */
 export type Settings = {
@@ -20,6 +16,10 @@ export type Settings = {
   displayClassroom: boolean; // 常に教室を表示する
   displayTime: boolean; // 常に開始終了時間を表示する
   displayTodayDate: boolean; // 今日の日付を表示する
+  highlightToday: boolean; // 今日の日付をハイライトする(TimeTable)
+  highlightTask: boolean; // タスクを色でハイライトする
+  deadlineMode: "relative" | "absolute"; // 締切表示モード
+  deadlineFormat: string; // 締切表示フォーマット(yyyy/MM/dd HH:mm)
 };
 export const defaultSettings: Settings = {
   clickLogin: true,
@@ -34,6 +34,10 @@ export const defaultSettings: Settings = {
   displayClassroom: false,
   displayTime: true,
   displayTodayDate: true,
+  highlightToday: true,
+  highlightTask: true,
+  deadlineMode: "relative",
+  deadlineFormat: "yyyy/MM/dd HH:mm",
 };
 
 /* ScombzData */

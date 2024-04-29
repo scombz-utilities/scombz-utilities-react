@@ -1,55 +1,146 @@
-import { Box } from "@mui/material";
-
-import React, { useState, useEffect } from "react";
+import {
+  Box,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Typography,
+  styled,
+  ButtonGroup,
+  IconButton,
+} from "@mui/material";
+import { grey, red } from "@mui/material/colors";
+import type { SxProps } from "@mui/system";
+import { differenceInHours, differenceInMinutes, format } from "date-fns";
+import React, { useState, useEffect, useCallback } from "react";
+import { HiOutlineSwitchHorizontal } from "react-icons/hi";
+import { MdCloseFullscreen, MdOpenInFull } from "react-icons/md";
+import type { Subject } from "../types/subject";
 import type { Task } from "../types/task";
 import { useWindowSize } from "../util/functions";
 import { defaultSaves } from "../util/settings";
 import type { Saves } from "../util/settings";
 
-const TESTDATA: Task[] = [
-  {
-    course: "情報工学科4年生",
-    deadline: "2025/04/01 00:00",
-    id: "survey20023319",
-    kind: "survey",
-    link: "https://scombz.shibaura-it.ac.jp/lms/course/surveys/take?surveyId=survey20023319&idnumber=2024com0006329902",
-    startline: "2024/04/01 00:00",
-    title: "(TESTDATA)学生自身の学修目標とキャリアプランの設定および2024年度前期気づきアンケート　4年生",
-  },
-  {
-    course: "工学英語 II",
-    deadline: "2024/04/28 00:00",
-    id: "survey20018759",
-    kind: "survey",
-    link: "https://scombz.shibaura-it.ac.jp/lms/course/surveys/take?surveyId=20018759&idnumber=202301SU0388772001",
-    startline: "2024/02/14 00:00",
-    title: "(TESTDATA)2023年度_後期_講義_自己評価アンケート / Class Evaluation Questionnaire",
-  },
-  {
-    course: "感性情報処理",
-    deadline: "2024/04/28 00:00",
-    id: "survey20019019",
-    kind: "survey",
-    link: "https://scombz.shibaura-it.ac.jp/lms/course/surveys/take?surveyId=20019019&idnumber=202301SU0436862001",
-    startline: "2024/02/14 00:00",
-    title: "(TESTDATA)2023年度_後期_講義_自己評価アンケート / Class Evaluation Questionnaire",
-  },
-];
+const getTaskColor = (
+  task: Task,
+): {
+  backgroundColor: string;
+  color: string;
+  fontWeight: number;
+} => {
+  const deadlineInHours = differenceInHours(new Date(task.deadline), new Date());
+  if (deadlineInHours < 6) return { backgroundColor: red[200], color: red[900], fontWeight: 600 };
+  if (deadlineInHours < 12) return { backgroundColor: red[100], color: red[900], fontWeight: 600 };
+  if (deadlineInHours < 24) return { backgroundColor: red[50], color: red[900], fontWeight: 600 };
+  if (deadlineInHours < 72) return { backgroundColor: "inherit", color: red[900], fontWeight: 400 };
+  if (deadlineInHours < 24 * 7) return { backgroundColor: "inherit", color: "inherit", fontWeight: 400 };
+  return { backgroundColor: "inherit", color: grey[500], fontWeight: 400 };
+};
+
+const TaskTypography = styled(Typography)(() => ({
+  display: "block",
+  textWrap: "nowrap",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
+  fontWeight: 400,
+}));
+
+type TaskTableCellProps = {
+  children: React.ReactNode;
+  sx?: SxProps;
+  href?: string;
+};
+const TaskTableCell = (props: TaskTableCellProps) => {
+  const { children, sx = {}, href } = props;
+  if (href)
+    return (
+      <TableCell align="left" sx={{ padding: "4px 8px" }}>
+        <a href={href} style={{ textDecoration: "none", color: "inherit" }}>
+          <TaskTypography
+            variant="caption"
+            sx={{
+              "&:hover": { textDecoration: "underline" },
+              borderRadius: 1,
+              padding: "1px",
+              ...sx,
+            }}
+          >
+            {children}
+          </TaskTypography>
+        </a>
+      </TableCell>
+    );
+  return (
+    <TableCell align="left" sx={{ padding: "4px 8px" }}>
+      <TaskTypography variant="caption" sx={sx}>
+        {children}
+      </TaskTypography>
+    </TableCell>
+  );
+};
+
+const getRelativeTime = (date: Date, now: Date): string => {
+  const diff = differenceInMinutes(date, now);
+  if (diff < 180) return `残り約${diff}分`;
+  if (diff < 1440) return `残り約${Math.floor(diff / 60)}時間`;
+  return `残り約${Math.floor(diff / 1440)}日`;
+};
 
 export const TaskList = () => {
+  const [isTaskListOpen, setIsTaskListOpen] = useState<boolean>(true);
+  const [isRelativeTime, setIsRelativeTime] = useState<boolean>(true);
   const [tasklist, setTasklist] = useState<Task[]>([]);
+  const [subjects, setSubjects] = useState<Subject[]>([]);
+  const [nowDate, setNowDate] = useState<Date>();
+  const [formatStr, setFormatStr] = useState<string>("yyyy/MM/dd HH:mm");
+  const [highlightTask, setHighlightTask] = useState<boolean>(true);
+
+  const toggleOpen = useCallback(() => {
+    setIsTaskListOpen(!isTaskListOpen);
+  }, [isTaskListOpen]);
+
+  const toggleRelativeTime = useCallback(() => {
+    setIsRelativeTime(!isRelativeTime);
+  }, [isRelativeTime]);
+
   useEffect(() => {
     const fetchTasklist = async () => {
       const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
+      setSubjects(currentData.settings.notifySurveySubjects);
+      setFormatStr(currentData.settings.deadlineFormat);
+      setIsRelativeTime(currentData.settings.deadlineMode === "relative");
+      setHighlightTask(currentData.settings.highlightTask);
+
       const normalTaskList = currentData.scombzData.tasklist;
 
       const notifySurveySubjectsName = currentData.settings.notifySurveySubjects.map((subject) => subject.name);
       const allSurveyList = currentData.scombzData.surveyList;
       const surveyList = allSurveyList.filter((task) => notifySurveySubjectsName.includes(task.course));
 
-      setTasklist([...normalTaskList, ...surveyList, ...TESTDATA]);
+      const now = new Date();
+
+      const combinedTaskList = [...normalTaskList, ...surveyList]
+        .map((task) => {
+          return { ...task, deadlineDate: new Date(task.deadline) };
+        })
+        .filter((task) => task.deadlineDate >= now);
+
+      combinedTaskList.sort((x, y) => {
+        const [a, b] = [x.deadlineDate, y.deadlineDate];
+        return a.getTime() - b.getTime();
+      });
+
+      setTasklist(combinedTaskList);
     };
     fetchTasklist();
+    setNowDate(new Date());
+    setInterval(() => {
+      setNowDate(new Date());
+    }, 60000);
   }, []);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -66,16 +157,84 @@ export const TaskList = () => {
         m={width > 1540 ? "10px auto" : "10px"}
         onClick={(e) => e.stopPropagation()}
         sx={{
-          backgroundColor: "#fff7",
+          backgroundColor: "#fff9",
           backdropFilter: "blur(6px)",
           padding: 1,
           borderRadius: 1,
         }}
       >
-        TASKLIST
-        {tasklist.map((task) => (
-          <div>{task.title}</div>
-        ))}
+        <Box mb={0.8} position="relative">
+          <Typography variant="h6" sx={{ px: 0.5, textAlign: "left", fontSize: "16px" }}>
+            課題一覧
+          </Typography>
+          <ButtonGroup sx={{ position: "absolute", top: 0, right: 0 }}>
+            <IconButton onClick={toggleRelativeTime} size="small">
+              <HiOutlineSwitchHorizontal />
+            </IconButton>
+            <IconButton onClick={toggleOpen} size="small">
+              {isTaskListOpen ? <MdCloseFullscreen /> : <MdOpenInFull />}
+            </IconButton>
+          </ButtonGroup>
+        </Box>
+        {isTaskListOpen && (
+          <Paper>
+            <TableContainer component={Paper}>
+              <Table size="small" aria-label="a dense table">
+                <TableHead>
+                  <TableRow>
+                    {width > 880 && <TaskTableCell>科目</TaskTableCell>}
+                    <TaskTableCell>課題名</TaskTableCell>
+                    <TaskTableCell>
+                      <Box onClick={toggleRelativeTime} sx={{ cursor: "pointer" }}>
+                        期限
+                      </Box>
+                    </TaskTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {tasklist.length === 0 && (
+                    <TableRow>
+                      <TaskTableCell sx={{ width: "100%" }}>課題はありません</TaskTableCell>
+                    </TableRow>
+                  )}
+                  {tasklist.map((task) => {
+                    const courseUrl = subjects.find((subject) => subject.name === task.course)?.url;
+                    const colors = highlightTask ? getTaskColor(task) : {};
+                    return (
+                      <TableRow
+                        key={task.id}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                          maxWidth: "100%",
+                          ...colors,
+                        }}
+                      >
+                        {width > 880 && (
+                          <TaskTableCell sx={{ ...colors, maxWidth: "110px" }} href={courseUrl}>
+                            {task.course}
+                          </TaskTableCell>
+                        )}
+                        <TaskTableCell
+                          sx={{ ...colors, maxWidth: width > 880 ? "calc(100vw - 600px)" : "calc(100vw - 480px)" }}
+                          href={task.link}
+                        >
+                          {task.title}
+                        </TaskTableCell>
+                        <TaskTableCell sx={{ ...colors, width: "110px" }}>
+                          <Box onClick={toggleRelativeTime}>
+                            {isRelativeTime
+                              ? getRelativeTime(task.deadlineDate, nowDate)
+                              : format(task.deadlineDate, formatStr)}
+                          </Box>
+                        </TaskTableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+        )}
       </Box>
     </>
   );

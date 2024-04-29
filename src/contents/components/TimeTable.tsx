@@ -16,7 +16,7 @@ type ClassBoxProps = {
   displayTeacher?: boolean;
   displayClassroom?: boolean;
   classroomWidth?: string;
-  nowDay: number;
+  nowDay: number | null;
   nowClassTime: number;
 };
 const ClassBox = (props: ClassBoxProps) => {
@@ -130,7 +130,7 @@ type TimeTableProps = {
   timetable: TimeTableType;
   displayTime?: boolean;
   displayClassroom?: boolean;
-  nowDay: number;
+  nowDay: number | null;
   nowClassTime: number;
   today?: string | false;
   hideButtonGroup?: boolean;
@@ -323,6 +323,7 @@ export const TimeTable = () => {
   const [timetable, setTimetable] = useState<TimeTableType>([]);
   const [displayClassroom, setDisplayClassroom] = useState<boolean>(false);
   const [displayTime, setDisplayTime] = useState<boolean>(true);
+  const [highlightToday, setHighlightToday] = useState<boolean>(true);
   const [today, setToday] = useState<string | false>(false);
 
   useEffect(() => {
@@ -335,11 +336,15 @@ export const TimeTable = () => {
       setTimetable(currentData.scombzData.timetable);
       setDisplayClassroom(currentData.settings.displayClassroom);
       setDisplayTime(currentData.settings.displayTime);
+      setHighlightToday(currentData.settings.highlightToday);
     };
     fetchTimetable();
   }, []);
 
-  const { day: nowDay, time: nowClassTime } = useMemo(() => getTimetablePosFromTime(new Date()), []);
+  const { day: nowDay, time: nowClassTime } = useMemo(
+    () => (false ? getTimetablePosFromTime(new Date()) : { day: null, time: null }),
+    [highlightToday],
+  );
 
   const specialClassData = useMemo(() => timetable.filter((classData) => classData.day === -1), [timetable]);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -353,6 +358,7 @@ export const TimeTable = () => {
     <>
       <Box
         maxWidth="1200px"
+        minHeight="30px"
         m={width > 1540 ? "10px auto" : "10px"}
         onClick={(e) => e.stopPropagation()}
         sx={{

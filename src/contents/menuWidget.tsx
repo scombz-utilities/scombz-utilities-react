@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { TaskList } from "./components/TaskList";
 import { TimeTable } from "./components/TimeTable";
 
+const IS_DEBUG = false;
+
 export const config: PlasmoCSConfig = {
   matches: ["https://scombz.shibaura-it.ac.jp/*"],
   run_at: "document_end",
@@ -34,6 +36,7 @@ const MenuWidget = () => {
     closeMenuButton?.addEventListener("click", () => {
       setIsMenuOpen(false);
     });
+    if (IS_DEBUG) setTimeout(() => document.getElementById("sidemenuOpen").click(), 500);
   }, []);
 
   return document.getElementById("sidemenu") && document.getElementById("sidemenuClose") ? (
