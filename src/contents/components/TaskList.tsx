@@ -17,7 +17,7 @@ import type { SxProps } from "@mui/system";
 import { differenceInHours, differenceInMinutes, format } from "date-fns";
 import React, { useState, useEffect, useCallback } from "react";
 import { HiOutlineSwitchHorizontal } from "react-icons/hi";
-import { MdCloseFullscreen, MdOpenInFull } from "react-icons/md";
+import { MdCloseFullscreen, MdOpenInFull, MdAdd } from "react-icons/md";
 import type { Subject } from "../types/subject";
 import type { Task } from "../types/task";
 import { useWindowSize } from "../util/functions";
@@ -47,6 +47,7 @@ const TaskTypography = styled(Typography)(() => ({
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
   fontWeight: 400,
+  letterSpacing: 0,
 }));
 
 type TaskTableCellProps = {
@@ -168,6 +169,9 @@ export const TaskList = () => {
             課題一覧
           </Typography>
           <ButtonGroup sx={{ position: "absolute", top: 0, right: 0 }}>
+            <IconButton size="small">
+              <MdAdd />
+            </IconButton>
             <IconButton onClick={toggleRelativeTime} size="small">
               <HiOutlineSwitchHorizontal />
             </IconButton>
