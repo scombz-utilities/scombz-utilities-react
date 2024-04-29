@@ -215,7 +215,7 @@ export const TaskList = () => {
                           </TaskTableCell>
                         )}
                         <TaskTableCell
-                          sx={{ ...colors, maxWidth: width > 880 ? "calc(100vw - 600px)" : "calc(100vw - 480px)" }}
+                          sx={{ ...colors, maxWidth: width > 880 ? "calc(100vw - 610px)" : "calc(100vw - 480px)" }}
                           href={task.link}
                         >
                           {task.title}
