@@ -95,10 +95,9 @@ export const fetchSurveys = async () => {
     taskObj.deadline = doc.querySelector(
       `#portalSurveysForm .result-list:nth-of-type(${i + 1}) .survey-list-update span:nth-of-type(3)`,
     ).innerHTML;
-    taskObj.id =
-      "survey" +
-      (doc.querySelector(`#portalSurveysForm .result-list:nth-of-type(${i + 1}) #listSurveyId`) as HTMLInputElement)
-        .value;
+    taskObj.id = (
+      doc.querySelector(`#portalSurveysForm .result-list:nth-of-type(${i + 1}) #listSurveyId`) as HTMLInputElement
+    ).value;
 
     const idnumber = (
       doc.querySelector(`#portalSurveysForm .result-list:nth-of-type(${i + 1}) #listIdnumber`) as HTMLInputElement

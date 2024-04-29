@@ -1,10 +1,10 @@
-import { Box, Typography, Paper } from "@mui/material";
-
+import { Box, Typography, Paper, IconButton, ButtonGroup } from "@mui/material";
 import { format as formatDate } from "date-fns";
 import { ja } from "date-fns/locale";
 import React, { useState, useEffect, useMemo } from "react";
+import { MdCloseFullscreen, MdOpenInFull, MdOutlineCalendarViewWeek, MdOutlineCalendarViewDay } from "react-icons/md";
 import type { TimeTable as TimeTableType } from "../types/timetable";
-import { useWindowSize } from "../util/functions";
+import { useWindowSize, getTimetablePosFromTime } from "../util/functions";
 import { defaultSaves } from "../util/settings";
 import type { Saves } from "../util/settings";
 import { CLASS_TIMES } from "~/constants";
@@ -16,6 +16,8 @@ type ClassBoxProps = {
   displayTeacher?: boolean;
   displayClassroom?: boolean;
   classroomWidth?: string;
+  nowDay: number;
+  nowClassTime: number;
 };
 const ClassBox = (props: ClassBoxProps) => {
   const {
@@ -25,6 +27,8 @@ const ClassBox = (props: ClassBoxProps) => {
     displayTeacher = false,
     displayClassroom = false,
     classroomWidth,
+    nowDay,
+    nowClassTime,
   } = props;
   return (
     <Box
@@ -48,7 +52,6 @@ const ClassBox = (props: ClassBoxProps) => {
             sx={{
               textAlign: "center",
               padding: "4px",
-              paddingBottom: "3px",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -56,11 +59,28 @@ const ClassBox = (props: ClassBoxProps) => {
               minHeight: "36px",
               overflow: "hidden",
               gap: "3px",
+              position: "relative",
+              boxSizing: "border-box",
               "&:hover": {
-                backgroundColor: "#f0f0f0",
+                opacity: 0.7,
+                border: "1px solid #000",
+                padding: "3px",
               },
             }}
           >
+            {nowDay === classData.day && nowClassTime === classData.time && (
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  backgroundColor: "#ff0",
+                  opacity: 0.2,
+                }}
+              />
+            )}
             <Typography variant="caption" sx={{ lineHeight: 1.3, letterSpacing: 0, display: "inline-block" }}>
               {classData.name}
             </Typography>
@@ -110,9 +130,60 @@ type TimeTableProps = {
   timetable: TimeTableType;
   displayTime?: boolean;
   displayClassroom?: boolean;
+  nowDay: number;
+  nowClassTime: number;
+  today?: string | false;
+  hideButtonGroup?: boolean;
 };
+
+const WideSelectableTimeTable = (props: TimeTableProps) => {
+  const { timetable, displayClassroom, displayTime, nowDay, nowClassTime, today } = props;
+  const [isTimeTableOpen, setIsTimeTableOpen] = useState<boolean>(true);
+  const [isWideTimeTable, setIsWideTimeTable] = useState<boolean>(true);
+
+  const toggleTimeTable = () => {
+    setIsTimeTableOpen(!isTimeTableOpen);
+  };
+
+  const toggleWideTimeTable = () => {
+    setIsWideTimeTable(!isWideTimeTable);
+  };
+
+  return (
+    <Box>
+      <Box mb={0.8} position="relative">
+        {today && (
+          <Typography variant="h6" sx={{ textAlign: "center", fontSize: "16px" }}>
+            {today}
+          </Typography>
+        )}
+        <ButtonGroup sx={{ position: "absolute", top: 0, right: 0 }}>
+          <IconButton onClick={toggleWideTimeTable} size="small">
+            {isWideTimeTable ? <MdOutlineCalendarViewDay /> : <MdOutlineCalendarViewWeek />}
+          </IconButton>
+          <IconButton onClick={toggleTimeTable} size="small">
+            {isTimeTableOpen ? <MdCloseFullscreen /> : <MdOpenInFull />}
+          </IconButton>
+        </ButtonGroup>
+      </Box>
+      {isTimeTableOpen && isWideTimeTable && (
+        <WideTimeTable
+          timetable={timetable}
+          displayClassroom={displayClassroom}
+          displayTime={displayTime}
+          nowDay={nowDay}
+          nowClassTime={nowClassTime}
+        />
+      )}
+      {isTimeTableOpen && !isWideTimeTable && (
+        <NarrowTimeTable timetable={timetable} nowDay={nowDay} nowClassTime={nowClassTime} hideButtonGroup />
+      )}
+    </Box>
+  );
+};
+
 const WideTimeTable = (props: TimeTableProps) => {
-  const { timetable, displayClassroom, displayTime } = props;
+  const { timetable, displayClassroom, displayTime, nowDay, nowClassTime } = props;
 
   const hasSaturday = useMemo(() => timetable?.some((day) => day.day === 6), [timetable]);
   const lastPeriod = useMemo(() => timetable?.reduce((acc, cur) => (cur.time > acc ? cur.time : acc), 0), [timetable]);
@@ -170,6 +241,8 @@ const WideTimeTable = (props: TimeTableProps) => {
               key={day + index}
               displayClassroom={displayClassroom}
               classDataArray={timetable.filter((classData) => classData.day - 1 === index && classData.time === period)}
+              nowDay={nowDay}
+              nowClassTime={nowClassTime}
             />
           ))}
         </>
@@ -179,7 +252,7 @@ const WideTimeTable = (props: TimeTableProps) => {
 };
 
 const NarrowTimeTable = (props: TimeTableProps) => {
-  const { timetable } = props;
+  const { timetable, nowDay, nowClassTime, today, hideButtonGroup = false } = props;
   const dayOfToday = useMemo(() => new Date().getDay(), []);
   const filteredTimetable = useMemo(() => timetable.filter((classData) => classData.day === dayOfToday), []);
   const timeTableData = useMemo(
@@ -190,35 +263,59 @@ const NarrowTimeTable = (props: TimeTableProps) => {
     [filteredTimetable],
   );
 
+  const [isTimeTableOpen, setIsTimeTableOpen] = useState<boolean>(true);
+  const toggleTimeTable = () => {
+    setIsTimeTableOpen(!isTimeTableOpen);
+  };
+
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      gap={1.5}
-      sx={{ backgroundColor: "#EEF7F799", borderRadius: 0.5, px: 1.5, py: 1 }}
-    >
-      {timeTableData.length === 0 && <Typography variant="caption">本日の授業はありません</Typography>}
-      {timeTableData.map((classDataArray, index) => (
-        <Box
-          key={classDataArray[0].time}
-          sx={{ display: "flex", flexDirection: "column", borderTop: index > 0 ? "1px solid #bbb" : "none" }}
-        >
-          <Box textAlign="center">
-            <Typography variant="caption">{classDataArray[0].time}限</Typography>
-            <Typography variant="caption" sx={{ color: "gray", ml: 1 }}>
-              ({CLASS_TIMES[classDataArray[0].time - 1].join("〜")})
+    <>
+      {!hideButtonGroup && (
+        <Box mb={0.8} position="relative">
+          {today && (
+            <Typography variant="h6" sx={{ textAlign: "center", fontSize: "16px" }}>
+              {today}
             </Typography>
-          </Box>
-          <ClassBox
-            classDataArray={classDataArray}
-            direction="row"
-            displayClassroom
-            classroomWidth="min(280px, calc(100vw - 400px))"
-          />
+          )}
+          <ButtonGroup sx={{ position: "absolute", top: 0, right: 0 }}>
+            <IconButton onClick={toggleTimeTable} size="small">
+              {isTimeTableOpen ? <MdCloseFullscreen /> : <MdOpenInFull />}
+            </IconButton>
+          </ButtonGroup>
         </Box>
-      ))}
-      {}
-    </Box>
+      )}
+      {isTimeTableOpen && (
+        <Box
+          display="flex"
+          flexDirection="column"
+          gap={1.5}
+          sx={{ backgroundColor: "#EEF7F799", borderRadius: 0.5, px: 1.5, py: 1 }}
+        >
+          {timeTableData.length === 0 && <Typography variant="caption">本日の授業はありません</Typography>}
+          {timeTableData.map((classDataArray, index) => (
+            <Box
+              key={classDataArray[0].time}
+              sx={{ display: "flex", flexDirection: "column", borderTop: index > 0 ? "1px solid #bbb" : "none" }}
+            >
+              <Box textAlign="center">
+                <Typography variant="caption">{classDataArray[0].time}限</Typography>
+                <Typography variant="caption" sx={{ color: "gray", ml: 1 }}>
+                  ({CLASS_TIMES[classDataArray[0].time - 1].join("〜")})
+                </Typography>
+              </Box>
+              <ClassBox
+                classDataArray={classDataArray}
+                direction="row"
+                displayClassroom
+                classroomWidth="min(280px, calc(100vw - 400px))"
+                nowDay={nowDay}
+                nowClassTime={nowClassTime}
+              />
+            </Box>
+          ))}
+        </Box>
+      )}
+    </>
   );
 };
 
@@ -226,10 +323,15 @@ export const TimeTable = () => {
   const [timetable, setTimetable] = useState<TimeTableType>([]);
   const [displayClassroom, setDisplayClassroom] = useState<boolean>(false);
   const [displayTime, setDisplayTime] = useState<boolean>(true);
+  const [today, setToday] = useState<string | false>(false);
 
   useEffect(() => {
     const fetchTimetable = async () => {
       const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
+      console.log(currentData.settings);
+      if (currentData.settings.displayTodayDate) {
+        setToday(formatDate(new Date(), "yyyy年MM月dd日(E)", { locale: ja }));
+      }
       setTimetable(currentData.scombzData.timetable);
       setDisplayClassroom(currentData.settings.displayClassroom);
       setDisplayTime(currentData.settings.displayTime);
@@ -237,10 +339,11 @@ export const TimeTable = () => {
     fetchTimetable();
   }, []);
 
+  const { day: nowDay, time: nowClassTime } = useMemo(() => getTimetablePosFromTime(new Date()), []);
+
   const specialClassData = useMemo(() => timetable.filter((classData) => classData.day === -1), [timetable]);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [width, height] = useWindowSize();
-  const today = useMemo(() => formatDate(new Date(), "yyyy年MM月dd日(E)", { locale: ja }), []);
 
   if (timetable.length === 0 || width < 540) {
     return <></>;
@@ -259,15 +362,17 @@ export const TimeTable = () => {
           borderRadius: 1,
         }}
       >
-        <Box mb={0.8}>
-          <Typography variant="h6" sx={{ textAlign: "center", fontSize: "16px" }}>
-            {today}
-          </Typography>
-        </Box>
         {width > 880 ? (
-          <WideTimeTable timetable={timetable} displayClassroom={displayClassroom} displayTime={displayTime} />
+          <WideSelectableTimeTable
+            timetable={timetable}
+            displayClassroom={displayClassroom}
+            displayTime={displayTime}
+            nowDay={nowDay}
+            nowClassTime={nowClassTime}
+            today={today}
+          />
         ) : (
-          <NarrowTimeTable timetable={timetable} />
+          <NarrowTimeTable timetable={timetable} nowDay={nowDay} nowClassTime={nowClassTime} today={today} />
         )}
         {specialClassData.length > 0 && (
           <Box
@@ -279,7 +384,12 @@ export const TimeTable = () => {
             <Typography variant="caption" sx={{ px: 1, textAlign: width > 880 ? "left" : "center" }}>
               その他の授業
             </Typography>
-            <ClassBox classDataArray={specialClassData} direction={width > 880 ? "row" : "column"} />
+            <ClassBox
+              classDataArray={specialClassData}
+              direction={width > 880 ? "row" : "column"}
+              nowDay={nowDay}
+              nowClassTime={nowClassTime}
+            />
           </Box>
         )}
       </Box>

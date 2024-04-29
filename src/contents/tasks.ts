@@ -21,7 +21,6 @@ const fetchTasks = async () => {
   const now = new Date();
   const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
   const lastTaskFetch = new Date(currentData.scombzData.lastTaskFetchUnixTime);
-  console.log(differenceInMinutes(now, lastTaskFetch));
   if (differenceInMinutes(now, lastTaskFetch) >= FETCH_INTERVAL) {
     console.log("fetch tasks");
     currentData.scombzData.lastTaskFetchUnixTime = now.getTime();
