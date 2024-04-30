@@ -404,22 +404,24 @@ export const TimeTable = (props: Props) => {
           />
         )}
         {specialClassData.length > 0 && (
-          <Box
-            mt={1}
-            display="flex"
-            flexDirection="column"
-            sx={{ backgroundColor: "#EEF7F799", borderRadius: 0.5, px: 1.5, py: 1 }}
-          >
-            <Typography variant="caption" sx={{ px: 1, textAlign: width > 880 ? "left" : "center" }}>
-              その他の授業
-            </Typography>
-            <ClassBox
-              classDataArray={specialClassData}
-              direction={width > 880 ? "row" : "column"}
-              nowDay={nowDay}
-              nowClassTime={nowClassTime}
-            />
-          </Box>
+          <Collapse in={isTimeTableOpen} timeout="auto">
+            <Box
+              mt={1}
+              display="flex"
+              flexDirection="column"
+              sx={{ backgroundColor: "#EEF7F799", borderRadius: 0.5, px: 1.5, py: 1 }}
+            >
+              <Typography variant="caption" sx={{ px: 1, textAlign: width > 880 ? "left" : "center" }}>
+                その他の授業
+              </Typography>
+              <ClassBox
+                classDataArray={specialClassData}
+                direction={width > 880 ? "row" : "column"}
+                nowDay={nowDay}
+                nowClassTime={nowClassTime}
+              />
+            </Box>
+          </Collapse>
         )}
       </Box>
     </>
