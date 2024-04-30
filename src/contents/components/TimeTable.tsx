@@ -139,16 +139,14 @@ type TimeTableProps = {
   nowClassTime: number;
   today?: string | false;
   hideButtonGroup?: boolean;
+  isTimeTableOpen: boolean;
+  toggleTimeTable: () => void;
 };
 
 const WideSelectableTimeTable = (props: TimeTableProps) => {
-  const { timetable, displayClassroom, displayTime, nowDay, nowClassTime, today } = props;
-  const [isTimeTableOpen, setIsTimeTableOpen] = useState<boolean>(true);
+  const { timetable, displayClassroom, displayTime, nowDay, nowClassTime, today, isTimeTableOpen, toggleTimeTable } =
+    props;
   const [isWideTimeTable, setIsWideTimeTable] = useState<boolean>(true);
-
-  const toggleTimeTable = () => {
-    setIsTimeTableOpen(!isTimeTableOpen);
-  };
 
   const toggleWideTimeTable = () => {
     setIsWideTimeTable(!isWideTimeTable);
@@ -179,9 +177,18 @@ const WideSelectableTimeTable = (props: TimeTableProps) => {
             displayTime={displayTime}
             nowDay={nowDay}
             nowClassTime={nowClassTime}
+            isTimeTableOpen={isTimeTableOpen}
+            toggleTimeTable={toggleTimeTable}
           />
         ) : (
-          <NarrowTimeTable timetable={timetable} nowDay={nowDay} nowClassTime={nowClassTime} hideButtonGroup />
+          <NarrowTimeTable
+            timetable={timetable}
+            nowDay={nowDay}
+            nowClassTime={nowClassTime}
+            hideButtonGroup
+            isTimeTableOpen={isTimeTableOpen}
+            toggleTimeTable={toggleTimeTable}
+          />
         )}
       </Collapse>
     </Box>
@@ -258,7 +265,7 @@ const WideTimeTable = (props: TimeTableProps) => {
 };
 
 const NarrowTimeTable = (props: TimeTableProps) => {
-  const { timetable, nowDay, nowClassTime, today, hideButtonGroup = false } = props;
+  const { timetable, nowDay, nowClassTime, today, hideButtonGroup = false, isTimeTableOpen, toggleTimeTable } = props;
   const dayOfToday = useMemo(() => new Date().getDay(), []);
   const filteredTimetable = useMemo(() => timetable.filter((classData) => classData.day === dayOfToday), []);
   const timeTableData = useMemo(
@@ -268,11 +275,6 @@ const NarrowTimeTable = (props: TimeTableProps) => {
       ),
     [filteredTimetable],
   );
-
-  const [isTimeTableOpen, setIsTimeTableOpen] = useState<boolean>(true);
-  const toggleTimeTable = () => {
-    setIsTimeTableOpen(!isTimeTableOpen);
-  };
 
   return (
     <>
@@ -336,6 +338,11 @@ export const TimeTable = (props: Props) => {
   const [highlightToday, setHighlightToday] = useState<boolean>(true);
   const [today, setToday] = useState<string | false>(false);
 
+  const [isTimeTableOpen, setIsTimeTableOpen] = useState<boolean>(true);
+  const toggleTimeTable = () => {
+    setIsTimeTableOpen(!isTimeTableOpen);
+  };
+
   useEffect(() => {
     const fetchTimetable = async () => {
       const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
@@ -383,9 +390,18 @@ export const TimeTable = (props: Props) => {
             nowDay={nowDay}
             nowClassTime={nowClassTime}
             today={today}
+            isTimeTableOpen={isTimeTableOpen}
+            toggleTimeTable={toggleTimeTable}
           />
         ) : (
-          <NarrowTimeTable timetable={timetable} nowDay={nowDay} nowClassTime={nowClassTime} today={today} />
+          <NarrowTimeTable
+            timetable={timetable}
+            nowDay={nowDay}
+            nowClassTime={nowClassTime}
+            today={today}
+            isTimeTableOpen={isTimeTableOpen}
+            toggleTimeTable={toggleTimeTable}
+          />
         )}
         {specialClassData.length > 0 && (
           <Box
