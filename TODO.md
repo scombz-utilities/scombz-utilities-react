@@ -1,12 +1,12 @@
 - 既存のシステムのそのまま移行
 
-  - [ ] addSubTimeTable
+  - [x] addSubTimeTable
   - [x] adfs
   - [ ] adjustTimeTable
-  - [ ] attendance
+  - [x] attendance
   - [ ] autoEvaluation
   - [ ] background
-  - [ ] changeReportButton
+  - [x] changeReportButton
   - [ ] clearButton
   - [x] clickLogin
   - [ ] downloadFiles
@@ -34,7 +34,8 @@
 
   - [x] ASDF認証のダイアログ
   - [x] メニュー展開時の時間割表示
-  - [ ] メニュー展開時の課題表示
+  - [x] メニュー展開時の課題表示
+    - [ ] 自作課題の表示
   - [ ] メニュー展開時のメモ表示
   - [ ] その他のウィジェット追加(optional)
   - [ ] オプション画面

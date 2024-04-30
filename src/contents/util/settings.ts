@@ -9,6 +9,7 @@ export type Settings = {
     username: string;
     password: string;
   };
+  removeAttendance: "none" | "only" | "all";
   notifySurveySubjects: Subject[];
   autoAdfs: boolean;
   hideSideMenu: boolean;
@@ -20,9 +21,14 @@ export type Settings = {
   highlightTask: boolean; // タスクを色でハイライトする
   deadlineMode: "relative" | "absolute"; // 締切表示モード
   deadlineFormat: string; // 締切表示フォーマット(yyyy/MM/dd HH:mm)
+  changeReportBtn: boolean; // レポート提出ボタンを変更する
+  sliderBarMax: number;
+  timesBtnValue: number;
+  defaultInputName: string;
 };
 export const defaultSettings: Settings = {
   clickLogin: true,
+  removeAttendance: "none",
   loginData: {
     username: "",
     password: "",
@@ -38,6 +44,10 @@ export const defaultSettings: Settings = {
   highlightTask: true,
   deadlineMode: "relative",
   deadlineFormat: "yyyy/MM/dd HH:mm",
+  changeReportBtn: true,
+  sliderBarMax: 600,
+  timesBtnValue: 0,
+  defaultInputName: "AA00000_山田太郎",
 };
 
 /* ScombzData */

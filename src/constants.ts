@@ -8,3 +8,10 @@ export const CLASS_TIMES = [
 ];
 
 export const FETCH_INTERVAL = 10;
+
+export const SLIDER_BAR_MINS = [
+  [10, 30, 60, 100, 200, 300, 600],
+  [10, 30, 60, 120, 180, 300, 600],
+  [10, 20, 30, 60, 90, 120, 180],
+  [10, 60, 120, 180, 300, 600, 1000],
+];
