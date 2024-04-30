@@ -11,16 +11,17 @@ import {
   styled,
   ButtonGroup,
   IconButton,
+  Pagination,
+  Collapse,
 } from "@mui/material";
 import { grey, red } from "@mui/material/colors";
 import type { SxProps } from "@mui/system";
 import { differenceInHours, differenceInMinutes, format } from "date-fns";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { HiOutlineSwitchHorizontal } from "react-icons/hi";
-import { MdCloseFullscreen, MdOpenInFull, MdAdd } from "react-icons/md";
+import { MdKeyboardArrowUp, MdKeyboardArrowDown, MdAdd } from "react-icons/md";
 import type { Subject } from "../types/subject";
 import type { Task } from "../types/task";
-import { useWindowSize } from "../util/functions";
 import { defaultSaves } from "../util/settings";
 import type { Saves } from "../util/settings";
 
@@ -91,7 +92,127 @@ const getRelativeTime = (date: Date, now: Date): string => {
   return `残り約${Math.floor(diff / 1440)}日`;
 };
 
-export const TaskList = () => {
+type TaskTableProps = {
+  tasklist: Task[];
+  subjects: Subject[];
+  nowDate: Date;
+  formatStr: string;
+  isRelativeTime: boolean;
+  highlightTask: boolean;
+  toggleRelativeTime: () => void;
+  width: number;
+  rowsPerPage: number;
+};
+const TaskTable = (props: TaskTableProps) => {
+  const {
+    tasklist,
+    subjects,
+    nowDate,
+    formatStr,
+    isRelativeTime,
+    highlightTask,
+    toggleRelativeTime,
+    width,
+    rowsPerPage,
+  } = props;
+  const [page, setPage] = useState(0);
+
+  const displayTaskList = useMemo(
+    () => tasklist.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
+    [tasklist, page],
+  );
+
+  const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value - 1);
+  };
+
+  return (
+    <>
+      {tasklist.length > displayTaskList.length ? (
+        <Box display="flex" alignItems="center" justifyContent="space-between" px={1}>
+          <Typography variant="caption" sx={{ display: "block", opacity: 0.7 }}>
+            {page * rowsPerPage + 1} - {Math.min(page * rowsPerPage + rowsPerPage, tasklist.length)} / {tasklist.length}
+          </Typography>
+          <Pagination
+            size="small"
+            count={Math.ceil(tasklist.length / rowsPerPage)}
+            page={page + 1}
+            onChange={handleChange}
+            showFirstButton
+            showLastButton
+            color="primary"
+            sx={{ mb: "5px", width: "fit-content" }}
+          />
+        </Box>
+      ) : (
+        <Box height="5px" />
+      )}
+      <Paper>
+        <TableContainer>
+          <Table size="small" aria-label="a dense table">
+            <TableHead>
+              <TableRow>
+                {width > 880 && <TaskTableCell>科目</TaskTableCell>}
+                <TaskTableCell>課題名</TaskTableCell>
+                <TaskTableCell>
+                  <Box onClick={toggleRelativeTime} sx={{ cursor: "pointer" }}>
+                    期限
+                  </Box>
+                </TaskTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {tasklist.length === 0 && (
+                <TableRow>
+                  <TaskTableCell sx={{ width: "100%" }}>課題はありません</TaskTableCell>
+                </TableRow>
+              )}
+              {displayTaskList.map((task) => {
+                const courseUrl = subjects.find((subject) => subject.name === task.course)?.url;
+                const colors = highlightTask ? getTaskColor(task) : {};
+                return (
+                  <TableRow
+                    // key={task.id}
+                    sx={{
+                      "&:last-child td, &:last-child th": { border: 0 },
+                      maxWidth: "100%",
+                      ...colors,
+                    }}
+                  >
+                    {width > 880 && (
+                      <TaskTableCell sx={{ ...colors, maxWidth: "110px" }} href={courseUrl}>
+                        {task.course}
+                      </TaskTableCell>
+                    )}
+                    <TaskTableCell
+                      sx={{ ...colors, maxWidth: width > 880 ? "calc(100vw - 610px)" : "calc(100vw - 480px)" }}
+                      href={task.link}
+                    >
+                      {task.title}
+                    </TaskTableCell>
+                    <TaskTableCell sx={{ ...colors, width: "110px" }}>
+                      <Box onClick={toggleRelativeTime}>
+                        {isRelativeTime
+                          ? getRelativeTime(task.deadlineDate, nowDate)
+                          : format(task.deadlineDate, formatStr)}
+                      </Box>
+                    </TaskTableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+    </>
+  );
+};
+
+type Props = {
+  width: number;
+};
+export const TaskList = (props: Props) => {
+  const { width } = props;
   const [isTaskListOpen, setIsTaskListOpen] = useState<boolean>(true);
   const [isRelativeTime, setIsRelativeTime] = useState<boolean>(true);
   const [tasklist, setTasklist] = useState<Task[]>([]);
@@ -99,6 +220,8 @@ export const TaskList = () => {
   const [nowDate, setNowDate] = useState<Date>();
   const [formatStr, setFormatStr] = useState<string>("yyyy/MM/dd HH:mm");
   const [highlightTask, setHighlightTask] = useState<boolean>(true);
+  const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const toggleOpen = useCallback(() => {
     setIsTaskListOpen(!isTaskListOpen);
@@ -115,6 +238,8 @@ export const TaskList = () => {
       setFormatStr(currentData.settings.deadlineFormat);
       setIsRelativeTime(currentData.settings.deadlineMode === "relative");
       setHighlightTask(currentData.settings.highlightTask);
+      setLastUpdate(new Date(currentData.scombzData.lastTaskFetchUnixTime));
+      setRowsPerPage(currentData.settings.taskListRowsPerPage);
 
       const normalTaskList = currentData.scombzData.tasklist;
 
@@ -141,11 +266,8 @@ export const TaskList = () => {
     setNowDate(new Date());
     setInterval(() => {
       setNowDate(new Date());
-    }, 60000);
+    }, 30000);
   }, []);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [width, height] = useWindowSize();
 
   if (width < 540) {
     return <></>;
@@ -164,9 +286,12 @@ export const TaskList = () => {
           borderRadius: 1,
         }}
       >
-        <Box mb={0.8} position="relative">
+        <Box position="relative" display="flex" alignItems="center">
           <Typography variant="h6" sx={{ px: 0.5, textAlign: "left", fontSize: "16px" }}>
             課題一覧
+          </Typography>
+          <Typography variant="caption" sx={{ px: 0.5, textAlign: "left", fontSize: "12px", opacity: 0.7 }}>
+            (最終更新: {format(lastUpdate, "MM/dd HH:mm")})
           </Typography>
           <ButtonGroup sx={{ position: "absolute", top: 0, right: 0 }}>
             <IconButton size="small">
@@ -176,69 +301,16 @@ export const TaskList = () => {
               <HiOutlineSwitchHorizontal />
             </IconButton>
             <IconButton onClick={toggleOpen} size="small">
-              {isTaskListOpen ? <MdCloseFullscreen /> : <MdOpenInFull />}
+              {isTaskListOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
             </IconButton>
           </ButtonGroup>
         </Box>
-        {isTaskListOpen && (
-          <Paper>
-            <TableContainer component={Paper}>
-              <Table size="small" aria-label="a dense table">
-                <TableHead>
-                  <TableRow>
-                    {width > 880 && <TaskTableCell>科目</TaskTableCell>}
-                    <TaskTableCell>課題名</TaskTableCell>
-                    <TaskTableCell>
-                      <Box onClick={toggleRelativeTime} sx={{ cursor: "pointer" }}>
-                        期限
-                      </Box>
-                    </TaskTableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {tasklist.length === 0 && (
-                    <TableRow>
-                      <TaskTableCell sx={{ width: "100%" }}>課題はありません</TaskTableCell>
-                    </TableRow>
-                  )}
-                  {tasklist.map((task) => {
-                    const courseUrl = subjects.find((subject) => subject.name === task.course)?.url;
-                    const colors = highlightTask ? getTaskColor(task) : {};
-                    return (
-                      <TableRow
-                        key={task.id}
-                        sx={{
-                          "&:last-child td, &:last-child th": { border: 0 },
-                          maxWidth: "100%",
-                          ...colors,
-                        }}
-                      >
-                        {width > 880 && (
-                          <TaskTableCell sx={{ ...colors, maxWidth: "110px" }} href={courseUrl}>
-                            {task.course}
-                          </TaskTableCell>
-                        )}
-                        <TaskTableCell
-                          sx={{ ...colors, maxWidth: width > 880 ? "calc(100vw - 610px)" : "calc(100vw - 480px)" }}
-                          href={task.link}
-                        >
-                          {task.title}
-                        </TaskTableCell>
-                        <TaskTableCell sx={{ ...colors, width: "110px" }}>
-                          <Box onClick={toggleRelativeTime}>
-                            {isRelativeTime
-                              ? getRelativeTime(task.deadlineDate, nowDate)
-                              : format(task.deadlineDate, formatStr)}
-                          </Box>
-                        </TaskTableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Paper>
-        )}
+        <Collapse in={isTaskListOpen} timeout="auto">
+          <TaskTable
+            {...{ tasklist, subjects, nowDate, formatStr, isRelativeTime, highlightTask, toggleRelativeTime, width }}
+            rowsPerPage={rowsPerPage}
+          />
+        </Collapse>
       </Box>
     </>
   );

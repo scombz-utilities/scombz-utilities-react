@@ -1,10 +1,15 @@
 import createCache from "@emotion/cache";
 import { CacheProvider } from "@emotion/react";
-import { Box } from "@mui/material";
+import { Box, ThemeProvider } from "@mui/material";
 import type { PlasmoCSConfig } from "plasmo";
 import { useEffect, useState } from "react";
 import { TaskList } from "./components/TaskList";
 import { TimeTable } from "./components/TimeTable";
+import { UserMemo } from "./components/UserMemo";
+import { useWindowSize } from "./util/functions";
+import { defaultSaves } from "./util/settings";
+import type { Saves } from "./util/settings";
+import theme from "~/theme";
 
 const IS_DEBUG = false;
 
@@ -25,6 +30,10 @@ export const getStyle = () => styleElement;
 
 const MenuWidget = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const [useSubTimeTable, setUseSubTimeTable] = useState<boolean>(true);
+  const [useTaskList, setUseTaskList] = useState<boolean>(true);
+  const [useUserMemo, setUseUserMemo] = useState<boolean>(true);
+
   useEffect(() => {
     const sideMenu = document.getElementById("sidemenu") as HTMLElement;
     setIsMenuOpen(!sideMenu?.classList?.contains("sidemenu-close"));
@@ -36,27 +45,38 @@ const MenuWidget = () => {
     closeMenuButton?.addEventListener("click", () => {
       setIsMenuOpen(false);
     });
+    chrome.storage.local.get(defaultSaves, (items: Saves) => {
+      setUseSubTimeTable(items.settings.useSubTimeTable);
+      setUseTaskList(items.settings.useTaskList);
+      setUseUserMemo(items.settings.useUserMemo);
+    });
     if (IS_DEBUG) setTimeout(() => document.getElementById("sidemenuOpen").click(), 500);
   }, []);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [width, height] = useWindowSize();
+
   return document.getElementById("sidemenu") && document.getElementById("sidemenuClose") ? (
     <CacheProvider value={styleCache}>
-      <Box
-        onClick={() => {
-          document.getElementById("sidemenuClose")?.click();
-        }}
-        sx={{
-          display: isMenuOpen ? "block" : "none",
-          position: "fixed",
-          top: 0,
-          left: 300,
-          width: "calc(100% - 300px)",
-          height: "100%",
-        }}
-      >
-        <TimeTable />
-        <TaskList />
-      </Box>
+      <ThemeProvider theme={theme}>
+        <Box
+          onClick={() => {
+            document.getElementById("sidemenuClose")?.click();
+          }}
+          sx={{
+            display: isMenuOpen ? "block" : "none",
+            position: "fixed",
+            top: 0,
+            left: 300,
+            width: "calc(100% - 300px)",
+            height: "100%",
+          }}
+        >
+          {useSubTimeTable && <TimeTable width={width} />}
+          {useTaskList && <TaskList width={width} />}
+          {useUserMemo && <UserMemo width={width} />}
+        </Box>
+      </ThemeProvider>
     </CacheProvider>
   ) : (
     <></>

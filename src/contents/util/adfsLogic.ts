@@ -2,7 +2,6 @@ import { defaultSaves } from "./settings";
 import type { Settings } from "./settings";
 
 export const adfsLogic = async () => {
-  console.log("adfsLogic");
   const adfsButton = document.getElementById("continueButton");
   const adfsPin = <HTMLInputElement>document.getElementById("pin");
   const hasAdfsButton = adfsButton !== null;
@@ -25,7 +24,6 @@ export const adfsLogic = async () => {
       });
       adfsPin.focus();
     } else if (hasAdfsButton) {
-      console.log("adfs login");
       adfsButton.click();
     } else if (userId && password && submit && settings.loginData.username && settings.loginData.password) {
       if (document.getElementById("error") && document.getElementById("error").textContent.trim().length > 0) return;

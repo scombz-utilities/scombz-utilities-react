@@ -1,9 +1,11 @@
 import createCache from "@emotion/cache";
 import { CacheProvider } from "@emotion/react";
+import { ThemeProvider } from "@mui/material";
 import type { PlasmoCSConfig } from "plasmo";
 import React, { useEffect } from "react";
 import { SaveDialog } from "./components/SaveDialog";
 import { adfsLogic } from "./util/adfsLogic";
+import theme from "~/theme";
 
 export const config: PlasmoCSConfig = {
   matches: ["https://adfs.sic.shibaura-it.ac.jp/*"],
@@ -25,10 +27,11 @@ const Adfs = () => {
     adfsLogic();
   }, []);
 
-  return document.getElementById("userNameInput") &&
-    document.getElementById("passwordInput") ? (
+  return document.getElementById("userNameInput") && document.getElementById("passwordInput") ? (
     <CacheProvider value={styleCache}>
-      <SaveDialog />
+      <ThemeProvider theme={theme}>
+        <SaveDialog />
+      </ThemeProvider>
     </CacheProvider>
   ) : (
     <></>

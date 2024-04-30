@@ -14,6 +14,9 @@ export type Settings = {
   autoAdfs: boolean;
   hideSideMenu: boolean;
   styleSideMenu: boolean;
+  useSubTimeTable: boolean;
+  useTaskList: boolean;
+  useUserMemo: boolean;
   displayClassroom: boolean; // 常に教室を表示する
   displayTime: boolean; // 常に開始終了時間を表示する
   displayTodayDate: boolean; // 今日の日付を表示する
@@ -22,6 +25,7 @@ export type Settings = {
   deadlineMode: "relative" | "absolute"; // 締切表示モード
   deadlineFormat: string; // 締切表示フォーマット(yyyy/MM/dd HH:mm)
   changeReportBtn: boolean; // レポート提出ボタンを変更する
+  taskListRowsPerPage: number;
   sliderBarMax: number;
   timesBtnValue: number;
   defaultInputName: string;
@@ -37,6 +41,9 @@ export const defaultSettings: Settings = {
   autoAdfs: true,
   hideSideMenu: true,
   styleSideMenu: true,
+  useSubTimeTable: true,
+  useTaskList: true,
+  useUserMemo: true,
   displayClassroom: false,
   displayTime: true,
   displayTodayDate: true,
@@ -45,6 +52,7 @@ export const defaultSettings: Settings = {
   deadlineMode: "relative",
   deadlineFormat: "yyyy/MM/dd HH:mm",
   changeReportBtn: true,
+  taskListRowsPerPage: 5,
   sliderBarMax: 600,
   timesBtnValue: 0,
   defaultInputName: "AA00000_山田太郎",

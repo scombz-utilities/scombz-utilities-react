@@ -1,10 +1,15 @@
-import { Box, Typography, Paper, IconButton, ButtonGroup } from "@mui/material";
+import { Box, Typography, Paper, IconButton, ButtonGroup, Collapse } from "@mui/material";
 import { format as formatDate } from "date-fns";
 import { ja } from "date-fns/locale";
 import React, { useState, useEffect, useMemo } from "react";
-import { MdCloseFullscreen, MdOpenInFull, MdOutlineCalendarViewWeek, MdOutlineCalendarViewDay } from "react-icons/md";
+import {
+  MdKeyboardArrowDown,
+  MdKeyboardArrowUp,
+  MdOutlineCalendarViewWeek,
+  MdOutlineCalendarViewDay,
+} from "react-icons/md";
 import type { TimeTable as TimeTableType } from "../types/timetable";
-import { useWindowSize, getTimetablePosFromTime } from "../util/functions";
+import { getTimetablePosFromTime } from "../util/functions";
 import { defaultSaves } from "../util/settings";
 import type { Saves } from "../util/settings";
 import { CLASS_TIMES } from "~/constants";
@@ -162,22 +167,23 @@ const WideSelectableTimeTable = (props: TimeTableProps) => {
             {isWideTimeTable ? <MdOutlineCalendarViewDay /> : <MdOutlineCalendarViewWeek />}
           </IconButton>
           <IconButton onClick={toggleTimeTable} size="small">
-            {isTimeTableOpen ? <MdCloseFullscreen /> : <MdOpenInFull />}
+            {isTimeTableOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
           </IconButton>
         </ButtonGroup>
       </Box>
-      {isTimeTableOpen && isWideTimeTable && (
-        <WideTimeTable
-          timetable={timetable}
-          displayClassroom={displayClassroom}
-          displayTime={displayTime}
-          nowDay={nowDay}
-          nowClassTime={nowClassTime}
-        />
-      )}
-      {isTimeTableOpen && !isWideTimeTable && (
-        <NarrowTimeTable timetable={timetable} nowDay={nowDay} nowClassTime={nowClassTime} hideButtonGroup />
-      )}
+      <Collapse in={isTimeTableOpen} timeout="auto">
+        {isWideTimeTable ? (
+          <WideTimeTable
+            timetable={timetable}
+            displayClassroom={displayClassroom}
+            displayTime={displayTime}
+            nowDay={nowDay}
+            nowClassTime={nowClassTime}
+          />
+        ) : (
+          <NarrowTimeTable timetable={timetable} nowDay={nowDay} nowClassTime={nowClassTime} hideButtonGroup />
+        )}
+      </Collapse>
     </Box>
   );
 };
@@ -279,12 +285,12 @@ const NarrowTimeTable = (props: TimeTableProps) => {
           )}
           <ButtonGroup sx={{ position: "absolute", top: 0, right: 0 }}>
             <IconButton onClick={toggleTimeTable} size="small">
-              {isTimeTableOpen ? <MdCloseFullscreen /> : <MdOpenInFull />}
+              {isTimeTableOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
             </IconButton>
           </ButtonGroup>
         </Box>
       )}
-      {isTimeTableOpen && (
+      <Collapse in={isTimeTableOpen} timeout="auto">
         <Box
           display="flex"
           flexDirection="column"
@@ -314,12 +320,16 @@ const NarrowTimeTable = (props: TimeTableProps) => {
             </Box>
           ))}
         </Box>
-      )}
+      </Collapse>
     </>
   );
 };
 
-export const TimeTable = () => {
+type Props = {
+  width: number;
+};
+export const TimeTable = (props: Props) => {
+  const { width } = props;
   const [timetable, setTimetable] = useState<TimeTableType>([]);
   const [displayClassroom, setDisplayClassroom] = useState<boolean>(false);
   const [displayTime, setDisplayTime] = useState<boolean>(true);
@@ -329,7 +339,6 @@ export const TimeTable = () => {
   useEffect(() => {
     const fetchTimetable = async () => {
       const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
-      console.log(currentData.settings);
       if (currentData.settings.displayTodayDate) {
         setToday(formatDate(new Date(), "yyyy年MM月dd日(E)", { locale: ja }));
       }
@@ -347,8 +356,6 @@ export const TimeTable = () => {
   );
 
   const specialClassData = useMemo(() => timetable.filter((classData) => classData.day === -1), [timetable]);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [width, height] = useWindowSize();
 
   if (timetable.length === 0 || width < 540) {
     return <></>;

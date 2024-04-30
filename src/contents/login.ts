@@ -8,8 +8,6 @@ export const config: PlasmoCSConfig = {
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
-  console.log("scombz login");
-
   // 芝猫を表示
   const topLogo = document.querySelector(".sitelogo");
   if (topLogo) {
