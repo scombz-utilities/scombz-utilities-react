@@ -1,10 +1,15 @@
-import { Box, Typography, Paper, IconButton, ButtonGroup } from "@mui/material";
+import { Box, Typography, Paper, IconButton, ButtonGroup, Collapse } from "@mui/material";
 import { format as formatDate } from "date-fns";
 import { ja } from "date-fns/locale";
 import React, { useState, useEffect, useMemo } from "react";
-import { MdCloseFullscreen, MdOpenInFull, MdOutlineCalendarViewWeek, MdOutlineCalendarViewDay } from "react-icons/md";
+import {
+  MdKeyboardArrowDown,
+  MdKeyboardArrowUp,
+  MdOutlineCalendarViewWeek,
+  MdOutlineCalendarViewDay,
+} from "react-icons/md";
 import type { TimeTable as TimeTableType } from "../types/timetable";
-import { useWindowSize, getTimetablePosFromTime } from "../util/functions";
+import { getTimetablePosFromTime } from "../util/functions";
 import { defaultSaves } from "../util/settings";
 import type { Saves } from "../util/settings";
 import { CLASS_TIMES } from "~/constants";
@@ -16,7 +21,7 @@ type ClassBoxProps = {
   displayTeacher?: boolean;
   displayClassroom?: boolean;
   classroomWidth?: string;
-  nowDay: number;
+  nowDay: number | null;
   nowClassTime: number;
 };
 const ClassBox = (props: ClassBoxProps) => {
@@ -130,24 +135,29 @@ type TimeTableProps = {
   timetable: TimeTableType;
   displayTime?: boolean;
   displayClassroom?: boolean;
-  nowDay: number;
+  nowDay: number | null;
   nowClassTime: number;
   today?: string | false;
   hideButtonGroup?: boolean;
+  isTimeTableOpen: boolean;
+  toggleTimeTable: () => void;
+  isWideTimeTable?: boolean;
+  toggleWideTimeTable?: () => void;
 };
 
 const WideSelectableTimeTable = (props: TimeTableProps) => {
-  const { timetable, displayClassroom, displayTime, nowDay, nowClassTime, today } = props;
-  const [isTimeTableOpen, setIsTimeTableOpen] = useState<boolean>(true);
-  const [isWideTimeTable, setIsWideTimeTable] = useState<boolean>(true);
-
-  const toggleTimeTable = () => {
-    setIsTimeTableOpen(!isTimeTableOpen);
-  };
-
-  const toggleWideTimeTable = () => {
-    setIsWideTimeTable(!isWideTimeTable);
-  };
+  const {
+    timetable,
+    displayClassroom,
+    displayTime,
+    nowDay,
+    nowClassTime,
+    today,
+    isTimeTableOpen,
+    toggleTimeTable,
+    isWideTimeTable,
+    toggleWideTimeTable,
+  } = props;
 
   return (
     <Box>
@@ -162,22 +172,32 @@ const WideSelectableTimeTable = (props: TimeTableProps) => {
             {isWideTimeTable ? <MdOutlineCalendarViewDay /> : <MdOutlineCalendarViewWeek />}
           </IconButton>
           <IconButton onClick={toggleTimeTable} size="small">
-            {isTimeTableOpen ? <MdCloseFullscreen /> : <MdOpenInFull />}
+            {isTimeTableOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
           </IconButton>
         </ButtonGroup>
       </Box>
-      {isTimeTableOpen && isWideTimeTable && (
-        <WideTimeTable
-          timetable={timetable}
-          displayClassroom={displayClassroom}
-          displayTime={displayTime}
-          nowDay={nowDay}
-          nowClassTime={nowClassTime}
-        />
-      )}
-      {isTimeTableOpen && !isWideTimeTable && (
-        <NarrowTimeTable timetable={timetable} nowDay={nowDay} nowClassTime={nowClassTime} hideButtonGroup />
-      )}
+      <Collapse in={isTimeTableOpen} timeout="auto">
+        {isWideTimeTable ? (
+          <WideTimeTable
+            timetable={timetable}
+            displayClassroom={displayClassroom}
+            displayTime={displayTime}
+            nowDay={nowDay}
+            nowClassTime={nowClassTime}
+            isTimeTableOpen={isTimeTableOpen}
+            toggleTimeTable={toggleTimeTable}
+          />
+        ) : (
+          <NarrowTimeTable
+            timetable={timetable}
+            nowDay={nowDay}
+            nowClassTime={nowClassTime}
+            hideButtonGroup
+            isTimeTableOpen={isTimeTableOpen}
+            toggleTimeTable={toggleTimeTable}
+          />
+        )}
+      </Collapse>
     </Box>
   );
 };
@@ -252,7 +272,7 @@ const WideTimeTable = (props: TimeTableProps) => {
 };
 
 const NarrowTimeTable = (props: TimeTableProps) => {
-  const { timetable, nowDay, nowClassTime, today, hideButtonGroup = false } = props;
+  const { timetable, nowDay, nowClassTime, today, hideButtonGroup = false, isTimeTableOpen, toggleTimeTable } = props;
   const dayOfToday = useMemo(() => new Date().getDay(), []);
   const filteredTimetable = useMemo(() => timetable.filter((classData) => classData.day === dayOfToday), []);
   const timeTableData = useMemo(
@@ -262,11 +282,6 @@ const NarrowTimeTable = (props: TimeTableProps) => {
       ),
     [filteredTimetable],
   );
-
-  const [isTimeTableOpen, setIsTimeTableOpen] = useState<boolean>(true);
-  const toggleTimeTable = () => {
-    setIsTimeTableOpen(!isTimeTableOpen);
-  };
 
   return (
     <>
@@ -279,12 +294,12 @@ const NarrowTimeTable = (props: TimeTableProps) => {
           )}
           <ButtonGroup sx={{ position: "absolute", top: 0, right: 0 }}>
             <IconButton onClick={toggleTimeTable} size="small">
-              {isTimeTableOpen ? <MdCloseFullscreen /> : <MdOpenInFull />}
+              {isTimeTableOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
             </IconButton>
           </ButtonGroup>
         </Box>
       )}
-      {isTimeTableOpen && (
+      <Collapse in={isTimeTableOpen} timeout="auto">
         <Box
           display="flex"
           flexDirection="column"
@@ -314,36 +329,59 @@ const NarrowTimeTable = (props: TimeTableProps) => {
             </Box>
           ))}
         </Box>
-      )}
+      </Collapse>
     </>
   );
 };
 
-export const TimeTable = () => {
+type Props = {
+  width: number;
+};
+export const TimeTable = (props: Props) => {
+  const { width } = props;
   const [timetable, setTimetable] = useState<TimeTableType>([]);
   const [displayClassroom, setDisplayClassroom] = useState<boolean>(false);
   const [displayTime, setDisplayTime] = useState<boolean>(true);
+  const [highlightToday, setHighlightToday] = useState<boolean>(true);
   const [today, setToday] = useState<string | false>(false);
+
+  const [isTimeTableOpen, setIsTimeTableOpen] = useState<boolean>(true);
+  const toggleTimeTable = () => {
+    setIsTimeTableOpen(!isTimeTableOpen);
+  };
+
+  const [isWideTimeTable, setIsWideTimeTable] = useState<boolean>(true);
+  const toggleWideTimeTable = () => {
+    setIsWideTimeTable(!isWideTimeTable);
+    const save = async () => {
+      const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
+      currentData.settings.forceNarrowTimeTable = isWideTimeTable;
+      chrome.storage.local.set(currentData);
+    };
+    save();
+  };
 
   useEffect(() => {
     const fetchTimetable = async () => {
       const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
-      console.log(currentData.settings);
       if (currentData.settings.displayTodayDate) {
         setToday(formatDate(new Date(), "yyyy年MM月dd日(E)", { locale: ja }));
       }
+      setIsWideTimeTable(!currentData.settings.forceNarrowTimeTable);
       setTimetable(currentData.scombzData.timetable);
       setDisplayClassroom(currentData.settings.displayClassroom);
       setDisplayTime(currentData.settings.displayTime);
+      setHighlightToday(currentData.settings.highlightToday);
     };
     fetchTimetable();
   }, []);
 
-  const { day: nowDay, time: nowClassTime } = useMemo(() => getTimetablePosFromTime(new Date()), []);
+  const { day: nowDay, time: nowClassTime } = useMemo(
+    () => (false ? getTimetablePosFromTime(new Date()) : { day: null, time: null }),
+    [highlightToday],
+  );
 
   const specialClassData = useMemo(() => timetable.filter((classData) => classData.day === -1), [timetable]);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [width, height] = useWindowSize();
 
   if (timetable.length === 0 || width < 540) {
     return <></>;
@@ -353,6 +391,7 @@ export const TimeTable = () => {
     <>
       <Box
         maxWidth="1200px"
+        minHeight="30px"
         m={width > 1540 ? "10px auto" : "10px"}
         onClick={(e) => e.stopPropagation()}
         sx={{
@@ -370,27 +409,40 @@ export const TimeTable = () => {
             nowDay={nowDay}
             nowClassTime={nowClassTime}
             today={today}
+            isTimeTableOpen={isTimeTableOpen}
+            toggleTimeTable={toggleTimeTable}
+            isWideTimeTable={isWideTimeTable}
+            toggleWideTimeTable={toggleWideTimeTable}
           />
         ) : (
-          <NarrowTimeTable timetable={timetable} nowDay={nowDay} nowClassTime={nowClassTime} today={today} />
+          <NarrowTimeTable
+            timetable={timetable}
+            nowDay={nowDay}
+            nowClassTime={nowClassTime}
+            today={today}
+            isTimeTableOpen={isTimeTableOpen}
+            toggleTimeTable={toggleTimeTable}
+          />
         )}
         {specialClassData.length > 0 && (
-          <Box
-            mt={1}
-            display="flex"
-            flexDirection="column"
-            sx={{ backgroundColor: "#EEF7F799", borderRadius: 0.5, px: 1.5, py: 1 }}
-          >
-            <Typography variant="caption" sx={{ px: 1, textAlign: width > 880 ? "left" : "center" }}>
-              その他の授業
-            </Typography>
-            <ClassBox
-              classDataArray={specialClassData}
-              direction={width > 880 ? "row" : "column"}
-              nowDay={nowDay}
-              nowClassTime={nowClassTime}
-            />
-          </Box>
+          <Collapse in={isTimeTableOpen} timeout="auto">
+            <Box
+              mt={1}
+              display="flex"
+              flexDirection="column"
+              sx={{ backgroundColor: "#EEF7F799", borderRadius: 0.5, px: 1.5, py: 1 }}
+            >
+              <Typography variant="caption" sx={{ px: 1, textAlign: width > 880 ? "left" : "center" }}>
+                その他の授業
+              </Typography>
+              <ClassBox
+                classDataArray={specialClassData}
+                direction={width > 880 ? "row" : "column"}
+                nowDay={nowDay}
+                nowClassTime={nowClassTime}
+              />
+            </Box>
+          </Collapse>
         )}
       </Box>
     </>
