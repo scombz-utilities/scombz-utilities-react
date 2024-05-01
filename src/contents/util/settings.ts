@@ -65,6 +65,7 @@ export type ScombzData = {
   timetable: TimeTable;
   tasklist: Task[];
   surveyList: Task[];
+  sideMenuMemo: string[];
 };
 export const defaultScombzData: ScombzData = {
   beforeLoginOshirase: "",
@@ -72,6 +73,7 @@ export const defaultScombzData: ScombzData = {
   timetable: [],
   tasklist: [],
   surveyList: [],
+  sideMenuMemo: [],
 };
 
 /* Saves */

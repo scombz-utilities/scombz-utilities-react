@@ -15,3 +15,5 @@ export const SLIDER_BAR_MINS = [
   [10, 20, 30, 60, 90, 120, 180],
   [10, 60, 120, 180, 300, 600, 1000],
 ];
+
+export const MAX_MEMO_COUNT = 30;
