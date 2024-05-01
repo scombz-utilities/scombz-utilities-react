@@ -15,7 +15,7 @@ const attendanceRemove = async () => {
       "#attendance > div.block-contents > div > div:nth-child(3) > div:nth-child(1) > div.course-view-attendance-status > label",
     );
     if (attendanceKome) {
-      if (attendanceKome.textContent == "※") {
+      if (attendanceKome.textContent === "※") {
         const attendance = document.querySelector("#attendance");
         attendance.remove();
       }

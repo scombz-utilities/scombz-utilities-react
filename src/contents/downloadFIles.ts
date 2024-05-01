@@ -119,7 +119,6 @@ const downloadFilesMain = (dlLabels, btn) => {
     data.resource_Id = tg.querySelector(".resource_Id").textContent;
     data.openEndDate = tg.querySelector(".openEndDate").textContent;
     data.dlMaterialId = tg.querySelector("#dlMaterialId").value;
-    console.log(data);
 
     //Ajaxする
     const param = {
@@ -137,7 +136,6 @@ const downloadFilesMain = (dlLabels, btn) => {
       }
       return params.toString();
     };
-    console.log({ param });
 
     const tempUrl = "/lms/course/make/tempfile";
     const queryString = new URLSearchParams(param).toString();
@@ -171,7 +169,6 @@ const downloadFilesMain = (dlLabels, btn) => {
         );
 
         const resultURL = `https://scombz.shibaura-it.ac.jp/lms/course/material/setfiledown/${encodedFileName}?${serializeData(result)}`;
-        console.log(resultURL);
         resultURLs.push(resultURL);
         resultNames.push(data.fileName);
 
@@ -182,8 +179,6 @@ const downloadFilesMain = (dlLabels, btn) => {
             downloadFileRoutine(dlLabels[resultURLs.length]);
           }, 100);
         } else {
-          console.log({ resultURLs });
-          console.log(resultURLs[0]);
           btn.textContent = `ダウンロード中...(0/${resultURLs.length})`;
           setTimeout(() => {
             dlZip(resultURLs);
@@ -229,7 +224,7 @@ const downloadFileBundle = async () => {
       const dlLabels = [...document.querySelectorAll(".course-view-material-file-name > .fileDownload")].filter(
         (e: HTMLElement) => e.innerText.trim().match(/\.pdf$/),
       );
-      if (dlLabels.length == 0) return;
+      if (dlLabels.length === 0) return;
       this.classList.add("clicked");
       this.textContent = "URL取得中...";
       downloadFilesMain(dlLabels, this);
@@ -265,7 +260,7 @@ const downloadFileBundle = async () => {
           dlLabels.push(targetnode.querySelector(".fileDownload"));
           targetnode = targetnode.nextElementSibling;
         }
-        if (dlLabels.length == 0) return;
+        if (dlLabels.length === 0) return;
         this.classList.add("clicked");
         this.textContent = "URL取得中...";
         downloadFilesMain(dlLabels, this);

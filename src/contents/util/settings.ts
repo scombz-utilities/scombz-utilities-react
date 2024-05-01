@@ -38,7 +38,22 @@ export type Settings = {
   };
   updateClear: boolean;
   dragAndDropBugFix: boolean;
+  forceDragAndDropSubmit: boolean;
   downloadFileBundle: boolean;
+  hideCompletedReports: boolean;
+  signOutPageLayout: boolean;
+  layout: {
+    maxWidthPx: {
+      subj: number;
+      lms: number;
+      task: number;
+    };
+    setMaxWidth: boolean;
+    removePageTop: boolean;
+    removeDirectLink: boolean;
+    topPageLayout: boolean;
+    clickToHideName: boolean;
+  };
 };
 
 export const defaultSettings: Settings = {
@@ -76,7 +91,22 @@ export const defaultSettings: Settings = {
   },
   updateClear: false,
   dragAndDropBugFix: true,
+  forceDragAndDropSubmit: false,
   downloadFileBundle: true,
+  hideCompletedReports: true,
+  signOutPageLayout: true,
+  layout: {
+    maxWidthPx: {
+      subj: 1280,
+      lms: 1280,
+      task: 1280,
+    },
+    setMaxWidth: true,
+    removePageTop: true,
+    removeDirectLink: true,
+    topPageLayout: true,
+    clickToHideName: true,
+  },
 };
 
 /* ScombzData */

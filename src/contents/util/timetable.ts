@@ -1,3 +1,4 @@
+import { getTimetablePosFromTime } from "../util/functions";
 import { getLMS } from "./getLMS";
 import { defaultSaves } from "./settings";
 import type { Settings } from "./settings";
@@ -33,6 +34,18 @@ const hideNoClassDay = () => {
   }
 };
 
+//現在時刻のコマを目立たせる
+const styleNowPeriod = () => {
+  const { day: nowDay, time: nowClassTime } = getTimetablePosFromTime(new Date());
+  document.querySelectorAll("#timetable .div-table-data-row").forEach((row, i) => {
+    if (i + 1 !== nowClassTime) return;
+    const targets = [...row.getElementsByClassName(`${nowDay}-yobicol`)] as HTMLDivElement[];
+    targets.forEach((target) => {
+      target.style.backgroundColor = "rgb(91, 237, 146)";
+    });
+  });
+};
+
 export const customizeTimetable = async () => {
   const currentData = await chrome.storage.local.get(defaultSaves);
   const settings = currentData.settings as Settings;
@@ -44,5 +57,8 @@ export const customizeTimetable = async () => {
   }
   if (settings.lms.hideNoClassDay) {
     hideNoClassDay();
+  }
+  if (settings.highlightToday) {
+    styleNowPeriod();
   }
 };

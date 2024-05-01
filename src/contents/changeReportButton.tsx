@@ -99,7 +99,7 @@ export const changeReportBtn = async () => {
   const submitBtnArea = document.querySelector(".block-under-area-btn") as HTMLElement;
   if (submitBtnArea) {
     submitBtnArea.style.maxWidth = "450px";
-    if (submitBtnArea.childElementCount == 2) {
+    if (submitBtnArea.childElementCount === 2) {
       submitBtnArea.firstElementChild.id = submitBtnArea.firstElementChild.id || "back";
       submitBtnArea.appendChild(submitBtnArea.children[0]);
     }

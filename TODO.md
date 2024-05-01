@@ -14,10 +14,14 @@
   - [x] exitSideMenu
   - [ ] exportCalender
   - [ ] getNews
-  - [ ] getTaskLists
-  - [ ] hideCompletedReport
+  - [x] getTaskLists
+  - [x] hideCompletedReport -> topPageLayout.tsに統合
   - [ ] homepage
   - [ ] layout
+    - [ ] 名前変更機能
+    - [ ] カスタムCSS機能
+    - [ ] ダークモード
+    - [ ] URLをハイパーリンクに変換
   - [ ] layoutSubject
   - [ ] modifyCoursePageTitle
   - [ ] mouseEvents

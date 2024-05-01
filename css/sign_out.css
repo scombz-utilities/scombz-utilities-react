@@ -1,0 +1,10 @@
+.btn-back {
+  margin-top: 10px;
+  width: 300px;
+  box-shadow: none;
+}
+@media (max-width: 480px) {
+  .btn-back {
+    width: 200px;
+  }
+}

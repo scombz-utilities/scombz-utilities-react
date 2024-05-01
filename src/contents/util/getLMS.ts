@@ -42,7 +42,7 @@ export const getLMS = (): TimeTable => {
           }
           break;
         }
-        if ($yobicolNum == 6) {
+        if ($yobicolNum === 6) {
           $timetableClassData.day = -1;
           $timetableClassData.time = -1; // 曜日時限不定履修
         }

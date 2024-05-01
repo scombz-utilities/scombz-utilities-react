@@ -1,0 +1,46 @@
+@media screen and (min-width: 1800px) {
+  .portal-link-list-li {
+    min-width: 440px;
+  }
+}
+.downloadFile.roo.portal-banner-list-li-img.portal-banner-img.portal-banner-img-contain {
+  transition: opacity 150ms;
+}
+.downloadFile.roo.portal-banner-list-li-img.portal-banner-img.portal-banner-img-contain:hover {
+  opacity: 0.6;
+}
+.portal-left {
+  width: calc(100% - 310px);
+  padding: 0 24px 35px 20px;
+  float: left;
+}
+@media screen and (max-width: 970px) {
+  .portal-left {
+    width: 100%;
+  }
+}
+@media screen and (min-width: 971px) {
+  .portal-right {
+    /* background-color: #E2E7E8; */
+    padding: 0 34px 35px 24px;
+    position: absolute;
+    right: 11px;
+    top: 96px;
+    width: 310px;
+    list-style: none;
+    padding: 0;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .portal-left {
+    max-width: 950px;
+    float: none !important;
+    margin-left: calc(50vw - 650px);
+  }
+  .portal-right {
+    right: calc(50vw - 625px);
+  }
+}
+#top_links {
+  overflow: visible;
+}
