@@ -25,6 +25,7 @@ export type Settings = {
   deadlineMode: "relative" | "absolute"; // 締切表示モード
   deadlineFormat: string; // 締切表示フォーマット(yyyy/MM/dd HH:mm)
   changeReportBtn: boolean; // レポート提出ボタンを変更する
+  hiddenTaskIdList: string[]; // 非表示課題IDリスト
   taskListRowsPerPage: number;
   sliderBarMax: number;
   timesBtnValue: number;
@@ -52,6 +53,7 @@ export const defaultSettings: Settings = {
   deadlineMode: "relative",
   deadlineFormat: "yyyy/MM/dd HH:mm",
   changeReportBtn: true,
+  hiddenTaskIdList: [],
   taskListRowsPerPage: 5,
   sliderBarMax: 600,
   timesBtnValue: 0,

@@ -19,6 +19,7 @@ import type { SxProps } from "@mui/system";
 import { differenceInHours, differenceInMinutes, format } from "date-fns";
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { HiOutlineSwitchHorizontal } from "react-icons/hi";
+import { IoMdEyeOff } from "react-icons/io";
 import { MdKeyboardArrowUp, MdKeyboardArrowDown, MdAdd } from "react-icons/md";
 import type { Subject } from "../types/subject";
 import type { Task } from "../types/task";
@@ -102,6 +103,7 @@ type TaskTableProps = {
   toggleRelativeTime: () => void;
   width: number;
   rowsPerPage: number;
+  addHiddenTaskId: (id: string) => void;
 };
 const TaskTable = (props: TaskTableProps) => {
   const {
@@ -114,6 +116,7 @@ const TaskTable = (props: TaskTableProps) => {
     toggleRelativeTime,
     width,
     rowsPerPage,
+    addHiddenTaskId,
   } = props;
   const [page, setPage] = useState(0);
 
@@ -122,9 +125,21 @@ const TaskTable = (props: TaskTableProps) => {
     [tasklist, page],
   );
 
-  const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value - 1);
-  };
+  const handleChange = useCallback(
+    (_event: React.ChangeEvent<unknown>, value: number) => {
+      setPage(value - 1);
+    },
+    [setPage],
+  );
+
+  const hideTask = useCallback(
+    (task: Task) => {
+      if (confirm(`課題『${task.title}』を非表示にしますか？`)) {
+        addHiddenTaskId(task.id);
+      }
+    },
+    [addHiddenTaskId],
+  );
 
   return (
     <>
@@ -155,8 +170,16 @@ const TaskTable = (props: TaskTableProps) => {
                 {width > 880 && <TaskTableCell>科目</TaskTableCell>}
                 <TaskTableCell>課題名</TaskTableCell>
                 <TaskTableCell>
-                  <Box onClick={toggleRelativeTime} sx={{ cursor: "pointer" }}>
-                    期限
+                  <Box
+                    onClick={toggleRelativeTime}
+                    sx={{ cursor: "pointer", userSelect: "none", display: "flex", alignItems: "center", gap: "2px" }}
+                  >
+                    <Typography display="block" fontSize="0.75rem">
+                      期限
+                    </Typography>
+                    <Box display="flex" fontSize="0.75rem" alignItems="center" sx={{ opacity: 0.5 }}>
+                      <HiOutlineSwitchHorizontal />
+                    </Box>
                   </Box>
                 </TaskTableCell>
               </TableRow>
@@ -167,14 +190,15 @@ const TaskTable = (props: TaskTableProps) => {
                   <TaskTableCell sx={{ width: "100%" }}>課題はありません</TaskTableCell>
                 </TableRow>
               )}
-              {displayTaskList.map((task) => {
+              {displayTaskList.map((task, index) => {
                 const courseUrl = subjects.find((subject) => subject.name === task.course)?.url;
                 const colors = highlightTask ? getTaskColor(task) : {};
                 return (
                   <TableRow
-                    // key={task.id}
+                    key={task.id + index}
                     sx={{
                       "&:last-child td, &:last-child th": { border: 0 },
+                      position: "relative",
                       maxWidth: "100%",
                       ...colors,
                     }}
@@ -190,13 +214,20 @@ const TaskTable = (props: TaskTableProps) => {
                     >
                       {task.title}
                     </TaskTableCell>
-                    <TaskTableCell sx={{ ...colors, width: "110px" }}>
+                    <TaskTableCell sx={{ ...colors, width: "113px" }}>
                       <Box onClick={toggleRelativeTime}>
                         {isRelativeTime
                           ? getRelativeTime(task.deadlineDate, nowDate)
                           : format(task.deadlineDate, formatStr)}
                       </Box>
                     </TaskTableCell>
+                    <IconButton
+                      size="small"
+                      sx={{ position: "absolute", right: "1px", top: "3px", opacity: 0.4, "&:hover": { opacity: 1 } }}
+                      onClick={() => hideTask(task)}
+                    >
+                      <IoMdEyeOff fontSize={15} />
+                    </IconButton>
                   </TableRow>
                 );
               })}
@@ -222,6 +253,7 @@ export const TaskList = (props: Props) => {
   const [highlightTask, setHighlightTask] = useState<boolean>(true);
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [hiddenTaskIdList, setHiddenTaskIdList] = useState<string[]>([]);
 
   const toggleOpen = useCallback(() => {
     setIsTaskListOpen(!isTaskListOpen);
@@ -253,7 +285,8 @@ export const TaskList = (props: Props) => {
         .map((task) => {
           return { ...task, deadlineDate: new Date(task.deadline) };
         })
-        .filter((task) => task.deadlineDate >= now);
+        .filter((task) => task.deadlineDate >= now)
+        .filter((task) => !currentData.settings.hiddenTaskIdList.includes(task.id));
 
       combinedTaskList.sort((x, y) => {
         const [a, b] = [x.deadlineDate, y.deadlineDate];
@@ -261,6 +294,7 @@ export const TaskList = (props: Props) => {
       });
 
       setTasklist(combinedTaskList);
+      setHiddenTaskIdList(currentData.settings.hiddenTaskIdList);
     };
     fetchTasklist();
     setNowDate(new Date());
@@ -268,6 +302,25 @@ export const TaskList = (props: Props) => {
       setNowDate(new Date());
     }, 30000);
   }, []);
+
+  useEffect(() => {
+    if (hiddenTaskIdList.length === 0 || tasklist.length === 0) return;
+    const newTaskList = tasklist.filter((task) => !hiddenTaskIdList.includes(task.id));
+    setTasklist(newTaskList);
+    const saveHiddenTaskIdList = async () => {
+      const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
+      currentData.settings.hiddenTaskIdList = hiddenTaskIdList;
+      chrome.storage.local.set(currentData);
+    };
+    saveHiddenTaskIdList();
+  }, [hiddenTaskIdList]);
+
+  const addHiddenTaskId = useCallback(
+    (taskId: string) => {
+      setHiddenTaskIdList([...hiddenTaskIdList, taskId]);
+    },
+    [hiddenTaskIdList],
+  );
 
   if (width < 540) {
     return <></>;
@@ -307,8 +360,18 @@ export const TaskList = (props: Props) => {
         </Box>
         <Collapse in={isTaskListOpen} timeout="auto">
           <TaskTable
-            {...{ tasklist, subjects, nowDate, formatStr, isRelativeTime, highlightTask, toggleRelativeTime, width }}
-            rowsPerPage={rowsPerPage}
+            {...{
+              tasklist,
+              subjects,
+              nowDate,
+              formatStr,
+              isRelativeTime,
+              highlightTask,
+              toggleRelativeTime,
+              width,
+              rowsPerPage,
+              addHiddenTaskId,
+            }}
           />
         </Collapse>
       </Box>
