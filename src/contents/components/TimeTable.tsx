@@ -141,16 +141,23 @@ type TimeTableProps = {
   hideButtonGroup?: boolean;
   isTimeTableOpen: boolean;
   toggleTimeTable: () => void;
+  isWideTimeTable?: boolean;
+  toggleWideTimeTable?: () => void;
 };
 
 const WideSelectableTimeTable = (props: TimeTableProps) => {
-  const { timetable, displayClassroom, displayTime, nowDay, nowClassTime, today, isTimeTableOpen, toggleTimeTable } =
-    props;
-  const [isWideTimeTable, setIsWideTimeTable] = useState<boolean>(true);
-
-  const toggleWideTimeTable = () => {
-    setIsWideTimeTable(!isWideTimeTable);
-  };
+  const {
+    timetable,
+    displayClassroom,
+    displayTime,
+    nowDay,
+    nowClassTime,
+    today,
+    isTimeTableOpen,
+    toggleTimeTable,
+    isWideTimeTable,
+    toggleWideTimeTable,
+  } = props;
 
   return (
     <Box>
@@ -343,12 +350,24 @@ export const TimeTable = (props: Props) => {
     setIsTimeTableOpen(!isTimeTableOpen);
   };
 
+  const [isWideTimeTable, setIsWideTimeTable] = useState<boolean>(true);
+  const toggleWideTimeTable = () => {
+    setIsWideTimeTable(!isWideTimeTable);
+    const save = async () => {
+      const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
+      currentData.settings.forceNarrowTimeTable = isWideTimeTable;
+      chrome.storage.local.set(currentData);
+    };
+    save();
+  };
+
   useEffect(() => {
     const fetchTimetable = async () => {
       const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
       if (currentData.settings.displayTodayDate) {
         setToday(formatDate(new Date(), "yyyy年MM月dd日(E)", { locale: ja }));
       }
+      setIsWideTimeTable(!currentData.settings.forceNarrowTimeTable);
       setTimetable(currentData.scombzData.timetable);
       setDisplayClassroom(currentData.settings.displayClassroom);
       setDisplayTime(currentData.settings.displayTime);
@@ -392,6 +411,8 @@ export const TimeTable = (props: Props) => {
             today={today}
             isTimeTableOpen={isTimeTableOpen}
             toggleTimeTable={toggleTimeTable}
+            isWideTimeTable={isWideTimeTable}
+            toggleWideTimeTable={toggleWideTimeTable}
           />
         ) : (
           <NarrowTimeTable

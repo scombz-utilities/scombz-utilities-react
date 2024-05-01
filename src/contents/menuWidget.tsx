@@ -11,8 +11,6 @@ import { defaultSaves } from "./util/settings";
 import type { Saves } from "./util/settings";
 import theme from "~/theme";
 
-const IS_DEBUG = false;
-
 export const config: PlasmoCSConfig = {
   matches: ["https://scombz.shibaura-it.ac.jp/*"],
   run_at: "document_end",
@@ -33,6 +31,7 @@ const MenuWidget = () => {
   const [useSubTimeTable, setUseSubTimeTable] = useState<boolean>(true);
   const [useTaskList, setUseTaskList] = useState<boolean>(true);
   const [useUserMemo, setUseUserMemo] = useState<boolean>(true);
+  const [styleSideMenu, setStyleSideMenu] = useState<boolean>(true);
 
   useEffect(() => {
     const sideMenu = document.getElementById("sidemenu") as HTMLElement;
@@ -49,14 +48,14 @@ const MenuWidget = () => {
       setUseSubTimeTable(items.settings.useSubTimeTable);
       setUseTaskList(items.settings.useTaskList);
       setUseUserMemo(items.settings.useUserMemo);
+      setStyleSideMenu(items.settings.styleSideMenu);
     });
-    if (IS_DEBUG) setTimeout(() => document.getElementById("sidemenuOpen").click(), 500);
   }, []);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [width, height] = useWindowSize();
 
-  return document.getElementById("sidemenu") && document.getElementById("sidemenuClose") ? (
+  return document.getElementById("sidemenu") && document.getElementById("sidemenuClose") && styleSideMenu ? (
     <CacheProvider value={styleCache}>
       <ThemeProvider theme={theme}>
         <Box

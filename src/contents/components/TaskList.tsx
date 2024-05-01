@@ -261,6 +261,12 @@ export const TaskList = (props: Props) => {
 
   const toggleRelativeTime = useCallback(() => {
     setIsRelativeTime(!isRelativeTime);
+    const save = async () => {
+      const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
+      currentData.settings.deadlineMode = isRelativeTime ? "absolute" : "relative";
+      chrome.storage.local.set(currentData);
+    };
+    save();
   }, [isRelativeTime]);
 
   useEffect(() => {
