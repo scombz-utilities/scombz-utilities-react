@@ -148,7 +148,7 @@ export const UserMemo = (props: Props) => {
           __html: `.scombz-utilities-menu-widget-markdown * {margin: 0;padding: 0;}`,
         }}
       />
-      <Box mb={0.8} position="relative">
+      <Box position="relative">
         <Typography variant="h6" sx={{ px: 0.5, textAlign: "left", fontSize: "16px" }}>
           メモ
         </Typography>
@@ -159,7 +159,7 @@ export const UserMemo = (props: Props) => {
         </ButtonGroup>
       </Box>
       <Collapse in={isUserMemoOpen} timeout="auto">
-        <Paper>
+        <Paper sx={{ mt: 0.8 }}>
           <form onSubmit={(e) => e.preventDefault()}>
             <TableContainer>
               <Table size="small" aria-label="a dense table">
