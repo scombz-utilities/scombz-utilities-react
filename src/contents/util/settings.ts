@@ -38,7 +38,9 @@ export type Settings = {
   };
   updateClear: boolean;
   dragAndDropBugFix: boolean;
+  downloadFileBundle: boolean;
 };
+
 export const defaultSettings: Settings = {
   clickLogin: true,
   removeAttendance: "none",
@@ -74,6 +76,7 @@ export const defaultSettings: Settings = {
   },
   updateClear: false,
   dragAndDropBugFix: true,
+  downloadFileBundle: true,
 };
 
 /* ScombzData */

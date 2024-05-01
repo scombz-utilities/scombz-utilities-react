@@ -1,0 +1,28 @@
+#downloadFileBundle {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 3px 5px;
+  cursor: pointer;
+  user-select: none;
+}
+#downloadFileBundle:hover {
+  background-color: #eee;
+}
+#downloadFileBundle.clicked {
+  pointer-events: none;
+}
+.utilities-dl-file-button {
+  position: absolute;
+  right: 2px;
+  bottom: 1px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 3px 5px;
+  cursor: pointer;
+  user-select: none;
+}
+.utilities-dl-file-button:hover {
+  background-color: #eee;
+}

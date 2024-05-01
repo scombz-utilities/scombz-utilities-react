@@ -9,7 +9,7 @@
   - [x] changeReportButton
   - [x] clearButton
   - [x] clickLogin
-  - [ ] downloadFiles
+  - [x] downloadFiles
   - [ ] eucjp
   - [x] exitSideMenu
   - [ ] exportCalender
