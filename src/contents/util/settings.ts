@@ -36,6 +36,8 @@ export type Settings = {
     centering: boolean;
     hideNoClassDay: boolean;
   };
+  updateClear: boolean;
+  dragAndDropBugFix: boolean;
 };
 export const defaultSettings: Settings = {
   clickLogin: true,
@@ -70,6 +72,8 @@ export const defaultSettings: Settings = {
     centering: true,
     hideNoClassDay: true,
   },
+  updateClear: false,
+  dragAndDropBugFix: true,
 };
 
 /* ScombzData */

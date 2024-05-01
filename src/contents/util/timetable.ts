@@ -23,7 +23,6 @@ const hideNoClassDay = () => {
   const timetableData = getLMS();
   if (!timetableData.find((data) => data.day === 6)) {
     const sats = Array.from(document.getElementsByClassName("6-yobicol"));
-    console.log({ sats });
     for (const sat of sats) sat.remove();
   }
   for (let i = 7; i > 4; i--) {

@@ -7,7 +7,7 @@
   - [ ] autoEvaluation
   - [ ] background
   - [x] changeReportButton
-  - [ ] clearButton
+  - [x] clearButton
   - [x] clickLogin
   - [ ] downloadFiles
   - [ ] eucjp
