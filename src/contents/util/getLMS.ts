@@ -12,8 +12,7 @@ const jigenInt = ($str: string) => {
   return han2Zenkaku($str.charAt(0));
 };
 
-const getLMSMain = (d?: Document): TimeTable => {
-  if (d === undefined) d = document;
+export const getLMS = (): TimeTable => {
   // 時間割じゃなくてスケジュールだったら取得できないので取得しない
   if (!(document.getElementById("displayMode1") as HTMLInputElement)?.checked) {
     return [];
@@ -80,6 +79,6 @@ const getLMSMain = (d?: Document): TimeTable => {
 
 export const getLMSinLMSPage = async () => {
   const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
-  currentData.scombzData.timetable = getLMSMain();
+  currentData.scombzData.timetable = getLMS();
   chrome.storage.local.set(currentData);
 };

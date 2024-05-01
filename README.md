@@ -1,6 +1,7 @@
 # ScombZ Utilitiesモダン化プロジェクト
 
-ScombZ UtilitiesをReactとTypeScriptでモダン化しよう
+ScombZ UtilitiesをReactとTypeScriptでモダン化しよう  
+進捗状況: [TODO.md](./TODO.md)
 
 ## Plasmoに関する日本語ドキュメントは以下参照
 
@@ -16,7 +17,7 @@ https://github.com/yudai1204/scombz-utilities
 
 ### nodeの準備
 
-nodeのバージョンをは`20.11.1`で固定とします。  
+nodeのバージョンをは`20.11.1`で固定とします。
 
 [asdf](https://asdf-vm.com/)や[nodenv](https://github.com/nodenv/nodenv)などのバージョン管理ツールを使うとよいでしょう。
 このreadmeでは`nodenv`を使ったガイドを載せるので、**nodenvの利用を推奨**します。

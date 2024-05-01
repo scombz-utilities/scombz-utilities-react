@@ -2,7 +2,7 @@
 
   - [x] addSubTimeTable
   - [x] adfs
-  - [ ] adjustTimeTable
+  - [x] adjustTimeTable -> lms.tsに統合
   - [x] attendance
   - [ ] autoEvaluation
   - [ ] background
@@ -15,7 +15,7 @@
   - [ ] exportCalender
   - [ ] getNews
   - [ ] getTaskLists
-  - [ ] hideComputedReport
+  - [ ] hideCompletedReport
   - [ ] homepage
   - [ ] layout
   - [ ] layoutSubject
@@ -36,7 +36,7 @@
   - [x] メニュー展開時の時間割表示
   - [x] メニュー展開時の課題表示
     - [ ] 自作課題の表示
-  - [ ] メニュー展開時のメモ表示
+  - [z] メニュー展開時のメモ表示
   - [ ] その他のウィジェット追加(optional)
   - [ ] オプション画面
   - [ ] シラバス連携

@@ -31,6 +31,11 @@ export type Settings = {
   sliderBarMax: number;
   timesBtnValue: number;
   defaultInputName: string;
+  lms: {
+    showClassroom: boolean;
+    centering: boolean;
+    hideNoClassDay: boolean;
+  };
 };
 export const defaultSettings: Settings = {
   clickLogin: true,
@@ -60,6 +65,11 @@ export const defaultSettings: Settings = {
   sliderBarMax: 600,
   timesBtnValue: 0,
   defaultInputName: "AA00000_山田太郎",
+  lms: {
+    showClassroom: true,
+    centering: true,
+    hideNoClassDay: true,
+  },
 };
 
 /* ScombzData */
