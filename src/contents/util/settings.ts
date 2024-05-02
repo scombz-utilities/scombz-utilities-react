@@ -33,6 +33,7 @@ export type Settings = {
   sliderBarMax: number;
   timesBtnValue: number;
   defaultInputName: string;
+  faculty: "din" | "arc" | "dsn" | "sys" | "ko1" | null;
   lms: {
     showClassroom: boolean;
     centering: boolean;
@@ -60,6 +61,12 @@ export type Settings = {
   modifyCoursePageTitle: boolean;
   modifyClickableLinks: boolean; // リンクの右クリック、中クリックを発火させる
   markdownNotePad: boolean;
+  syllabus: {
+    faculty: "din" | "arc" | "dsn" | "sys" | "ko1" | null;
+    enterYear: string | null;
+    division: string | null;
+    keiretu: string | null;
+  };
 };
 
 export const defaultSettings: Settings = {
@@ -92,6 +99,7 @@ export const defaultSettings: Settings = {
   sliderBarMax: 600,
   timesBtnValue: 0,
   defaultInputName: "AA00000_山田太郎",
+  faculty: null,
   lms: {
     showClassroom: true,
     centering: true,
@@ -119,6 +127,12 @@ export const defaultSettings: Settings = {
   modifyCoursePageTitle: true,
   modifyClickableLinks: true,
   markdownNotePad: true,
+  syllabus: {
+    faculty: null,
+    enterYear: null,
+    division: null,
+    keiretu: null,
+  },
 };
 
 /* ScombzData */

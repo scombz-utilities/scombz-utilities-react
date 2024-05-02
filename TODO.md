@@ -11,7 +11,7 @@
   - [x] clearButton
   - [x] clickLogin
   - [x] downloadFiles
-  - [ ] eucjp
+  - [x] eucjp -> util/encoding.ts
   - [x] exitSideMenu
   - [ ] getNews
   - [x] getTaskLists
@@ -27,8 +27,8 @@
   - [x] styleSideMenu
   - [x] styleSurveys
   - [ ] supportFunctions
-  - [ ] syllabus
-  - [ ] syllBtn
+  - [x] syllabus
+  - [x] syllBtn
 
 - 新規システムへの刷新
 

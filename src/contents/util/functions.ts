@@ -44,7 +44,7 @@ export const getCourseTitle = () => {
     .replace(/'/g, "&#x27;")
     .replace(/`/g, "&#x60;");
   const courseTitleItems = /(.+)\s([0-9]{2}[A-Z]{2}[0-9]{6})\s(.+)/.exec(courseTitle);
-  return courseTitleItems[3]; //これが科目名
+  return courseTitleItems?.[3]; //これが科目名
 };
 
 /**

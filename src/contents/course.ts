@@ -1,5 +1,6 @@
 import markdownit from "markdown-it";
 import type { PlasmoCSConfig } from "plasmo";
+import { toEscapedEUCJP } from "./util/encoding";
 import { getCourseTitle } from "./util/functions";
 import { defaultSaves } from "./util/settings";
 import type { Saves } from "./util/settings";
@@ -225,6 +226,35 @@ const markdownNotePad = (): void => {
   });
 };
 
+const splitByNumbers = (input: string): string[] => {
+  // 半角・全角数字の直前で分割
+  // 半角・全角アルファベットの前後で分割
+  const pattern =
+    /(?<=\D)(?=\d)|(?<=[^０-９])(?=[０-９])|(?<=[a-z|A-Z])(?=[ａ-ｚ|Ａ-Ｚ])|(?<=[ａ-ｚ|Ａ-Ｚ])(?=[a-z|A-Z])/;
+  return input.split(pattern);
+};
+
+const createSyllabusButton = async () => {
+  const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
+  const fac = currentData.settings.faculty;
+  if (!location.href.startsWith("https://scombz.shibaura-it.ac.jp/lms/course?")) return;
+  const rawCourseTitle = getCourseTitle().replace(/！-／：-＠［-｀｛-～、-〜”’・]+/g, " ");
+  const courseTitle = splitByNumbers(rawCourseTitle).join(" ");
+  const searchStr = courseTitle.includes(" ") ? courseTitle : `+subject:"${courseTitle}"`;
+  const date = new Date();
+  date.setMonth(date.getMonth() - 4);
+  const urlParam = `ajaxmode=true&query=${toEscapedEUCJP(searchStr)}&whence=0&idxname=${date.getFullYear()}%2F${fac}&max=20&result=normal&sort=score&scombzutilities=true`;
+
+  const insertArea =
+    document.querySelector(".contents-question-template-area") || document.querySelector(".course-title-txt");
+  insertArea.insertAdjacentHTML(
+    "afterend",
+    `<a href="http://syllabus.sic.shibaura-it.ac.jp/namazu/namazu.cgi?${urlParam}"  target="_blank" rel="noopener noreferrer" class="btn btn-square btn-square-area btn-txt white-btn-color" style="margin-left:40px;margin-bottom:5px;">シラバスを表示</a>
+    <span style="margin-left:35px;margin-bottom:10px;font-size:60%;">※自動検索で関連付けているため、違う教科のシラバスが開かれることがあります。</span>
+    `,
+  );
+};
+
 const course = async () => {
   const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
   if (currentData.settings.layout.linkify) {
@@ -239,6 +269,7 @@ const course = async () => {
   if (currentData.settings.markdownNotePad) {
     markdownNotePad();
   }
+  createSyllabusButton();
 };
 
 course();
