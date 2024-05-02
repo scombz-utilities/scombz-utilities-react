@@ -57,3 +57,10 @@ export const serializeData = (data): string => {
   }
   return params.toString();
 };
+
+/** firefoxかどうか
+ *
+ */
+export const isFirefox = (): boolean => {
+  return navigator.userAgent.toLowerCase().includes("firefox");
+};

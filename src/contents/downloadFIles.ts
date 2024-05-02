@@ -1,6 +1,6 @@
 import JSZip from "jszip";
 import type { PlasmoCSConfig } from "plasmo";
-import { getCourseTitle, serializeData } from "./util/functions";
+import { getCourseTitle, serializeData, isFirefox } from "./util/functions";
 import { defaultSaves } from "./util/settings";
 import type { Saves } from "./util/settings";
 
@@ -185,7 +185,7 @@ const downloadFileBundle = async () => {
   const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
   if (!currentData.settings.downloadFileBundle) return;
 
-  if (navigator.userAgent.toLowerCase().indexOf("firefox") != -1)
+  if (isFirefox)
     //firefoxでは動作しないためreturn
     return;
   setTimeout(() => {

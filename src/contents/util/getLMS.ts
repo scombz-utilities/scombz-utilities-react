@@ -1,4 +1,5 @@
 import type { TimeTable, TimeTableData } from "../types/timetable";
+import { isFirefox } from "../util/functions";
 import type { Saves } from "./settings";
 import { defaultSaves } from "./settings";
 
@@ -78,7 +79,10 @@ export const getLMS = (): TimeTable => {
 };
 
 export const getLMSinLMSPage = async () => {
-  const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
-  currentData.scombzData.timetable = getLMS();
-  chrome.storage.local.set(currentData);
+  const waitTime = isFirefox() ? 1500 : 0;
+  setTimeout(async () => {
+    const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
+    currentData.scombzData.timetable = getLMS();
+    chrome.storage.local.set(currentData);
+  }, waitTime);
 };

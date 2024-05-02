@@ -25,7 +25,7 @@ type UserMemoRowProps = {
 };
 const UserMemoRow = (props: UserMemoRowProps) => {
   const { memo, onDelete } = props;
-  const replacedMemo = memo.replace(/(^|\s)https?:\/\/\S+(\s|$)/g, "[$&]($&)").replace(/\[https?:\/\/\S+\]/g, "$&($&)");
+  const replacedMemo = memo.replace(/(^|\s)https?:\/\/\S+(\s|$)/g, "[$&]($&)");
   return (
     <TableRow
       sx={{
