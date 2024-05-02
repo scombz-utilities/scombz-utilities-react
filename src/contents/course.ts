@@ -4,6 +4,7 @@ import { toEscapedEUCJP } from "./util/encoding";
 import { getCourseTitle } from "./util/functions";
 import { defaultSaves } from "./util/settings";
 import type { Saves } from "./util/settings";
+import type { RuntimeMessage } from "~background";
 
 export const config: PlasmoCSConfig = {
   matches: ["https://scombz.shibaura-it.ac.jp/lms/course*"],
@@ -235,9 +236,25 @@ const splitByNumbers = (input: string): string[] => {
 };
 
 const createSyllabusButton = async () => {
+  if (!location.href.startsWith("https://scombz.shibaura-it.ac.jp/lms/course?")) return;
   const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
   const fac = currentData.settings.faculty;
-  if (!location.href.startsWith("https://scombz.shibaura-it.ac.jp/lms/course?")) return;
+  const insertArea =
+    document.querySelector(".contents-question-template-area") || document.querySelector(".course-title-txt");
+  if (!fac) {
+    insertArea.insertAdjacentHTML(
+      "afterend",
+      `<span style="color:red;padding: 12px 30px 10px 34px">
+        シラバス表示をするには
+        <a href="javascript:void(0);" id="link_to_extention_syll">拡張機能設定</a>
+        から学部を設定してください。</span>
+    `,
+    );
+    document.getElementById("link_to_extention_syll")?.addEventListener("click", () => {
+      chrome.runtime.sendMessage({ action: "openOption" } as RuntimeMessage);
+    });
+    return;
+  }
   const rawCourseTitle = getCourseTitle().replace(/！-／：-＠［-｀｛-～、-〜”’・]+/g, " ");
   const courseTitle = splitByNumbers(rawCourseTitle).join(" ");
   const searchStr = courseTitle.includes(" ") ? courseTitle : `+subject:"${courseTitle}"`;
@@ -245,8 +262,6 @@ const createSyllabusButton = async () => {
   date.setMonth(date.getMonth() - 4);
   const urlParam = `ajaxmode=true&query=${toEscapedEUCJP(searchStr)}&whence=0&idxname=${date.getFullYear()}%2F${fac}&max=20&result=normal&sort=score&scombzutilities=true`;
 
-  const insertArea =
-    document.querySelector(".contents-question-template-area") || document.querySelector(".course-title-txt");
   insertArea.insertAdjacentHTML(
     "afterend",
     `<a href="http://syllabus.sic.shibaura-it.ac.jp/namazu/namazu.cgi?${urlParam}"  target="_blank" rel="noopener noreferrer" class="btn btn-square btn-square-area btn-txt white-btn-color" style="margin-left:40px;margin-bottom:5px;">シラバスを表示</a>
