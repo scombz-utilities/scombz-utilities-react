@@ -1,3 +1,4 @@
+import markdownit from "markdown-it";
 import type { PlasmoCSConfig } from "plasmo";
 import { getCourseTitle } from "./util/functions";
 import { defaultSaves } from "./util/settings";
@@ -142,6 +143,88 @@ const urlToLink = (): void => {
   });
 };
 
+const loadNotepad = async () => {
+  const pageUrl = new URL(window.location.href);
+  const idNum = pageUrl.searchParams.get("idnumber");
+  const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
+  const coursePageMemo = currentData.scombzData.coursePageMemo;
+  const memo = coursePageMemo.find((memo) => memo.id === idNum)?.memo || "";
+  const mdNotepadArea = document.getElementById("mdNotepadArea") as HTMLDivElement;
+  mdNotepadArea.innerHTML = markdownit().render(memo);
+};
+
+const markdownNotePad = (): void => {
+  if (!location.href.startsWith("https://scombz.shibaura-it.ac.jp/lms/course?")) return;
+
+  // URLを取得
+  const pageUrl = new URL(window.location.href);
+  const idNum = pageUrl.searchParams.get("idnumber");
+
+  const link = document.createElement("link");
+  link.href = chrome.runtime.getURL("css/markdown_notepad.css");
+  link.type = "text/css";
+  link.rel = "stylesheet";
+  document.head.appendChild(link);
+
+  document.querySelector(".contents-title").insertAdjacentHTML(
+    "beforebegin",
+    `
+  <div class="contents-title">
+    <div class="contents-title-txt">
+      <div class="course-view-title-txt" style="min-height:1em;">
+        <span style="float:left;">メモ</span><span id="mdNotepadAdd"></span>
+      </div>
+      <div id="mdNotepadArea"></div>
+    </div>
+  </div>`,
+  );
+  loadNotepad();
+  const mdNotepadArea = document.getElementById("mdNotepadArea") as HTMLDivElement;
+  //クリックイベント
+  document.getElementById("mdNotepadAdd").addEventListener("click", async () => {
+    {
+      const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
+      // 表示されているメモを削除
+      while (mdNotepadArea.lastChild) {
+        mdNotepadArea.removeChild(mdNotepadArea.lastChild);
+      }
+      // 入力欄を作成
+      const mdNotepad = document.createElement("textarea");
+      mdNotepad.id = "mdNotepadMd";
+      mdNotepad.value = currentData.scombzData.coursePageMemo.find((memo) => memo.id === idNum)?.memo || "";
+      mdNotepadArea.appendChild(mdNotepad);
+      mdNotepadArea.insertAdjacentHTML(
+        "beforeend",
+        `
+          <div class="md-exp">
+            <a id="mdSaveButton" class="btn btn-inline btn-file-margin btn-txt btn-color">保存する</a>
+            <a id="mdCancelButton" class="btn btn-inline btn-file-margin btn-txt btn-color">キャンセル</a>
+          </div>`,
+      );
+    }
+
+    // 保存
+    document.getElementById("mdSaveButton").addEventListener("click", async () => {
+      const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
+      const coursePageMemoArray = currentData.scombzData.coursePageMemo;
+      const mdNotepad = document.getElementById("mdNotepadMd") as HTMLTextAreaElement;
+      const coursePageMemo = coursePageMemoArray.find((memo) => memo.id === idNum);
+      if (coursePageMemo) {
+        coursePageMemo.memo = mdNotepad.value;
+      } else {
+        coursePageMemoArray.push({ id: idNum, memo: mdNotepad.value });
+      }
+      currentData.scombzData.coursePageMemo = coursePageMemoArray;
+      chrome.storage.local.set(currentData);
+      loadNotepad();
+    });
+    // キャンセル
+    document.getElementById("mdCancelButton").addEventListener("click", () => {
+      loadNotepad();
+    });
+  });
+};
+
 const course = async () => {
   const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
   if (currentData.settings.layout.linkify) {
@@ -152,6 +235,9 @@ const course = async () => {
   }
   if (currentData.settings.useTaskList) {
     insertSurveyBtnOnSubj();
+  }
+  if (currentData.settings.markdownNotePad) {
+    markdownNotePad();
   }
 };
 

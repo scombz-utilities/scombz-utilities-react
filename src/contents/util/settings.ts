@@ -57,6 +57,7 @@ export type Settings = {
   };
   modifyCoursePageTitle: boolean;
   modifyClickableLinks: boolean; // リンクの右クリック、中クリックを発火させる
+  markdownNotePad: boolean;
 };
 
 export const defaultSettings: Settings = {
@@ -113,6 +114,7 @@ export const defaultSettings: Settings = {
   },
   modifyCoursePageTitle: true,
   modifyClickableLinks: true,
+  markdownNotePad: true,
 };
 
 /* ScombzData */
@@ -123,6 +125,7 @@ export type ScombzData = {
   tasklist: Task[];
   surveyList: Task[];
   sideMenuMemo: string[];
+  coursePageMemo: { id: string; memo: string }[];
 };
 export const defaultScombzData: ScombzData = {
   beforeLoginOshirase: "",
@@ -131,6 +134,7 @@ export const defaultScombzData: ScombzData = {
   tasklist: [],
   surveyList: [],
   sideMenuMemo: [],
+  coursePageMemo: [],
 };
 
 /* Saves */

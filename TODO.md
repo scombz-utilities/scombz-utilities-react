@@ -21,7 +21,7 @@
   - [ ] layoutSubject
   - [x] modifyCoursePageTitle
   - [x] mouseEvents
-  - [ ] notepad
+  - [x] notepad -> courseに統合
   - [ ] oldScomb
   - [ ] styleDialog
   - [x] styleSideMenu
