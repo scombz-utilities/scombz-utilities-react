@@ -45,3 +45,13 @@
   top: -12px;
   margin-right: 5px;
 }
+
+.course-title-txt.course-view-header-txt {
+  text-wrap: nowrap;
+}
+
+@media screen and (max-width: 420px) {
+  .noticeSurveyBox {
+    margin-left: 0;
+  }
+}

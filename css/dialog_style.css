@@ -1,0 +1,7 @@
+.information-popup-block {
+  box-shadow: 0 0 15px #c2c2c2;
+}
+.ui-widget-overlay.ui-front {
+  background: #000;
+  opacity: 0.5;
+}

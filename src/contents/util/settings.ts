@@ -14,6 +14,8 @@ export type Settings = {
   autoAdfs: boolean;
   hideSideMenu: boolean;
   styleSideMenu: boolean;
+  styleDialog: boolean;
+  styleSurveys: boolean;
   useSubTimeTable: boolean;
   useTaskList: boolean;
   useUserMemo: boolean;
@@ -71,6 +73,8 @@ export const defaultSettings: Settings = {
   autoAdfs: true,
   hideSideMenu: true,
   styleSideMenu: true,
+  styleDialog: true,
+  styleSurveys: true,
   useSubTimeTable: true,
   useTaskList: true,
   useUserMemo: true,

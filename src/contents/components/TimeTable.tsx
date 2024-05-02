@@ -23,6 +23,7 @@ type ClassBoxProps = {
   classroomWidth?: string;
   nowDay: number | null;
   nowClassTime: number;
+  wrapCaption?: boolean;
 };
 const ClassBox = (props: ClassBoxProps) => {
   const {
@@ -34,6 +35,7 @@ const ClassBox = (props: ClassBoxProps) => {
     classroomWidth,
     nowDay,
     nowClassTime,
+    wrapCaption = false,
   } = props;
   return (
     <Box
@@ -117,7 +119,7 @@ const ClassBox = (props: ClassBoxProps) => {
                   maxWidth: classroomWidth || "calc( 15vw - 50px )",
                   overflow: "hidden",
                   textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
+                  whiteSpace: wrapCaption ? "wrap" : "nowrap",
                   color: "gray",
                 }}
               >
@@ -325,6 +327,7 @@ const NarrowTimeTable = (props: TimeTableProps) => {
                 classroomWidth="min(280px, calc(100vw - 400px))"
                 nowDay={nowDay}
                 nowClassTime={nowClassTime}
+                wrapCaption
               />
             </Box>
           ))}

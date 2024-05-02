@@ -23,8 +23,6 @@ if (params.has("scombzExtensionRedirect")) {
     endDate: params.get("openEndDate"),
   };
 
-  console.log(result);
-
   const encodedFileName = encodeURIComponent(fileName.replace(/\s+/g, "_").replace(/_+/g, "_")).replace(/#/g, "%23");
 
   const resultURL = `https://scombz.shibaura-it.ac.jp/lms/course/material/setfiledown/${encodedFileName}?${serializeData(result)}`;

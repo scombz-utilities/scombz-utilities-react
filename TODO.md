@@ -22,11 +22,12 @@
   - [x] modifyCoursePageTitle
   - [x] mouseEvents
   - [x] notepad -> courseに統合
-  - [ ] oldScomb
-  - [ ] styleDialog
+  - [x] oldScomb
+  - [x] styleDialog
   - [x] styleSideMenu
-  - [ ] styleSurveys
+  - [x] styleSurveys
   - [ ] supportFunctions
+  - [ ] syllabus
   - [ ] syllBtn
 
 - 新規システムへの刷新
@@ -36,10 +37,8 @@
   - [x] メニュー展開時の課題表示
     - [ ] 自作課題の表示
   - [x] メニュー展開時のメモ表示
-  - [ ] その他のウィジェット追加(optional)
   - [ ] オプション画面
   - [ ] シラバス連携
-  - [ ] has()を使った実装
   - [ ] popup
 
 - その他
@@ -57,3 +56,4 @@
   - [ ] ダークモード
   - [ ] exportCalender
   - [ ] styleExam
+  - [ ] その他のウィジェット追加(optional)

@@ -2,7 +2,6 @@ import createCache from "@emotion/cache";
 import { CacheProvider } from "@emotion/react";
 import { ThemeProvider } from "@mui/material";
 import type { PlasmoCSConfig } from "plasmo";
-import React, { useEffect } from "react";
 import { OpenOptionButton } from "./components/OpenOptionButton";
 import theme from "~/theme";
 
@@ -22,10 +21,6 @@ const styleCache = createCache({
 export const getStyle = () => styleElement;
 
 const HomePage = () => {
-  useEffect(() => {
-    console.log("HomePage");
-  }, []);
-
   return (
     <CacheProvider value={styleCache}>
       <ThemeProvider theme={theme}>
