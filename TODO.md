@@ -7,13 +7,13 @@
   - [x] adjustTimeTable -> lms.tsに統合
   - [x] attendance
   - [ ] background
+    - [ ] インストール時と起動時の動作
   - [x] changeReportButton
   - [x] clearButton
   - [x] clickLogin
   - [x] downloadFiles
   - [x] eucjp -> util/encoding.ts
   - [x] exitSideMenu
-  - [ ] getNews
   - [x] getTaskLists
   - [x] hideCompletedReport -> topPageLayout.tsに統合
   - [x] homepage
@@ -26,7 +26,7 @@
   - [x] styleDialog
   - [x] styleSideMenu
   - [x] styleSurveys
-  - [ ] supportFunctions
+  - [x] supportFunctions
   - [x] syllabus
   - [x] syllBtn
 
@@ -35,7 +35,7 @@
   - [x] ASDF認証のダイアログ
   - [x] メニュー展開時の時間割表示
   - [x] メニュー展開時の課題表示
-    - [ ] 自作課題の表示
+    - [ ] 自作課題の作成・表示
   - [x] メニュー展開時のメモ表示
   - [ ] オプション画面
   - [ ] シラバス連携
@@ -57,3 +57,5 @@
   - [ ] exportCalender
   - [ ] styleExam
   - [ ] その他のウィジェット追加(optional)
+  - [ ] GAS連携
+  - [ ] getNews
