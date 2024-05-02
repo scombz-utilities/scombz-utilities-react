@@ -92,33 +92,26 @@ const onRightClick = (element: HTMLElement, x: number, y: number, url?: string) 
 const mousedownClick = (items: NodeListOf<HTMLElement>, openInBackground?: boolean) => {
   for (const item of items) {
     item.addEventListener("mousedown", (event: MouseEvent) => {
-      switch (event.button) {
-        case 1:
-          // ホイールクリック
-          if (openInBackground) {
-            openFileOnBackgroundTab(item.parentNode as HTMLElement);
-          } else {
-            item.click();
-          }
-          break;
-        case 2:
-          // 右クリック
-          if (openInBackground) {
-            event.preventDefault();
-            onRightClick(item, event.clientX, event.clientY);
-          } else {
-            item.click();
-          }
-          break;
-        default:
+      if (event.button === 1) {
+        // ホイールクリック
+        if (openInBackground) {
+          openFileOnBackgroundTab(item.parentNode as HTMLElement);
+        } else {
+          item.click();
+        }
       }
     });
-    if (openInBackground) {
-      item.addEventListener("contextmenu", (e: MouseEvent) => {
-        e.preventDefault();
-      });
-    }
+    item.addEventListener("contextmenu", (event: MouseEvent) => {
+      // 右クリック
+      if (openInBackground) {
+        event.preventDefault();
+        onRightClick(item, event.clientX, event.clientY);
+      } else {
+        item.click();
+      }
+    });
   }
+
   return;
 };
 
@@ -127,7 +120,14 @@ const mousedownClickLMS = async () => {
   LMSLinkElements.forEach((linkElement) => {
     linkElement.addEventListener("contextmenu", (e: MouseEvent) => {
       e.preventDefault();
+      onRightClick(
+        linkElement,
+        e.clientX,
+        e.clientY,
+        "https://scombz.shibaura-it.ac.jp/lms/course?idnumber=" + linkElement.getAttribute("id"),
+      );
     });
+
     linkElement.addEventListener("mousedown", (e: MouseEvent) => {
       if (e.button === 1) {
         // ホイールクリック
@@ -135,15 +135,6 @@ const mousedownClickLMS = async () => {
           action: "openNewTabInBackground",
           url: "https://scombz.shibaura-it.ac.jp/lms/course?idnumber=" + linkElement.getAttribute("id"),
         } as RuntimeMessage);
-      }
-      if (e.button === 2) {
-        // 右クリック
-        onRightClick(
-          linkElement,
-          e.clientX,
-          e.clientY,
-          "https://scombz.shibaura-it.ac.jp/lms/course?idnumber=" + linkElement.getAttribute("id"),
-        );
       }
     });
   });
