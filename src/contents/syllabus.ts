@@ -87,7 +87,13 @@ const loadFaculty = async () => {
     return;
   }
 
-  if (enterYear && division && keiretu) {
+  if (
+    enterYear &&
+    division &&
+    keiretu &&
+    currentData.settings.syllabus.enterYear &&
+    currentData.settings.syllabus.division
+  ) {
     // selectイベントを発火させる
     const event = new Event("change", { bubbles: true });
     enterYear.value = currentData.settings.syllabus.enterYear;
