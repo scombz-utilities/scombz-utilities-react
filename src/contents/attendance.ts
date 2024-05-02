@@ -17,13 +17,13 @@ const attendanceRemove = async () => {
     if (attendanceKome) {
       if (attendanceKome.textContent === "※") {
         const attendance = document.querySelector("#attendance");
-        attendance.remove();
+        attendance?.remove();
       }
     }
   } else if (settings.removeAttendance === "all") {
     const attendance = document.querySelector("#attendance");
     if (attendance) {
-      attendance.remove();
+      attendance?.remove();
     }
   }
 };

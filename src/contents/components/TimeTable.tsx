@@ -81,8 +81,8 @@ const ClassBox = (props: ClassBoxProps) => {
                   left: 0,
                   width: "100%",
                   height: "100%",
-                  backgroundColor: "#ff0",
-                  opacity: 0.2,
+                  backgroundColor: "rgb(91, 237, 146)",
+                  opacity: 0.3,
                 }}
               />
             )}
@@ -377,7 +377,7 @@ export const TimeTable = (props: Props) => {
   }, []);
 
   const { day: nowDay, time: nowClassTime } = useMemo(
-    () => (false ? getTimetablePosFromTime(new Date()) : { day: null, time: null }),
+    () => (highlightToday ? getTimetablePosFromTime(new Date()) : { day: null, time: null }),
     [highlightToday],
   );
 

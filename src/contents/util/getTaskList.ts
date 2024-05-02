@@ -1,6 +1,7 @@
 import type { Task } from "../types/task";
 import { defaultSaves } from "./settings";
 import type { Saves } from "./settings";
+import type { RuntimeMessage } from "~background";
 
 const getTasks = (doc: Document): Task[] => {
   const taskListNode = doc.getElementById("taskList") as HTMLElement;
@@ -33,7 +34,7 @@ export const getTasksOnTaskPage = async () => {
   const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
   currentData.scombzData.tasklist = taskList;
   await chrome.storage.local.set(currentData);
-  chrome.runtime.sendMessage({ action: "updateBadgeText" });
+  chrome.runtime.sendMessage({ action: "updateBadgeText" } as RuntimeMessage);
   return taskList;
 };
 
@@ -49,7 +50,7 @@ export const getTasksByAjax = async () => {
   const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
   currentData.scombzData.tasklist = taskList;
   await chrome.storage.local.set(currentData);
-  chrome.runtime.sendMessage({ action: "updateBadgeText" });
+  chrome.runtime.sendMessage({ action: "updateBadgeText" } as RuntimeMessage);
   return taskList;
 };
 
@@ -114,49 +115,6 @@ export const fetchSurveys = async () => {
   const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
   currentData.scombzData.surveyList = taskListsObj;
   await chrome.storage.local.set(currentData);
-  chrome.runtime.sendMessage({ action: "updateBadgeText" });
+  chrome.runtime.sendMessage({ action: "updateBadgeText" } as RuntimeMessage);
   return taskListsObj;
-};
-
-//アンケートを取得するかどうかの設定を科目別ページに挿入
-export const insertSurveyBtnOnSubj = async () => {
-  if (location.href.startsWith("https://scombz.shibaura-it.ac.jp/lms/course?")) {
-    const $courseTitle = document.querySelector(".course-title-txt");
-    if ($courseTitle && !document.getElementById("noticeSurvey")) {
-      const $nameInt = $courseTitle.innerHTML.indexOf(" ", $courseTitle.innerHTML.indexOf(" ") + 2);
-      const $courseName = $courseTitle.innerHTML.slice($nameInt + 1);
-      const link = document.createElement("link");
-      link.href = chrome.runtime.getURL("css/class_survey_button.css"); // 新しいCSSファイルのパス
-      link.type = "text/css";
-      link.rel = "stylesheet";
-      document.head.appendChild(link);
-      ($courseTitle.parentNode as HTMLElement).insertAdjacentHTML(
-        "beforeend",
-        `
-          <div class="noticeSurveyBox">
-            <input class="ItemBox-CheckBox-Input" type="checkbox" id="noticeSurvey"></input>
-            <label class="ItemBox-CheckBox-Label" for="noticeSurvey"></label>
-            <span>この科目のアンケートを課題一覧に表示する</span>
-          </div>`,
-      );
-      const pageUrl = location.href;
-      const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
-      const notifySurveySubjects = currentData.settings.notifySurveySubjects;
-
-      //chrome.storageに保存されたオンオフ情報を復元
-      (document.getElementById("noticeSurvey") as HTMLInputElement).checked = notifySurveySubjects.some(
-        (subject) => subject.name === $courseName,
-      );
-      //値の変更時にchrome.storageに保存する
-      document.getElementById("noticeSurvey").addEventListener("change", () => {
-        const filteredNotifySurveySubjects = notifySurveySubjects.filter((subject) => subject.name !== $courseName);
-        if ((document.getElementById("noticeSurvey") as HTMLInputElement).checked) {
-          filteredNotifySurveySubjects.push({ name: $courseName, url: pageUrl });
-        }
-        currentData.settings.notifySurveySubjects = filteredNotifySurveySubjects;
-
-        chrome.storage.local.set(currentData);
-      });
-    }
-  }
 };

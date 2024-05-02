@@ -18,9 +18,10 @@ import React from "react";
 import { MdVisibility, MdVisibilityOff, MdCloseFullscreen, MdOpenInFull } from "react-icons/md";
 import { defaultSaves } from "../util/settings";
 import type { Settings } from "../util/settings";
+import type { RuntimeMessage } from "~background";
 
 export const openSettings = () => {
-  chrome.runtime.sendMessage({ type: "open_settings" });
+  chrome.runtime.sendMessage({ action: "openOption" } as RuntimeMessage);
 };
 
 export const SaveDialog = () => {

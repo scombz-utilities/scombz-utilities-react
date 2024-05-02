@@ -1,6 +1,6 @@
 import { differenceInMinutes } from "date-fns";
 import type { PlasmoCSConfig } from "plasmo";
-import { getTasksOnTaskPage, insertSurveyBtnOnSubj, getTasksByAjax, fetchSurveys } from "./util/getTaskList";
+import { getTasksOnTaskPage, getTasksByAjax, fetchSurveys } from "./util/getTaskList";
 import { defaultSaves } from "./util/settings";
 import type { Saves } from "./util/settings";
 import { FETCH_INTERVAL } from "~/constants";
@@ -13,8 +13,6 @@ export const config: PlasmoCSConfig = {
 if (location.href === "https://scombz.shibaura-it.ac.jp/lms/task") {
   getTasksOnTaskPage();
 }
-// 各授業ページにアンケートボタンを追加
-insertSurveyBtnOnSubj();
 
 // タスクを取得
 const fetchTasks = async () => {

@@ -1,10 +1,11 @@
+# TODO
+
 - 既存のシステムのそのまま移行
 
   - [x] addSubTimeTable
   - [x] adfs
   - [x] adjustTimeTable -> lms.tsに統合
   - [x] attendance
-  - [ ] autoEvaluation
   - [ ] background
   - [x] changeReportButton
   - [x] clearButton
@@ -12,18 +13,13 @@
   - [x] downloadFiles
   - [ ] eucjp
   - [x] exitSideMenu
-  - [ ] exportCalender
   - [ ] getNews
   - [x] getTaskLists
   - [x] hideCompletedReport -> topPageLayout.tsに統合
-  - [ ] homepage
-  - [ ] layout
-    - [ ] 名前変更機能
-    - [ ] カスタムCSS機能
-    - [ ] ダークモード
-    - [ ] URLをハイパーリンクに変換
+  - [x] homepage
+  - [x] layout
   - [ ] layoutSubject
-  - [ ] modifyCoursePageTitle
+  - [x] modifyCoursePageTitle
   - [ ] mouseEvents
   - [ ] notepad
   - [ ] oldScomb
@@ -48,8 +44,16 @@
   - [ ] popup
 
 - その他
+
   - [ ] 公式サイト
   - [ ] chrome.storageのデータ移行
     - 設定系は移行する必要あり
     - TimeTableDataも必須
-  - Themeの設定（緑色系統）
+  - [x] Themeの設定（緑色系統）
+
+- Optional / 削除候補
+  - [ ] autoEvaluation
+  - [ ] 名前変更機能
+  - [ ] カスタムCSS機能
+  - [ ] ダークモード
+  - [ ] exportCalender

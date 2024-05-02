@@ -1,4 +1,5 @@
 import type { PlasmoCSConfig } from "plasmo";
+import type { RuntimeMessage } from "../background";
 import { defaultSaves } from "./util/settings";
 import type { Settings } from "./util/settings";
 
@@ -90,7 +91,7 @@ const addExtensionSettingsBtn = () => {
         `,
     );
     document.getElementById("link_to_extention").addEventListener("click", () => {
-      chrome.runtime.sendMessage({ type: "open_settings" });
+      chrome.runtime.sendMessage({ action: "openOption" } as RuntimeMessage);
     });
   }
   return;

@@ -53,7 +53,9 @@ export type Settings = {
     removeDirectLink: boolean;
     topPageLayout: boolean;
     clickToHideName: boolean;
+    linkify: boolean;
   };
+  modifyCoursePageTitle: boolean;
 };
 
 export const defaultSettings: Settings = {
@@ -106,7 +108,9 @@ export const defaultSettings: Settings = {
     removeDirectLink: true,
     topPageLayout: true,
     clickToHideName: true,
+    linkify: true,
   },
+  modifyCoursePageTitle: true,
 };
 
 /* ScombzData */

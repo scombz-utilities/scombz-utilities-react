@@ -41,7 +41,7 @@ const styleNowPeriod = () => {
     if (i + 1 !== nowClassTime) return;
     const targets = [...row.getElementsByClassName(`${nowDay}-yobicol`)] as HTMLDivElement[];
     targets.forEach((target) => {
-      target.style.backgroundColor = "rgb(91, 237, 146)";
+      (target.querySelector(".timetable-course-top-btn") as HTMLDivElement).style.backgroundColor = "rgb(91, 237, 146)";
     });
   });
 };
