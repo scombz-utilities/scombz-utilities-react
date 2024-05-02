@@ -1,6 +1,6 @@
 import JSZip from "jszip";
 import type { PlasmoCSConfig } from "plasmo";
-import { getCourseTitle } from "./util/functions";
+import { getCourseTitle, serializeData } from "./util/functions";
 import { defaultSaves } from "./util/settings";
 import type { Saves } from "./util/settings";
 
@@ -13,7 +13,7 @@ const downloadFilesMain = (dlLabels, btn) => {
   const resultURLs = [];
   const resultNames = [];
 
-  const downloadFileRoutine = (label) => {
+  const downloadFileRoutine = (label: HTMLElement) => {
     // zip ファイルで画像をダウンロード
     const generateZip = (images) => {
       btn.textContent = "ZIPファイル生成中...(時間がかかります)";
@@ -115,7 +115,7 @@ const downloadFilesMain = (dlLabels, btn) => {
     data.objectName = tg.querySelector(".objectName").textContent;
     data.resource_Id = tg.querySelector(".resource_Id").textContent;
     data.openEndDate = tg.querySelector(".openEndDate").textContent;
-    data.dlMaterialId = tg.querySelector("#dlMaterialId").value;
+    data.dlMaterialId = (tg.querySelector("#dlMaterialId") as HTMLInputElement).value;
 
     //Ajaxする
     const param = {
@@ -123,15 +123,6 @@ const downloadFilesMain = (dlLabels, btn) => {
       objectName: data.objectName,
       id: data.resource_Id,
       idnumber: (document.querySelector('input[name="idnumber"]') as HTMLInputElement).value,
-    };
-
-    // データをクエリパラメータにシリアライズする関数
-    const serializeData = (data) => {
-      const params = new URLSearchParams();
-      for (const key in data) {
-        params.append(key, data[key]);
-      }
-      return params.toString();
     };
 
     const tempUrl = "/lms/course/make/tempfile";

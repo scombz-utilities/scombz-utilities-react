@@ -1,0 +1,20 @@
+#scombzUtilitiesContextMenu {
+  display: none;
+  position: fixed;
+  z-index: 999999;
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+#scombzUtilitiesContextMenu .contextMenuButton {
+  display: block;
+  padding: 5px;
+  cursor: pointer;
+  border: 1px solid #000;
+}
+
+#scombzUtilitiesContextMenu .contextMenuButton:hover {
+  background: #f0f0f0;
+}

@@ -56,6 +56,7 @@ export type Settings = {
     linkify: boolean;
   };
   modifyCoursePageTitle: boolean;
+  modifyClickableLinks: boolean; // リンクの右クリック、中クリックを発火させる
 };
 
 export const defaultSettings: Settings = {
@@ -111,6 +112,7 @@ export const defaultSettings: Settings = {
     linkify: true,
   },
   modifyCoursePageTitle: true,
+  modifyClickableLinks: true,
 };
 
 /* ScombzData */

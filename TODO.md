@@ -20,11 +20,10 @@
   - [x] layout
   - [ ] layoutSubject
   - [x] modifyCoursePageTitle
-  - [ ] mouseEvents
+  - [x] mouseEvents
   - [ ] notepad
   - [ ] oldScomb
   - [ ] styleDialog
-  - [ ] styleExam
   - [x] styleSideMenu
   - [ ] styleSurveys
   - [ ] supportFunctions
@@ -57,3 +56,4 @@
   - [ ] カスタムCSS機能
   - [ ] ダークモード
   - [ ] exportCalender
+  - [ ] styleExam

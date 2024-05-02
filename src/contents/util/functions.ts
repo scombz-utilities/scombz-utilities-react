@@ -46,3 +46,14 @@ export const getCourseTitle = () => {
   const courseTitleItems = /(.+)\s([0-9]{2}[A-Z]{2}[0-9]{6})\s(.+)/.exec(courseTitle);
   return courseTitleItems[3]; //これが科目名
 };
+
+/**
+ * データをクエリパラメータにシリアライズする関数
+ */
+export const serializeData = (data): string => {
+  const params = new URLSearchParams();
+  for (const key in data) {
+    params.append(key, data[key]);
+  }
+  return params.toString();
+};

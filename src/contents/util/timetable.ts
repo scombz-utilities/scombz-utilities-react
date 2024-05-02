@@ -3,7 +3,10 @@ import { getLMS } from "./getLMS";
 import { defaultSaves } from "./settings";
 import type { Settings } from "./settings";
 
-const showClassroom = () => {
+/**
+ * 教室名を表示する
+ */
+const showClassroom = async () => {
   const tooltipDivs = document.querySelectorAll('div[data-toggle="tooltip"]');
 
   tooltipDivs.forEach((div) => {
@@ -13,14 +16,20 @@ const showClassroom = () => {
   });
 };
 
-const centeringTimetable = () => {
+/**
+ * 時間割を中央寄せにする
+ */
+const centeringTimetable = async () => {
   const table = document.querySelector(".div-table") as HTMLDivElement;
   if (table) {
     table.style.textAlign = "center";
   }
 };
 
-const hideNoClassDay = () => {
+/**
+ * 休講の曜日や時間帯を非表示にする
+ */
+const hideNoClassDay = async () => {
   const timetableData = getLMS();
   if (!timetableData.find((data) => data.day === 6)) {
     const sats = Array.from(document.getElementsByClassName("6-yobicol"));
@@ -34,8 +43,10 @@ const hideNoClassDay = () => {
   }
 };
 
-//現在時刻のコマを目立たせる
-const styleNowPeriod = () => {
+/**
+ * LMS上で現在時刻のコマを目立たせる
+ */
+const styleNowPeriod = async () => {
   const { day: nowDay, time: nowClassTime } = getTimetablePosFromTime(new Date());
   document.querySelectorAll("#timetable .div-table-data-row").forEach((row, i) => {
     if (i + 1 !== nowClassTime) return;
