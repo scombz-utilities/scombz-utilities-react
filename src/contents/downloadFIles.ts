@@ -9,6 +9,56 @@ export const config: PlasmoCSConfig = {
   run_at: "document_end",
 };
 
+export type DownloadMetaData = {
+  scanStatus: string;
+  fileName: string;
+  objectName: string;
+  resource_Id: string;
+  openEndDate: string;
+  dlMaterialId: string;
+};
+export const getDownloadURL = async (data: DownloadMetaData): Promise<string> => {
+  const param = {
+    fileName: data.fileName,
+    objectName: data.objectName,
+    id: data.resource_Id,
+    idnumber: (document.querySelector('input[name="idnumber"]') as HTMLInputElement).value,
+  };
+
+  const tempUrl = "/lms/course/make/tempfile";
+  const queryString = new URLSearchParams(param).toString();
+  const url = `${tempUrl}?${queryString}`;
+
+  const response = await fetch(url, {
+    method: "GET",
+    cache: "no-cache",
+  });
+
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+
+  const e = await response.text();
+
+  const result = {
+    fileName: data.fileName,
+    fileId: e,
+    idnumber: (document.getElementById("idnumber") as HTMLInputElement).value,
+    resourceId: data.resource_Id,
+    screen: 1,
+    contentId: data.dlMaterialId,
+    endDate: data.openEndDate,
+  };
+
+  const encodedFileName = encodeURIComponent(data.fileName.replace(/\s+/g, "_").replace(/_+/g, "_")).replace(
+    /#/g,
+    "%23",
+  );
+
+  const resultURL = `https://scombz.shibaura-it.ac.jp/lms/course/material/setfiledown/${encodedFileName}?${serializeData(result)}`;
+  return resultURL;
+};
+
 const downloadFilesMain = (dlLabels, btn) => {
   const resultURLs = [];
   const resultNames = [];
@@ -108,55 +158,20 @@ const downloadFilesMain = (dlLabels, btn) => {
     };
 
     const tg = label.parentNode;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const data = {} as any;
-    data.scanStatus = tg.querySelector(".scanStatus").textContent;
-    data.fileName = tg.querySelector(".fileName").textContent;
-    data.objectName = tg.querySelector(".objectName").textContent;
-    data.resource_Id = tg.querySelector(".resource_Id").textContent;
-    data.openEndDate = tg.querySelector(".openEndDate").textContent;
-    data.dlMaterialId = (tg.querySelector("#dlMaterialId") as HTMLInputElement).value;
+
+    const data = {
+      scanStatus: tg.querySelector(".scanStatus").textContent,
+      fileName: tg.querySelector(".fileName").textContent,
+      objectName: tg.querySelector(".objectName").textContent,
+      resource_Id: tg.querySelector(".resource_Id").textContent,
+      openEndDate: tg.querySelector(".openEndDate").textContent,
+      dlMaterialId: (tg.querySelector("#dlMaterialId") as HTMLInputElement).value,
+    } as DownloadMetaData;
 
     //Ajaxする
-    const param = {
-      fileName: data.fileName,
-      objectName: data.objectName,
-      id: data.resource_Id,
-      idnumber: (document.querySelector('input[name="idnumber"]') as HTMLInputElement).value,
-    };
-
-    const tempUrl = "/lms/course/make/tempfile";
-    const queryString = new URLSearchParams(param).toString();
-    const url = `${tempUrl}?${queryString}`;
     const mainTry = async () => {
       try {
-        const response = await fetch(url, {
-          method: "GET",
-          cache: "no-cache",
-        });
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const e = await response.text();
-
-        const result = {
-          fileName: data.fileName,
-          fileId: e,
-          idnumber: (document.getElementById("idnumber") as HTMLInputElement).value,
-          resourceId: data.resource_Id,
-          screen: 1,
-          contentId: data.dlMaterialId,
-          endDate: data.openEndDate,
-        };
-
-        const encodedFileName = encodeURIComponent(data.fileName.replace(/\s+/g, "_").replace(/_+/g, "_")).replace(
-          /#/g,
-          "%23",
-        );
-
-        const resultURL = `https://scombz.shibaura-it.ac.jp/lms/course/material/setfiledown/${encodedFileName}?${serializeData(result)}`;
+        const resultURL = await getDownloadURL(data);
         resultURLs.push(resultURL);
         resultNames.push(data.fileName);
 
@@ -185,9 +200,11 @@ const downloadFileBundle = async () => {
   const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
   if (!currentData.settings.downloadFileBundle) return;
 
-  if (isFirefox)
+  if (isFirefox()) {
     //firefoxでは動作しないためreturn
     return;
+  }
+
   setTimeout(() => {
     // 全体のDL
     //ない場合はreturn

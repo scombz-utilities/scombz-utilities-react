@@ -12,6 +12,7 @@ export type Settings = {
   removeAttendance: "none" | "only" | "all";
   notifySurveySubjects: Subject[];
   autoAdfs: boolean;
+  autoFillSgsot: boolean;
   hideSideMenu: boolean;
   styleSideMenu: boolean;
   styleDialog: boolean;
@@ -78,6 +79,7 @@ export const defaultSettings: Settings = {
   },
   notifySurveySubjects: [],
   autoAdfs: true,
+  autoFillSgsot: true,
   hideSideMenu: true,
   styleSideMenu: true,
   styleDialog: true,

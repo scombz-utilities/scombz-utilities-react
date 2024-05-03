@@ -43,9 +43,7 @@ const fixDisplayBug = async () => {
     if (anchor.href?.startsWith("http://syllabus.sic.shibaura-it.ac.jp/syllabus/")) return;
     const correctURL = anchor.outerHTML.match(/href="(http[^"]*)"/);
     if (correctURL && correctURL.length > 1) {
-      console.log(correctURL[1]);
       anchor.setAttribute("href", correctURL[1]);
-      console.log(anchor.innerHTML);
       anchor.innerHTML = anchor.innerHTML.replace(/href="http[^"]*"(&gt;)?/, "");
     }
   });
@@ -121,7 +119,6 @@ const saveFaculty = async () => {
     const firstChild = buttonGroup.firstChild;
     buttonGroup.insertBefore(button, firstChild);
     button.addEventListener("click", async () => {
-      console.log("clicked");
       const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
       currentData.settings.syllabus.enterYear = enterYear.value;
       currentData.settings.syllabus.division = division.value;

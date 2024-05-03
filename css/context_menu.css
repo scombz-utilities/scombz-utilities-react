@@ -2,10 +2,10 @@
   display: none;
   position: fixed;
   z-index: 999999;
-  background: #fff8;
+  background: #eeec;
   border-radius: 4px;
-  padding: 3px;
-  box-shadow: 1px 1px 4px #0005;
+  padding: 5px;
+  box-shadow: 1px 1px 4px #0009;
   backdrop-filter: blur(4px);
 }
 
@@ -15,8 +15,14 @@
   cursor: pointer;
   backdrop-filter: blur(4px);
   background-color: #fff5;
+  border-top: 0.5px solid #ccc;
+  border-bottom: 0.5px solid #ccc;
 }
 
 #scombzUtilitiesContextMenu .contextMenuButton:hover {
   background: #ccc6;
+}
+
+.utilities-contextMenuTarget {
+  opacity: 0.6;
 }

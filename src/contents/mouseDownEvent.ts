@@ -1,5 +1,7 @@
 import type { PlasmoCSConfig } from "plasmo";
 import type { RuntimeMessage } from "../background";
+import { getDownloadURL } from "./downloadFiles";
+import type { DownloadMetaData } from "./downloadFiles";
 import { defaultSaves } from "./util/settings";
 import type { Saves } from "./util/settings";
 
@@ -9,14 +11,14 @@ export const config: PlasmoCSConfig = {
 };
 
 const openFileOnBackgroundTab = (element: HTMLElement) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const data = {} as any;
-  data.scanStatus = element.querySelector(".scanStatus").textContent;
-  data.fileName = element.querySelector(".fileName").textContent;
-  data.objectName = element.querySelector(".objectName").textContent;
-  data.resource_Id = element.querySelector(".resource_Id").textContent;
-  data.openEndDate = element.querySelector(".openEndDate").textContent;
-  data.dlMaterialId = (element.querySelector("#dlMaterialId") as HTMLInputElement).value;
+  const data = {
+    scanStatus: element.querySelector(".scanStatus").textContent,
+    fileName: element.querySelector(".fileName").textContent,
+    objectName: element.querySelector(".objectName").textContent,
+    resource_Id: element.querySelector(".resource_Id").textContent,
+    openEndDate: element.querySelector(".openEndDate").textContent,
+    dlMaterialId: (element.querySelector("#dlMaterialId") as HTMLInputElement).value,
+  } as DownloadMetaData;
 
   const param = {
     fileName: data.fileName,
@@ -45,10 +47,12 @@ const insertContextMenu = () => {
   document.body.insertAdjacentHTML("beforeend", `<div id="scombzUtilitiesContextMenu"></div>`);
   document.body.addEventListener("click", () => {
     document.getElementById("scombzUtilitiesContextMenu").style.display = "none";
+    document.querySelector(".utilities-contextMenuTarget")?.classList.remove("utilities-contextMenuTarget");
   });
 };
 
 const onRightClick = (element: HTMLElement, x: number, y: number, url?: string) => {
+  element.classList.add("utilities-contextMenuTarget");
   const contextMenu = document.getElementById("scombzUtilitiesContextMenu");
 
   const buttonNormal = document.createElement("div");
@@ -80,9 +84,34 @@ const onRightClick = (element: HTMLElement, x: number, y: number, url?: string) 
     contextMenu.style.display = "none";
   });
 
+  const buttonDownload = document.createElement("div");
+  buttonDownload.textContent = "リンク先をダウンロード";
+  buttonDownload.classList.add("contextMenuButton");
+  buttonDownload.addEventListener("click", async (e) => {
+    e.preventDefault();
+    const elm = element.parentNode as HTMLElement;
+    const data = {
+      scanStatus: elm.querySelector(".scanStatus").textContent,
+      fileName: elm.querySelector(".fileName").textContent,
+      objectName: elm.querySelector(".objectName").textContent,
+      resource_Id: elm.querySelector(".resource_Id").textContent,
+      openEndDate: elm.querySelector(".openEndDate").textContent,
+      dlMaterialId: (elm.querySelector("#dlMaterialId") as HTMLInputElement).value,
+    } as DownloadMetaData;
+    buttonDownload.textContent = "ダウンロード中...";
+    const donwloadURL = await getDownloadURL(data);
+    const downloadAnchor = document.createElement("a");
+    downloadAnchor.href = donwloadURL;
+    downloadAnchor.download = data.fileName;
+    downloadAnchor.click();
+    contextMenu.style.display = "none";
+    buttonDownload.textContent = "リンク先をダウンロード";
+  });
+
   contextMenu.innerHTML = "";
   contextMenu.appendChild(buttonNormal);
   contextMenu.appendChild(buttonBack);
+  contextMenu.appendChild(buttonDownload);
 
   contextMenu.style.top = y + "px";
   contextMenu.style.left = x + "px";
