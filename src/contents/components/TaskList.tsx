@@ -17,6 +17,7 @@ import {
 import { grey, red } from "@mui/material/colors";
 import type { SxProps } from "@mui/system";
 import { differenceInHours, differenceInMinutes, format } from "date-fns";
+import { ja } from "date-fns/locale";
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { HiOutlineSwitchHorizontal } from "react-icons/hi";
 import { IoMdEyeOff } from "react-icons/io";
@@ -218,7 +219,7 @@ const TaskTable = (props: TaskTableProps) => {
                       <Box onClick={toggleRelativeTime}>
                         {isRelativeTime
                           ? getRelativeTime(task.deadlineDate, nowDate)
-                          : format(task.deadlineDate, formatStr)}
+                          : format(task.deadlineDate, formatStr, { locale: ja })}
                       </Box>
                     </TaskTableCell>
                     <IconButton
@@ -317,7 +318,9 @@ export const TaskList = (props: Props) => {
     setTasklist(newTaskList);
     const saveHiddenTaskIdList = async () => {
       const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
-      currentData.settings.hiddenTaskIdList = hiddenTaskIdList;
+      currentData.settings.hiddenTaskIdList = hiddenTaskIdList.filter((id) =>
+        tasklist.map((task) => task.id).includes(id),
+      );
       chrome.storage.local.set(currentData);
     };
     saveHiddenTaskIdList();

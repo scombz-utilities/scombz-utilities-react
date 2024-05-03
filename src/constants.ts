@@ -7,7 +7,7 @@ export const CLASS_TIMES = [
   ["18:50", "20:30"],
 ];
 
-export const FETCH_INTERVAL = 10;
+export const FETCH_INTERVAL = 15;
 
 export const SLIDER_BAR_MINS = [
   [10, 30, 60, 100, 200, 300, 600],

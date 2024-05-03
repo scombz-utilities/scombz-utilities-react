@@ -2,6 +2,8 @@ import type { Subject } from "./contents/types/subject";
 import type { Task } from "./contents/types/task";
 import type { TimeTable } from "./contents/types/timetable";
 
+export type Faculty = "din" | "arc" | "dsn" | "sys" | "ko1";
+
 /* Settings */
 export type Settings = {
   clickLogin: boolean;
@@ -18,6 +20,7 @@ export type Settings = {
   styleSideMenu: boolean;
   styleDialog: boolean;
   styleSurveys: boolean;
+  styleExam: boolean;
   useSubTimeTable: boolean;
   useTaskList: boolean;
   useUserMemo: boolean;
@@ -35,7 +38,7 @@ export type Settings = {
   sliderBarMax: number;
   timesBtnValue: number;
   defaultInputName: string;
-  faculty: "din" | "arc" | "dsn" | "sys" | "ko1" | null;
+  faculty: Faculty | null;
   lms: {
     showClassroom: boolean;
     centering: boolean;
@@ -64,7 +67,7 @@ export type Settings = {
   modifyClickableLinks: boolean; // リンクの右クリック、中クリックを発火させる
   markdownNotePad: boolean;
   syllabus: {
-    faculty: "din" | "arc" | "dsn" | "sys" | "ko1" | null;
+    faculty: Faculty | null;
     enterYear: string | null;
     division: string | null;
     keiretu: string | null;
@@ -73,12 +76,12 @@ export type Settings = {
 
 export const defaultSettings: Settings = {
   clickLogin: true,
-  removeAttendance: "none",
   loginData: {
     username: "",
     password: "",
   },
   popupBadge: true,
+  removeAttendance: "none",
   notifySurveySubjects: [],
   autoAdfs: true,
   autoFillSgsot: true,
@@ -86,6 +89,7 @@ export const defaultSettings: Settings = {
   styleSideMenu: true,
   styleDialog: true,
   styleSurveys: true,
+  styleExam: true,
   useSubTimeTable: true,
   useTaskList: true,
   useUserMemo: true,
