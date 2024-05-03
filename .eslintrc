@@ -4,7 +4,7 @@
     "plugin:import/recommended",
     "plugin:import/warnings",
     "plugin:@typescript-eslint/recommended",
-    "prettier"
+    "prettier",
   ],
   "rules": {
     "semi": ["error", "always"],
@@ -21,18 +21,21 @@
     "multiline-ternary": "off",
     "no-var": "error",
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": [
+    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "@typescript-eslint/ban-ts-comment": [
       "error",
-      { "argsIgnorePattern": "^_" }
+      {
+        "ts-ignore": "allow-with-description",
+      },
     ],
     "import/no-unresolved": "off",
     "import/order": [
       "error",
       {
         "alphabetize": {
-          "order": "asc"
-        }
-      }
-    ]
-  }
+          "order": "asc",
+        },
+      },
+    ],
+  },
 }

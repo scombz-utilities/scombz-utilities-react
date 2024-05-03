@@ -9,6 +9,7 @@ export type Settings = {
     username: string;
     password: string;
   };
+  popupBadge: boolean;
   removeAttendance: "none" | "only" | "all";
   notifySurveySubjects: Subject[];
   autoAdfs: boolean;
@@ -77,6 +78,7 @@ export const defaultSettings: Settings = {
     username: "",
     password: "",
   },
+  popupBadge: true,
   notifySurveySubjects: [],
   autoAdfs: true,
   autoFillSgsot: true,
@@ -144,6 +146,7 @@ export type ScombzData = {
   timetable: TimeTable;
   tasklist: Task[];
   surveyList: Task[];
+  originalTasklist: Task[];
   sideMenuMemo: string[];
   coursePageMemo: { id: string; memo: string }[];
 };
@@ -153,6 +156,7 @@ export const defaultScombzData: ScombzData = {
   timetable: [],
   tasklist: [],
   surveyList: [],
+  originalTasklist: [],
   sideMenuMemo: [],
   coursePageMemo: [],
 };
