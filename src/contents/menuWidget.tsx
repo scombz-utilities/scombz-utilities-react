@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { TaskList } from "./components/TaskList";
 import { TimeTable } from "./components/TimeTable";
 import { UserMemo } from "./components/UserMemo";
-import { OriginalTaskModal } from "./components/originalTaskModal";
 import { useWindowSize } from "./util/functions";
 import { defaultSaves } from "./util/settings";
 import type { Saves } from "./util/settings";
@@ -76,7 +75,6 @@ const MenuWidget = () => {
           {useTaskList && <TaskList width={width} />}
           {useUserMemo && <UserMemo width={width} />}
         </Box>
-        <OriginalTaskModal />
       </ThemeProvider>
     </CacheProvider>
   ) : (
