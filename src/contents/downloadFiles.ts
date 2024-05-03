@@ -62,6 +62,7 @@ export const getDownloadURL = async (data: DownloadMetaData): Promise<string> =>
 const downloadFilesMain = (dlLabels, btn) => {
   const resultURLs = [];
   const resultNames = [];
+  const defaultButtonTextContent = btn.textContent;
 
   const downloadFileRoutine = (label: HTMLElement) => {
     // zip ファイルで画像をダウンロード
@@ -120,8 +121,7 @@ const downloadFilesMain = (dlLabels, btn) => {
           }, 1000);
           //終了処理
           setTimeout(() => {
-            if (btn.getAttribute("data-title")) btn.textContent = "この回を一括DL";
-            btn.textContent = "pdf一括ダウンロード";
+            btn.textContent = defaultButtonTextContent;
             btn.classList.remove("clicked");
           }, 100);
         });
