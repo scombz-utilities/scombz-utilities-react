@@ -26,6 +26,7 @@ import type { Subject } from "../types/subject";
 import type { Task } from "../types/task";
 import { defaultSaves } from "../util/settings";
 import type { Saves } from "../util/settings";
+import { OriginalTaskModal } from "./originalTaskModal";
 
 const getTaskColor = (
   task: Task,
@@ -205,7 +206,7 @@ const TaskTable = (props: TaskTableProps) => {
                     }}
                   >
                     {width > 880 && (
-                      <TaskTableCell sx={{ ...colors, maxWidth: "110px" }} href={courseUrl}>
+                      <TaskTableCell sx={{ ...colors, maxWidth: "110px" }} href={task.courseURL ?? courseUrl}>
                         {task.course}
                       </TaskTableCell>
                     )}
@@ -255,6 +256,8 @@ export const TaskList = (props: Props) => {
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [hiddenTaskIdList, setHiddenTaskIdList] = useState<string[]>([]);
+
+  const [isOpenAddModal, setIsOpenAddModal] = useState<boolean>(false);
 
   const toggleOpen = useCallback(() => {
     setIsTaskListOpen(!isTaskListOpen);
@@ -339,6 +342,13 @@ export const TaskList = (props: Props) => {
 
   return (
     <>
+      <OriginalTaskModal
+        isOpen={isOpenAddModal}
+        setIsOpen={setIsOpenAddModal}
+        onClose={(newTask) => {
+          if (newTask) setTasklist([...tasklist, newTask]);
+        }}
+      />
       <Box
         maxWidth="1200px"
         m={width > 1540 ? "10px auto" : "10px"}
@@ -358,7 +368,7 @@ export const TaskList = (props: Props) => {
             (最終更新: {format(lastUpdate, "MM/dd HH:mm")})
           </Typography>
           <ButtonGroup sx={{ position: "absolute", top: 0, right: 0 }}>
-            <IconButton size="small">
+            <IconButton size="small" onClick={() => setIsOpenAddModal(true)}>
               <MdAdd />
             </IconButton>
             <IconButton onClick={toggleRelativeTime} size="small">

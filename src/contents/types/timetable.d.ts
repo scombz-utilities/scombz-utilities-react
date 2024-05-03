@@ -5,8 +5,6 @@ export type TimeTableData = {
   name: string;
   classroom?: string;
   teacher?: string[];
-  termYear?: number;
-  termPhase?: number;
 };
 
 export type TimeTable = TimeTableData[];
