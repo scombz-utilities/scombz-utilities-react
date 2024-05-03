@@ -111,7 +111,7 @@ const onRightClick = (element: HTMLElement, x: number, y: number, url?: string) 
   contextMenu.innerHTML = "";
   contextMenu.appendChild(buttonNormal);
   contextMenu.appendChild(buttonBack);
-  contextMenu.appendChild(buttonDownload);
+  if (!url) contextMenu.appendChild(buttonDownload);
 
   contextMenu.style.top = y + "px";
   contextMenu.style.left = x + "px";
