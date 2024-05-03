@@ -6,8 +6,7 @@
   - [x] adfs
   - [x] adjustTimeTable -> lms.tsに統合
   - [x] attendance
-  - [ ] background
-    - [ ] インストール時と起動時の動作
+  - [x] background
   - [x] changeReportButton
   - [x] clearButton
   - [x] clickLogin

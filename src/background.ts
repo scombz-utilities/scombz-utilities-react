@@ -1,4 +1,5 @@
 import { updateBadgeText } from "./backgrounds/badge";
+import { onInstalled } from "./backgrounds/onInstalled";
 
 export type RuntimeMessage = {
   action: "openOption" | "updateBadgeText" | "openNewTabInBackground";
@@ -24,7 +25,7 @@ chrome.runtime.onMessage.addListener((message: RuntimeMessage, _sender, _sendRes
 //インストール時
 chrome.runtime.onInstalled.addListener(({ reason }) => {
   updateBadgeText();
-  console.log(`onInstalled: ${reason}`);
+  onInstalled(reason);
 });
 
 //  起動時
