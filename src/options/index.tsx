@@ -2,6 +2,7 @@ import { Box, Button, Typography, Snackbar, Alert, ThemeProvider, Tabs, Tab } fr
 import React, { useEffect, useState } from "react";
 import { AdvancedOptions } from "./components/AdvancedOptions";
 import { BasicOptions } from "./components/BasicOptions";
+import { CustomCSS } from "./components/CustomCSS";
 import { WidgetOptions } from "./components/WidgetOptions";
 import theme from "~/theme";
 import { defaultSaves } from "~settings";
@@ -85,6 +86,7 @@ const OptionsIndex = () => {
               <Tab label="基本設定" />
               <Tab label="ウィジェット設定" />
               <Tab label="詳細設定" />
+              <Tab label="カスタムCSS" />
               <Tab label="初期化" />
               <Tab label="バージョン情報" />
             </Tabs>
@@ -95,6 +97,9 @@ const OptionsIndex = () => {
             {tabIndex === 1 && <WidgetOptions saves={saves} setSettings={setSettings} />}
             {tabIndex === 2 && <AdvancedOptions saves={saves} setSettings={setSettings} />}
             {tabIndex === 3 && (
+              <CustomCSS value={saves.settings.customCSS} onChange={(value) => setSettings("customCSS", value)} />
+            )}
+            {tabIndex === 4 && (
               <Box>
                 <Typography variant="h5">初期化</Typography>
                 <Button
@@ -112,7 +117,7 @@ const OptionsIndex = () => {
                 </Button>
               </Box>
             )}
-            {tabIndex === 4 && (
+            {tabIndex === 5 && (
               <Box>
                 <Typography variant="h5">バージョン情報</Typography>
                 <Typography variant="body1">ScombZ Utilities v{chrome.runtime.getManifest().version}</Typography>

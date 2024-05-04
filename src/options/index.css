@@ -2,3 +2,7 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.ace_gutter {
+  background: #0b6bcb2c !important; /* 新しいgutterの背景色 */
+}

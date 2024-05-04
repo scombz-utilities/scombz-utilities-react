@@ -218,6 +218,7 @@ export const migrate = (): Promise<Saves | "alreadyMigrated"> => {
       newSaves.settings.modifyClickableLinks = defaultSaves.settings.modifyClickableLinks;
       newSaves.settings.markdownNotePad = defaultSaves.settings.markdownNotePad;
       newSaves.settings.headLinkTo = oldSaves.headLinkTo ?? defaultSaves.settings.headLinkTo;
+      newSaves.settings.customCSS = oldSaves.customcss ?? defaultSaves.settings.customCSS;
 
       newSaves.scombzData.doMigration = true;
 

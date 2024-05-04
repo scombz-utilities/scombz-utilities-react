@@ -73,6 +73,7 @@ export type Settings = {
     keiretu: string | null;
   };
   headLinkTo: string;
+  customCSS: string;
 };
 
 export const defaultSettings: Settings = {
@@ -143,6 +144,7 @@ export const defaultSettings: Settings = {
     keiretu: null,
   },
   headLinkTo: "/portal/home",
+  customCSS: "",
 };
 
 /* ScombzData */
