@@ -9,7 +9,7 @@
     "build:chrome": "plasmo build",
     "build:firefox": "plasmo build --target=firefox-mv2",
     "build": "plasmo build && plasmo build --target=firefox-mv2",
-    "package": "plasmo package",
+    "package": "plasmo package && plasmo package --target=firefox-mv2",
     "eslint": "eslint '**/*.ts?(x)' --fix"
   },
   "dependencies": {

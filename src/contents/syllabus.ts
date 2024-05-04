@@ -54,7 +54,17 @@ const linkToManualSearch = async () => {
   if (!header) return;
   const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
   const fac = currentData.settings.faculty;
-  const url = `http://syllabus.sic.shibaura-it.ac.jp/${fac}.html`;
+  const bArray = ["ko1", "arc", "sys", "dsn", "mst", "dcr"];
+  let paragraph = "";
+  if (fac === "din") {
+    paragraph = `うまく検索できない場合は手動で探してみて下さい。<br />
+      修士の方は<a href="http://syllabus.sic.shibaura-it.ac.jp/mst.html?f=din&b=5">こちら</a><br />
+      博士の方は<a href="http://syllabus.sic.shibaura-it.ac.jp/dcr.html?f=din&b=6">こちら</a>
+      `;
+  } else {
+    const url = `http://syllabus.sic.shibaura-it.ac.jp/${fac}.html?f=${fac}&b=${bArray.indexOf(fac) + 1}`;
+    paragraph = `うまく検索できない場合は<a href="${url}">こちらから</a>手動で探してみて下さい。`;
+  }
   header.insertAdjacentHTML(
     "beforebegin",
     `
@@ -68,7 +78,7 @@ const linkToManualSearch = async () => {
     }
     </style>
   <div class="scombz-utilities-manual-search-box">
-    うまく検索できない場合は<a href="${url}">こちらから</a>手動で探してみて下さい。
+    ${paragraph}
   </div>
   `,
   );
