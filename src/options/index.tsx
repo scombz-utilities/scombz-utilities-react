@@ -495,6 +495,18 @@ const OptionsIndex = () => {
               value={saves.settings.markdownNotePad}
               onChange={(_e, checked) => setSettings("markdownNotePad", checked)}
             />
+            <CustomSelect
+              label="ヘッダアイコンのリンク先"
+              caption="ヘッダのScombZアイコンをクリックした際のリンク先を設定します。"
+              id="headLinkTo"
+              options={[
+                { value: "/portal/home", label: "ホーム" },
+                { value: "/lms/timetable", label: "LMS" },
+                { value: "lms/task", label: "課題・テスト一覧" },
+              ]}
+              value={saves.settings.headLinkTo}
+              onChange={(e, _) => setSettings("headLinkTo", e.target.value)}
+            />
           </Box>
           <Box>
             <Typography variant="h4">初期化</Typography>

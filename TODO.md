@@ -25,6 +25,7 @@
   - [x] styleDialog
   - [x] styleSideMenu
   - [x] styleSurveys
+  - [x] styleExam
   - [x] supportFunctions
   - [x] syllabus
   - [x] syllBtn
@@ -42,9 +43,7 @@
 - その他
 
   - [ ] 公式サイト
-  - [ ] chrome.storageのデータ移行
-    - 設定系は移行する必要あり
-    - TimeTableDataも必須
+  - [x] chrome.storageのデータ移行
   - [x] Themeの設定（緑色系統）
 
 - Optional / 削除候補
@@ -53,7 +52,6 @@
   - [ ] カスタムCSS機能
   - [ ] ダークモード
   - [ ] exportCalender
-  - [ ] styleExam
   - [ ] その他のウィジェット追加(optional)
   - [ ] GAS連携
   - [ ] getNews

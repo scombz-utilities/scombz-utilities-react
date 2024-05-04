@@ -37,8 +37,8 @@ const getTaskColor = (
 } => {
   const deadlineInHours = differenceInHours(new Date(task.deadline), new Date());
   if (deadlineInHours < 6) return { backgroundColor: red[200], color: red[900], fontWeight: 600 };
-  if (deadlineInHours < 12) return { backgroundColor: red[100], color: red[900], fontWeight: 600 };
-  if (deadlineInHours < 24) return { backgroundColor: red[50], color: red[900], fontWeight: 600 };
+  if (deadlineInHours < 12) return { backgroundColor: red[200], color: red[900], fontWeight: 600 };
+  if (deadlineInHours < 24) return { backgroundColor: red[100], color: red[900], fontWeight: 600 };
   if (deadlineInHours < 72) return { backgroundColor: "inherit", color: red[900], fontWeight: 400 };
   if (deadlineInHours < 24 * 7) return { backgroundColor: "inherit", color: "inherit", fontWeight: 400 };
   return { backgroundColor: "inherit", color: grey[500], fontWeight: 400 };
@@ -346,7 +346,9 @@ export const TaskList = (props: Props) => {
         isOpen={isOpenAddModal}
         setIsOpen={setIsOpenAddModal}
         onClose={(newTask) => {
-          if (newTask) setTasklist([...tasklist, newTask]);
+          if (newTask) {
+            setTasklist([...tasklist, newTask].sort((x, y) => x.deadlineDate.getTime() - y.deadlineDate.getTime()));
+          }
         }}
       />
       <Box

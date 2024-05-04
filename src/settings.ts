@@ -72,6 +72,7 @@ export type Settings = {
     division: string | null;
     keiretu: string | null;
   };
+  headLinkTo: string;
 };
 
 export const defaultSettings: Settings = {
@@ -141,6 +142,7 @@ export const defaultSettings: Settings = {
     division: null,
     keiretu: null,
   },
+  headLinkTo: "/portal/home",
 };
 
 /* ScombzData */
@@ -153,6 +155,7 @@ export type ScombzData = {
   originalTasklist: Task[];
   sideMenuMemo: string[];
   coursePageMemo: { id: string; memo: string }[];
+  doMigration: boolean;
 };
 export const defaultScombzData: ScombzData = {
   beforeLoginOshirase: "",
@@ -163,6 +166,7 @@ export const defaultScombzData: ScombzData = {
   originalTasklist: [],
   sideMenuMemo: [],
   coursePageMemo: [],
+  doMigration: false,
 };
 
 /* Saves */
