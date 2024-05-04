@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { AdvancedOptions } from "./components/AdvancedOptions";
 import { BasicOptions } from "./components/BasicOptions";
 import { CustomCSS } from "./components/CustomCSS";
+import { DataOperation } from "./components/DataOperation";
 import { WidgetOptions } from "./components/WidgetOptions";
 import theme from "~/theme";
 import { defaultSaves } from "~settings";
@@ -82,12 +83,12 @@ const OptionsIndex = () => {
               backdropFilter: "blur(3px)",
             }}
           >
-            <Tabs value={tabIndex} onChange={handleTabChange}>
+            <Tabs value={tabIndex} onChange={handleTabChange} variant="scrollable" scrollButtons="auto">
               <Tab label="基本設定" />
               <Tab label="ウィジェット設定" />
               <Tab label="詳細設定" />
               <Tab label="カスタムCSS" />
-              <Tab label="初期化" />
+              <Tab label="インポート・エクスポート・初期化" />
               <Tab label="バージョン情報" />
             </Tabs>
           </Box>
@@ -99,24 +100,7 @@ const OptionsIndex = () => {
             {tabIndex === 3 && (
               <CustomCSS value={saves.settings.customCSS} onChange={(value) => setSettings("customCSS", value)} />
             )}
-            {tabIndex === 4 && (
-              <Box>
-                <Typography variant="h5">初期化</Typography>
-                <Button
-                  variant="contained"
-                  color="error"
-                  onClick={() => {
-                    if (confirm("本当に初期化しますか？\nこの操作は取り消せません。")) {
-                      chrome.storage.local.clear(() => {
-                        window.location.reload();
-                      });
-                    }
-                  }}
-                >
-                  初期化
-                </Button>
-              </Box>
-            )}
+            {tabIndex === 4 && <DataOperation saves={saves} setSaves={setSaves} />}
             {tabIndex === 5 && (
               <Box>
                 <Typography variant="h5">バージョン情報</Typography>

@@ -49,7 +49,7 @@
 - Optional / 削除候補
   - [ ] autoEvaluation
   - [ ] 名前変更機能
-  - [ ] カスタムCSS機能
+  - [x] カスタムCSS機能
   - [ ] ダークモード
   - [ ] exportCalender
   - [ ] その他のウィジェット追加(optional)
