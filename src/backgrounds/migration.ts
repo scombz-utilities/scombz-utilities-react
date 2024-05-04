@@ -108,8 +108,8 @@ const oldSavesTemp = {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const migrateLogic = (oldSaves: any): Saves => {
   const newSaves = {
-    scombzData: oldSaves?.scombzData ?? {},
-    settings: oldSaves?.settings ?? {},
+    scombzData: oldSaves?.scombzData ?? defaultSaves.scombzData,
+    settings: oldSaves?.settings ?? defaultSaves.settings,
   } as Saves;
 
   // ScombZDataの移植
