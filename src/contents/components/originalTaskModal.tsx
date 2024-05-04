@@ -2,6 +2,7 @@ import { Button, Box, Card, IconButton, Typography, TextField } from "@mui/mater
 import { useState, useEffect, useCallback } from "react";
 import { MdClose } from "react-icons/md";
 import { AutoComplete } from "./AutoComplete";
+import type { RuntimeMessage } from "~background";
 import type { Task } from "~contents/types/task";
 import type { Saves } from "~settings";
 import { defaultSaves } from "~settings";
@@ -67,10 +68,14 @@ export const OriginalTaskModal = (props: Props) => {
     };
     chrome.storage.local.get(defaultSaves, (currentData: Saves) => {
       currentData.scombzData.originalTasklist.push(task);
-      chrome.storage.local.set(currentData);
-      setIsOpen(false);
-      onClose({ ...task, deadlineDate: new Date(task.deadline) } as Task);
-      alert("課題を追加しました。");
+      chrome.storage.local.set(currentData, () => {
+        setIsOpen(false);
+        onClose({ ...task, deadlineDate: new Date(task.deadline) } as Task);
+        alert("課題を追加しました。");
+        setTimeout(() => {
+          chrome.runtime.sendMessage({ action: "updateBadgeText" } as RuntimeMessage);
+        }, 500);
+      });
     });
   };
 
