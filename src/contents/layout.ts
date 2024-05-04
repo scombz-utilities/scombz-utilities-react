@@ -133,6 +133,9 @@ const layout = async () => {
   if (settings.layout.removePageTop) removePageTop();
   if (settings.layout.removeDirectLink) removeDirectLink();
   if (settings.layout.clickToHideName) clickToHideName();
+  if (settings.customCSS.length > 0) {
+    document.head.insertAdjacentHTML("beforeend", `<style>${settings.customCSS}</style>`);
+  }
   fixHeadShadow();
   addExtensionSettingsBtn();
 };
