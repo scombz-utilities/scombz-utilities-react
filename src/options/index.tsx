@@ -1,4 +1,4 @@
-import { Box, Button, Typography, Snackbar, Alert, ThemeProvider, Tabs, Tab } from "@mui/material";
+import { Box, Button, Typography, Snackbar, Alert, ThemeProvider, Tabs, Tab, Link } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { AdvancedOptions } from "./components/AdvancedOptions";
 import { BasicOptions } from "./components/BasicOptions";
@@ -89,7 +89,7 @@ const OptionsIndex = () => {
               <Tab label="詳細設定" />
               <Tab label="カスタムCSS" />
               <Tab label="インポート・エクスポート・初期化" />
-              <Tab label="バージョン情報" />
+              <Tab label="情報" />
             </Tabs>
           </Box>
 
@@ -102,9 +102,31 @@ const OptionsIndex = () => {
             )}
             {tabIndex === 4 && <DataOperation saves={saves} setSaves={setSaves} />}
             {tabIndex === 5 && (
-              <Box>
-                <Typography variant="h5">バージョン情報</Typography>
-                <Typography variant="body1">ScombZ Utilities v{chrome.runtime.getManifest().version}</Typography>
+              <Box display="flex" flexDirection="column" gap={2}>
+                <Typography variant="h5">情報</Typography>
+                <Typography variant="body1">
+                  この拡張機能は、ScombZのユーザビリティの向上を目的としたオープンソースプロジェクトです。
+                </Typography>
+                <Box>
+                  <Typography variant="h6" mb={0.5}>
+                    バージョン情報
+                  </Typography>
+                  <Typography variant="body1">ScombZ Utilities v{chrome.runtime.getManifest().version}</Typography>
+                </Box>
+                <Box>
+                  <Typography variant="h6" mb={0.5}>
+                    リンク
+                  </Typography>
+                  <Link href="https://scombz-utilities.com">
+                    <Typography variant="body1">公式サイト</Typography>
+                  </Link>
+                  <Link href="https://chromewebstore.google.com/detail/scombz-utilities/iejnanaabfgocfjbnmhkfheghbkanibj?hl=ja">
+                    <Typography variant="body1">Chrome Web Store</Typography>
+                  </Link>
+                  <Link href="https://github.com/yudai1204/scombz-utilities">
+                    <Typography variant="body1">GitHub</Typography>
+                  </Link>
+                </Box>
               </Box>
             )}
           </Box>
