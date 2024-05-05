@@ -161,7 +161,6 @@ export const migrateLogic = (oldSaves: any): Saves => {
   newSaves.settings.styleExam = oldSaves?.styleExamBtn ?? defaultSaves.settings.styleExam;
   newSaves.settings.useSubTimeTable = oldSaves?.addSubTimetable ?? defaultSaves.settings.useSubTimeTable;
   newSaves.settings.useTaskList = oldSaves?.tasklistDisplay ?? defaultSaves.settings.useTaskList;
-  newSaves.settings.useUserMemo = oldSaves?.notepadMode ?? defaultSaves.settings.useUserMemo;
   newSaves.settings.forceNarrowTimeTable = defaultSaves.settings.forceNarrowTimeTable;
   newSaves.settings.displayClassroom = defaultSaves.settings.displayClassroom;
   newSaves.settings.displayTime = defaultSaves.settings.displayTime;

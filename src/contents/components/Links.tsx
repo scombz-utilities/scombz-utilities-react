@@ -86,7 +86,7 @@ export const Links = (props: Props) => {
     <>
       <Box
         maxWidth="1200px"
-        m={width > 1540 ? "10px auto" : "10px"}
+        m={width > 1540 ? "0 auto" : "0"}
         onClick={(e) => e.stopPropagation()}
         sx={{
           backgroundColor: "#fff9",

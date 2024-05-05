@@ -2,13 +2,9 @@ import createCache from "@emotion/cache";
 import { CacheProvider } from "@emotion/react";
 import { Box, ThemeProvider } from "@mui/material";
 import type { PlasmoCSConfig } from "plasmo";
-import { useEffect, useState } from "react";
-import { Bus } from "./components/Bus";
-import { Calender } from "./components/Calender";
-import { Links } from "./components/Links";
-import { TaskList } from "./components/TaskList";
-import { TimeTable } from "./components/TimeTable";
-import { UserMemo } from "./components/UserMemo";
+import { useEffect, useMemo, useState } from "react";
+import { WidgetWrapper } from "./components/WidgetWrapper";
+import type { Widget } from "./types/widget";
 import { useWindowSize } from "./util/functions";
 import { defaultSaves } from "./util/settings";
 import type { Saves } from "./util/settings";
@@ -31,10 +27,13 @@ export const getStyle = () => styleElement;
 
 const MenuWidget = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const [styleSideMenu, setStyleSideMenu] = useState<boolean>(true);
+
   const [useSubTimeTable, setUseSubTimeTable] = useState<boolean>(true);
   const [useTaskList, setUseTaskList] = useState<boolean>(true);
-  const [useUserMemo, setUseUserMemo] = useState<boolean>(true);
-  const [styleSideMenu, setStyleSideMenu] = useState<boolean>(true);
+
+  const [widgetOrder, setWidgetOrder] = useState<Widget[]>(["Calender", "UserMemo", "Links", "Bus"]);
+  const [columnCount, setColumnCount] = useState<number>(2);
 
   useEffect(() => {
     const sideMenu = document.getElementById("sidemenu") as HTMLElement;
@@ -48,15 +47,15 @@ const MenuWidget = () => {
       setIsMenuOpen(false);
     });
     chrome.storage.local.get(defaultSaves, (items: Saves) => {
+      setStyleSideMenu(items.settings.styleSideMenu);
       setUseSubTimeTable(items.settings.useSubTimeTable);
       setUseTaskList(items.settings.useTaskList);
-      setUseUserMemo(items.settings.useUserMemo);
-      setStyleSideMenu(items.settings.styleSideMenu);
+      setWidgetOrder(items.settings.widgetOrder);
+      setColumnCount(items.settings.columnCount);
     });
-    setTimeout(() => {
-      document.getElementById("sidemenuOpen")?.click();
-    }, 300);
   }, []);
+
+  const useCalender = useMemo(() => widgetOrder.includes("Calender"), [widgetOrder]);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [width, height] = useWindowSize();
@@ -78,14 +77,39 @@ const MenuWidget = () => {
           }}
         >
           {width >= 540 && (
-            <>
-              {false && useSubTimeTable && <TimeTable width={width} />}
-              {false && useTaskList && <TaskList width={width} />}
-              {false && useUserMemo && <UserMemo width={width} />}
-              <Links width={width} />
-              <Calender width={width} />
-              <Bus width={width} />
-            </>
+            <Box sx={{ display: "grid", gridTemplateColumns: "repeat(1, 1fr)", gap: "10px", padding: "10px" }}>
+              {/* 時間割とタスクはフルサイズじゃないとバグる */}
+              {useSubTimeTable && <WidgetWrapper widget="TimeTable" width={width} />}
+              {useTaskList && <WidgetWrapper widget="TaskList" width={width} />}
+              {/* カレンダーがある時は縦幅を占有するのでカレンダーだけ1列にする */}
+              {columnCount === 2 && useCalender && (
+                <Box sx={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "10px" }}>
+                  <WidgetWrapper widget="Calender" width={width} />
+                  <Box sx={{ display: "grid", gridTemplateColumns: "repeat(1, 1fr)", gap: "10px" }}>
+                    {widgetOrder
+                      .filter((widgetName) => widgetName !== "Calender")
+                      .map((widgetName) => (
+                        <WidgetWrapper key={widgetName} widget={widgetName} width={width} />
+                      ))}
+                  </Box>
+                </Box>
+              )}
+              {/* カレンダーがない時、1列の時はそのまま並べる */}
+              {columnCount === 2 && !useCalender && (
+                <Box sx={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "10px" }}>
+                  {widgetOrder.map((widgetName) => (
+                    <WidgetWrapper key={widgetName} widget={widgetName} width={width} />
+                  ))}
+                </Box>
+              )}
+              {columnCount === 1 && (
+                <Box sx={{ display: "grid", gridTemplateColumns: "repeat(1, 1fr)", gap: "10px" }}>
+                  {widgetOrder.map((widgetName) => (
+                    <WidgetWrapper key={widgetName} widget={widgetName} width={width} />
+                  ))}
+                </Box>
+              )}
+            </Box>
           )}
         </Box>
       </ThemeProvider>

@@ -1,10 +1,83 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Switch, IconButton, ButtonGroup, Button, Paper } from "@mui/material";
+import { MdArrowDownward, MdArrowUpward, MdDelete } from "react-icons/md";
 import { CustomRemovableList } from "./CustomRemovableList";
 import { CustomSelect } from "./CustomSelect";
 import { CustomSwitch } from "./CustomSwitch";
 import { CustomTextField } from "./CustomTextField";
 
+import type { Widget } from "~contents/types/widget";
 import type { Saves, Settings } from "~settings";
+
+const widgets: Widget[] = ["Calender", "UserMemo", "Links", "Bus"];
+
+type UsingWidgetProps = {
+  name: Widget;
+  displayName: string;
+  deleteWidget: (name: Widget) => void;
+  moveUp: (name: Widget) => void;
+  moveDown: (name: Widget) => void;
+};
+const UsingWidget = (props: UsingWidgetProps) => {
+  const { name, displayName, deleteWidget, moveUp, moveDown } = props;
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        gap: 1,
+        alignItems: "center",
+        border: "1px solid #ccc",
+        p: 0.5,
+        borderRadius: 1,
+        backgroundColor: "#fff",
+        height: "45px",
+      }}
+    >
+      <ButtonGroup orientation="vertical">
+        <Button variant="outlined" size="small" onClick={() => moveUp(name)}>
+          <MdArrowUpward />
+        </Button>
+        <Button variant="outlined" size="small" onClick={() => moveDown(name)}>
+          <MdArrowDownward />
+        </Button>
+      </ButtonGroup>
+      <Typography>{displayName}</Typography>
+      <IconButton size="small" color="error" sx={{ marginLeft: "auto" }} onClick={() => deleteWidget(name)}>
+        <MdDelete />
+      </IconButton>
+    </Box>
+  );
+};
+
+type UnUsingWidgetProps = {
+  name: Widget;
+  displayName: string;
+  addWidget: (name: Widget) => void;
+};
+const UnUsingWidget = (props: UnUsingWidgetProps) => {
+  const { name, displayName, addWidget } = props;
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        gap: 1,
+        alignItems: "center",
+        border: "1px solid #ccc",
+        py: 0.5,
+        px: 2,
+        borderRadius: 1,
+        backgroundColor: "#fff",
+        height: "45px",
+        cursor: "pointer",
+        "&:hover": {
+          backgroundColor: "#eee",
+        },
+      }}
+      onClick={() => addWidget(name)}
+    >
+      <Typography>{displayName}</Typography>
+    </Box>
+  );
+};
 
 type Props = {
   saves: Saves;
@@ -13,10 +86,113 @@ type Props = {
 };
 export const WidgetOptions = (props: Props) => {
   const { saves, setSettings } = props;
+
   return (
     <Box>
       <Typography variant="h5">ウィジェット設定</Typography>
       <Box display="flex" flexDirection="column" gap={1} p={1}>
+        <Box>
+          <Box>
+            2カラムレイアウト
+            <Switch
+              checked={saves.settings.columnCount === 2}
+              onChange={(_e, checked) => setSettings("columnCount", checked ? 2 : 1)}
+            />
+          </Box>
+          <Box>
+            並び替え ※2カラムでカレンダー使用中の場合は、カレンダーは必ず左側に配置されます。
+            <Box sx={{ display: "flex", gap: 1 }}>
+              <Paper
+                elevation={5}
+                sx={{
+                  backgroundColor: "#eee",
+                }}
+              >
+                <Box
+                  sx={{
+                    textAlign: "center",
+                    borderBottom: "1px solid #ccc",
+                    width: "300px",
+                    p: 0.8,
+                    backgroundColor: "#fff",
+                  }}
+                >
+                  <Typography variant="h6" fontSize="1.1rem">
+                    使用中のウィジェット
+                  </Typography>
+                </Box>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 1, py: 1, px: 0.5 }}>
+                  {saves.settings.widgetOrder.map((name) => (
+                    <UsingWidget
+                      key={name}
+                      name={name}
+                      displayName={name}
+                      deleteWidget={(name) => {
+                        const newOrder = saves.settings.widgetOrder.filter((n) => n !== name);
+                        setSettings("widgetOrder", newOrder);
+                      }}
+                      moveUp={(name) => {
+                        const idx = saves.settings.widgetOrder.indexOf(name);
+                        const newOrder = saves.settings.widgetOrder.filter((n) => n !== name);
+                        newOrder.splice(idx - 1, 0, name);
+                        setSettings("widgetOrder", newOrder);
+                      }}
+                      moveDown={(name) => {
+                        const idx = saves.settings.widgetOrder.indexOf(name);
+                        const newOrder = saves.settings.widgetOrder.filter((n) => n !== name);
+                        newOrder.splice(idx + 1, 0, name);
+                        setSettings("widgetOrder", newOrder);
+                      }}
+                    />
+                  ))}
+                </Box>
+              </Paper>
+              <Paper
+                elevation={5}
+                sx={{
+                  backgroundColor: "#eee",
+                }}
+              >
+                <Box
+                  sx={{
+                    textAlign: "center",
+                    borderBottom: "1px solid #ccc",
+                    width: "300px",
+                    p: 0.8,
+                    backgroundColor: "#fff",
+                  }}
+                >
+                  <Typography variant="h6" fontSize="1.1rem">
+                    無効化中のウィジェット
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 1,
+                    py: 1,
+                    px: 0.5,
+                  }}
+                >
+                  {widgets
+                    .filter((name) => !saves.settings.widgetOrder.includes(name))
+                    .map((name) => (
+                      <UnUsingWidget
+                        key={name}
+                        name={name}
+                        displayName={name}
+                        addWidget={(name) => {
+                          const newOrder = [...saves.settings.widgetOrder, name];
+                          setSettings("widgetOrder", newOrder);
+                        }}
+                      />
+                    ))}
+                </Box>
+              </Paper>
+            </Box>
+          </Box>
+        </Box>
         <CustomSwitch
           label="メニュー横ウィジェット 時間割表示"
           caption={`サイドメニュー展開時に、右のスペースに簡易的な時間割を表示します。
@@ -32,14 +208,6 @@ export const WidgetOptions = (props: Props) => {
           id="useTaskList"
           value={saves.settings.useTaskList}
           onChange={(_e, checked) => setSettings("useTaskList", checked)}
-        />
-        <CustomSwitch
-          label="メニュー横ウィジェット メモ表示"
-          caption={`サイドメニュー展開時に、右のスペースに自由に追加できるメモ帳を表示します。
-                      通常記述のほか、マークダウンに対応しています。`}
-          id="useUserMemo"
-          value={saves.settings.useUserMemo}
-          onChange={(_e, checked) => setSettings("useUserMemo", checked)}
         />
         <CustomSwitch
           label="メニュー横ウィジェット 時間割 教室表示"
