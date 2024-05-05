@@ -32,7 +32,7 @@ const MenuWidget = () => {
   const [useSubTimeTable, setUseSubTimeTable] = useState<boolean>(true);
   const [useTaskList, setUseTaskList] = useState<boolean>(true);
 
-  const [widgetOrder, setWidgetOrder] = useState<Widget[]>(["Calender", "UserMemo", "Links", "Bus"]);
+  const [widgetOrder, setWidgetOrder] = useState<Widget[]>([]);
   const [columnCount, setColumnCount] = useState<number>(2);
 
   useEffect(() => {
