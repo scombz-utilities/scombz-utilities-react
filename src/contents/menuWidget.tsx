@@ -3,6 +3,7 @@ import { CacheProvider } from "@emotion/react";
 import { Box, ThemeProvider } from "@mui/material";
 import type { PlasmoCSConfig } from "plasmo";
 import { useEffect, useState } from "react";
+import { Calender } from "./components/Calender";
 import { Links } from "./components/Links";
 import { TaskList } from "./components/TaskList";
 import { TimeTable } from "./components/TimeTable";
@@ -75,10 +76,11 @@ const MenuWidget = () => {
             height: "100%",
           }}
         >
-          {useSubTimeTable && <TimeTable width={width} />}
-          {useTaskList && <TaskList width={width} />}
-          {useUserMemo && <UserMemo width={width} />}
+          {false && useSubTimeTable && <TimeTable width={width} />}
+          {false && useTaskList && <TaskList width={width} />}
+          {false && useUserMemo && <UserMemo width={width} />}
           <Links width={width} />
+          <Calender width={width} />
         </Box>
       </ThemeProvider>
     </CacheProvider>

@@ -5,13 +5,13 @@ import type { Saves } from "~settings";
 import { defaultSaves } from "~settings";
 
 const template = [
+  { title: "学年歴", url: "https://www.shibaura-it.ac.jp/campus_life/school_calendar/index.html" },
   { title: "シラバス", url: "http://syllabus.sic.shibaura-it.ac.jp/index.html.ja" },
   { title: "S*gsot", url: "https://sgsot.sic.shibaura-it.ac.jp" },
   { title: "AMI", url: "https://ami.sic.shibaura-it.ac.jp/" },
   { title: "大宮バス時刻表", url: "http://bus.shibaura-it.ac.jp/" },
   { title: "スーパー英語", url: "https://supereigo2.sic.shibaura-it.ac.jp/sso/" },
   { title: "施設予約システム", url: "https://station.sic.shibaura-it.ac.jp/facilityreservation/schedule.html" },
-  { title: "旧Scomb", url: "https://scomb.shibaura-it.ac.jp" },
 ];
 
 type Props = {

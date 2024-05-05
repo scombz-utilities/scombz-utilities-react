@@ -95,12 +95,6 @@ export const Links = (props: Props) => {
           borderRadius: 1,
         }}
       >
-        <style
-          type="text/css"
-          dangerouslySetInnerHTML={{
-            __html: `.scombz-utilities-menu-widget-markdown * {margin: 0;padding: 0;}`,
-          }}
-        />
         <Box position="relative">
           <Typography variant="h6" sx={{ px: 0.5, textAlign: "left", fontSize: "16px" }}>
             リンク集
@@ -119,6 +113,42 @@ export const Links = (props: Props) => {
             {links.map((link, index) => (
               <LinkItem key={index} title={link.title} url={link.url} />
             ))}
+            {links.length === 0 && (
+              <Paper
+                sx={{
+                  py: 1,
+                  px: 1,
+                  minWidth: "60px",
+                  maxWidth: "90px",
+                  height: "50px",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: 0.5,
+                  cursor: "pointer",
+                  "&:hover": {
+                    backgroundColor: "action.hover",
+                  },
+                }}
+                onClick={() => setIsAddLinkModalOpen(true)}
+              >
+                <Box
+                  width="28px"
+                  height="28px"
+                  fontSize="24px"
+                  color="text.secondary"
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <MdAdd />
+                </Box>
+                <Typography variant="caption" sx={{ textAlign: "center" }}>
+                  リンク追加
+                </Typography>
+              </Paper>
+            )}
           </Box>
         </Collapse>
       </Box>

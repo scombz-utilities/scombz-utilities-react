@@ -1,3 +1,4 @@
+import type { CalEvent } from "./contents/types/calender";
 import type { Subject } from "./contents/types/subject";
 import type { Task } from "./contents/types/task";
 import type { TimeTable } from "./contents/types/timetable";
@@ -160,6 +161,8 @@ export type ScombzData = {
   sideMenuMemo: string[];
   coursePageMemo: { id: string; memo: string }[];
   doMigration: boolean;
+  scombzCalendar: CalEvent[];
+  lastCalendarFetchUnixTime: number;
 };
 export const defaultScombzData: ScombzData = {
   beforeLoginOshirase: "",
@@ -171,6 +174,8 @@ export const defaultScombzData: ScombzData = {
   sideMenuMemo: [],
   coursePageMemo: [],
   doMigration: false,
+  scombzCalendar: [],
+  lastCalendarFetchUnixTime: 0,
 };
 
 /* Saves */
