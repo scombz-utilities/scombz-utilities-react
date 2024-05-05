@@ -166,7 +166,7 @@ const TaskTable = (props: TaskTableProps) => {
       )}
       <Paper>
         <TableContainer>
-          <Table size="small" aria-label="a dense table">
+          <Table size="small">
             <TableHead>
               <TableRow>
                 {width > 880 && <TaskTableCell>科目</TaskTableCell>}
@@ -353,7 +353,8 @@ export const TaskList = (props: Props) => {
       />
       <Box
         maxWidth="1200px"
-        m={width > 1540 ? "10px auto" : "10px"}
+        width="calc(100% - 20px)"
+        m="0 auto"
         onClick={(e) => e.stopPropagation()}
         sx={{
           backgroundColor: "#fff9",

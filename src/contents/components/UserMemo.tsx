@@ -89,12 +89,7 @@ const NewUserMemoRow = (props: NewUserMemoRowProps) => {
   );
 };
 
-type Props = {
-  width: number;
-};
-export const UserMemo = (props: Props) => {
-  const { width } = props;
-
+export const UserMemo = () => {
   const [isUserMemoOpen, setIsUserMemoOpen] = useState<boolean>(true);
   const [userMemo, setUserMemo] = useState<string[]>([]);
 
@@ -126,14 +121,11 @@ export const UserMemo = (props: Props) => {
     setIsUserMemoOpen(!isUserMemoOpen);
   };
 
-  if (width < 540) {
-    return <></>;
-  }
-
   return (
     <Box
+      width="calc(100% - 16px)"
       maxWidth="1200px"
-      m={width > 1540 ? "10px auto" : "10px"}
+      m="0 auto"
       onClick={(e) => e.stopPropagation()}
       sx={{
         backgroundColor: "#fff9",
@@ -162,7 +154,7 @@ export const UserMemo = (props: Props) => {
         <Paper sx={{ mt: 0.8 }}>
           <form onSubmit={(e) => e.preventDefault()}>
             <TableContainer>
-              <Table size="small" aria-label="a dense table">
+              <Table size="small">
                 <TableBody>
                   {userMemo.map((memo, index) => (
                     <UserMemoRow key={index} memo={memo} onDelete={deleteMemo(index, memo)} />

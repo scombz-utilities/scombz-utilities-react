@@ -393,9 +393,10 @@ export const TimeTable = (props: Props) => {
   return (
     <>
       <Box
+        width="calc(100% - 20px)"
         maxWidth="1200px"
         minHeight="30px"
-        m={width > 1540 ? "10px auto" : "10px"}
+        m="0 auto"
         onClick={(e) => e.stopPropagation()}
         sx={{
           backgroundColor: "#fff7",

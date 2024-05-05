@@ -1,7 +1,7 @@
-import { Button, Box, Card, IconButton, Typography, TextField } from "@mui/material";
+import { Button, Box, TextField } from "@mui/material";
 import { useState, useEffect, useCallback } from "react";
-import { MdClose } from "react-icons/md";
 import { AutoComplete } from "./AutoComplete";
+import { Modal } from "./Modal";
 import type { RuntimeMessage } from "~background";
 import type { Task } from "~contents/types/task";
 import type { Saves } from "~settings";
@@ -30,12 +30,6 @@ export const OriginalTaskModal = (props: Props) => {
       setSubjects(Array.from(subjectSet));
     });
   }, []);
-
-  const close = (e) => {
-    e.stopPropagation();
-    onClose();
-    setIsOpen(false);
-  };
 
   const onChangeSubject = useCallback(
     (value: string) => {
@@ -74,83 +68,65 @@ export const OriginalTaskModal = (props: Props) => {
         alert("課題を追加しました。");
         setTimeout(() => {
           chrome.runtime.sendMessage({ action: "updateBadgeText" } as RuntimeMessage);
+          setSubjectName("");
+          setSubjectURL("");
+          setTaskName("");
+          setTaskURL("");
+          setTaskDate("");
+          setTaskTime("00:00");
         }, 500);
       });
     });
   };
 
   return (
-    <Box
-      sx={{
-        display: open ? "flex" : "none",
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-        zIndex: 1000,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-      onClick={close}
-    >
-      <Card sx={{ width: 720, padding: 1, overflow: "visible" }} onClick={(e) => e.stopPropagation()}>
-        <Box display="flex" justifyContent="center" sx={{ position: "relative", p: 0.5 }}>
-          <IconButton onClick={close} sx={{ position: "absolute", right: 0, top: 0 }}>
-            <MdClose />
-          </IconButton>
-          <Typography variant="h6" sx={{ textAlign: "center" }}>
-            自作課題追加
-          </Typography>
-        </Box>
-        <Box display="flex" flexDirection="column" px={1} sx={{ gap: 1 }}>
-          <AutoComplete options={subjects} onChange={onChangeSubject} label="科目名" required />
-          <TextField
-            label="科目URL"
-            variant="outlined"
-            size="small"
-            fullWidth
-            value={subjectURL}
-            onChange={(e) => setSubjectURL(e.target.value)}
-          />
-          <TextField
-            label="課題名"
-            variant="outlined"
-            size="small"
-            fullWidth
-            value={taskName}
-            onChange={(e) => setTaskName(e.target.value)}
+    <Modal title="自作課題追加" isOpen={open} setIsOpen={setIsOpen} onClose={onClose}>
+      <Box display="flex" flexDirection="column" px={1} sx={{ gap: 1 }}>
+        <AutoComplete options={subjects} onChange={onChangeSubject} label="科目名" required />
+        <TextField
+          label="科目URL"
+          variant="outlined"
+          size="small"
+          fullWidth
+          value={subjectURL}
+          onChange={(e) => setSubjectURL(e.target.value)}
+        />
+        <TextField
+          label="課題名"
+          variant="outlined"
+          size="small"
+          fullWidth
+          value={taskName}
+          onChange={(e) => setTaskName(e.target.value)}
+          required
+        />
+        <TextField
+          label="課題URL"
+          variant="outlined"
+          size="small"
+          fullWidth
+          value={taskURL}
+          onChange={(e) => setTaskURL(e.target.value)}
+        />
+        <Box display="flex" gap={1} justifyContent="center">
+          <input
+            type="date"
+            value={taskDate}
+            onChange={(e) => setTaskDate(e.target.value)}
+            style={{ width: "calc(50% - 5px)", height: 30 }}
             required
           />
-          <TextField
-            label="課題URL"
-            variant="outlined"
-            size="small"
-            fullWidth
-            value={taskURL}
-            onChange={(e) => setTaskURL(e.target.value)}
+          <input
+            type="time"
+            value={taskTime}
+            onChange={(e) => setTaskTime(e.target.value)}
+            style={{ width: "calc(50% - 5px)", height: 30 }}
           />
-          <Box display="flex" gap={1} justifyContent="center">
-            <input
-              type="date"
-              value={taskDate}
-              onChange={(e) => setTaskDate(e.target.value)}
-              style={{ width: "calc(50% - 5px)", height: 30 }}
-              required
-            />
-            <input
-              type="time"
-              value={taskTime}
-              onChange={(e) => setTaskTime(e.target.value)}
-              style={{ width: "calc(50% - 5px)", height: 30 }}
-            />
-          </Box>
-          <Button variant="contained" color="primary" onClick={submit}>
-            タスクを追加
-          </Button>
         </Box>
-      </Card>
-    </Box>
+        <Button variant="contained" color="primary" onClick={submit}>
+          タスクを追加
+        </Button>
+      </Box>
+    </Modal>
   );
 };

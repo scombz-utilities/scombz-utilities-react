@@ -1,13 +1,14 @@
 import { updateBadgeText } from "./backgrounds/badge";
+import { getJson } from "./backgrounds/getJson";
 import { migrate } from "./backgrounds/migration";
 import { onInstalled } from "./backgrounds/onInstalled";
 
 export type RuntimeMessage = {
-  action: "openOption" | "updateBadgeText" | "openNewTabInBackground";
+  action: "openOption" | "updateBadgeText" | "openNewTabInBackground" | "getJson";
   url?: string;
 };
 
-chrome.runtime.onMessage.addListener((message: RuntimeMessage, _sender, _sendResponse) => {
+chrome.runtime.onMessage.addListener((message: RuntimeMessage, _sender, sendResponse) => {
   switch (message.action) {
     case "openOption":
       chrome.runtime.openOptionsPage();
@@ -17,6 +18,9 @@ chrome.runtime.onMessage.addListener((message: RuntimeMessage, _sender, _sendRes
       break;
     case "updateBadgeText":
       updateBadgeText();
+      break;
+    case "getJson":
+      getJson(message, sendResponse);
       break;
     default:
       break;
