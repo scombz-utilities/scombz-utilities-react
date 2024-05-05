@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import { CustomRemovableList } from "./CustomRemovableList";
 import { CustomSelect } from "./CustomSelect";
 import { CustomSwitch } from "./CustomSwitch";
 import { CustomTextField } from "./CustomTextField";
@@ -102,6 +103,17 @@ export const WidgetOptions = (props: Props) => {
           id="taskListRowsPerPage"
           value={saves.settings.taskListRowsPerPage.toString()}
           onChange={(e) => setSettings("taskListRowsPerPage", parseInt(e.target.value, 10))}
+        />
+        <CustomRemovableList
+          label="サイドメニュー リンク集"
+          caption="サイドメニューにリンク集を追加できます。リンク集は好きに追加可能です。"
+          id="originalLinks"
+          options={saves.settings.originalLinks.map((link) => link.title + " - " + link.url)}
+          onChange={(idx) => {
+            const newLinks = saves.settings.originalLinks.filter((_, i) => i !== idx);
+            setSettings("originalLinks", newLinks);
+          }}
+          reset={() => setSettings("originalLinks", [])}
         />
       </Box>
     </Box>

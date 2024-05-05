@@ -3,6 +3,7 @@ import { CacheProvider } from "@emotion/react";
 import { Box, ThemeProvider } from "@mui/material";
 import type { PlasmoCSConfig } from "plasmo";
 import { useEffect, useState } from "react";
+import { Links } from "./components/Links";
 import { TaskList } from "./components/TaskList";
 import { TimeTable } from "./components/TimeTable";
 import { UserMemo } from "./components/UserMemo";
@@ -50,6 +51,9 @@ const MenuWidget = () => {
       setUseUserMemo(items.settings.useUserMemo);
       setStyleSideMenu(items.settings.styleSideMenu);
     });
+    setTimeout(() => {
+      document.getElementById("sidemenuOpen")?.click();
+    }, 300);
   }, []);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -74,6 +78,7 @@ const MenuWidget = () => {
           {useSubTimeTable && <TimeTable width={width} />}
           {useTaskList && <TaskList width={width} />}
           {useUserMemo && <UserMemo width={width} />}
+          <Links width={width} />
         </Box>
       </ThemeProvider>
     </CacheProvider>

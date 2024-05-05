@@ -35,7 +35,7 @@ export const CustomRemovableList = (props: Props) => {
             size="small"
             color="error"
             onClick={() => {
-              confirm("全ての科目を削除しますか？") && reset();
+              confirm("全ての項目を削除しますか？") && reset();
             }}
           >
             全て削除

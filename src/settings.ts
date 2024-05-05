@@ -74,6 +74,7 @@ export type Settings = {
   };
   headLinkTo: string;
   customCSS: string;
+  originalLinks: { title: string; url: string }[];
 };
 
 export const defaultSettings: Settings = {
@@ -145,6 +146,7 @@ export const defaultSettings: Settings = {
   },
   headLinkTo: "/portal/home",
   customCSS: "",
+  originalLinks: [],
 };
 
 /* ScombzData */
