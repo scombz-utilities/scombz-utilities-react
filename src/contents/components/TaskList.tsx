@@ -166,7 +166,7 @@ const TaskTable = (props: TaskTableProps) => {
       )}
       <Paper>
         <TableContainer>
-          <Table size="small" aria-label="a dense table">
+          <Table size="small">
             <TableHead>
               <TableRow>
                 {width > 880 && <TaskTableCell>科目</TaskTableCell>}

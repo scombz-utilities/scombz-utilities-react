@@ -159,9 +159,9 @@ type Props = {
 };
 export const Calender = (props: Props) => {
   const { width } = props;
-  const [isLinksOpen, setIsLinksOpen] = useState(true);
+  const [isCalenderOpen, setIsCalenderOpen] = useState(true);
   const [calenderEvents, setCalenderEvents] = useState<CalEvent[]>([]);
-  const toggleOpen = () => setIsLinksOpen(!isLinksOpen);
+  const toggleOpen = () => setIsCalenderOpen(!isCalenderOpen);
 
   useEffect(() => {
     const fetching = async () => {
@@ -226,11 +226,11 @@ export const Calender = (props: Props) => {
         </Typography>
         <ButtonGroup sx={{ position: "absolute", top: 0, right: 0 }}>
           <IconButton onClick={toggleOpen} size="small">
-            {isLinksOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
+            {isCalenderOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
           </IconButton>
         </ButtonGroup>
       </Box>
-      <Collapse in={isLinksOpen} timeout="auto">
+      <Collapse in={isCalenderOpen} timeout="auto">
         <MyCalender events={calenderEvents} />
       </Collapse>
     </Box>

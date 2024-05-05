@@ -2,6 +2,7 @@ import type { CalEvent } from "./contents/types/calender";
 import type { Subject } from "./contents/types/subject";
 import type { Task } from "./contents/types/task";
 import type { TimeTable } from "./contents/types/timetable";
+import type { List as BusList } from "~contents/types/bus";
 
 export type Faculty = "din" | "arc" | "dsn" | "sys" | "ko1";
 
@@ -163,6 +164,8 @@ export type ScombzData = {
   doMigration: boolean;
   scombzCalendar: CalEvent[];
   lastCalendarFetchUnixTime: number;
+  busList: BusList[];
+  lastBusFetchUnixTime: number;
 };
 export const defaultScombzData: ScombzData = {
   beforeLoginOshirase: "",
@@ -176,6 +179,8 @@ export const defaultScombzData: ScombzData = {
   doMigration: false,
   scombzCalendar: [],
   lastCalendarFetchUnixTime: 0,
+  busList: [],
+  lastBusFetchUnixTime: 0,
 };
 
 /* Saves */

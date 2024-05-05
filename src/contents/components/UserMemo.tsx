@@ -162,7 +162,7 @@ export const UserMemo = (props: Props) => {
         <Paper sx={{ mt: 0.8 }}>
           <form onSubmit={(e) => e.preventDefault()}>
             <TableContainer>
-              <Table size="small" aria-label="a dense table">
+              <Table size="small">
                 <TableBody>
                   {userMemo.map((memo, index) => (
                     <UserMemoRow key={index} memo={memo} onDelete={deleteMemo(index, memo)} />
