@@ -77,13 +77,23 @@ const MenuWidget = () => {
           }}
         >
           {width >= 540 && (
-            <Box sx={{ display: "grid", gridTemplateColumns: "repeat(1, 1fr)", gap: "10px", padding: "10px" }}>
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: "repeat(1, 1fr)",
+                gap: "10px",
+                padding: "10px",
+                alignItems: "center",
+                margin: "0 auto",
+                maxWidth: "1200px",
+              }}
+            >
               {/* 時間割とタスクはフルサイズじゃないとバグる */}
               {useSubTimeTable && <WidgetWrapper widget="TimeTable" width={width} />}
               {useTaskList && <WidgetWrapper widget="TaskList" width={width} />}
               {/* カレンダーがある時は縦幅を占有するのでカレンダーだけ1列にする */}
               {columnCount === 2 && useCalender && (
-                <Box sx={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "10px" }}>
+                <Box sx={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "10px", px: "2px" }}>
                   <WidgetWrapper widget="Calender" width={width} />
                   <Box sx={{ display: "grid", gridTemplateColumns: "repeat(1, 1fr)", gap: "10px" }}>
                     {widgetOrder
@@ -96,14 +106,14 @@ const MenuWidget = () => {
               )}
               {/* カレンダーがない時、1列の時はそのまま並べる */}
               {columnCount === 2 && !useCalender && (
-                <Box sx={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "10px" }}>
+                <Box sx={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "10px", px: "2px" }}>
                   {widgetOrder.map((widgetName) => (
                     <WidgetWrapper key={widgetName} widget={widgetName} width={width} />
                   ))}
                 </Box>
               )}
               {columnCount === 1 && (
-                <Box sx={{ display: "grid", gridTemplateColumns: "repeat(1, 1fr)", gap: "10px" }}>
+                <Box sx={{ display: "grid", gridTemplateColumns: "repeat(1, 1fr)", gap: "10px", px: "2px" }}>
                   {widgetOrder.map((widgetName) => (
                     <WidgetWrapper key={widgetName} widget={widgetName} width={width} />
                   ))}

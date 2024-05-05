@@ -17,10 +17,10 @@ export const WidgetWrapper = (props: Props) => {
     <>
       {widget === "TimeTable" && <TimeTable width={width} />}
       {widget === "TaskList" && <TaskList width={width} />}
-      {widget === "UserMemo" && <UserMemo width={width} />}
-      {widget === "Links" && <Links width={width} />}
-      {widget === "Calender" && <Calender width={width} />}
-      {widget === "Bus" && <Bus width={width} />}
+      {widget === "UserMemo" && <UserMemo />}
+      {widget === "Links" && <Links />}
+      {widget === "Calender" && <Calender />}
+      {widget === "Bus" && <Bus />}
     </>
   );
 };

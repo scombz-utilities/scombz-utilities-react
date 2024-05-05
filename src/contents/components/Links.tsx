@@ -64,11 +64,7 @@ const LinkItem = (props: LinkItemProps) => {
   );
 };
 
-type Props = {
-  width: number;
-};
-export const Links = (props: Props) => {
-  const { width } = props;
+export const Links = () => {
   const [isLinksOpen, setIsLinksOpen] = useState<boolean>(true);
   const [isAddLinkModalOpen, setIsAddLinkModalOpen] = useState<boolean>(false);
   const [links, setLinks] = useState<{ title: string; url: string }[]>([]);
@@ -85,8 +81,9 @@ export const Links = (props: Props) => {
   return (
     <>
       <Box
+        width="calc(100% - 16px)"
         maxWidth="1200px"
-        m={width > 1540 ? "0 auto" : "0"}
+        m="0 auto"
         onClick={(e) => e.stopPropagation()}
         sx={{
           backgroundColor: "#fff9",

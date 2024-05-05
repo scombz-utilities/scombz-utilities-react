@@ -1,5 +1,6 @@
-import { Box, Typography, Switch, IconButton, ButtonGroup, Button, Paper } from "@mui/material";
+import { Box, Typography, IconButton, ButtonGroup, Button, Paper } from "@mui/material";
 import { MdArrowDownward, MdArrowUpward, MdDelete } from "react-icons/md";
+import { CustomContainerParent } from "./CustomContainerParent";
 import { CustomRemovableList } from "./CustomRemovableList";
 import { CustomSelect } from "./CustomSelect";
 import { CustomSwitch } from "./CustomSwitch";
@@ -92,15 +93,34 @@ export const WidgetOptions = (props: Props) => {
       <Typography variant="h5">ウィジェット設定</Typography>
       <Box display="flex" flexDirection="column" gap={1} p={1}>
         <Box>
-          <Box>
-            2カラムレイアウト
-            <Switch
-              checked={saves.settings.columnCount === 2}
-              onChange={(_e, checked) => setSettings("columnCount", checked ? 2 : 1)}
-            />
-          </Box>
-          <Box>
-            並び替え ※2カラムでカレンダー使用中の場合は、カレンダーは必ず左側に配置されます。
+          <CustomSwitch
+            label="時間割表示"
+            caption={`サイドメニュー展開時に、右のスペースに簡易的な時間割を表示します。
+                      この時間割はLMS以外の画面でも展開できるため、科目ページに直接アクセスできます。`}
+            id="useSubTimeTable"
+            value={saves.settings.useSubTimeTable}
+            onChange={(_e, checked) => setSettings("useSubTimeTable", checked)}
+          />
+          <CustomSwitch
+            label="課題表示"
+            caption={`サイドメニュー展開時に、右のスペースに課題一覧を表示します。
+                      表示される課題一覧は約15分ごとに更新されます。`}
+            id="useTaskList"
+            value={saves.settings.useTaskList}
+            onChange={(_e, checked) => setSettings("useTaskList", checked)}
+          />
+          <CustomSwitch
+            label="2カラムレイアウトを有効化"
+            caption={`並び替え可能なウィジェットを2列に並べて表示します。`}
+            id="columnCount"
+            value={saves.settings.columnCount === 2}
+            onChange={(_e, checked) => setSettings("columnCount", checked ? 2 : 1)}
+          />
+          <CustomContainerParent
+            label="カスタムウィジェット並び替え設定"
+            id="widgetOrder"
+            caption="カレンダー、メモ、リンク集、バス時刻表ウィジェットの表示設定を変更します。 ※2カラムでカレンダー使用中の場合は、カレンダーは必ず左側に配置されます。"
+          >
             <Box sx={{ display: "flex", gap: 1 }}>
               <Paper
                 elevation={5}
@@ -191,26 +211,11 @@ export const WidgetOptions = (props: Props) => {
                 </Box>
               </Paper>
             </Box>
-          </Box>
+          </CustomContainerParent>
         </Box>
+
         <CustomSwitch
-          label="メニュー横ウィジェット 時間割表示"
-          caption={`サイドメニュー展開時に、右のスペースに簡易的な時間割を表示します。
-                      この時間割はLMS以外の画面でも展開できるため、科目ページに直接アクセスできます。`}
-          id="useSubTimeTable"
-          value={saves.settings.useSubTimeTable}
-          onChange={(_e, checked) => setSettings("useSubTimeTable", checked)}
-        />
-        <CustomSwitch
-          label="メニュー横ウィジェット 課題表示"
-          caption={`サイドメニュー展開時に、右のスペースに課題一覧を表示します。
-                      表示される課題一覧は約15分ごとに更新されます。`}
-          id="useTaskList"
-          value={saves.settings.useTaskList}
-          onChange={(_e, checked) => setSettings("useTaskList", checked)}
-        />
-        <CustomSwitch
-          label="メニュー横ウィジェット 時間割 教室表示"
+          label="時間割 教室表示"
           caption={`メニュー横ウィジェットの時間割に、常に各科目の教室情報を表示します。
                         なお、日別表示の際はこの項目にかかわらず教室情報が表示されます。`}
           id="displayClassroom"
@@ -218,7 +223,7 @@ export const WidgetOptions = (props: Props) => {
           onChange={(_e, checked) => setSettings("displayClassroom", checked)}
         />
         <CustomSwitch
-          label="メニュー横ウィジェット 時間割 授業時間表示"
+          label="時間割 授業時間表示"
           caption={`メニュー横ウィジェットの時間割に、各時限の開始及び終了時刻を表示します。
                         なお、日別表示の際はこの項目にかかわらず時限情報が表示されます。`}
           id="displayTime"
@@ -226,12 +231,20 @@ export const WidgetOptions = (props: Props) => {
           onChange={(_e, checked) => setSettings("displayTime", checked)}
         />
         <CustomSwitch
-          label="メニュー横ウィジェット 時間割 今日の日付表示"
+          label="時間割 今日の日付表示"
           caption={`メニュー横ウィジェットの時間割の上部に、今日の日付を表示します。`}
           id="displayTodayDate"
           value={saves.settings.displayTodayDate}
           onChange={(_e, checked) => setSettings("displayTodayDate", checked)}
         />
+        <CustomSwitch
+          label="時間割 現在の授業を目立たせる"
+          caption={`LMSページおよびメニュー横ウィジェットの時間割で、現在の授業時間を目立たせます。`}
+          id="highlightToday"
+          value={saves.settings.highlightToday}
+          onChange={(_e, checked) => setSettings("highlightToday", checked)}
+        />
+
         <CustomSwitch
           label="課題一覧 残り時間で強調表示"
           caption={`メニュー横ウィジェットの課題一覧で、提出期限に近いものを目立たせます。`}
@@ -257,15 +270,8 @@ export const WidgetOptions = (props: Props) => {
           value={saves.settings.deadlineFormat}
           onChange={(e) => setSettings("deadlineFormat", e.target.value)}
         />
-        <CustomSwitch
-          label="時間割 現在の授業を目立たせる"
-          caption={`LMSページおよびメニュー横ウィジェットの時間割で、現在の授業時間を目立たせます。`}
-          id="highlightToday"
-          value={saves.settings.highlightToday}
-          onChange={(_e, checked) => setSettings("highlightToday", checked)}
-        />
         <CustomTextField
-          label="課題一覧表示件数"
+          label="課題一覧 表示件数"
           type="number"
           caption="メニュー横ウィジェットの課題一覧で、1ページ内に表示する課題の最大件数を設定します。 課題の数がこれを超えた場合であっても、ページネーションにより全ての課題を確認できます。"
           id="taskListRowsPerPage"
@@ -273,7 +279,7 @@ export const WidgetOptions = (props: Props) => {
           onChange={(e) => setSettings("taskListRowsPerPage", parseInt(e.target.value, 10))}
         />
         <CustomRemovableList
-          label="サイドメニュー リンク集"
+          label="リンク集 リンク削除"
           caption="サイドメニューにリンク集を追加できます。リンク集は好きに追加可能です。"
           id="originalLinks"
           options={saves.settings.originalLinks.map((link) => link.title + " - " + link.url)}

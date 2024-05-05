@@ -353,7 +353,8 @@ export const TaskList = (props: Props) => {
       />
       <Box
         maxWidth="1200px"
-        m={width > 1540 ? "0 auto" : "0"}
+        width="calc(100% - 20px)"
+        m="0 auto"
         onClick={(e) => e.stopPropagation()}
         sx={{
           backgroundColor: "#fff9",

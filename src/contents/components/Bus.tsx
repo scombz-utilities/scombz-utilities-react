@@ -18,11 +18,7 @@ import type { Root, Timesheet, Calendar, List } from "../types/bus";
 import type { RuntimeMessage } from "~background";
 import { defaultSaves, type Saves } from "~settings";
 
-type Props = {
-  width: number;
-};
-export const Bus = (props: Props) => {
-  const { width } = props;
+export const Bus = () => {
   const [isBusOpen, setIsBusOpen] = useState(true);
   const [busList, setBusList] = useState<List[]>([]);
   const [displayList, setDisplayList] = useState<List[]>([]);
@@ -81,8 +77,9 @@ export const Bus = (props: Props) => {
 
   return (
     <Box
+      width="calc(100% - 16px)"
       maxWidth="1200px"
-      m={width > 1540 ? "0 auto" : "0"}
+      m="0 auto"
       onClick={(e) => e.stopPropagation()}
       sx={{
         backgroundColor: "#fff9",

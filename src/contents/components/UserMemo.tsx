@@ -89,12 +89,7 @@ const NewUserMemoRow = (props: NewUserMemoRowProps) => {
   );
 };
 
-type Props = {
-  width: number;
-};
-export const UserMemo = (props: Props) => {
-  const { width } = props;
-
+export const UserMemo = () => {
   const [isUserMemoOpen, setIsUserMemoOpen] = useState<boolean>(true);
   const [userMemo, setUserMemo] = useState<string[]>([]);
 
@@ -126,14 +121,11 @@ export const UserMemo = (props: Props) => {
     setIsUserMemoOpen(!isUserMemoOpen);
   };
 
-  if (width < 540) {
-    return <></>;
-  }
-
   return (
     <Box
+      width="calc(100% - 16px)"
       maxWidth="1200px"
-      m={width > 1540 ? "0 auto" : "0"}
+      m="0 auto"
       onClick={(e) => e.stopPropagation()}
       sx={{
         backgroundColor: "#fff9",

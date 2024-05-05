@@ -154,11 +154,7 @@ const MyCalender = (props: MyCalenderProps) => {
   );
 };
 
-type Props = {
-  width: number;
-};
-export const Calender = (props: Props) => {
-  const { width } = props;
+export const Calender = () => {
   const [isCalenderOpen, setIsCalenderOpen] = useState(true);
   const [calenderEvents, setCalenderEvents] = useState<CalEvent[]>([]);
   const toggleOpen = () => setIsCalenderOpen(!isCalenderOpen);
@@ -210,8 +206,9 @@ export const Calender = (props: Props) => {
 
   return (
     <Box
+      width="calc(100% - 16px)"
       maxWidth="1200px"
-      m={width > 1540 ? "0 auto" : "0"}
+      m="0 auto"
       onClick={(e) => e.stopPropagation()}
       sx={{
         backgroundColor: "#fff9",

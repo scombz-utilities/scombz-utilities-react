@@ -99,7 +99,7 @@ export const defaultSettings: Settings = {
   styleExam: true,
   useSubTimeTable: true,
   useTaskList: true,
-  widgetOrder: ["Calender", "UserMemo", "Links", "Bus"],
+  widgetOrder: ["Bus", "UserMemo"],
   columnCount: 2,
   forceNarrowTimeTable: false,
   displayClassroom: false,
