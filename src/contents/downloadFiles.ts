@@ -235,7 +235,7 @@ const downloadFileBundle = async () => {
       downloadFilesMain(dlLabels, this, overallDownloadButtonText);
     });
     // 回ごとのDL
-    const roundDownloadButtonText = "この回を一括DL";
+    const sessionDownloadButtonText = "この回を一括DL";
     const titles = [
       ...document.querySelectorAll(
         "#materialContents > #materialList > .contents-detail.clearfix > .block-title.material-sub-color.block-wide.break > label.bold-txt",
@@ -253,7 +253,7 @@ const downloadFileBundle = async () => {
           "beforeend",
           `
                 <div class="utilities-dl-file-button" data-title="${titles[i]}">
-                    ${roundDownloadButtonText}
+                    ${sessionDownloadButtonText}
                 </div>
                 `,
         );
@@ -269,7 +269,7 @@ const downloadFileBundle = async () => {
         if (dlLabels.length === 0) return;
         this.classList.add("clicked");
         this.textContent = "URL取得中...";
-        downloadFilesMain(dlLabels, this, roundDownloadButtonText);
+        downloadFilesMain(dlLabels, this, sessionDownloadButtonText);
       });
     });
   }, 500);
