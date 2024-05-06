@@ -25,6 +25,7 @@ chrome.runtime.onMessage.addListener((message: RuntimeMessage, _sender, sendResp
     default:
       break;
   }
+  return true;
 });
 
 //インストール時

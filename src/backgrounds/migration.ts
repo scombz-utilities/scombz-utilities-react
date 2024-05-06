@@ -133,6 +133,10 @@ export const migrateLogic = (oldSaves: any): Saves => {
         memo: memo.value ?? "",
       };
     }) ?? [];
+  newSaves.scombzData.busList = [];
+  newSaves.scombzData.lastBusFetchUnixTime = 0;
+  newSaves.scombzData.lastCalendarFetchUnixTime = 0;
+  newSaves.scombzData.scombzCalendar = [];
 
   // Settingsの移植
 
