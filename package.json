@@ -1,8 +1,8 @@
 {
   "name": "scombz-utilities",
-  "displayName": "Scombz Utilities",
+  "displayName": "ScombZ Utilities",
   "version": "4.0.0",
-  "description": "ScombZをカスタムする拡張機能",
+  "description": "__MSG_extensionDescription__",
   "author": "udai",
   "scripts": {
     "dev": "plasmo dev",
@@ -50,6 +50,7 @@
     "typescript": "5.3.3"
   },
   "manifest": {
+    "default_locale": "en",
     "web_accessible_resources": [
       {
         "resources": [

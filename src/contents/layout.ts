@@ -86,7 +86,7 @@ const addExtensionSettingsBtn = () => {
         }
         </style>
         <li class="page-head-navi-list">
-			<a class="page-head-navi-colomn" href="javascript:void(0);" id="link_to_extention">拡張機能設定</a>
+			<a class="page-head-navi-colomn" href="javascript:void(0);" id="link_to_extention">${chrome.i18n.getMessage("extensionOption")}</a>
 		</li>
         `,
     );

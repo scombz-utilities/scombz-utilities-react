@@ -67,7 +67,7 @@ const NewUserMemoRow = (props: NewUserMemoRowProps) => {
           size="small"
           sx={{ padding: 0, margin: 0 }}
           inputProps={{ style: { padding: "3px 8px", fontSize: "15px", height: "20px" } }}
-          placeholder="メモを追加"
+          placeholder={chrome.i18n.getMessage("notepadAdd")}
           value={memo}
           onChange={(e) => setMemo(e.target.value)}
         />
@@ -112,7 +112,7 @@ export const UserMemo = () => {
   }, [userMemo]);
 
   const deleteMemo = (index: number, memo: string) => () => {
-    if (window.confirm(`『${memo}』を削除しますか？`)) {
+    if (window.confirm(chrome.i18n.getMessage("notepadDeleteConfirm").replace("_NOTE_", memo))) {
       setUserMemo(userMemo.filter((_, i) => i !== index));
     }
   };
@@ -142,7 +142,7 @@ export const UserMemo = () => {
       />
       <Box position="relative">
         <Typography variant="h6" sx={{ px: 0.5, textAlign: "left", fontSize: "16px" }}>
-          メモ
+          {chrome.i18n.getMessage("notepad")}
         </Typography>
         <ButtonGroup sx={{ position: "absolute", top: 0, right: 0 }}>
           <IconButton onClick={toggleOpen} size="small">

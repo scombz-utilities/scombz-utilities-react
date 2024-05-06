@@ -210,10 +210,13 @@ const WideTimeTable = (props: TimeTableProps) => {
   const hasSaturday = useMemo(() => timetable?.some((day) => day.day === 6), [timetable]);
   const lastPeriod = useMemo(() => timetable?.reduce((acc, cur) => (cur.time > acc ? cur.time : acc), 0), [timetable]);
 
-  const weekdays = useMemo(
-    () => (hasSaturday ? ["月", "火", "水", "木", "金", "土"] : ["月", "火", "水", "木", "金"]),
-    [hasSaturday],
-  );
+  const weekdays = useMemo(() => {
+    const WeekdayBase =
+      chrome.i18n.getUILanguage() === "ja"
+        ? ["月", "火", "水", "木", "金", "土"]
+        : ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    return hasSaturday ? WeekdayBase : WeekdayBase.slice(0, 5);
+  }, [hasSaturday]);
   const periods = useMemo(() => [1, 2, 3, 4, 5, 6, 7].slice(0, Math.max(lastPeriod, 4)), [lastPeriod]);
 
   return (
@@ -225,7 +228,7 @@ const WideTimeTable = (props: TimeTableProps) => {
       sx={{ columnGap: "2px", rowGap: "5px", backgroundColor: "#EEF7F799", padding: "2px", borderRadius: 0.5 }}
     >
       <Box textAlign="center" sx={{ background: "#eda49c" }}>
-        <Typography variant="caption">時限</Typography>
+        <Typography variant="caption">{chrome.i18n.getMessage("timetablePeriod")}</Typography>
       </Box>
       {weekdays.map((day) => (
         <Box key={day} textAlign="center" sx={{ background: "#f0d6a0" }}>
@@ -243,7 +246,10 @@ const WideTimeTable = (props: TimeTableProps) => {
             gap={0}
             sx={{ background: "#eda49c" }}
           >
-            <Typography variant="caption">{period}限</Typography>
+            <Typography variant="caption">
+              {period}
+              {chrome.i18n.getMessage("timetablePeriodSubscription")}
+            </Typography>
             {displayTime &&
               CLASS_TIMES[period - 1].map((time) => (
                 <Typography
@@ -308,14 +314,19 @@ const NarrowTimeTable = (props: TimeTableProps) => {
           gap={1.5}
           sx={{ backgroundColor: "#EEF7F799", borderRadius: 0.5, px: 1.5, py: 1 }}
         >
-          {timeTableData.length === 0 && <Typography variant="caption">本日の授業はありません</Typography>}
+          {timeTableData.length === 0 && (
+            <Typography variant="caption">{chrome.i18n.getMessage("timetableNoClassToday")}</Typography>
+          )}
           {timeTableData.map((classDataArray, index) => (
             <Box
               key={classDataArray[0].time}
               sx={{ display: "flex", flexDirection: "column", borderTop: index > 0 ? "1px solid #bbb" : "none" }}
             >
               <Box textAlign="center">
-                <Typography variant="caption">{classDataArray[0].time}限</Typography>
+                <Typography variant="caption">
+                  {classDataArray[0].time}
+                  {chrome.i18n.getMessage("timetablePeriodSubscription")}
+                </Typography>
                 <Typography variant="caption" sx={{ color: "gray", ml: 1 }}>
                   ({CLASS_TIMES[classDataArray[0].time - 1].join("〜")})
                 </Typography>
@@ -368,7 +379,11 @@ export const TimeTable = (props: Props) => {
     const fetchTimetable = async () => {
       const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
       if (currentData.settings.displayTodayDate) {
-        setToday(formatDate(new Date(), "yyyy年MM月dd日(E)", { locale: ja }));
+        if (chrome.i18n.getUILanguage() === "ja") {
+          setToday(formatDate(new Date(), "yyyy年MM月dd日(E)", { locale: ja }));
+        } else {
+          setToday(formatDate(new Date(), "EEEE, MMMM dd, yyyy"));
+        }
       }
       setIsWideTimeTable(!currentData.settings.forceNarrowTimeTable);
       setTimetable(currentData.scombzData.timetable);
@@ -437,7 +452,7 @@ export const TimeTable = (props: Props) => {
               sx={{ backgroundColor: "#EEF7F799", borderRadius: 0.5, px: 1.5, py: 1 }}
             >
               <Typography variant="caption" sx={{ px: 1, textAlign: width > 880 ? "left" : "center" }}>
-                その他の授業
+                {chrome.i18n.getMessage("timetableIntensiveCourse")}
               </Typography>
               <ClassBox
                 classDataArray={specialClassData}

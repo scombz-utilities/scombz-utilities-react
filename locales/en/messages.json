@@ -1,0 +1,258 @@
+{
+  "extensionName": {
+    "message": "ScombZ Utilities",
+    "description": "Name of the extension."
+  },
+  "extensionDescription": {
+    "message": "An extension for ScombZ  easier to use.",
+    "description": "Description of the extension."
+  },
+  "timetablePeriod": {
+    "message": "Period",
+    "description": "時限"
+  },
+  "timetablePeriodSubscription": {
+    "message": "",
+    "description": "n限目の限"
+  },
+  "timetableNoClassToday": {
+    "message": "No classes today.",
+    "description": "本日の授業はありません"
+  },
+  "timetableIntensiveCourse": {
+    "message": "Intensive courses",
+    "description": "集中講義"
+  },
+  "taskList": {
+    "message": "Assignments List",
+    "description": "課題一覧"
+  },
+  "taskListLastUpdate": {
+    "message": "Last update",
+    "description": "最終更新"
+  },
+  "taskListNoTask": {
+    "message": "No task.",
+    "description": "課題はありません"
+  },
+  "taskListSubject": {
+    "message": "Course",
+    "description": "科目"
+  },
+  "taskListTaskName": {
+    "message": "Title",
+    "description": "課題名"
+  },
+  "taskListDeadline": {
+    "message": "Deadline",
+    "description": "期限"
+  },
+  "taskListAbout": {
+    "message": "About ",
+    "description": "残り約"
+  },
+  "taskListMinsLeft": {
+    "message": " mins left",
+    "description": "分"
+  },
+  "taskListHoursLeft": {
+    "message": " hours left",
+    "description": "時間"
+  },
+  "taskListDaysLeft": {
+    "message": " days left",
+    "description": "日"
+  },
+  "taskAddAlert": {
+    "message": "Please fill in the required fields.\nRequired fields are the title of the assignment, course title, and submission deadline.",
+    "description": "必須項目を入力してください。必須項目は課題名、科目名、提出期限です。"
+  },
+  "TaskAdded": {
+    "message": "Assignments added",
+    "description": "課題を追加しました"
+  },
+  "OriginalTaskAdd": {
+    "message": "Add Assignment",
+    "description": "自作課題追加"
+  },
+  "OriginalTaskURL": {
+    "message": "Assignment URL",
+    "description": "課題名"
+  },
+  "AddTask": {
+    "message": "Add",
+    "description": "タスクを追加"
+  },
+  "hideTaskOk": {
+    "message": "Are you sure you want to hide this task?\n\ntaskTitle",
+    "description": "この課題を非表示にする"
+  },
+  "schoolBus": {
+    "message": "School Bus",
+    "description": "学バス"
+  },
+  "schoolBusFromCampus": {
+    "message": "from Omiya Campus",
+    "description": "大宮キャンパス発 東大宮駅行"
+  },
+  "schoolBusFromStation": {
+    "message": "from Higashi-Omiya Station",
+    "description": "東大宮駅発 大宮キャンパス行"
+  },
+  "schoolBusNoBus": {
+    "message": "Today's bus service has been closed.",
+    "description": "本日の営業は終了しました"
+  },
+  "notepad": {
+    "message": "Notepad",
+    "description": "メモ"
+  },
+  "notepadAdd": {
+    "message": "Add note",
+    "description": "メモを追加"
+  },
+  "notepadDeleteConfirm": {
+    "message": "Are you sure you want to delete this note?\n\n_NOTE_",
+    "description": "メモを削除"
+  },
+  "calendar": {
+    "message": "Calendar",
+    "description": "カレンダー"
+  },
+  "calendarNextMonth": {
+    "message": "Next",
+    "description": "次月"
+  },
+  "calendarPrevMonth": {
+    "message": "Previous",
+    "description": "前月"
+  },
+  "calendarFormatDay": {
+    "message": "MMMM dd, yyyy",
+    "description": "yyyy年MM月dd日"
+  },
+  "calendarFormatMonth": {
+    "message": "MMMM, yyyy",
+    "description": "yyyy年M月"
+  },
+  "dialogClose": {
+    "message": "Close",
+    "description": "閉じる"
+  },
+  "dialogOpenOptions": {
+    "message": "Options",
+    "description": "設定を開く"
+  },
+  "dialogSave": {
+    "message": "Save",
+    "description": "保存"
+  },
+  "dialogCancel": {
+    "message": "Cancel",
+    "description": "キャンセル"
+  },
+  "dialogDescription": {
+    "message": "Save your ID and password in ScombZ Utilities for automatic login.",
+    "description": "ScombZ Utilitiesに保存すると自動ログインできます。"
+  },
+  "dialogDescription2": {
+    "message": "You can change your saved login information from the Extension Settings.",
+    "description": "保存したログイン情報は拡張機能設定から変更できます。"
+  },
+  "dialogDescription3": {
+    "message": "*Settings are saved only on the PC itself.",
+    "description": "※設定はPC本体のみに保存されます。"
+  },
+  "dialogIncorrectPassword": {
+    "message": "Incorrect student ID number or password.",
+    "description": "学籍番号またはパスワードが正しくありません。"
+  },
+  "dialogClickToOpen": {
+    "message": "Open here and save to ScombZ Utilities",
+    "description": "ここを開いてScombZ Utilitiesに保存"
+  },
+  "WidgetLinks": {
+    "message": "Links",
+    "description": "リンク集"
+  },
+  "WidgetLinksAdd": {
+    "message": "Add link",
+    "description": "リンク追加"
+  },
+  "WidgetLinkTitle": {
+    "message": "Title",
+    "description": "タイトル"
+  },
+  "WidgetLinkAdd": {
+    "message": "Add",
+    "description": "追加"
+  },
+  "WidgetLinkAlert": {
+    "message": "Please enter a URL.",
+    "description": "URLを入力してください。"
+  },
+  "notifications": {
+    "message": "Notifications",
+    "description": "お知らせ"
+  },
+  "surveys": {
+    "message": "Surveys",
+    "description": "アンケート"
+  },
+  "extensionOption": {
+    "message": "Extension Settings",
+    "description": "拡張機能設定"
+  },
+  "openExtensionOptionDescription1": {
+    "message": "To display the syllabus, please set the faculty from ",
+    "description": "シラバス表示をするには"
+  },
+  "openExtensionOptionDescription2": {
+    "message": ".",
+    "description": "から学部を設定してください。"
+  },
+  "displayThisSurveyForTaskList": {
+    "message": "Display surveys of this course for the Assignments List.",
+    "description": "この科目のアンケートを課題一覧に表示する"
+  },
+  "openSyllabus": {
+    "message": "Open Syllabus",
+    "description": "シラバスを表示"
+  },
+  "openSyllabusDescription": {
+    "message": "*Sometimes a different subject syllabus is opened because it is associated with an automatic search.",
+    "description": "※自動検索で関連付けているため、違う教科のシラバスが開かれることがあります。"
+  },
+  "pdfBundleDownload": {
+    "message": "Download PDF bundle",
+    "description": "PDF一括ダウンロード"
+  },
+  "numberBundleDownload": {
+    "message": "Download bundle",
+    "description": "この回を一括DL"
+  },
+  "downloading": {
+    "message": "Downloading...",
+    "description": "ダウンロード中..."
+  },
+  "gettingURL": {
+    "message": "Getting URL...",
+    "description": "URL取得中..."
+  },
+  "generatingZip": {
+    "message": "Generating ZIP...",
+    "description": "ZIPファイル生成中...(時間がかかります)"
+  },
+  "openInNewTab": {
+    "message": "Open in new tab",
+    "description": "新しいタブで開く"
+  },
+  "openInNewTabBackground": {
+    "message": "Open in background",
+    "description": "バックグラウンドで開く"
+  },
+  "downloadLink": {
+    "message": "Save link",
+    "description": "リンク先をダウンロード"
+  }
+}

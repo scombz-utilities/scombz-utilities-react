@@ -48,7 +48,7 @@ export const OriginalTaskModal = (props: Props) => {
 
   const submit = () => {
     if (!taskName || !taskDate || !subjectName) {
-      alert("必須項目を入力してください。必須項目は課題名、科目名、提出期限です。");
+      alert(chrome.i18n.getMessage("TaskAddAlert"));
       return;
     }
     const task: Task = {
@@ -65,7 +65,7 @@ export const OriginalTaskModal = (props: Props) => {
       chrome.storage.local.set(currentData, () => {
         setIsOpen(false);
         onClose({ ...task, deadlineDate: new Date(task.deadline) } as Task);
-        alert("課題を追加しました。");
+        alert(chrome.i18n.getMessage("TaskAdded"));
         setTimeout(() => {
           chrome.runtime.sendMessage({ action: "updateBadgeText" } as RuntimeMessage);
           setSubjectName("");
@@ -80,11 +80,16 @@ export const OriginalTaskModal = (props: Props) => {
   };
 
   return (
-    <Modal title="自作課題追加" isOpen={open} setIsOpen={setIsOpen} onClose={onClose}>
+    <Modal title={chrome.i18n.getMessage("OriginalTaskAdd")} isOpen={open} setIsOpen={setIsOpen} onClose={onClose}>
       <Box display="flex" flexDirection="column" px={1} sx={{ gap: 1 }}>
-        <AutoComplete options={subjects} onChange={onChangeSubject} label="科目名" required />
+        <AutoComplete
+          options={subjects}
+          onChange={onChangeSubject}
+          label={chrome.i18n.getMessage("taskListSubject")}
+          required
+        />
         <TextField
-          label="科目URL"
+          label={`${chrome.i18n.getMessage("taskListSubject")} URL`}
           variant="outlined"
           size="small"
           fullWidth
@@ -92,7 +97,7 @@ export const OriginalTaskModal = (props: Props) => {
           onChange={(e) => setSubjectURL(e.target.value)}
         />
         <TextField
-          label="課題名"
+          label={chrome.i18n.getMessage("taskListTaskName")}
           variant="outlined"
           size="small"
           fullWidth
@@ -101,7 +106,7 @@ export const OriginalTaskModal = (props: Props) => {
           required
         />
         <TextField
-          label="課題URL"
+          label={chrome.i18n.getMessage("OriginalTaskURL")}
           variant="outlined"
           size="small"
           fullWidth
@@ -124,7 +129,7 @@ export const OriginalTaskModal = (props: Props) => {
           />
         </Box>
         <Button variant="contained" color="primary" onClick={submit}>
-          タスクを追加
+          {chrome.i18n.getMessage("AddTask")}
         </Button>
       </Box>
     </Modal>
