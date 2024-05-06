@@ -34,7 +34,7 @@ const Day = (props: DayProps) => {
           variant="body2"
           fontSize="9px"
           color={deepOrange[700]}
-          sx={{ position: "absolute", top: 6, right: 0, width: "calc(100% - 12px)", lineHeight: "9px" }}
+          sx={{ position: "absolute", top: 6, right: 0, width: "calc(100% - 22px)", lineHeight: "9px" }}
         >
           {holiday}
         </Typography>
@@ -53,8 +53,8 @@ const Day = (props: DayProps) => {
               textOverflow="ellipsis"
               whiteSpace="wrap"
               display="block"
-              lineHeight="10px"
-              maxHeight="20px"
+              lineHeight="11px"
+              maxHeight="22px"
             >
               {d}
             </Typography>
