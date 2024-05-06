@@ -8,7 +8,10 @@ import type { CalEvent } from "../types/calender";
 import { holidays } from "~constants";
 import { defaultSaves, type Saves } from "~settings";
 
-const days = ["日", "月", "火", "水", "木", "金", "土"];
+const days =
+  chrome.i18n.getUILanguage() === "ja"
+    ? ["日", "月", "火", "水", "木", "金", "土"]
+    : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 type DayProps = {
   isToday?: boolean;
@@ -103,14 +106,14 @@ const MyCalender = (props: MyCalenderProps) => {
     <Box display="flex" flexDirection="column" gap={0.5}>
       <Box display="flex" justifyContent="space-between" alignItems="center" px={1}>
         <Typography variant="h6" fontSize="16px">
-          {year}年{month + 1}月
+          {format(new Date(year, month, 5), chrome.i18n.getMessage("calendarFormatMonth"))}
         </Typography>
         <ButtonGroup>
           <Button variant="text" size="small" color="primary" onClick={() => onMonthChange(-1)}>
-            前月
+            {chrome.i18n.getMessage("calendarPrevMonth")}
           </Button>
           <Button variant="text" size="small" color="primary" onClick={() => onMonthChange(1)}>
-            次月
+            {chrome.i18n.getMessage("calendarNextMonth")}
           </Button>
         </ButtonGroup>
       </Box>
@@ -158,7 +161,7 @@ const MyCalender = (props: MyCalenderProps) => {
         })}
       </Box>
       <Box px={1} py={0.5}>
-        <Typography fontSize="14px">{format(targetDay, "yyyy年MM月dd日")}</Typography>
+        <Typography fontSize="14px">{format(targetDay, chrome.i18n.getMessage("calendarFormatDay"))}</Typography>
         <Box display="flex" flexDirection="column" gap={0.5}>
           {events
             .filter((d) => format(d.startDate, "yyyy-MM-dd") === format(targetDay, "yyyy-MM-dd"))
@@ -239,7 +242,7 @@ export const Calender = () => {
     >
       <Box position="relative">
         <Typography variant="h6" sx={{ px: 0.5, textAlign: "left", fontSize: "16px" }}>
-          カレンダー
+          {chrome.i18n.getMessage("calendar")}
         </Typography>
         <ButtonGroup sx={{ position: "absolute", top: 0, right: 0 }}>
           <IconButton onClick={toggleOpen} size="small">

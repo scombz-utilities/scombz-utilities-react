@@ -63,6 +63,26 @@
     "message": " days left",
     "description": "日"
   },
+  "taskAddAlert": {
+    "message": "Please fill in the required fields.\nRequired fields are the title of the assignment, course title, and submission deadline.",
+    "description": "必須項目を入力してください。必須項目は課題名、科目名、提出期限です。"
+  },
+  "TaskAdded": {
+    "message": "Assignments added",
+    "description": "課題を追加しました"
+  },
+  "OriginalTaskAdd": {
+    "message": "Add Assignment",
+    "description": "自作課題追加"
+  },
+  "OriginalTaskURL": {
+    "message": "Assignment URL",
+    "description": "課題名"
+  },
+  "AddTask": {
+    "message": "Add",
+    "description": "タスクを追加"
+  },
   "hideTaskOk": {
     "message": "Are you sure you want to hide this task?\n\ntaskTitle",
     "description": "この課題を非表示にする"
@@ -94,6 +114,26 @@
   "notepadDeleteConfirm": {
     "message": "Are you sure you want to delete this note?\n\n_NOTE_",
     "description": "メモを削除"
+  },
+  "calendar": {
+    "message": "Calendar",
+    "description": "カレンダー"
+  },
+  "calendarNextMonth": {
+    "message": "Next",
+    "description": "次月"
+  },
+  "calendarPrevMonth": {
+    "message": "Previous",
+    "description": "前月"
+  },
+  "calendarFormatDay": {
+    "message": "MMMM dd, yyyy",
+    "description": "yyyy年MM月dd日"
+  },
+  "calendarFormatMonth": {
+    "message": "MMMM, yyyy",
+    "description": "yyyy年M月"
   },
   "dialogClose": {
     "message": "Close",
@@ -139,6 +179,18 @@
     "message": "Add link",
     "description": "リンク追加"
   },
+  "WidgetLinkTitle": {
+    "message": "Title",
+    "description": "タイトル"
+  },
+  "WidgetLinkAdd": {
+    "message": "Add",
+    "description": "追加"
+  },
+  "WidgetLinkAlert": {
+    "message": "Please enter a URL.",
+    "description": "URLを入力してください。"
+  },
   "notifications": {
     "message": "Notifications",
     "description": "お知らせ"
@@ -176,7 +228,7 @@
     "description": "PDF一括ダウンロード"
   },
   "numberBundleDownload": {
-    "message": "Download bundle of this episode",
+    "message": "Download bundle",
     "description": "この回を一括DL"
   },
   "downloading": {
@@ -188,7 +240,19 @@
     "description": "URL取得中..."
   },
   "generatingZip": {
-    "message": "Generating ZIP...(It will take a while)",
+    "message": "Generating ZIP...",
     "description": "ZIPファイル生成中...(時間がかかります)"
+  },
+  "openInNewTab": {
+    "message": "Open in new tab",
+    "description": "新しいタブで開く"
+  },
+  "openInNewTabBackground": {
+    "message": "Open in background",
+    "description": "バックグラウンドで開く"
+  },
+  "downloadLink": {
+    "message": "Save link",
+    "description": "リンク先をダウンロード"
   }
 }

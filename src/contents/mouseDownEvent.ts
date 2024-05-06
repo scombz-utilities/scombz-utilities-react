@@ -56,7 +56,7 @@ const onRightClick = (element: HTMLElement, x: number, y: number, url?: string) 
   const contextMenu = document.getElementById("scombzUtilitiesContextMenu");
 
   const buttonNormal = document.createElement("div");
-  buttonNormal.textContent = "新しいタブで開く";
+  buttonNormal.textContent = chrome.i18n.getMessage("openInNewTab");
   buttonNormal.classList.add("contextMenuButton");
   buttonNormal.addEventListener("click", (e) => {
     if (url) {
@@ -69,7 +69,7 @@ const onRightClick = (element: HTMLElement, x: number, y: number, url?: string) 
   });
 
   const buttonBack = document.createElement("div");
-  buttonBack.textContent = "バックグラウンドで開く";
+  buttonBack.textContent = chrome.i18n.getMessage("openInNewTabBackground");
   buttonBack.classList.add("contextMenuButton");
   buttonBack.addEventListener("click", (e) => {
     e.preventDefault();
@@ -85,7 +85,7 @@ const onRightClick = (element: HTMLElement, x: number, y: number, url?: string) 
   });
 
   const buttonDownload = document.createElement("div");
-  buttonDownload.textContent = "リンク先をダウンロード";
+  buttonDownload.textContent = chrome.i18n.getMessage("downloadLink");
   buttonDownload.classList.add("contextMenuButton");
   buttonDownload.addEventListener("click", async (e) => {
     e.preventDefault();
@@ -98,14 +98,14 @@ const onRightClick = (element: HTMLElement, x: number, y: number, url?: string) 
       openEndDate: elm.querySelector(".openEndDate").textContent,
       dlMaterialId: (elm.querySelector("#dlMaterialId") as HTMLInputElement).value,
     } as DownloadMetaData;
-    buttonDownload.textContent = "ダウンロード中...";
+    buttonDownload.textContent = chrome.i18n.getMessage("downloading");
     const donwloadURL = await getDownloadURL(data);
     const downloadAnchor = document.createElement("a");
     downloadAnchor.href = donwloadURL;
     downloadAnchor.download = data.fileName;
     downloadAnchor.click();
     contextMenu.style.display = "none";
-    buttonDownload.textContent = "リンク先をダウンロード";
+    buttonDownload.textContent = chrome.i18n.getMessage("downloadLink");
   });
 
   contextMenu.innerHTML = "";

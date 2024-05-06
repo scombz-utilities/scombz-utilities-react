@@ -47,7 +47,6 @@
     "message": "期限",
     "description": "期限"
   },
-
   "taskListAbout": {
     "message": "残り約",
     "description": "残り約"
@@ -63,6 +62,26 @@
   "taskListDaysLeft": {
     "message": "日",
     "description": "日"
+  },
+  "taskAddAlert": {
+    "message": "必須項目を入力してください。必須項目は課題名、科目名、提出期限です。",
+    "description": "必須項目を入力してください。必須項目は課題名、科目名、提出期限です。"
+  },
+  "TaskAdded": {
+    "message": "課題を追加しました。",
+    "description": "課題を追加しました"
+  },
+  "OriginalTaskAdd": {
+    "message": "自作課題追加",
+    "description": "自作課題追加"
+  },
+  "OriginalTaskURL": {
+    "message": "課題 URL",
+    "description": "課題URL"
+  },
+  "AddTask": {
+    "message": "タスクを追加",
+    "description": "タスクを追加"
   },
   "hideTaskOk": {
     "message": "課題『taskTitle』を非表示にしますか？",
@@ -95,6 +114,26 @@
   "notepadDeleteConfirm": {
     "message": "『_NOTE_』を削除しますか？",
     "description": "メモを削除"
+  },
+  "calendar": {
+    "message": "カレンダー",
+    "description": "カレンダー"
+  },
+  "calendarNextMonth": {
+    "message": "次月",
+    "description": "次月"
+  },
+  "calendarPrevMonth": {
+    "message": "前月",
+    "description": "前月"
+  },
+  "calendarFormatDay": {
+    "message": "yyyy年MM月dd日",
+    "description": "yyyy年MM月dd日"
+  },
+  "calendarFormatMonth": {
+    "message": "yyyy年M月",
+    "description": "yyyy年M月"
   },
   "dialogClose": {
     "message": "閉じる",
@@ -139,6 +178,18 @@
   "WidgetLinksAdd": {
     "message": "リンク追加",
     "description": "リンク追加"
+  },
+  "WidgetLinkTitle": {
+    "message": "タイトル",
+    "description": "タイトル"
+  },
+  "WidgetLinkAdd": {
+    "message": "追加",
+    "description": "追加"
+  },
+  "WidgetLinkAlert": {
+    "message": "Please enter a URL.",
+    "description": "URLを入力してください。"
   },
   "notifications": {
     "message": "お知らせ",
@@ -191,5 +242,17 @@
   "generatingZip": {
     "message": "ZIPファイル生成中...(時間がかかります)",
     "description": "ZIPファイル生成中...(時間がかかります)"
+  },
+  "openInNewTab": {
+    "message": "新しいタブで開く",
+    "description": "新しいタブで開く"
+  },
+  "openInNewTabBackground": {
+    "message": "バックグラウンドで開く",
+    "description": "バックグラウンドで開く"
+  },
+  "downloadLink": {
+    "message": "リンク先をダウンロード",
+    "description": "リンク先をダウンロード"
   }
 }
