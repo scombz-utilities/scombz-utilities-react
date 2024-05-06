@@ -99,7 +99,7 @@ export const Bus = () => {
     >
       <Box position="relative">
         <Typography variant="h6" sx={{ px: 0.5, textAlign: "left", fontSize: "16px" }}>
-          学バス
+          {chrome.i18n.getMessage("schoolBus")}
         </Typography>
         <ButtonGroup sx={{ position: "absolute", top: 0, right: 0 }}>
           <IconButton onClick={toggleDirection} size="small">
@@ -116,7 +116,9 @@ export const Bus = () => {
       <Collapse in={isBusOpen} timeout="auto">
         <Box sx={{ mb: 0.5, ml: 0.5 }}>
           <Typography fontSize="14px" variant="body1">
-            {busDirection === "bus_right" ? "大宮キャンパス発 東大宮駅行" : "東大宮駅発 大宮キャンパス行"}
+            {busDirection === "bus_right"
+              ? chrome.i18n.getMessage("schoolBusFromCampus")
+              : chrome.i18n.getMessage("schoolBusFromStation")}
           </Typography>
         </Box>
         <Paper>
@@ -125,7 +127,7 @@ export const Bus = () => {
               <TableBody>
                 {displayList.length === 0 && (
                   <TableRow>
-                    <TableCell>本日の営業は終了しました</TableCell>
+                    <TableCell>{chrome.i18n.getMessage("schoolBusNoBus")}</TableCell>
                   </TableRow>
                 )}
                 {displayList.length > 0 &&
@@ -139,7 +141,8 @@ export const Bus = () => {
                       <TableRow key={d.time}>
                         <TableCell sx={{ pl: "10px", pr: "0", width: "40px" }}>
                           <Typography fontSize="14px" variant="body1" width="30px" textAlign="right">
-                            {d.time}時
+                            {d.time}
+                            {chrome.i18n.getUILanguage() === "ja" ? "時" : ""}
                           </Typography>
                         </TableCell>
                         <TableCell sx={{ pr: "8px" }}>

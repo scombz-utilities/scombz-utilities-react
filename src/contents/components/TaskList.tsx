@@ -90,9 +90,11 @@ const TaskTableCell = (props: TaskTableCellProps) => {
 
 const getRelativeTime = (date: Date, now: Date): string => {
   const diff = differenceInMinutes(date, now);
-  if (diff < 180) return `残り約${diff}分`;
-  if (diff < 1440) return `残り約${Math.floor(diff / 60)}時間`;
-  return `残り約${Math.floor(diff / 1440)}日`;
+  if (diff < 180)
+    return `${chrome.i18n.getMessage("taskListAbout")}${diff}${chrome.i18n.getMessage("taskListMinsLeft")}`;
+  if (diff < 1440)
+    return `${chrome.i18n.getMessage("taskListAbout")}${Math.floor(diff / 60)}${chrome.i18n.getMessage("taskListHoursLeft")}`;
+  return `${chrome.i18n.getMessage("taskListAbout")}${Math.floor(diff / 1440)}${chrome.i18n.getMessage("taskListDaysLeft")}`;
 };
 
 type TaskTableProps = {
@@ -136,7 +138,7 @@ const TaskTable = (props: TaskTableProps) => {
 
   const hideTask = useCallback(
     (task: Task) => {
-      if (confirm(`課題『${task.title}』を非表示にしますか？`)) {
+      if (confirm(chrome.i18n.getMessage("hideTaskOk").replace("taskTitle", task.title))) {
         addHiddenTaskId(task.id);
       }
     },
@@ -169,15 +171,15 @@ const TaskTable = (props: TaskTableProps) => {
           <Table size="small">
             <TableHead>
               <TableRow>
-                {width > 880 && <TaskTableCell>科目</TaskTableCell>}
-                <TaskTableCell>課題名</TaskTableCell>
+                {width > 880 && <TaskTableCell>{chrome.i18n.getMessage("taskListSubject")}</TaskTableCell>}
+                <TaskTableCell>{chrome.i18n.getMessage("taskListTaskName")}</TaskTableCell>
                 <TaskTableCell>
                   <Box
                     onClick={toggleRelativeTime}
                     sx={{ cursor: "pointer", userSelect: "none", display: "flex", alignItems: "center", gap: "2px" }}
                   >
                     <Typography display="block" fontSize="0.75rem">
-                      期限
+                      {chrome.i18n.getMessage("taskListDeadline")}
                     </Typography>
                     <Box display="flex" fontSize="0.75rem" alignItems="center" sx={{ opacity: 0.5 }}>
                       <HiOutlineSwitchHorizontal />
@@ -189,7 +191,7 @@ const TaskTable = (props: TaskTableProps) => {
             <TableBody>
               {tasklist.length === 0 && (
                 <TableRow>
-                  <TaskTableCell sx={{ width: "100%" }}>課題はありません</TaskTableCell>
+                  <TaskTableCell sx={{ width: "100%" }}>{chrome.i18n.getMessage("taskListNoTask")}</TaskTableCell>
                 </TableRow>
               )}
               {displayTaskList.map((task, index) => {
@@ -365,10 +367,10 @@ export const TaskList = (props: Props) => {
       >
         <Box position="relative" display="flex" alignItems="center">
           <Typography variant="h6" sx={{ px: 0.5, textAlign: "left", fontSize: "16px" }}>
-            課題一覧
+            {chrome.i18n.getMessage("taskList")}
           </Typography>
           <Typography variant="caption" sx={{ px: 0.5, textAlign: "left", fontSize: "12px", opacity: 0.7 }}>
-            (最終更新: {format(lastUpdate, "MM/dd HH:mm")})
+            ({chrome.i18n.getMessage("taskListLastUpdate")}: {format(lastUpdate, "MM/dd HH:mm")})
           </Typography>
           <ButtonGroup sx={{ position: "absolute", top: 0, right: 0 }}>
             <IconButton size="small" onClick={() => setIsOpenAddModal(true)}>

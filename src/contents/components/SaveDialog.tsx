@@ -2,7 +2,6 @@ import { LoadingButton } from "@mui/lab";
 import {
   Button,
   FormControl,
-  Link,
   Stack,
   Box,
   Typography,
@@ -74,7 +73,7 @@ export const SaveDialog = () => {
         anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
       >
         <Alert severity="error">
-          <Typography variant={"subtitle1"}>学籍番号またはパスワードが正しくありません。</Typography>
+          <Typography variant={"subtitle1"}>{chrome.i18n.getMessage("dialogIncorrectPassword")}</Typography>
         </Alert>
       </Snackbar>
       <Stack
@@ -102,16 +101,12 @@ export const SaveDialog = () => {
               <img src={chrome.runtime.getURL("assets/logo.webp")} width={48} height={48} />
               <Box>
                 <Typography variant="subtitle2">
-                  ScombZ Utilitiesに保存すると自動ログインできます。
+                  {chrome.i18n.getMessage("dialogDescription")}
                   <br />
-                  保存したログイン情報は
-                  <Link href="#" onClick={openSettings}>
-                    設定
-                  </Link>
-                  から変更できます。
+                  {chrome.i18n.getMessage("dialogDescription2")}
                 </Typography>
                 <Typography color={"gray"} variant="caption">
-                  ※設定はPC本体のみに保存されます。
+                  {chrome.i18n.getMessage("dialogDescription3")}
                 </Typography>
               </Box>
             </Box>
@@ -143,7 +138,7 @@ export const SaveDialog = () => {
                 </IconButton>
                 <label htmlFor="scombz-utilities-close">
                   <Typography variant={"subtitle1"} color={"gray"}>
-                    閉じる
+                    {chrome.i18n.getMessage("dialogClose")}
                   </Typography>
                 </label>
               </Box>
@@ -158,7 +153,7 @@ export const SaveDialog = () => {
                 }}
               >
                 <Button variant={"outlined"} onClick={openSettings}>
-                  設定
+                  {chrome.i18n.getMessage("dialogOpenOptions")}
                 </Button>
                 <LoadingButton
                   variant={"contained"}
@@ -167,7 +162,7 @@ export const SaveDialog = () => {
                   onClick={saveUser}
                   type="submit"
                 >
-                  保存
+                  {chrome.i18n.getMessage("dialogSave")}
                 </LoadingButton>
               </Box>
             </Box>
@@ -178,7 +173,7 @@ export const SaveDialog = () => {
               <MdOpenInFull />
             </IconButton>
             <label htmlFor="scombz-utilities-open">
-              <Typography variant={"subtitle1"}>ここを開いてScombZ Utilitiesに保存</Typography>
+              <Typography variant={"subtitle1"}>{chrome.i18n.getMessage("dialogClickToOpen")}</Typography>
             </label>
           </Box>
         )}

@@ -94,7 +94,7 @@ export const Links = () => {
       >
         <Box position="relative">
           <Typography variant="h6" sx={{ px: 0.5, textAlign: "left", fontSize: "16px" }}>
-            リンク集
+            {chrome.i18n.getMessage("WidgetLinks")}
           </Typography>
           <ButtonGroup sx={{ position: "absolute", top: 0, right: 0 }}>
             <IconButton size="small" onClick={() => setIsAddLinkModalOpen(true)}>
@@ -142,7 +142,7 @@ export const Links = () => {
                   <MdAdd />
                 </Box>
                 <Typography variant="caption" sx={{ textAlign: "center" }}>
-                  リンク追加
+                  {chrome.i18n.getMessage("WidgetLinksAdd")}
                 </Typography>
               </Paper>
             )}

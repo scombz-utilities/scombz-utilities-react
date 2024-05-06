@@ -22,6 +22,16 @@ const styleSidemenu = async () => {
   link.rel = "stylesheet";
   document.head.appendChild(link);
 
+  // 英語だといくつか改行されてしまう
+  const anchors = document.querySelectorAll(
+    "a.sidemenu-link.sidemenu-lms-link.sidemenu-link-txt.task-color.sidemenu-icon",
+  ) as NodeListOf<HTMLAnchorElement>;
+  for (const anchor of anchors) {
+    if (anchor.textContent?.length > 19) {
+      anchor.style.paddingTop = "2px";
+    }
+  }
+
   //LMSページ飛び出る問題
   if (location.href.includes("https://scombz.shibaura-it.ac.jp/lms/course?")) {
     const contentsDetails = document.querySelectorAll(".contents-detail");
@@ -81,8 +91,8 @@ const styleSidemenu = async () => {
       "afterend",
       `
         <br>
-        <a class="sidemenu-link sidemenu-lms-link sidemenu-link-txt info-color sidemenu-icon info-icon" href="https://scombz.shibaura-it.ac.jp/portal/home/information/list" style="height: 50px;border-top: 1px solid #CCC;">お知らせ</a>
-        <a class="sidemenu-link sidemenu-lms-link sidemenu-link-txt questionnaire-color sidemenu-icon questionnaire-icon" href="https://scombz.shibaura-it.ac.jp/portal/surveys/list" style="height: 50px;">アンケート</a>
+        <a class="sidemenu-link sidemenu-lms-link sidemenu-link-txt info-color sidemenu-icon info-icon" href="https://scombz.shibaura-it.ac.jp/portal/home/information/list" style="height: 50px;border-top: 1px solid #CCC;">${chrome.i18n.getMessage("notifications")}</a>
+        <a class="sidemenu-link sidemenu-lms-link sidemenu-link-txt questionnaire-color sidemenu-icon questionnaire-icon" href="https://scombz.shibaura-it.ac.jp/portal/surveys/list" style="height: 50px;">${chrome.i18n.getMessage("surveys")}</a>
         `,
     );
   }

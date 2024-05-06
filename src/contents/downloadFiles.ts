@@ -66,7 +66,7 @@ const downloadFilesMain = (dlLabels, btn, defaultButtonTextContent: string) => {
   const downloadFileRoutine = (label: HTMLElement) => {
     // zip ファイルで画像をダウンロード
     const generateZip = (images) => {
-      btn.textContent = "ZIPファイル生成中...(時間がかかります)";
+      btn.textContent = chrome.i18n.getMessage("generatingZip");
       const zip = new JSZip();
 
       // フォルダ作成
@@ -137,7 +137,7 @@ const downloadFilesMain = (dlLabels, btn, defaultButtonTextContent: string) => {
             xhr.responseType = "blob";
             xhr.onload = function () {
               downloadCount++;
-              btn.textContent = "ダウンロード中...(" + downloadCount + "/" + urls.length + ")";
+              btn.textContent = `${chrome.i18n.getMessage("downloading")}(${downloadCount}/${urls.length})`;
               // ファイル名とデータ返却
               const fileName = resultNames[i];
               resolve({ data: this.response, fileName: fileName });
@@ -174,14 +174,14 @@ const downloadFilesMain = (dlLabels, btn, defaultButtonTextContent: string) => {
         resultURLs.push(resultURL);
         resultNames.push(data.fileName);
 
-        btn.textContent = `URL取得中...(${resultURLs.length}/${dlLabels.length})`;
+        btn.textContent = `${chrome.i18n.getMessage("gettingURL")}(${resultURLs.length}/${dlLabels.length})`;
 
         if (resultURLs.length < dlLabels.length) {
           setTimeout(() => {
             downloadFileRoutine(dlLabels[resultURLs.length]);
           }, 100);
         } else {
-          btn.textContent = `ダウンロード中...(0/${resultURLs.length})`;
+          btn.textContent = `${chrome.i18n.getMessage("downloading")}(0/${resultURLs.length})`;
           setTimeout(() => {
             dlZip(resultURLs);
           }, 100);
@@ -211,7 +211,7 @@ const downloadFileBundle = async () => {
     if (check == null) return;
     (document.querySelector("#courseContent #materialTitle") as HTMLElement).style.position = "relative";
 
-    const overallDownloadButtonText = "PDF一括ダウンロード";
+    const overallDownloadButtonText = chrome.i18n.getMessage("pdfBundleDownload");
     const link = document.createElement("link");
     link.href = chrome.runtime.getURL("css/download_bundle.css"); // 新しいCSSファイルのパス
     link.type = "text/css";
@@ -231,11 +231,11 @@ const downloadFileBundle = async () => {
       );
       if (dlLabels.length === 0) return;
       this.classList.add("clicked");
-      this.textContent = "URL取得中...";
+      this.textContent = chrome.i18n.getMessage("gettingURL");
       downloadFilesMain(dlLabels, this, overallDownloadButtonText);
     });
     // 回ごとのDL
-    const sessionDownloadButtonText = "この回を一括DL";
+    const sessionDownloadButtonText = chrome.i18n.getMessage("numberBundleDownload");
     const titles = [
       ...document.querySelectorAll(
         "#materialContents > #materialList > .contents-detail.clearfix > .block-title.material-sub-color.block-wide.break > label.bold-txt",
@@ -268,7 +268,7 @@ const downloadFileBundle = async () => {
         }
         if (dlLabels.length === 0) return;
         this.classList.add("clicked");
-        this.textContent = "URL取得中...";
+        this.textContent = chrome.i18n.getMessage("gettingURL");
         downloadFilesMain(dlLabels, this, sessionDownloadButtonText);
       });
     });

@@ -1,0 +1,195 @@
+{
+  "extensionName": {
+    "message": "with-locales-i18n-en",
+    "description": "拡張機能名"
+  },
+  "extensionDescription": {
+    "message": "ScombZを使いやすくカスタムする拡張機能",
+    "description": "拡張機能説明"
+  },
+  "timetablePeriod": {
+    "message": "時限",
+    "description": "時限"
+  },
+  "timetablePeriodSubscription": {
+    "message": "限",
+    "description": "n限目の限"
+  },
+  "timetableNoClassToday": {
+    "message": "本日の授業はありません",
+    "description": "本日の授業はありません"
+  },
+  "timetableIntensiveCourse": {
+    "message": "その他の授業",
+    "description": "集中講義"
+  },
+  "taskList": {
+    "message": "課題一覧",
+    "description": "課題一覧"
+  },
+  "taskListLastUpdate": {
+    "message": "最終更新",
+    "description": "最終更新"
+  },
+  "taskListNoTask": {
+    "message": "課題はありません",
+    "description": "課題はありません"
+  },
+  "taskListSubject": {
+    "message": "科目",
+    "description": "科目"
+  },
+  "taskListTaskName": {
+    "message": "課題名",
+    "description": "課題名"
+  },
+  "taskListDeadline": {
+    "message": "期限",
+    "description": "期限"
+  },
+
+  "taskListAbout": {
+    "message": "残り約",
+    "description": "残り約"
+  },
+  "taskListMinsLeft": {
+    "message": "分",
+    "description": "分"
+  },
+  "taskListHoursLeft": {
+    "message": "時間",
+    "description": "時間"
+  },
+  "taskListDaysLeft": {
+    "message": "日",
+    "description": "日"
+  },
+  "hideTaskOk": {
+    "message": "課題『taskTitle』を非表示にしますか？",
+    "description": "この課題を非表示にする"
+  },
+  "schoolBus": {
+    "message": "学バス",
+    "description": "学バス"
+  },
+  "schoolBusFromCampus": {
+    "message": "大宮キャンパス発 東大宮駅行",
+    "description": "大宮キャンパス発 東大宮駅行"
+  },
+  "schoolBusFromStation": {
+    "message": "東大宮駅発 大宮キャンパス行",
+    "description": "東大宮駅発 大宮キャンパス行"
+  },
+  "schoolBusNoBus": {
+    "message": "本日の営業は終了しました",
+    "description": "本日の営業は終了しました"
+  },
+  "notepad": {
+    "message": "メモ",
+    "description": "メモ"
+  },
+  "notepadAdd": {
+    "message": "メモを追加",
+    "description": "メモを追加"
+  },
+  "notepadDeleteConfirm": {
+    "message": "『_NOTE_』を削除しますか？",
+    "description": "メモを削除"
+  },
+  "dialogClose": {
+    "message": "閉じる",
+    "description": "閉じる"
+  },
+  "dialogOpenOptions": {
+    "message": "設定",
+    "description": "設定を開く"
+  },
+  "dialogSave": {
+    "message": "保存",
+    "description": "保存"
+  },
+  "dialogCancel": {
+    "message": "キャンセル",
+    "description": "キャンセル"
+  },
+  "dialogDescription": {
+    "message": "ScombZ Utilitiesに保存すると自動ログインできます。",
+    "description": "ScombZ Utilitiesに保存すると自動ログインできます。"
+  },
+  "dialogDescription2": {
+    "message": "保存したログイン情報は拡張機能設定から変更できます。",
+    "description": "保存したログイン情報は拡張機能設定から変更できます。"
+  },
+  "dialogDescription3": {
+    "message": "※設定はPC本体のみに保存されます。",
+    "description": "※設定はPC本体のみに保存されます。"
+  },
+  "dialogIncorrectPassword": {
+    "message": "学籍番号またはパスワードが正しくありません。",
+    "description": "学籍番号またはパスワードが正しくありません。"
+  },
+  "dialogClickToOpen": {
+    "message": "ここを開いてScombZ Utilitiesに保存",
+    "description": "ここを開いてScombZ Utilitiesに保存"
+  },
+  "WidgetLinks": {
+    "message": "リンク集",
+    "description": "リンク集"
+  },
+  "WidgetLinksAdd": {
+    "message": "リンク追加",
+    "description": "リンク追加"
+  },
+  "notifications": {
+    "message": "お知らせ",
+    "description": "お知らせ"
+  },
+  "surveys": {
+    "message": "アンケート",
+    "description": "アンケート"
+  },
+  "extensionOption": {
+    "message": "拡張機能設定",
+    "description": "拡張機能設定"
+  },
+  "openExtensionOptionDescription1": {
+    "message": "シラバス表示をするには",
+    "description": "シラバス表示をするには"
+  },
+  "openExtensionOptionDescription2": {
+    "message": "から学部を設定してください。",
+    "description": "から学部を設定してください。"
+  },
+  "displayThisSurveyForTaskList": {
+    "message": "この科目のアンケートを課題一覧に表示する",
+    "description": "この科目のアンケートを課題一覧に表示する"
+  },
+  "openSyllabus": {
+    "message": "シラバスを表示",
+    "description": "シラバスを表示"
+  },
+  "openSyllabusDescription": {
+    "message": "※自動検索で関連付けているため、違う教科のシラバスが開かれることがあります。",
+    "description": "※自動検索で関連付けているため、違う教科のシラバスが開かれることがあります。"
+  },
+  "pdfBundleDownload": {
+    "message": "PDF一括ダウンロード",
+    "description": "PDF一括ダウンロード"
+  },
+  "numberBundleDownload": {
+    "message": "この回を一括DL",
+    "description": "この回を一括DL"
+  },
+  "downloading": {
+    "message": "ダウンロード中...",
+    "description": "ダウンロード中..."
+  },
+  "gettingURL": {
+    "message": "URL取得中...",
+    "description": "URL取得中..."
+  },
+  "generatingZip": {
+    "message": "ZIPファイル生成中...(時間がかかります)",
+    "description": "ZIPファイル生成中...(時間がかかります)"
+  }
+}

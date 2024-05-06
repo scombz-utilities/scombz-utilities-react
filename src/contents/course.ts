@@ -28,7 +28,7 @@ const insertSurveyBtnOnSubj = async () => {
           <div class="noticeSurveyBox">
             <input class="ItemBox-CheckBox-Input" type="checkbox" id="noticeSurvey"></input>
             <label class="ItemBox-CheckBox-Label" for="noticeSurvey"></label>
-            <span>この科目のアンケートを課題一覧に表示する</span>
+            <span>${chrome.i18n.getMessage("displayThisSurveyForTaskList")}</span>
           </div>`,
       );
       const pageUrl = location.href;
@@ -174,7 +174,7 @@ const markdownNotePad = (): void => {
   <div class="contents-title">
     <div class="contents-title-txt">
       <div class="course-view-title-txt" style="min-height:1em;">
-        <span style="float:left;">メモ</span><span id="mdNotepadAdd"></span>
+        <span style="float:left;">${chrome.i18n.getMessage("notepad")}</span><span id="mdNotepadAdd"></span>
       </div>
       <div id="mdNotepadArea"></div>
     </div>
@@ -199,8 +199,8 @@ const markdownNotePad = (): void => {
         "beforeend",
         `
           <div class="md-exp">
-            <a id="mdSaveButton" class="btn btn-inline btn-file-margin btn-txt btn-color">保存する</a>
-            <a id="mdCancelButton" class="btn btn-inline btn-file-margin btn-txt btn-color">キャンセル</a>
+            <a id="mdSaveButton" class="btn btn-inline btn-file-margin btn-txt btn-color">${chrome.i18n.getMessage("dialogSave")}</a>
+            <a id="mdCancelButton" class="btn btn-inline btn-file-margin btn-txt btn-color">${chrome.i18n.getMessage("dialogCancel")}</a>
           </div>`,
       );
     }
@@ -245,9 +245,10 @@ const createSyllabusButton = async () => {
     insertArea.insertAdjacentHTML(
       "afterend",
       `<span style="color:red;padding: 12px 30px 10px 34px">
-        シラバス表示をするには
-        <a href="javascript:void(0);" id="link_to_extention_syll">拡張機能設定</a>
-        から学部を設定してください。</span>
+        ${chrome.i18n.getMessage("openExtensionOptionDescription1")}
+        <a href="javascript:void(0);" id="link_to_extention_syll">${chrome.i18n.getMessage("extensionOption")}</a>
+        ${chrome.i18n.getMessage("openExtensionOptionDescription2")}
+        </span>
     `,
     );
     document.getElementById("link_to_extention_syll")?.addEventListener("click", () => {
@@ -264,8 +265,8 @@ const createSyllabusButton = async () => {
 
   insertArea.insertAdjacentHTML(
     "afterend",
-    `<a href="http://syllabus.sic.shibaura-it.ac.jp/namazu/namazu.cgi?${urlParam}"  target="_blank" rel="noopener noreferrer" class="btn btn-square btn-square-area btn-txt white-btn-color" style="margin-left:40px;margin-bottom:5px;">シラバスを表示</a>
-    <span style="margin-left:35px;margin-bottom:10px;font-size:60%;">※自動検索で関連付けているため、違う教科のシラバスが開かれることがあります。</span>
+    `<a href="http://syllabus.sic.shibaura-it.ac.jp/namazu/namazu.cgi?${urlParam}"  target="_blank" rel="noopener noreferrer" class="btn btn-square btn-square-area btn-txt white-btn-color" style="margin-left:40px;margin-bottom:5px;">${chrome.i18n.getMessage("openSyllabus")}</a>
+    <span style="margin-left:35px;margin-bottom:10px;font-size:60%;">${chrome.i18n.getMessage("openSyllabusDescription")}</span>
     `,
   );
 };
