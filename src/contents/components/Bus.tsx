@@ -115,12 +115,12 @@ export const Bus = () => {
                     const nowMin = new Date().getMinutes();
                     return (
                       <TableRow key={d.time}>
-                        <TableCell width="50px">
-                          <Typography fontSize="14px" variant="body1" width="50px">
+                        <TableCell sx={{ pl: "10px", pr: "0", width: "40px" }}>
+                          <Typography fontSize="14px" variant="body1" width="30px" textAlign="right">
                             {d.time}時
                           </Typography>
                         </TableCell>
-                        <TableCell>
+                        <TableCell sx={{ pr: "8px" }}>
                           <Box display="flex" flexWrap="wrap" gap="8px">
                             {numArray.map((min) => (
                               <Typography

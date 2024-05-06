@@ -55,6 +55,19 @@ const MenuWidget = () => {
     });
   }, []);
 
+  useEffect(() => {
+    const onEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isMenuOpen) {
+        document.getElementById("sidemenuClose")?.click();
+      }
+    };
+    document.addEventListener("keydown", onEscape);
+
+    return () => {
+      document.removeEventListener("keydown", onEscape);
+    };
+  }, [isMenuOpen]);
+
   const useCalender = useMemo(() => widgetOrder.includes("Calender"), [widgetOrder]);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -93,8 +106,14 @@ const MenuWidget = () => {
               {useTaskList && <WidgetWrapper widget="TaskList" width={width} />}
               {/* カレンダーがある時は縦幅を占有するのでカレンダーだけ1列にする */}
               {columnCount === 2 && useCalender && (
-                <Box sx={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "10px", px: "2px" }}>
-                  <WidgetWrapper widget="Calender" width={width} />
+                <Box
+                  sx={{
+                    display: "grid",
+                    gridTemplateColumns: `repeat(${width > 1100 ? 2 : 1}, 1fr)`,
+                    gap: "10px",
+                    px: "2px",
+                  }}
+                >
                   <Box sx={{ display: "grid", gridTemplateColumns: "repeat(1, 1fr)", gap: "10px" }}>
                     {widgetOrder
                       .filter((widgetName) => widgetName !== "Calender")
@@ -102,6 +121,7 @@ const MenuWidget = () => {
                         <WidgetWrapper key={widgetName} widget={widgetName} width={width} />
                       ))}
                   </Box>
+                  <WidgetWrapper widget="Calender" width={width} />
                 </Box>
               )}
               {/* カレンダーがない時、1列の時はそのまま並べる */}
