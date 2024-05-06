@@ -35,29 +35,28 @@ export const Bus = () => {
         setBusList(currentData.scombzData.busList);
         return;
       }
-      chrome.runtime.sendMessage(
-        { action: "getJson", url: "http://bus.shibaura-it.ac.jp/db/bus_data.json" } as RuntimeMessage,
-        (response: Root) => {
-          const today = new Date();
-          const calendarList: Calendar[] = response.calendar;
-          const targetCalendar = calendarList.find((calendar) => Number(calendar.month) === today.getMonth() + 1);
-          const targetCalendarId = targetCalendar.list.find((d) => Number(d.day) === today.getDate()).ts_id;
+      const response: Root = await chrome.runtime.sendMessage({
+        action: "getJson",
+        url: "http://bus.shibaura-it.ac.jp/db/bus_data.json",
+      } as RuntimeMessage);
 
-          const timeSheetList: Timesheet[] = response.timesheet;
-          const targetTimeSheet = timeSheetList.find((timesheet) => timesheet.ts_id === targetCalendarId);
-          const targetList = targetTimeSheet ? targetTimeSheet.list : [];
-          setBusList(targetList);
-          chrome.storage.local.get(defaultSaves, (data: Saves) => {
-            chrome.storage.local.set({
-              scombzData: {
-                ...data.scombzData,
-                busList: targetList,
-                lastBusFetchUnixTime: new Date().getTime(),
-              },
-            });
-          });
-        },
-      );
+      const today = new Date();
+      const calendarList: Calendar[] = response.calendar;
+      const targetCalendar = calendarList.find((calendar) => Number(calendar.month) === today.getMonth() + 1);
+      const targetCalendarId = targetCalendar.list.find((d) => Number(d.day) === today.getDate()).ts_id;
+      const timeSheetList: Timesheet[] = response.timesheet;
+      const targetTimeSheet = timeSheetList.find((timesheet) => timesheet.ts_id === targetCalendarId);
+      const targetList = targetTimeSheet ? targetTimeSheet.list : [];
+      setBusList(targetList);
+      chrome.storage.local.get(defaultSaves, (data: Saves) => {
+        chrome.storage.local.set({
+          scombzData: {
+            ...data.scombzData,
+            busList: targetList,
+            lastBusFetchUnixTime: new Date().getTime(),
+          },
+        });
+      });
     };
     fetchBusData();
   }, []);
@@ -91,7 +90,7 @@ export const Bus = () => {
     >
       <Box position="relative">
         <Typography variant="h6" sx={{ px: 0.5, textAlign: "left", fontSize: "16px" }}>
-          学バス 大宮キャンパス発
+          学バス
         </Typography>
         <ButtonGroup sx={{ position: "absolute", top: 0, right: 0 }}>
           <IconButton size="small" href="http://bus.shibaura-it.ac.jp/" target="_blank">
@@ -103,7 +102,12 @@ export const Bus = () => {
         </ButtonGroup>
       </Box>
       <Collapse in={isBusOpen} timeout="auto">
-        <Paper sx={{ mt: 0.8 }}>
+        <Box sx={{ mb: 0.5, ml: 0.5 }}>
+          <Typography fontSize="14px" variant="body1">
+            大宮キャンパス発
+          </Typography>
+        </Box>
+        <Paper>
           <TableContainer>
             <Table size="small">
               <TableBody>

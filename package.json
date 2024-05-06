@@ -65,7 +65,7 @@
       "storage"
     ],
     "host_permissions": [
-      "https://*/*"
+      "http://bus.shibaura-it.ac.jp/"
     ]
   }
 }
