@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import { useState, useEffect } from "react";
+import { HiOutlineSwitchHorizontal } from "react-icons/hi";
 import { LuTableProperties } from "react-icons/lu";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import type { Root, Timesheet, Calendar, List } from "../types/bus";
@@ -24,8 +25,14 @@ export const Bus = () => {
   const [busList, setBusList] = useState<List[]>([]);
   const [displayList, setDisplayList] = useState<List[]>([]);
 
+  const [busDirection, setBusDirection] = useState<"bus_right" | "bus_left">("bus_right");
+
   const toggleOpen = () => {
     setIsBusOpen(!isBusOpen);
+  };
+
+  const toggleDirection = () => {
+    setBusDirection(busDirection === "bus_right" ? "bus_left" : "bus_right");
   };
 
   useEffect(() => {
@@ -67,7 +74,9 @@ export const Bus = () => {
       setDisplayList(
         busList
           .filter((d) => Number(d.time) === nowTime.getHours() || Number(d.time) === nowTime.getHours() + 1)
-          .filter((d) => d.bus_right.num1 || d.bus_right.num2 || d.bus_right.memo1 || d.bus_right.memo2),
+          .filter(
+            (d) => d[busDirection].num1 || d[busDirection].num2 || d[busDirection].memo1 || d[busDirection].memo2,
+          ),
       );
     };
     logic();
@@ -93,6 +102,9 @@ export const Bus = () => {
           学バス
         </Typography>
         <ButtonGroup sx={{ position: "absolute", top: 0, right: 0 }}>
+          <IconButton onClick={toggleDirection} size="small">
+            <HiOutlineSwitchHorizontal />
+          </IconButton>
           <IconButton size="small" href="http://bus.shibaura-it.ac.jp/" target="_blank">
             <LuTableProperties />
           </IconButton>
@@ -104,7 +116,7 @@ export const Bus = () => {
       <Collapse in={isBusOpen} timeout="auto">
         <Box sx={{ mb: 0.5, ml: 0.5 }}>
           <Typography fontSize="14px" variant="body1">
-            大宮キャンパス発
+            {busDirection === "bus_right" ? "大宮キャンパス発 東大宮駅行" : "東大宮駅発 大宮キャンパス行"}
           </Typography>
         </Box>
         <Paper>
@@ -118,8 +130,10 @@ export const Bus = () => {
                 )}
                 {displayList.length > 0 &&
                   displayList.map((d, i) => {
-                    const numArray = [...d.bus_right.num1.split("."), ...d.bus_right.num2.split(".")].filter((d) => d);
-                    const memo = (d.bus_right.memo1 + "\n" + d.bus_right.memo2).trim();
+                    const numArray = [...d[busDirection].num1.split("."), ...d[busDirection].num2.split(".")].filter(
+                      (d) => d,
+                    );
+                    const memo = (d[busDirection].memo1 + "\n" + d[busDirection].memo2).trim();
                     const nowMin = new Date().getMinutes();
                     return (
                       <TableRow key={d.time}>
