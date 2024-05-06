@@ -59,10 +59,9 @@ export const getDownloadURL = async (data: DownloadMetaData): Promise<string> =>
   return resultURL;
 };
 
-const downloadFilesMain = (dlLabels, btn) => {
+const downloadFilesMain = (dlLabels, btn, defaultButtonTextContent: string) => {
   const resultURLs = [];
   const resultNames = [];
-  const defaultButtonTextContent = btn.textContent;
 
   const downloadFileRoutine = (label: HTMLElement) => {
     // zip ファイルで画像をダウンロード
@@ -212,6 +211,7 @@ const downloadFileBundle = async () => {
     if (check == null) return;
     (document.querySelector("#courseContent #materialTitle") as HTMLElement).style.position = "relative";
 
+    const overallDownloadButtonText = "PDF一括ダウンロード";
     const link = document.createElement("link");
     link.href = chrome.runtime.getURL("css/download_bundle.css"); // 新しいCSSファイルのパス
     link.type = "text/css";
@@ -222,7 +222,7 @@ const downloadFileBundle = async () => {
       "afterbegin",
       `
       <div style="position: absolute; left: 10px; top: 10px;">
-        <div id="downloadFileBundle" class="btn btn-primary btn-sm" style="margin-right: 5px;">PDF一括ダウンロード</div>
+        <div id="downloadFileBundle" class="btn btn-primary btn-sm" style="margin-right: 5px;">${overallDownloadButtonText}</div>
       </div>`,
     );
     document.querySelector("#downloadFileBundle").addEventListener("click", function () {
@@ -232,9 +232,10 @@ const downloadFileBundle = async () => {
       if (dlLabels.length === 0) return;
       this.classList.add("clicked");
       this.textContent = "URL取得中...";
-      downloadFilesMain(dlLabels, this);
+      downloadFilesMain(dlLabels, this, overallDownloadButtonText);
     });
     // 回ごとのDL
+    const roundDownloadButtonText = "この回を一括DL";
     const titles = [
       ...document.querySelectorAll(
         "#materialContents > #materialList > .contents-detail.clearfix > .block-title.material-sub-color.block-wide.break > label.bold-txt",
@@ -252,7 +253,7 @@ const downloadFileBundle = async () => {
           "beforeend",
           `
                 <div class="utilities-dl-file-button" data-title="${titles[i]}">
-                    この回を一括DL
+                    ${roundDownloadButtonText}
                 </div>
                 `,
         );
@@ -268,7 +269,7 @@ const downloadFileBundle = async () => {
         if (dlLabels.length === 0) return;
         this.classList.add("clicked");
         this.textContent = "URL取得中...";
-        downloadFilesMain(dlLabels, this);
+        downloadFilesMain(dlLabels, this, roundDownloadButtonText);
       });
     });
   }, 500);
