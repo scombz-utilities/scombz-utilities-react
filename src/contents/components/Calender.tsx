@@ -1,9 +1,11 @@
 import { Box, IconButton, Typography, ButtonGroup, Collapse, Button } from "@mui/material";
+import { deepOrange, indigo } from "@mui/material/colors";
 import { lastDayOfMonth, format } from "date-fns";
 import ICAL from "ical";
 import { useState, useEffect, useMemo } from "react";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import type { CalEvent } from "../types/calender";
+import { holidays } from "~constants";
 import { defaultSaves, type Saves } from "~settings";
 
 const days = ["日", "月", "火", "水", "木", "金", "土"];
@@ -16,17 +18,30 @@ type DayProps = {
   date?: number;
   onClick?: (date: number) => void;
   isSelected?: boolean;
+  holiday?: undefined | string;
 };
 const Day = (props: DayProps) => {
-  const { isToday, isSunday, isSaturday, events, date, onClick, isSelected } = props;
+  const { isToday, isSunday, isSaturday, events, date, onClick, isSelected, holiday } = props;
   return (
     <Box
-      bgcolor={isToday ? "#f2c973" : isSelected ? "#dfdfdf" : date ? "#fff" : "inherit"}
+      bgcolor={isToday ? "#f2c973" : isSelected ? "#dfdfdf" : "#fff"}
       p={0.2}
-      sx={{ cursor: date ? "pointer" : "default" }}
+      sx={{ cursor: date ? "pointer" : "default", opacity: date ? 1 : 0, position: "relative" }}
       onClick={() => onClick?.(date)}
     >
-      <Typography color={isSunday ? "error" : isSaturday ? "secondary" : undefined}>{date}</Typography>
+      {holiday && !holiday.includes("振替休日") && (
+        <Typography
+          variant="body2"
+          fontSize="9px"
+          color={deepOrange[700]}
+          sx={{ position: "absolute", top: 6, right: 0, width: "calc(100% - 12px)", lineHeight: "9px" }}
+        >
+          {holiday}
+        </Typography>
+      )}
+      <Typography color={isSunday || holiday ? deepOrange[700] : isSaturday ? indigo[700] : undefined}>
+        {date}
+      </Typography>
       <Box display="flex" flexDirection="column" gap={0.2}>
         {events
           ?.map((d) => d.summary.replace(/【レポート】/g, ""))
@@ -122,20 +137,25 @@ const MyCalender = (props: MyCalenderProps) => {
           <Day key={i} />
         ))}
         {/* Body */}
-        {Array.from({ length: lastDayOfMonth(new Date(year, month)).getDate() }, (_, i) => (
-          <Day
-            key={i}
-            date={i + 1}
-            events={events.filter(
-              (d) => format(d.startDate, "yyyy-MM-dd") === format(new Date(year, month, i + 1), "yyyy-MM-dd"),
-            )}
-            isToday={today.getDate() === i + 1}
-            onClick={onClick}
-            isSelected={
-              targetDay.getDate() === i + 1 && targetDay.getMonth() === month && targetDay.getFullYear() === year
-            }
-          />
-        ))}
+        {Array.from({ length: lastDayOfMonth(new Date(year, month)).getDate() }, (_, i) => {
+          const thisDate = new Date(year, month, i + 1);
+          const formatThisDate = format(thisDate, "yyyy-MM-dd");
+          return (
+            <Day
+              key={i}
+              date={i + 1}
+              events={events.filter((d) => format(d.startDate, "yyyy-MM-dd") === formatThisDate)}
+              isToday={today.getDate() === i + 1}
+              onClick={onClick}
+              isSunday={thisDate.getDay() === 0}
+              isSaturday={thisDate.getDay() === 6}
+              holiday={holidays.find((d) => d.start === formatThisDate)?.summary}
+              isSelected={
+                targetDay.getDate() === i + 1 && targetDay.getMonth() === month && targetDay.getFullYear() === year
+              }
+            />
+          );
+        })}
       </Box>
       <Box px={1} py={0.5}>
         <Typography fontSize="14px">{format(targetDay, "yyyy年MM月dd日")}</Typography>

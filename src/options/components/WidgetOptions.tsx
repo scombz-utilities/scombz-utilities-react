@@ -119,7 +119,7 @@ export const WidgetOptions = (props: Props) => {
           <CustomContainerParent
             label="カスタムウィジェット並び替え設定"
             id="widgetOrder"
-            caption="カレンダー、メモ、リンク集、バス時刻表ウィジェットの表示設定を変更します。 ※2カラムでカレンダー使用中の場合は、カレンダーは必ず左側に配置されます。"
+            caption="カレンダー、メモ、リンク集、バス時刻表ウィジェットの表示設定を変更します。 ※2カラムでカレンダー使用中の場合は、カレンダーは必ず右側に配置されます。"
           >
             <Box sx={{ display: "flex", gap: 1 }}>
               <Paper

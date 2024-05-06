@@ -7,3 +7,11 @@ export type CalEvent = {
   startDate?: Date;
   endDate?: Date;
 };
+
+export type Holiday = {
+  start: string; // yyyy-mm-dd
+  end: string; // yyyy-mm-dd
+  summary: string;
+  description: string;
+  uid: string;
+};

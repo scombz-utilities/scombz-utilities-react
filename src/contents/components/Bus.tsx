@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import { useState, useEffect } from "react";
+import { LuTableProperties } from "react-icons/lu";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import type { Root, Timesheet, Calendar, List } from "../types/bus";
 import type { RuntimeMessage } from "~background";
@@ -30,7 +31,7 @@ export const Bus = () => {
   useEffect(() => {
     const fetchBusData = async () => {
       const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
-      if (currentData.scombzData.lastBusFetchUnixTime + 3600000 * 24 > new Date().getTime()) {
+      if (currentData.scombzData.lastBusFetchUnixTime + 3600000 * 4 > new Date().getTime()) {
         setBusList(currentData.scombzData.busList);
         return;
       }
@@ -93,6 +94,9 @@ export const Bus = () => {
           学バス 大宮キャンパス発
         </Typography>
         <ButtonGroup sx={{ position: "absolute", top: 0, right: 0 }}>
+          <IconButton size="small" href="http://bus.shibaura-it.ac.jp/" target="_blank">
+            <LuTableProperties />
+          </IconButton>
           <IconButton onClick={toggleOpen} size="small">
             {isBusOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
           </IconButton>
@@ -115,12 +119,12 @@ export const Bus = () => {
                     const nowMin = new Date().getMinutes();
                     return (
                       <TableRow key={d.time}>
-                        <TableCell width="50px">
-                          <Typography fontSize="14px" variant="body1" width="50px">
+                        <TableCell sx={{ pl: "10px", pr: "0", width: "40px" }}>
+                          <Typography fontSize="14px" variant="body1" width="30px" textAlign="right">
                             {d.time}時
                           </Typography>
                         </TableCell>
-                        <TableCell>
+                        <TableCell sx={{ pr: "8px" }}>
                           <Box display="flex" flexWrap="wrap" gap="8px">
                             {numArray.map((min) => (
                               <Typography

@@ -1,4 +1,5 @@
 import { Box, Card, IconButton, Typography } from "@mui/material";
+import { useEffect } from "react";
 import { MdClose } from "react-icons/md";
 type Props = {
   title: string;
@@ -10,6 +11,20 @@ type Props = {
 };
 export const Modal = (props: Props) => {
   const { title, children, isOpen: open, setIsOpen, onClose = () => {} } = props;
+
+  useEffect(() => {
+    const onEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && open) {
+        onClose();
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("keydown", onEscape);
+
+    return () => {
+      document.removeEventListener("keydown", onEscape);
+    };
+  }, [open]);
 
   const close = (e) => {
     e.stopPropagation();
