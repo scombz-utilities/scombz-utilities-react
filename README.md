@@ -19,10 +19,21 @@ https://github.com/yudai1204/scombz-utilities
 
 nodeのバージョンをは`20.11.1`で固定とします。
 
+`.node-version`ファイルでバージョンを指定しているため、対応したバージョン管理ツールを使ってインストールしてください。
 [asdf](https://asdf-vm.com/)や[nodenv](https://github.com/nodenv/nodenv)などのバージョン管理ツールを使うとよいでしょう。
-このreadmeでは`nodenv`を使ったガイドを載せるので、**nodenvの利用を推奨**します。
+このreadmeでは`nodenv`を使ったガイドを載せます。
 
 ---
+
+<details>
+<summary> asdfで実行する際の注意 </summary>
+`asdf`の場合は`.node-version`を標準では読み込まないため、`~/.asdfrc`に以下の記述を追加してください。
+
+```bash
+legacy_version_file = yes
+```
+
+</details>
 
 <details>
 <summary> nodenvのインストール for Mac </summary>

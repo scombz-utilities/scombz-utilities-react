@@ -25,6 +25,7 @@
   - [x] styleDialog
   - [x] styleSideMenu
   - [x] styleSurveys
+  - [x] styleExam
   - [x] supportFunctions
   - [x] syllabus
   - [x] syllBtn
@@ -34,27 +35,28 @@
   - [x] ASDF認証のダイアログ
   - [x] メニュー展開時の時間割表示
   - [x] メニュー展開時の課題表示
-    - [ ] 自作課題の作成・表示
   - [x] メニュー展開時のメモ表示
-  - [ ] オプション画面
+  - [x] オプション画面
   - [x] シラバス連携
   - [ ] popup
 
 - その他
 
   - [ ] 公式サイト
-  - [ ] chrome.storageのデータ移行
-    - 設定系は移行する必要あり
-    - TimeTableDataも必須
+  - [x] chrome.storageのデータ移行
   - [x] Themeの設定（緑色系統）
 
 - Optional / 削除候補
+  - [ ] リファクタリング
   - [ ] autoEvaluation
   - [ ] 名前変更機能
-  - [ ] カスタムCSS機能
+  - [x] カスタムCSS機能
   - [ ] ダークモード
   - [ ] exportCalender
-  - [ ] styleExam
   - [ ] その他のウィジェット追加(optional)
+    - [ ] 学年歴カレンダー
+    - [ ] 学バス時刻表
+    - [x] リンク集
+    - [ ] それらを好きに並び替えできる機能
   - [ ] GAS連携
   - [ ] getNews

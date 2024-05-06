@@ -33,8 +33,6 @@ export const updateBadgeText = () => {
 
     const mergedTaskList = [...tasklist, ...surveyList, ...originalTasklist];
 
-    console.log(mergedTaskList);
-
     const now = new Date().getTime();
 
     const filteredTaskList = mergedTaskList
@@ -51,7 +49,6 @@ export const updateBadgeText = () => {
         setBadgeBackgroundColor("#1a73e8");
       }
     }
-    console.log(filteredTaskList.length);
     setBadgeText(filteredTaskList.length > 0 ? filteredTaskList.length.toString() : "");
   });
 };

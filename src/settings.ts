@@ -1,6 +1,9 @@
+import type { CalEvent } from "./contents/types/calender";
 import type { Subject } from "./contents/types/subject";
 import type { Task } from "./contents/types/task";
 import type { TimeTable } from "./contents/types/timetable";
+import type { List as BusList } from "~contents/types/bus";
+import type { Widget } from "~contents/types/widget";
 
 export type Faculty = "din" | "arc" | "dsn" | "sys" | "ko1";
 
@@ -23,7 +26,8 @@ export type Settings = {
   styleExam: boolean;
   useSubTimeTable: boolean;
   useTaskList: boolean;
-  useUserMemo: boolean;
+  widgetOrder: Widget[];
+  columnCount: 1 | 2;
   forceNarrowTimeTable: boolean;
   displayClassroom: boolean; // 常に教室を表示する
   displayTime: boolean; // 常に開始終了時間を表示する
@@ -72,6 +76,9 @@ export type Settings = {
     division: string | null;
     keiretu: string | null;
   };
+  headLinkTo: string;
+  customCSS: string;
+  originalLinks: { title: string; url: string }[];
 };
 
 export const defaultSettings: Settings = {
@@ -92,7 +99,8 @@ export const defaultSettings: Settings = {
   styleExam: true,
   useSubTimeTable: true,
   useTaskList: true,
-  useUserMemo: true,
+  widgetOrder: ["Bus", "UserMemo"],
+  columnCount: 2,
   forceNarrowTimeTable: false,
   displayClassroom: false,
   displayTime: true,
@@ -141,6 +149,9 @@ export const defaultSettings: Settings = {
     division: null,
     keiretu: null,
   },
+  headLinkTo: "/portal/home",
+  customCSS: "",
+  originalLinks: [],
 };
 
 /* ScombzData */
@@ -153,6 +164,11 @@ export type ScombzData = {
   originalTasklist: Task[];
   sideMenuMemo: string[];
   coursePageMemo: { id: string; memo: string }[];
+  doMigration: boolean;
+  scombzCalendar: CalEvent[];
+  lastCalendarFetchUnixTime: number;
+  busList: BusList[];
+  lastBusFetchUnixTime: number;
 };
 export const defaultScombzData: ScombzData = {
   beforeLoginOshirase: "",
@@ -163,6 +179,11 @@ export const defaultScombzData: ScombzData = {
   originalTasklist: [],
   sideMenuMemo: [],
   coursePageMemo: [],
+  doMigration: false,
+  scombzCalendar: [],
+  lastCalendarFetchUnixTime: 0,
+  busList: [],
+  lastBusFetchUnixTime: 0,
 };
 
 /* Saves */

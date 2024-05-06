@@ -9,7 +9,7 @@
     "build:chrome": "plasmo build",
     "build:firefox": "plasmo build --target=firefox-mv2",
     "build": "plasmo build && plasmo build --target=firefox-mv2",
-    "package": "plasmo package",
+    "package": "plasmo package && plasmo package --target=firefox-mv2",
     "eslint": "eslint '**/*.ts?(x)' --fix"
   },
   "dependencies": {
@@ -21,13 +21,16 @@
     "@mui/material": "^5.15.14",
     "@plasmohq/messaging": "^0.6.2",
     "@typescript-eslint/eslint-plugin": "^7.7.1",
+    "brace": "^0.11.1",
     "date-fns": "^3.6.0",
     "encoding-japanese": "^2.1.0",
+    "ical": "^0.8.0",
     "jszip": "^3.10.1",
     "markdown-it": "^14.1.0",
     "node-sass": "^9.0.0",
     "plasmo": "^0.74.2",
     "react": "18.2.0",
+    "react-ace": "^11.0.1",
     "react-dom": "18.2.0",
     "react-icons": "^5.1.0"
   },

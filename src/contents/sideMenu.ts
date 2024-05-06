@@ -38,22 +38,15 @@ const styleSidemenu = async () => {
     }
   }
   //ヘッダ中心にアイコンを表示 ヘッダをクリックで一番上へ
-  chrome.storage.local.get(
-    {
-      headLinkTo: "/portal/home",
-    },
-    (items) => {
-      const pageHead = document.getElementById("page_head");
-      if (pageHead) {
-        pageHead.insertAdjacentHTML(
-          "beforeend",
-          `<a href="${items.headLinkTo}" id="pagetop-head-logo">
+  const pageHead = document.getElementById("page_head");
+  if (pageHead) {
+    pageHead.insertAdjacentHTML(
+      "beforeend",
+      `<a href="${currentData.settings.headLinkTo}" id="pagetop-head-logo">
             <div class="mainmenu-head-logo"><img src="/sitelogo" class="scombz-icon" alt="Top"></div>
           </a>`,
-        );
-      }
-    },
-  );
+    );
+  }
   //サイドメニューの開閉ボタンを変える
   const closeButton = document.getElementById("sidemenuClose");
   if (closeButton) {

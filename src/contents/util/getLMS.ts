@@ -61,18 +61,6 @@ export const getLMS = (): TimeTable => {
       $timetableClassData.teacher = $courseTeachers;
       $timetableData.push($timetableClassData);
     }
-    $timetableData.push({
-      day: -2,
-      time: -2,
-      name: "授業は存在しません",
-    });
-    $timetableData.push({
-      termYear: Number(
-        String((document.getElementById("nendo").querySelector("[selected]") as HTMLSelectElement)?.value),
-      ),
-      termPhase:
-        (document.getElementById("kikanCd").querySelector("[selected]") as HTMLSelectElement)?.value === "10" ? 1 : 2,
-    });
     return $timetableData;
   }
   return [];

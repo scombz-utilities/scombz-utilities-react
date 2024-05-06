@@ -26,6 +26,7 @@ import type { Subject } from "../types/subject";
 import type { Task } from "../types/task";
 import { defaultSaves } from "../util/settings";
 import type { Saves } from "../util/settings";
+import { OriginalTaskModal } from "./originalTaskModal";
 
 const getTaskColor = (
   task: Task,
@@ -36,8 +37,8 @@ const getTaskColor = (
 } => {
   const deadlineInHours = differenceInHours(new Date(task.deadline), new Date());
   if (deadlineInHours < 6) return { backgroundColor: red[200], color: red[900], fontWeight: 600 };
-  if (deadlineInHours < 12) return { backgroundColor: red[100], color: red[900], fontWeight: 600 };
-  if (deadlineInHours < 24) return { backgroundColor: red[50], color: red[900], fontWeight: 600 };
+  if (deadlineInHours < 12) return { backgroundColor: red[200], color: red[900], fontWeight: 600 };
+  if (deadlineInHours < 24) return { backgroundColor: red[100], color: red[900], fontWeight: 600 };
   if (deadlineInHours < 72) return { backgroundColor: "inherit", color: red[900], fontWeight: 400 };
   if (deadlineInHours < 24 * 7) return { backgroundColor: "inherit", color: "inherit", fontWeight: 400 };
   return { backgroundColor: "inherit", color: grey[500], fontWeight: 400 };
@@ -165,7 +166,7 @@ const TaskTable = (props: TaskTableProps) => {
       )}
       <Paper>
         <TableContainer>
-          <Table size="small" aria-label="a dense table">
+          <Table size="small">
             <TableHead>
               <TableRow>
                 {width > 880 && <TaskTableCell>科目</TaskTableCell>}
@@ -205,7 +206,7 @@ const TaskTable = (props: TaskTableProps) => {
                     }}
                   >
                     {width > 880 && (
-                      <TaskTableCell sx={{ ...colors, maxWidth: "110px" }} href={courseUrl}>
+                      <TaskTableCell sx={{ ...colors, maxWidth: "110px" }} href={task.courseURL ?? courseUrl}>
                         {task.course}
                       </TaskTableCell>
                     )}
@@ -255,6 +256,8 @@ export const TaskList = (props: Props) => {
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [hiddenTaskIdList, setHiddenTaskIdList] = useState<string[]>([]);
+
+  const [isOpenAddModal, setIsOpenAddModal] = useState<boolean>(false);
 
   const toggleOpen = useCallback(() => {
     setIsTaskListOpen(!isTaskListOpen);
@@ -339,9 +342,19 @@ export const TaskList = (props: Props) => {
 
   return (
     <>
+      <OriginalTaskModal
+        isOpen={isOpenAddModal}
+        setIsOpen={setIsOpenAddModal}
+        onClose={(newTask) => {
+          if (newTask) {
+            setTasklist([...tasklist, newTask].sort((x, y) => x.deadlineDate.getTime() - y.deadlineDate.getTime()));
+          }
+        }}
+      />
       <Box
         maxWidth="1200px"
-        m={width > 1540 ? "10px auto" : "10px"}
+        width="calc(100% - 20px)"
+        m="0 auto"
         onClick={(e) => e.stopPropagation()}
         sx={{
           backgroundColor: "#fff9",
@@ -358,7 +371,7 @@ export const TaskList = (props: Props) => {
             (最終更新: {format(lastUpdate, "MM/dd HH:mm")})
           </Typography>
           <ButtonGroup sx={{ position: "absolute", top: 0, right: 0 }}>
-            <IconButton size="small">
+            <IconButton size="small" onClick={() => setIsOpenAddModal(true)}>
               <MdAdd />
             </IconButton>
             <IconButton onClick={toggleRelativeTime} size="small">

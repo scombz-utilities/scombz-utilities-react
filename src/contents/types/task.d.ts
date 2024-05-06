@@ -7,4 +7,5 @@ export type Task = {
   deadlineDate?: Date;
   startline?: string;
   id: string | null;
+  courseURL?: string;
 };
