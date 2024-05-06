@@ -146,6 +146,12 @@ const OptionsIndex = () => {
                     <Typography variant="body1">GitHub (v4.0.0~)</Typography>
                   </Link>
                 </Box>
+                <Box>
+                  <Typography variant="h6" mb={0.5}>
+                    ライセンス
+                  </Typography>
+                  <Typography variant="body1">MIT License</Typography>
+                </Box>
               </Box>
             )}
           </Box>
