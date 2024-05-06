@@ -91,6 +91,15 @@ export const WidgetOptions = (props: Props) => {
   return (
     <Box>
       <Typography variant="h5">ウィジェット設定</Typography>
+      <Box p={1}>
+        <Typography variant="body2" sx={{ color: "#666" }}>
+          ScombZでサイドメニューを開いた時に右側に表示されるウィジェットの設定を行います。
+        </Typography>
+        <Typography variant="body2" sx={{ color: "#666" }}>
+          基本ウィジェットである「時間割LMS」と「課題一覧」に加え、「カレンダー」「メモ」「リンク集」「学バス時刻表」の4つのカスタムウィジェットを追加できます。
+          カスタムウィジェットは表示の有無や順番を自由に設定できます。
+        </Typography>
+      </Box>
       <Box display="flex" flexDirection="column" gap={1} p={1}>
         <Box>
           <CustomSwitch
