@@ -27,7 +27,8 @@ nodeのバージョンをは`20.11.1`で固定とします。
 
 <details>
 <summary> asdfで実行する際の注意 </summary>
-`asdf`の場合は`.node-version`を標準では読み込まないため、`~/.asdfrc`に以下の記述を追加してください。
+
+`asdf` の場合は`.node-version`を標準では読み込まないため、`~/.asdfrc`に以下の記述を追加してください。
 
 ```bash
 legacy_version_file = yes
@@ -196,23 +197,18 @@ $ npm run build
 ### コーディング規則
 
 - 基本的にすべてのコードは`src`、すべての外部ファイルは`assets`内に記載します。
-- content_scriptはページ単位で`contents`ディレクトリ直下に記載してください。
+- content_scriptはなるべくページ単位で`contents`ディレクトリ直下に記載してください。
 - `contents`ファイル直下に1機能につき1つの`ts`もしくは`tsx`ファイルを設置し、コンポーネントや共通モジュールを定義する場合は`components`や`util`内に記載してimportで読み込んでください。
 - Plasmoとの相性が悪いためLintではあえて指定していませんが、基本的に変数名はキャメルケースで統一します。特別な事情がない限りスネークケースは使わないでください。
 - DOM操作は可読性のために`tsx`ではなく`ts`ファイル内に記述してください。同じ機能で`ts`と`tsx`の両方が必要になる場合、`tsx`でPlasmoの読み込みを行い`useEffect`等でtsを読み込みます。
 - ライブラリを追加する場合、共同開発者は全員が再度`npm i`をする必要が生じます。影響範囲も大きいので必ず相談をしてください。
 - 関数定義の際`function`は使わずアロー関数で定義します。
-- EventHandlerの命名はReactの慣習にのっとり `handle`+`対象`+`イベントのタイプ` としてください。（例: `handleSaveClick` `handleNameInput`）
-- propsに渡す際は `on`+`対象`+`イベントのタイプ` です。
 - 基本的にはJSX構文ではMUIコンポーネントを使ってください。
-
-Tips: Plasmoではdev環境では`contents`ディレクトリ内にあるすべてのファイルを読んでくれるが、build時には`contents`直下のファイルしか読み込まれず、明示的にimportをしない限りサブディレクトリの内部に記述したファイルはコンパイルされないことに注意。
 
 ## 主なライブラリ
 
 - [Plasmo](https://docs.plasmo.com/)
 - [MUI](https://mui.com/material-ui/)
-- react-hook-form
 - ESLint
 - Prettier
-- sass
+- TypeScript
