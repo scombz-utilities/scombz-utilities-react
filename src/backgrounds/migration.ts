@@ -124,7 +124,11 @@ export const migrateLogic = (oldSaves: any): Saves => {
     }) ?? [];
   newSaves.scombzData.sideMenuMemo =
     oldSaves?.notepadData?.map((memo) => {
-      return `${memo.title} ${memo.index}`;
+      const memoIndex = memo?.index
+        ?.replace(/\s+/g, " ")
+        ?.replace(/<br>/g, "    ")
+        ?.replace(/<a.*?>(.*?)<\/a>/g, "[$1]($1)");
+      return `${memo.title}    ${memoIndex}`.trim();
     }) ?? [];
   newSaves.scombzData.coursePageMemo =
     oldSaves?.mdNotepadData?.map((memo) => {
@@ -133,10 +137,10 @@ export const migrateLogic = (oldSaves: any): Saves => {
         memo: memo.value ?? "",
       };
     }) ?? [];
-  newSaves.scombzData.busList = [];
-  newSaves.scombzData.lastBusFetchUnixTime = 0;
-  newSaves.scombzData.lastCalendarFetchUnixTime = 0;
-  newSaves.scombzData.scombzCalendar = [];
+  newSaves.scombzData.busList = defaultSaves.scombzData.busList;
+  newSaves.scombzData.lastBusFetchUnixTime = defaultSaves.scombzData.lastBusFetchUnixTime;
+  newSaves.scombzData.lastCalendarFetchUnixTime = defaultSaves.scombzData.lastCalendarFetchUnixTime;
+  newSaves.scombzData.scombzCalendar = defaultSaves.scombzData.scombzCalendar;
 
   // Settingsの移植
 

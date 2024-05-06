@@ -280,7 +280,7 @@ export const TaskList = (props: Props) => {
       setFormatStr(currentData.settings.deadlineFormat);
       setIsRelativeTime(currentData.settings.deadlineMode === "relative");
       setHighlightTask(currentData.settings.highlightTask);
-      setLastUpdate(new Date(currentData.scombzData.lastTaskFetchUnixTime));
+      setLastUpdate(new Date(currentData.scombzData.lastTaskFetchUnixTime ?? 0));
       setRowsPerPage(currentData.settings.taskListRowsPerPage);
 
       const normalTaskList = currentData.scombzData.tasklist;
