@@ -16,6 +16,10 @@ if (location.href === "https://scombz.shibaura-it.ac.jp/lms/task") {
 
 // タスクを取得
 const fetchTasks = async () => {
+  // TOPページを除外する
+  if (location.href.startsWith("https://scombz.shibaura-it.ac.jp/login")) {
+    return;
+  }
   const now = new Date();
   const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
   const lastTaskFetch = new Date(currentData.scombzData.lastTaskFetchUnixTime);
