@@ -25,6 +25,16 @@ const OptionsIndex = () => {
     });
   };
 
+  const setScombzData = (key: string, value: unknown) => {
+    setSaves({
+      ...saves,
+      scombzData: {
+        ...saves.scombzData,
+        [key]: value,
+      },
+    });
+  };
+
   useEffect(() => {
     chrome.storage.local.get(defaultSaves, (currentData: Saves) => {
       setSaves(currentData);
@@ -96,7 +106,9 @@ const OptionsIndex = () => {
           <Box px={2} py={3}>
             {tabIndex === 0 && <BasicOptions saves={saves} setSettings={setSettings} />}
             {tabIndex === 1 && <WidgetOptions saves={saves} setSettings={setSettings} />}
-            {tabIndex === 2 && <AdvancedOptions saves={saves} setSettings={setSettings} />}
+            {tabIndex === 2 && (
+              <AdvancedOptions saves={saves} setSettings={setSettings} setScombzData={setScombzData} />
+            )}
             {tabIndex === 3 && (
               <CustomCSS value={saves.settings.customCSS} onChange={(value) => setSettings("customCSS", value)} />
             )}

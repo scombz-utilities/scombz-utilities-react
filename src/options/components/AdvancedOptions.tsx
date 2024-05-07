@@ -11,10 +11,11 @@ type Props = {
   saves: Saves;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setSettings: (key: keyof Settings, value: any) => void;
+  setScombzData: (key: string, value: unknown) => void;
 };
 
 export const AdvancedOptions = (props: Props) => {
-  const { saves, setSettings } = props;
+  const { saves, setSettings, setScombzData } = props;
   const hiddenTaskList = useMemo(() => {
     const mergedTaskList = [
       ...saves.scombzData.tasklist,
@@ -155,6 +156,19 @@ export const AdvancedOptions = (props: Props) => {
           ]}
           value={saves.settings.headLinkTo}
           onChange={(e, _) => setSettings("headLinkTo", e.target.value)}
+        />
+        <CustomRemovableList
+          label="科目ページメモ"
+          id="coursePageMemo"
+          caption="科目ページに表示されるメモを設定します。"
+          options={saves.scombzData.coursePageMemo.map(
+            (memo) => `${memo.course ?? memo.id}: ${memo.memo.slice(0, 30)}`,
+          )}
+          onChange={(idx) => {
+            const newMemos = saves.scombzData.coursePageMemo.filter((_, i) => i !== idx);
+            setScombzData("coursePageMemo", newMemos);
+          }}
+          reset={() => setScombzData("coursePageMemo", [])}
         />
       </Box>
     </Box>

@@ -163,7 +163,7 @@ export type ScombzData = {
   surveyList: Task[];
   originalTasklist: Task[];
   sideMenuMemo: string[];
-  coursePageMemo: { id: string; memo: string }[];
+  coursePageMemo: { id: string; memo: string; course?: string }[];
   doMigration: boolean;
   scombzCalendar: CalEvent[];
   lastCalendarFetchUnixTime: number;

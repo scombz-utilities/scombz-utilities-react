@@ -214,7 +214,8 @@ const markdownNotePad = (): void => {
       if (coursePageMemo) {
         coursePageMemo.memo = mdNotepad.value;
       } else {
-        coursePageMemoArray.push({ id: idNum, memo: mdNotepad.value });
+        const course = getCourseTitle();
+        coursePageMemoArray.push({ id: idNum, memo: mdNotepad.value, course });
       }
       currentData.scombzData.coursePageMemo = coursePageMemoArray;
       chrome.storage.local.set(currentData);
