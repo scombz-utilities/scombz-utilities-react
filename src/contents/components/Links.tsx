@@ -6,7 +6,7 @@ import { AddLinkModal } from "./AddLinkModal";
 import type { Saves } from "~settings";
 import { defaultSaves } from "~settings";
 
-type LinkItemProps = {
+export type LinkItemProps = {
   title: string;
   url: string;
 };

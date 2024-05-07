@@ -1,19 +1,21 @@
 import { TextField, Box, Button } from "@mui/material";
 import { useState } from "react";
+import type { LinkItemProps } from "./Links";
 import { Modal } from "./Modal";
 import type { Saves } from "~settings";
 import { defaultSaves } from "~settings";
 
-const template =
+const template: LinkItemProps[] =
   chrome.i18n.getUILanguage() === "ja"
     ? [
         { title: "学年歴", url: "https://www.shibaura-it.ac.jp/campus_life/school_calendar/index.html" },
         { title: "シラバス", url: "http://syllabus.sic.shibaura-it.ac.jp/index.html.ja" },
+        { title: "時間割検索", url: "http://timetable.sic.shibaura-it.ac.jp/" },
         { title: "S*gsot", url: "https://sgsot.sic.shibaura-it.ac.jp" },
         { title: "AMI", url: "https://ami.sic.shibaura-it.ac.jp/" },
         { title: "大宮バス時刻表", url: "http://bus.shibaura-it.ac.jp/" },
         { title: "スーパー英語", url: "https://supereigo2.sic.shibaura-it.ac.jp/sso/" },
-        { title: "施設予約システム", url: "https://station.sic.shibaura-it.ac.jp/facilityreservation/schedule.html" },
+        { title: "施設予約", url: "https://station.sic.shibaura-it.ac.jp/facilityreservation/schedule.html" },
       ]
     : [
         {
@@ -21,6 +23,7 @@ const template =
           url: "https://www.shibaura-it.ac.jp/en/campus_life/academic_life/academic_year.html",
         },
         { title: "Syllabus", url: "http://syllabus.sic.shibaura-it.ac.jp/index.html.en" },
+        { title: "Web timetable", url: "http://timetable.sic.shibaura-it.ac.jp/en" },
         { title: "S*gsot", url: "https://sgsot.sic.shibaura-it.ac.jp" },
         { title: "AMI", url: "https://ami.sic.shibaura-it.ac.jp/" },
       ];
@@ -28,7 +31,7 @@ const template =
 type Props = {
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
-  onClose: ({ title, url }: { title: string; url: string }) => void;
+  onClose: (link: LinkItemProps) => void;
 };
 
 export const AddLinkModal = (props: Props) => {
