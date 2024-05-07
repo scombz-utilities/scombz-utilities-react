@@ -29,7 +29,12 @@ const Day = (props: DayProps) => {
     <Box
       bgcolor={isToday ? "#f2c973" : isSelected ? "#dfdfdf" : "#fff"}
       p={0.2}
-      sx={{ cursor: date ? "pointer" : "default", opacity: date ? 1 : 0, position: "relative" }}
+      sx={{
+        cursor: date ? "pointer" : "default",
+        opacity: date ? 1 : 0,
+        position: "relative",
+        "&:hover": { bgcolor: isToday || isSelected ? undefined : "#f2f2f2" },
+      }}
       onClick={() => onClick?.(date)}
     >
       {holiday && !holiday.includes("振替休日") && (
