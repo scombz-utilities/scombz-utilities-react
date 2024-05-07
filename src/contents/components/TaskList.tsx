@@ -27,6 +27,7 @@ import type { Task } from "../types/task";
 import { defaultSaves } from "../util/settings";
 import type { Saves } from "../util/settings";
 import { OriginalTaskModal } from "./originalTaskModal";
+import { MAX_HIDDEN_TASKS } from "~/constants";
 
 const getTaskColor = (
   task: Task,
@@ -333,7 +334,11 @@ export const TaskList = (props: Props) => {
 
   const addHiddenTaskId = useCallback(
     (taskId: string) => {
-      setHiddenTaskIdList([...hiddenTaskIdList, taskId]);
+      const newList = [...hiddenTaskIdList, taskId];
+      if (newList.length > MAX_HIDDEN_TASKS) {
+        newList.shift();
+      }
+      setHiddenTaskIdList(newList);
     },
     [hiddenTaskIdList],
   );
