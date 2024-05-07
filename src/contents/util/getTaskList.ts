@@ -72,8 +72,11 @@ export const fetchSurveys = async () => {
     const endColorElement = doc.querySelector(
       `#portalSurveysForm .result-list:nth-of-type(${i + 1}) .survey-list-title .portal-surveys-status-end-color`,
     );
+    const takeEndColorElement = doc.querySelector(
+      `#portalSurveysForm .result-list:nth-of-type(${i + 1}) .survey-list-title .portal-surveys-status-takeend-color`,
+    );
 
-    if (endColorElement) {
+    if (endColorElement || takeEndColorElement) {
       i++;
       continue;
     }
