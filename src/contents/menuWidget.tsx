@@ -109,7 +109,7 @@ const MenuWidget = () => {
                 <Box
                   sx={{
                     display: "grid",
-                    gridTemplateColumns: `repeat(${width > 1100 ? 2 : 1}, 1fr)`,
+                    gridTemplateColumns: `repeat(${width > 1100 && widgetOrder.length > 1 ? 2 : 1}, 1fr)`,
                     gap: "10px",
                     px: "2px",
                   }}
@@ -126,7 +126,14 @@ const MenuWidget = () => {
               )}
               {/* カレンダーがない時、1列の時はそのまま並べる */}
               {columnCount === 2 && !useCalender && (
-                <Box sx={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "10px", px: "2px" }}>
+                <Box
+                  sx={{
+                    display: "grid",
+                    gridTemplateColumns: `repeat(${widgetOrder.length > 1 ? 2 : 1}, 1fr)`,
+                    gap: "10px",
+                    px: "2px",
+                  }}
+                >
                   {widgetOrder.map((widgetName) => (
                     <WidgetWrapper key={widgetName} widget={widgetName} width={width} />
                   ))}

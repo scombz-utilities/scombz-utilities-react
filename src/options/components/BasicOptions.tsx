@@ -18,7 +18,7 @@ export const BasicOptions = (props: Props) => {
         <CustomSelect
           label="学部"
           id="faculty"
-          caption="学部を選択してください"
+          caption="学部を選択してください。学部情報は、ScombZとシラバス間の連携機能にのみ使用されます。"
           options={[
             { value: "din", label: "大学院" },
             { value: "ko1", label: "工学部" },
