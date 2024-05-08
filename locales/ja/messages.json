@@ -275,6 +275,26 @@
     "message": "初期化",
     "description": "初期化"
   },
+  "OptionGroupSyllabusLinking": {
+    "message": "シラバス連携",
+    "description": "シラバス連携"
+  },
+  "OptionGroupAutomaticLogin": {
+    "message": "自動ログイン",
+    "description": "自動ログイン"
+  },
+  "OptionGroupWidget": {
+    "message": "ウィジェット",
+    "description": "ウィジェット"
+  },
+  "OptionGroupCoursePage": {
+    "message": "科目別ページ",
+    "description": "科目別ページ"
+  },
+  "OptionGroupOthers": {
+    "message": "その他",
+    "description": "その他"
+  },
   "optionTitleFaculty": {
     "message": "学部",
     "description": "学部"

@@ -275,12 +275,32 @@
     "message": "Reset",
     "description": "初期化"
   },
+  "OptionGroupSyllabusLinking": {
+    "message": "Syllabus Linking",
+    "description": "シラバス連携"
+  },
+  "OptionGroupAutomaticLogin": {
+    "message": "Automatic Sign-in",
+    "description": "自動ログイン"
+  },
+  "OptionGroupWidget": {
+    "message": "Widgets",
+    "description": "ウィジェット"
+  },
+  "OptionGroupCoursePage": {
+    "message": "Course Pages",
+    "description": "科目別ページ"
+  },
+  "OptionGroupOthers": {
+    "message": "Others",
+    "description": "その他"
+  },
   "optionTitleFaculty": {
     "message": "Faculty",
     "description": "学部"
   },
   "optionDescriptionFaculty": {
-    "message": "Please select a faculty. This option is only used for the linking function between ScombZ and the syllabus.",
+    "message": "Please select your faculty. This option is only used for the linking function between ScombZ and the syllabus.",
     "description": "学部を選択してください。学部情報は、ScombZとシラバス間の連携機能にのみ使用されます。"
   },
   "optionTitleStudentID": {

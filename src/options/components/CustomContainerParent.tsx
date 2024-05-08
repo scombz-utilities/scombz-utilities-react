@@ -11,7 +11,7 @@ type Props = {
 export const CustomContainerParent = (props: Props) => {
   const { label, caption, id = "", children } = props;
   return (
-    <Box borderTop="1px solid #ccc" marginBottom={2} paddingTop={2.5}>
+    <Box borderBottom="1px solid #ccc" paddingBottom={2} marginTop={2.5}>
       <Box display="flex" alignItems="flex-end" gap={1}>
         <InputLabel sx={{ color: grey[700] }}>{label}</InputLabel>
         <Typography variant="caption" color={grey[500]}>
