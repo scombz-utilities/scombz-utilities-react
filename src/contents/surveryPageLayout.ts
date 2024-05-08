@@ -55,7 +55,7 @@ const addSurveyListButton = () => {
     const surveyListButton = backButton.cloneNode(true) as HTMLAnchorElement;
     surveyListButton.id = "backSurveys";
     surveyListButton.href = "/portal/surveys/list";
-    surveyListButton.textContent = "アンケート一覧に戻る";
+    surveyListButton.textContent = chrome.i18n.getMessage("surveyBackToList");
 
     // 「科目トップに戻る」ボタンの隣に「アンケート一覧に戻る」ボタンを追加する
     backButton.after(surveyListButton);

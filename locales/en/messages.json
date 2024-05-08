@@ -7,6 +7,14 @@
     "message": "An extension for ScombZ  easier to use.",
     "description": "Description of the extension."
   },
+  "loginUserLabel": {
+    "message": "Student ID@sic",
+    "description": "あなたのユーザ名@sic"
+  },
+  "surveyBackToList": {
+    "message": "Go back to the survey list",
+    "description": "アンケート一覧に戻る"
+  },
   "timetablePeriod": {
     "message": "Period",
     "description": "時限"

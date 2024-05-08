@@ -7,6 +7,14 @@
     "message": "ScombZを使いやすくカスタムする拡張機能",
     "description": "拡張機能説明"
   },
+  "loginUserLabel": {
+    "message": "あなたのユーザ名@sic",
+    "description": "あなたのユーザ名@sic"
+  },
+  "surveyBackToList": {
+    "message": "アンケート一覧に戻る",
+    "description": "アンケート一覧に戻る"
+  },
   "timetablePeriod": {
     "message": "時限",
     "description": "時限"
