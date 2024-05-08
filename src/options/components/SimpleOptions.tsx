@@ -34,8 +34,8 @@ export const SimpleOptions = (props: Props) => {
         }}
       >
         <Tabs value={tabIndex} onChange={handleTabChange} variant="scrollable" scrollButtons="auto">
-          <Tab label="おすすめ設定" />
-          <Tab label="インポート・エクスポート・初期化" />
+          <Tab label={chrome.i18n.getMessage("RecommendedOptions")} />
+          <Tab label={chrome.i18n.getMessage("IOReset")} />
           <Tab label="情報" />
         </Tabs>
       </Box>

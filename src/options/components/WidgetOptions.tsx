@@ -109,7 +109,7 @@ export const CustomWidgetSort = (props: CustomWidgetSortProps) => {
             }}
           >
             <Typography variant="h6" fontSize="1.1rem">
-              使用中のウィジェット
+              {chrome.i18n.getMessage("optionWidgetOrderEnabled")}
             </Typography>
           </Box>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 1, py: 1, px: 0.5 }}>
@@ -154,7 +154,7 @@ export const CustomWidgetSort = (props: CustomWidgetSortProps) => {
             }}
           >
             <Typography variant="h6" fontSize="1.1rem">
-              無効化中のウィジェット
+              {chrome.i18n.getMessage("optionWidgetOrderDisabled")}
             </Typography>
           </Box>
           <Box

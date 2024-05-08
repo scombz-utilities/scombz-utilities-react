@@ -113,7 +113,7 @@ const OptionsIndex = () => {
                 </Button>
               </Box>
               <Button variant="contained" sx={{ width: 250 }} onClick={save}>
-                保存
+                {chrome.i18n.getMessage("dialogSave")}
               </Button>
             </Box>
           </Box>

@@ -20,14 +20,21 @@ export const CustomContainerParent = (props: Props) => {
       </Box>
       <Box ml={0.1}>
         <Typography variant="caption">
-          {caption
-            .replace(/\s+/g, " ")
-            .split(" ")
-            .map((text, index) => (
-              <Typography key={index} variant="body2" color={grey[700]} display="block">
-                {text}
-              </Typography>
-            ))}
+          {/* 日本語だったらスペースで改行 */}
+          {chrome.i18n.getUILanguage() === "ja" ? (
+            caption
+              .replace(/\s+/g, " ")
+              .split(" ")
+              .map((text, index) => (
+                <Typography key={index} variant="body2" color={grey[700]} display="block">
+                  {text}
+                </Typography>
+              ))
+          ) : (
+            <Typography variant="body2" color={grey[700]} display="block">
+              {caption}
+            </Typography>
+          )}
         </Typography>
       </Box>
       {children}

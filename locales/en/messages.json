@@ -255,6 +255,26 @@
     "message": "Save link",
     "description": "リンク先をダウンロード"
   },
+  "RecommendedOptions": {
+    "message": "Recommended Options",
+    "description": "おすすめ設定"
+  },
+  "IOReset": {
+    "message": "Import/Export/Reset",
+    "description": "インポート・エクスポート・初期化"
+  },
+  "import": {
+    "message": "Import",
+    "description": "インポート"
+  },
+  "export": {
+    "message": "Export",
+    "description": "エクスポート"
+  },
+  "reset": {
+    "message": "Reset",
+    "description": "初期化"
+  },
   "optionTitleFaculty": {
     "message": "Faculty",
     "description": "学部"
@@ -366,6 +386,14 @@
   "optionDescriptionWidgetOrder": {
     "message": "Change the display settings for the Calendar, Notes, Links, and Bus Timetable widgets.",
     "description": "カレンダー、メモ、リンク集、バス時刻表ウィジェットの表示設定を変更します。"
+  },
+  "optionWidgetOrderEnabled": {
+    "message": "Enabled widgets",
+    "description": "使用中のウィジェット"
+  },
+  "optionWidgetOrderDisabled": {
+    "message": "Disabled widgets",
+    "description": "無効化中のウィジェット"
   },
   "optionTitleDisplayClassroom": {
     "message": "Display Classrooms on the Timetable Widget",

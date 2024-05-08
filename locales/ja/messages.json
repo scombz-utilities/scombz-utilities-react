@@ -255,6 +255,26 @@
     "message": "リンク先をダウンロード",
     "description": "リンク先をダウンロード"
   },
+  "RecommendedOptions": {
+    "message": "おすすめ設定",
+    "description": "おすすめ設定"
+  },
+  "IOReset": {
+    "message": "インポート・エクスポート・初期化",
+    "description": "インポート・エクスポート・初期化"
+  },
+  "import": {
+    "message": "インポート",
+    "description": "インポート"
+  },
+  "export": {
+    "message": "エクスポート",
+    "description": "エクスポート"
+  },
+  "reset": {
+    "message": "初期化",
+    "description": "初期化"
+  },
   "optionTitleFaculty": {
     "message": "学部",
     "description": "学部"
@@ -366,6 +386,14 @@
   "optionDescriptionWidgetOrder": {
     "message": "カレンダー、メモ、リンク集、バス時刻表ウィジェットの表示設定を変更します。",
     "description": "カレンダー、メモ、リンク集、バス時刻表ウィジェットの表示設定を変更します。"
+  },
+  "optionWidgetOrderEnabled": {
+    "message": "使用中のウィジェット",
+    "description": "使用中のウィジェット"
+  },
+  "optionWidgetOrderDisabled": {
+    "message": "無効化中のウィジェット",
+    "description": "無効化中のウィジェット"
   },
   "optionTitleDisplayClassroom": {
     "message": "時間割ウィジェット 教室表示",

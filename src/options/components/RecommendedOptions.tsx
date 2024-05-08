@@ -30,19 +30,29 @@ export const RecommendedOptions = (props: Props) => {
   ]);
   return (
     <Box>
-      <Typography variant="h5">おすすめ設定</Typography>
+      <Typography variant="h5">{chrome.i18n.getMessage("RecommendedOptions")}</Typography>
       <Box display="flex" flexDirection="column" gap={1} p={1}>
         <CustomSelect
           label={chrome.i18n.getMessage("optionTitleFaculty")}
           id="faculty"
           caption={chrome.i18n.getMessage("optionDescriptionFaculty")}
-          options={[
-            { value: "din", label: "大学院" },
-            { value: "ko1", label: "工学部" },
-            { value: "sys", label: "システム理工学部" },
-            { value: "dsn", label: "デザイン工学部" },
-            { value: "arc", label: "建築学部" },
-          ]}
+          options={
+            chrome.i18n.getUILanguage() === "ja"
+              ? [
+                  { value: "din", label: "大学院" },
+                  { value: "ko1", label: "工学部" },
+                  { value: "sys", label: "システム理工学部" },
+                  { value: "dsn", label: "デザイン工学部" },
+                  { value: "arc", label: "建築学部" },
+                ]
+              : [
+                  { value: "din", label: "Master / Doctor" },
+                  { value: "ko1", label: "Engineering" },
+                  { value: "sys", label: "System Engineering and Science" },
+                  { value: "dsn", label: "Engineering and Design" },
+                  { value: "arc", label: "Architecture" },
+                ]
+          }
           value={saves.settings.faculty}
           onChange={(e, _) => setSettings("faculty", e.target.value)}
         />
@@ -71,9 +81,9 @@ export const RecommendedOptions = (props: Props) => {
           caption={chrome.i18n.getMessage("optionDescriptionHeadLinkTo")}
           id="headLinkTo"
           options={[
-            { value: "/portal/home", label: "ホーム" },
+            { value: "/portal/home", label: "ホーム / Top" },
             { value: "/lms/timetable", label: "LMS" },
-            { value: "lms/task", label: "課題・テスト一覧" },
+            { value: "lms/task", label: "課題・テスト一覧 / Assignments" },
           ]}
           value={saves.settings.headLinkTo}
           onChange={(e, _) => setSettings("headLinkTo", e.target.value)}
