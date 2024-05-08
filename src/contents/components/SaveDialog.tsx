@@ -140,14 +140,9 @@ export const SaveDialog = () => {
             </Stack>
             <Box sx={{ display: "flex" }}>
               <Box sx={{ display: "flex", alignItems: "center" }}>
-                <IconButton onClick={closeDialog} id="scombz-utilities-close">
-                  <MdCloseFullscreen />
-                </IconButton>
-                <label htmlFor="scombz-utilities-close">
-                  <Typography variant={"subtitle1"} color={"gray"}>
-                    {chrome.i18n.getMessage("dialogClose")}
-                  </Typography>
-                </label>
+                <Button onClick={closeDialog} variant={"text"} startIcon={<MdCloseFullscreen />}>
+                  {chrome.i18n.getMessage("dialogClose")}
+                </Button>
               </Box>
               <Box
                 sx={{
@@ -175,14 +170,9 @@ export const SaveDialog = () => {
             </Box>
           </form>
         ) : (
-          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <IconButton onClick={() => setOpen(true)} id="scombz-utilities-open">
-              <MdOpenInFull />
-            </IconButton>
-            <label htmlFor="scombz-utilities-open">
-              <Typography variant={"subtitle1"}>{chrome.i18n.getMessage("dialogClickToOpen")}</Typography>
-            </label>
-          </Box>
+          <Button onClick={() => setOpen(true)} startIcon={<MdOpenInFull />}>
+            {chrome.i18n.getMessage("dialogClickToOpen")}
+          </Button>
         )}
       </Stack>
     </>
