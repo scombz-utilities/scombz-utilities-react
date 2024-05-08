@@ -112,15 +112,16 @@ export const SaveDialog = () => {
             </Box>
             <Stack gap={0.5} mb={2}>
               <FormControl sx={{ mt: 1 }} variant="outlined">
-                <InputLabel htmlFor="scombz-utilities-username">Username</InputLabel>
-                <Input size="small" id="scombz-utilities-username" ref={idRef} />
+                <InputLabel htmlFor="scombz-utilities-username">あなたのユーザ名@sic</InputLabel>
+                <Input size="small" id="scombz-utilities-username" ref={idRef} type="email" autoComplete="email" />
               </FormControl>
               <FormControl sx={{ mt: 1 }} variant="outlined">
-                <InputLabel htmlFor="scombz-utilities-password">Password</InputLabel>
+                <InputLabel htmlFor="scombz-utilities-password">パスワード</InputLabel>
                 <Input
                   id="scombz-utilities-password"
                   ref={passRef}
                   type={showPassword ? "text" : "password"}
+                  autoComplete="password"
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
@@ -128,19 +129,20 @@ export const SaveDialog = () => {
                       </IconButton>
                     </InputAdornment>
                   }
+                  sx={{
+                    // ref: https://learn.microsoft.com/ja-jp/microsoft-edge/web-platform/password-reveal#visibility-of-the-control
+                    "& *::-ms-reveal": {
+                      display: "none",
+                    },
+                  }}
                 />
               </FormControl>
             </Stack>
             <Box sx={{ display: "flex" }}>
               <Box sx={{ display: "flex", alignItems: "center" }}>
-                <IconButton onClick={closeDialog} id="scombz-utilities-close">
-                  <MdCloseFullscreen />
-                </IconButton>
-                <label htmlFor="scombz-utilities-close">
-                  <Typography variant={"subtitle1"} color={"gray"}>
-                    {chrome.i18n.getMessage("dialogClose")}
-                  </Typography>
-                </label>
+                <Button onClick={closeDialog} variant={"text"} startIcon={<MdCloseFullscreen />}>
+                  {chrome.i18n.getMessage("dialogClose")}
+                </Button>
               </Box>
               <Box
                 sx={{
@@ -168,14 +170,9 @@ export const SaveDialog = () => {
             </Box>
           </form>
         ) : (
-          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <IconButton onClick={() => setOpen(true)} id="scombz-utilities-open">
-              <MdOpenInFull />
-            </IconButton>
-            <label htmlFor="scombz-utilities-open">
-              <Typography variant={"subtitle1"}>{chrome.i18n.getMessage("dialogClickToOpen")}</Typography>
-            </label>
-          </Box>
+          <Button onClick={() => setOpen(true)} startIcon={<MdOpenInFull />}>
+            {chrome.i18n.getMessage("dialogClickToOpen")}
+          </Button>
         )}
       </Stack>
     </>
