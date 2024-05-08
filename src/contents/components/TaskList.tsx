@@ -28,6 +28,7 @@ import { defaultSaves } from "../util/settings";
 import type { Saves } from "../util/settings";
 import { OriginalTaskModal } from "./originalTaskModal";
 import { MAX_HIDDEN_TASKS } from "~/constants";
+import { fetchTasks } from "~contents/tasks";
 
 const getTaskColor = (
   task: Task,
@@ -109,6 +110,7 @@ type TaskTableProps = {
   width: number;
   rowsPerPage: number;
   addHiddenTaskId: (id: string) => void;
+  isLoading: boolean;
 };
 const TaskTable = (props: TaskTableProps) => {
   const {
@@ -122,6 +124,7 @@ const TaskTable = (props: TaskTableProps) => {
     width,
     rowsPerPage,
     addHiddenTaskId,
+    isLoading,
   } = props;
   const [page, setPage] = useState(0);
 
@@ -145,6 +148,15 @@ const TaskTable = (props: TaskTableProps) => {
     },
     [addHiddenTaskId],
   );
+
+  if (isLoading)
+    return (
+      <Paper sx={{ px: 2, py: 0.5, mt: "5px" }}>
+        <Typography variant="body2" color="grey">
+          Loading...
+        </Typography>
+      </Paper>
+    );
 
   return (
     <>
@@ -260,6 +272,8 @@ export const TaskList = (props: Props) => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [hiddenTaskIdList, setHiddenTaskIdList] = useState<string[]>([]);
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const [isOpenAddModal, setIsOpenAddModal] = useState<boolean>(false);
 
   const toggleOpen = useCallback(() => {
@@ -276,42 +290,44 @@ export const TaskList = (props: Props) => {
     save();
   }, [isRelativeTime]);
 
+  const fetchTasklistFromStorage = async () => {
+    const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
+    setSubjects(currentData.settings.notifySurveySubjects);
+    setFormatStr(currentData.settings.deadlineFormat);
+    setIsRelativeTime(currentData.settings.deadlineMode === "relative");
+    setHighlightTask(currentData.settings.highlightTask);
+    setLastUpdate(new Date(currentData.scombzData.lastTaskFetchUnixTime ?? 0));
+    setRowsPerPage(currentData.settings.taskListRowsPerPage);
+
+    const normalTaskList = currentData.scombzData.tasklist;
+
+    const notifySurveySubjectsName = currentData.settings.notifySurveySubjects.map((subject) => subject.name);
+    const allSurveyList = currentData.scombzData.surveyList;
+    const surveyList = allSurveyList.filter((task) => notifySurveySubjectsName.includes(task.course));
+
+    const originalTasklist = currentData.scombzData.originalTasklist;
+
+    const now = new Date();
+
+    const combinedTaskList = [...normalTaskList, ...surveyList, ...originalTasklist]
+      .map((task) => {
+        return { ...task, deadlineDate: new Date(task.deadline) };
+      })
+      .filter((task) => task.deadlineDate >= now)
+      .filter((task) => !currentData.settings.hiddenTaskIdList.includes(task.id));
+
+    combinedTaskList.sort((x, y) => {
+      const [a, b] = [x.deadlineDate, y.deadlineDate];
+      return a.getTime() - b.getTime();
+    });
+
+    setTasklist(combinedTaskList);
+    setHiddenTaskIdList(currentData.settings.hiddenTaskIdList);
+    return;
+  };
+
   useEffect(() => {
-    const fetchTasklist = async () => {
-      const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
-      setSubjects(currentData.settings.notifySurveySubjects);
-      setFormatStr(currentData.settings.deadlineFormat);
-      setIsRelativeTime(currentData.settings.deadlineMode === "relative");
-      setHighlightTask(currentData.settings.highlightTask);
-      setLastUpdate(new Date(currentData.scombzData.lastTaskFetchUnixTime ?? 0));
-      setRowsPerPage(currentData.settings.taskListRowsPerPage);
-
-      const normalTaskList = currentData.scombzData.tasklist;
-
-      const notifySurveySubjectsName = currentData.settings.notifySurveySubjects.map((subject) => subject.name);
-      const allSurveyList = currentData.scombzData.surveyList;
-      const surveyList = allSurveyList.filter((task) => notifySurveySubjectsName.includes(task.course));
-
-      const originalTasklist = currentData.scombzData.originalTasklist;
-
-      const now = new Date();
-
-      const combinedTaskList = [...normalTaskList, ...surveyList, ...originalTasklist]
-        .map((task) => {
-          return { ...task, deadlineDate: new Date(task.deadline) };
-        })
-        .filter((task) => task.deadlineDate >= now)
-        .filter((task) => !currentData.settings.hiddenTaskIdList.includes(task.id));
-
-      combinedTaskList.sort((x, y) => {
-        const [a, b] = [x.deadlineDate, y.deadlineDate];
-        return a.getTime() - b.getTime();
-      });
-
-      setTasklist(combinedTaskList);
-      setHiddenTaskIdList(currentData.settings.hiddenTaskIdList);
-    };
-    fetchTasklist();
+    fetchTasklistFromStorage();
     setNowDate(new Date());
     setInterval(() => {
       setNowDate(new Date());
@@ -342,6 +358,19 @@ export const TaskList = (props: Props) => {
     },
     [hiddenTaskIdList],
   );
+
+  const reloadTasklist = useCallback(() => {
+    const fetching = async () => {
+      await fetchTasks(true);
+      await fetchTasklistFromStorage();
+      setIsLoading(false);
+    };
+
+    if (isLoading) return;
+    setIsLoading(true);
+
+    fetching();
+  }, []);
 
   if (width < 540) {
     return <></>;
@@ -374,7 +403,19 @@ export const TaskList = (props: Props) => {
           <Typography variant="h6" sx={{ px: 0.5, textAlign: "left", fontSize: "16px" }}>
             {chrome.i18n.getMessage("taskList")}
           </Typography>
-          <Typography variant="caption" sx={{ px: 0.5, textAlign: "left", fontSize: "12px", opacity: 0.7 }}>
+          <Typography
+            variant="caption"
+            title="Reload"
+            sx={{
+              px: 0.5,
+              textAlign: "left",
+              fontSize: "12px",
+              opacity: 0.7,
+              cursor: "pointer",
+              "&:hover": { opacity: 1 },
+            }}
+            onClick={reloadTasklist}
+          >
             ({chrome.i18n.getMessage("taskListLastUpdate")}: {format(lastUpdate, "MM/dd HH:mm")})
           </Typography>
           <ButtonGroup sx={{ position: "absolute", top: 0, right: 0 }}>
@@ -402,6 +443,7 @@ export const TaskList = (props: Props) => {
               width,
               rowsPerPage,
               addHiddenTaskId,
+              isLoading,
             }}
           />
         </Collapse>

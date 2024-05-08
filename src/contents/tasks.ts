@@ -15,7 +15,7 @@ if (location.href === "https://scombz.shibaura-it.ac.jp/lms/task") {
 }
 
 // タスクを取得
-const fetchTasks = async () => {
+export const fetchTasks = async (forceExecute?: boolean) => {
   // TOPページを除外する
   if (location.href.startsWith("https://scombz.shibaura-it.ac.jp/login")) {
     return;
@@ -23,7 +23,7 @@ const fetchTasks = async () => {
   const now = new Date();
   const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
   const lastTaskFetch = new Date(currentData.scombzData.lastTaskFetchUnixTime);
-  if (differenceInMinutes(now, lastTaskFetch) >= FETCH_INTERVAL) {
+  if (forceExecute || differenceInMinutes(now, lastTaskFetch) >= FETCH_INTERVAL) {
     console.log("fetch tasks");
     currentData.scombzData.lastTaskFetchUnixTime = now.getTime();
     chrome.storage.local.set(currentData);
