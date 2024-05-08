@@ -145,7 +145,7 @@ export const DataOperation = (props: Props) => {
           <Box display="flex" flexDirection="column" gap={1}>
             <Button variant="contained" color="primary" sx={{ width: 200 }} component="label" startIcon={<MdUpload />}>
               <Box width="100px" textAlign="center">
-                インポート
+                {chrome.i18n.getMessage("import")}
               </Box>
               <VisuallyHiddenInput type="file" accept=".json" onChange={importData} />
             </Button>
@@ -157,7 +157,7 @@ export const DataOperation = (props: Props) => {
               startIcon={<MdDownload />}
             >
               <Box width="100px" textAlign="center">
-                エクスポート
+                {chrome.i18n.getMessage("export")}
               </Box>
             </Button>
           </Box>
@@ -199,7 +199,7 @@ export const DataOperation = (props: Props) => {
           </Box>
           <Button variant="contained" color="error" onClick={resetData} sx={{ width: 200 }} startIcon={<MdDelete />}>
             <Box width="100px" textAlign="center">
-              初期化
+              {chrome.i18n.getMessage("reset")}
             </Box>
           </Button>
         </Box>

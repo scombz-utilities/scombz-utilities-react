@@ -88,9 +88,9 @@ export const CustomWidgetSort = (props: CustomWidgetSortProps) => {
   const { saves, setSettings } = props;
   return (
     <CustomContainerParent
-      label="カスタムウィジェット並び替え設定"
+      label={chrome.i18n.getMessage("optionTitleWidgetOrder")}
       id="widgetOrder"
-      caption="カレンダー、メモ、リンク集、バス時刻表ウィジェットの表示設定を変更します。 ※2カラムでカレンダー使用中の場合は、カレンダーは必ず右側に配置されます。"
+      caption={chrome.i18n.getMessage("optionDescriptionWidgetOrder")}
     >
       <Box sx={{ display: "flex", gap: 1, mt: 1 }}>
         <Paper
@@ -109,7 +109,7 @@ export const CustomWidgetSort = (props: CustomWidgetSortProps) => {
             }}
           >
             <Typography variant="h6" fontSize="1.1rem">
-              使用中のウィジェット
+              {chrome.i18n.getMessage("optionWidgetOrderEnabled")}
             </Typography>
           </Box>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 1, py: 1, px: 0.5 }}>
@@ -154,7 +154,7 @@ export const CustomWidgetSort = (props: CustomWidgetSortProps) => {
             }}
           >
             <Typography variant="h6" fontSize="1.1rem">
-              無効化中のウィジェット
+              {chrome.i18n.getMessage("optionWidgetOrderDisabled")}
             </Typography>
           </Box>
           <Box
