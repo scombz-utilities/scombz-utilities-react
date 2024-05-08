@@ -113,7 +113,7 @@ export const SaveDialog = () => {
             <Stack gap={0.5} mb={2}>
               <FormControl sx={{ mt: 1 }} variant="outlined">
                 <InputLabel htmlFor="scombz-utilities-username">Username</InputLabel>
-                <Input size="small" id="scombz-utilities-username" ref={idRef} />
+                <Input size="small" id="scombz-utilities-username" ref={idRef} type="email" autoComplete="email" />
               </FormControl>
               <FormControl sx={{ mt: 1 }} variant="outlined">
                 <InputLabel htmlFor="scombz-utilities-password">Password</InputLabel>
@@ -121,6 +121,7 @@ export const SaveDialog = () => {
                   id="scombz-utilities-password"
                   ref={passRef}
                   type={showPassword ? "text" : "password"}
+                  autoComplete="password"
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
