@@ -129,6 +129,12 @@ export const SaveDialog = () => {
                       </IconButton>
                     </InputAdornment>
                   }
+                  sx={{
+                    // ref: https://learn.microsoft.com/ja-jp/microsoft-edge/web-platform/password-reveal#visibility-of-the-control
+                    "& *::-ms-reveal": {
+                      display: "none",
+                    },
+                  }}
                 />
               </FormControl>
             </Stack>
