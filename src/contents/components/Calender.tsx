@@ -2,10 +2,10 @@ import { Box, IconButton, Typography, ButtonGroup, Collapse, Button } from "@mui
 import { deepOrange, indigo } from "@mui/material/colors";
 import { lastDayOfMonth, format } from "date-fns";
 import ICAL from "ical";
+import JapaneseHolidays from "japanese-holidays";
 import { useState, useEffect, useMemo } from "react";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import type { CalEvent } from "../types/calender";
-import { holidays } from "~constants";
 import { defaultSaves, type Saves } from "~settings";
 
 const days =
@@ -37,7 +37,7 @@ const Day = (props: DayProps) => {
       }}
       onClick={() => onClick?.(date)}
     >
-      {holiday && !holiday.includes("振替休日") && (
+      {holiday && (
         <Typography
           variant="body2"
           fontSize="9px"
@@ -157,7 +157,7 @@ const MyCalender = (props: MyCalenderProps) => {
               onClick={onClick}
               isSunday={thisDate.getDay() === 0}
               isSaturday={thisDate.getDay() === 6}
-              holiday={holidays.find((d) => d.start === formatThisDate)?.summary}
+              holiday={JapaneseHolidays.isHoliday(thisDate)}
               isSelected={
                 targetDay.getDate() === i + 1 && targetDay.getMonth() === month && targetDay.getFullYear() === year
               }

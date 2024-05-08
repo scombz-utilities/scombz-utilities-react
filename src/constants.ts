@@ -18,5 +18,3 @@ export const SLIDER_BAR_MINS = [
 
 export const MAX_MEMO_COUNT = 30;
 export const MAX_HIDDEN_TASKS = 150;
-
-export { holidays } from "./holidays";
