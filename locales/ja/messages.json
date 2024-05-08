@@ -254,5 +254,125 @@
   "downloadLink": {
     "message": "リンク先をダウンロード",
     "description": "リンク先をダウンロード"
+  },
+  "optionTitleFaculty": {
+    "message": "学部",
+    "description": "学部"
+  },
+  "optionDescriptionFaculty": {
+    "message": "学部を選択してください。学部情報は、ScombZとシラバス間の連携機能にのみ使用されます。",
+    "description": "学部を選択してください。学部情報は、ScombZとシラバス間の連携機能にのみ使用されます。"
+  },
+  "optionTitleStudentID": {
+    "message": "学籍番号",
+    "description": "学籍番号"
+  },
+  "optionDescriptionStudentID": {
+    "message": "ログイン時に使用する学籍番号を入力してください。情報はPC本体にのみ保存され、外部に送信されることはありません。",
+    "description": "ログイン時に使用する学籍番号を入力してください。情報はPC本体にのみ保存され、外部に送信されることはありません。"
+  },
+  "optionTitlePassword": {
+    "message": "パスワード",
+    "description": "パスワード"
+  },
+  "optionDescriptionPassword": {
+    "message": "ログイン時に使用するパスワードを入力してください。情報はPC本体にのみ保存され、外部に送信されることはありません。",
+    "description": "ログイン時に使用するパスワードを入力してください。情報はPC本体にのみ保存され、外部に送信されることはありません。"
+  },
+  "optionTitleHeadLinkTo": {
+    "message": "ヘッダアイコンのリンク先",
+    "description": "ヘッダアイコンのリンク先"
+  },
+  "optionDescriptionHeadLinkTo": {
+    "message": "ヘッダのScombZアイコンをクリックした際のリンク先を設定します。",
+    "description": "ヘッダのScombZアイコンをクリックした際のリンク先を設定します。"
+  },
+  "optionTitleLmsShowClassroom": {
+    "message": "LMSページのレイアウト変更 教室表示",
+    "description": "LMSページのレイアウト変更 教室表示"
+  },
+  "optionDescriptionLmsShowClassroom": {
+    "message": "LMSページの時間割で、各授業欄に教室情報を常に表示します。",
+    "description": "LMSページの時間割で、各授業欄に教室情報を常に表示します。"
+  },
+  "optionTitleLmsHideNoClassDay": {
+    "message": "LMSページのレイアウト変更 休日・放課後非表示",
+    "description": "LMSページのレイアウト変更 休日・放課後非表示"
+  },
+  "optionDescriptionLmsHideNoClassDay": {
+    "message": "LMSページで、授業のない日を非表示にします。 また、5限以降の授業をとっていない場合はそれらも非表示にします。",
+    "description": "LMSページで、授業のない日を非表示にします。 また、5限以降の授業をとっていない場合はそれらも非表示にします。"
+  },
+  "optionTitleForceDragAndDropSubmit": {
+    "message": "課題ドラッグ&ドロップ提出",
+    "description": "課題ドラッグ&ドロップ提出"
+  },
+  "optionDescriptionForceDragAndDropSubmit": {
+    "message": "課題提出画面の成果物提出欄をクリックなしで最初からドラッグ&ドロップにします。",
+    "description": "課題提出画面の成果物提出欄をクリックなしで最初からドラッグ&ドロップにします。"
+  },
+  "optionTitleDownloadFileBundle": {
+    "message": "ファイル一括ダウンロード",
+    "description": "ファイル一括ダウンロード"
+  },
+  "optionDescriptionDownloadFileBundle": {
+    "message": "科目詳細ページ内において、配布されているすべてのpdfファイルをZIP形式に圧縮し一括でダウンロードする機能です。",
+    "description": "科目詳細ページ内において、配布されているすべてのpdfファイルをZIP形式に圧縮し一括でダウンロードする機能です。"
+  },
+  "optionTitleLayoutClickToHideName": {
+    "message": "クリックで名前非表示",
+    "description": "クリックで名前非表示"
+  },
+  "optionDescriptionLayoutClickToHideName": {
+    "message": "名前をクリックして非表示にできるようにします。",
+    "description": "名前をクリックして非表示にできるようにします。"
+  },
+  "optionTitleLayoutLinkify": {
+    "message": "科目ページ リンク化",
+    "description": "科目ページ リンク化"
+  },
+  "optionDescriptionLayoutLinkify": {
+    "message": "科目別のページ内において、テキスト内のURLを自動的にリンク化します。",
+    "description": "科目別のページ内において、テキスト内のURLを自動的にリンク化します。"
+  },
+  "optionTitleModifyClickableLinks": {
+    "message": "特殊リンクにおけるホイールクリックと右クリックの有効化",
+    "description": "特殊リンクにおけるホイールクリックと右クリックの有効化"
+  },
+  "optionDescriptionModifyClickableLinks": {
+    "message": "LMSページ内の科目ボタン、科目別ページのダウンロードリンクなど、右クリックが通常できないリンクを通常のリンクと同じようにサポートします。",
+    "description": "LMSページ内の科目ボタン、科目別ページのダウンロードリンクなど、右クリックが通常できないリンクを通常のリンクと同じようにサポートします。"
+  },
+  "optionTitleMarkdownNotePad": {
+    "message": "科目ページ マークダウンメモ帳",
+    "description": "科目ページ マークダウンメモ帳"
+  },
+  "optionDescriptionMarkdownNotePad": {
+    "message": "科目別ページ内において、マークダウン記法に対応したメモ帳を追加します。",
+    "description": "科目別ページ内において、マークダウン記法に対応したメモ帳を追加します。"
+  },
+  "optionTitleHiddenTaskList": {
+    "message": "非表示課題リスト",
+    "description": "非表示課題リスト"
+  },
+  "optionDescriptionHiddenTaskList": {
+    "message": "メニュー横ウィジェットの課題一覧に表示されない課題一覧。 リストから削除すると、期限内のものは再度表示されるようになります。",
+    "description": "メニュー横ウィジェットの課題一覧に表示されない課題一覧。 リストから削除すると、期限内のものは再度表示されるようになります。"
+  },
+  "optionTitleWidgetOrder": {
+    "message": "カスタムウィジェット並び替え設定",
+    "description": "カスタムウィジェット並び替え設定"
+  },
+  "optionDescriptionWidgetOrder": {
+    "message": "カレンダー、メモ、リンク集、バス時刻表ウィジェットの表示設定を変更します。",
+    "description": "カレンダー、メモ、リンク集、バス時刻表ウィジェットの表示設定を変更します。"
+  },
+  "optionTitleDisplayClassroom": {
+    "message": "時間割ウィジェット 教室表示",
+    "description": "時間割ウィジェット 教室表示"
+  },
+  "optionDescriptionDisplayClassroom": {
+    "message": "メニュー横ウィジェットの時間割に、常に各科目の教室情報を表示します。 なお、日別表示の際はこの項目にかかわらず教室情報が表示されます。",
+    "description": "メニュー横ウィジェットの時間割に、常に各科目の教室情報を表示します。 なお、日別表示の際はこの項目にかかわらず教室情報が表示されます。"
   }
 }

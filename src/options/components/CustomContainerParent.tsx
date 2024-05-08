@@ -1,4 +1,5 @@
 import { Box, Typography, InputLabel } from "@mui/material";
+import grey from "@mui/material/colors/grey";
 import React from "react";
 
 type Props = {
@@ -12,18 +13,18 @@ export const CustomContainerParent = (props: Props) => {
   return (
     <Box borderTop="1px solid #ccc" marginBottom={2} paddingTop={2.5}>
       <Box display="flex" alignItems="flex-end" gap={1}>
-        <InputLabel>{label}</InputLabel>
-        <Typography variant="caption" color="grey">
+        <InputLabel sx={{ color: grey[700] }}>{label}</InputLabel>
+        <Typography variant="caption" color={grey[500]}>
           {id}
         </Typography>
       </Box>
       <Box ml={0.1}>
-        <Typography variant="caption" color="grey">
+        <Typography variant="caption">
           {caption
             .replace(/\s+/g, " ")
             .split(" ")
             .map((text, index) => (
-              <Typography key={index} variant="caption" color="grey" display="block">
+              <Typography key={index} variant="body2" color={grey[700]} display="block">
                 {text}
               </Typography>
             ))}
