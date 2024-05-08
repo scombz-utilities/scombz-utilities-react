@@ -112,11 +112,11 @@ export const SaveDialog = () => {
             </Box>
             <Stack gap={0.5} mb={2}>
               <FormControl sx={{ mt: 1 }} variant="outlined">
-                <InputLabel htmlFor="scombz-utilities-username">Username</InputLabel>
+                <InputLabel htmlFor="scombz-utilities-username">あなたのユーザ名@sic</InputLabel>
                 <Input size="small" id="scombz-utilities-username" ref={idRef} type="email" autoComplete="email" />
               </FormControl>
               <FormControl sx={{ mt: 1 }} variant="outlined">
-                <InputLabel htmlFor="scombz-utilities-password">Password</InputLabel>
+                <InputLabel htmlFor="scombz-utilities-password">パスワード</InputLabel>
                 <Input
                   id="scombz-utilities-password"
                   ref={passRef}
