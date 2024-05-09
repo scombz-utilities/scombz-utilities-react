@@ -1,6 +1,7 @@
-import { Box, Button, Typography, ThemeProvider, Link } from "@mui/material";
+import { Box, Button, Typography, ThemeProvider } from "@mui/material";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
+import { MultiPageTimeTable } from "./components/MultiPageTimeTable";
 import theme from "~/theme";
 import type { Task } from "~contents/types/task";
 import { defaultSaves, type Saves } from "~settings";
@@ -36,23 +37,18 @@ const IndexPopup = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box width={500} textAlign="center" m={2}>
+      <Box width={360} textAlign="center" m={2}>
         <Typography variant="h5">ScombZ Utilities</Typography>
 
         {/* 授業一覧 */}
         <Box my={1}>
           <Box>
-            <Typography variant="h6">TimeTable</Typography>
-            {saves.scombzData.timetable.map((d) => (
-              <Box key={d.id} sx={{ display: "flex", gap: 2 }}>
-                <Typography>
-                  {days[d.day]}曜{d.time}限
-                </Typography>
-                <Link href={`https://scombz.shibaura-it.ac.jp/lms/course?idnumber=${d.id}`} target="_blank">
-                  <Typography>{d.name}</Typography>
-                </Link>
-              </Box>
-            ))}
+            {/* <Typography variant="h6">TimeTable</Typography>
+            <ListCourse courses={saves.scombzData.timetable} /> */}
+            <MultiPageTimeTable
+              courses={saves.scombzData.timetable}
+              shows={["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Tasks"]}
+            />
           </Box>
 
           {/* 課題一覧 */}
