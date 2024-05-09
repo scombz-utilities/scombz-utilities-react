@@ -1,13 +1,24 @@
-# ScombZ Utilitiesモダン化プロジェクト
+[![License](https://img.shields.io/github/license/yudai1204/ScombZ-Utilities?color=white&style=flat-square)](https://github.com/yudai1204/ScombZ-Utilities/blob/dev/LICENSE)
+[![Contributors](https://img.shields.io/github/contributors/yudai1204/ScombZ-Utilities?color=white&style=flat-square)](https://github.com/yudai1204/ScombZ-Utilities/graphs/contributors)
+![Version for Chrome](https://img.shields.io/chrome-web-store/v/iejnanaabfgocfjbnmhkfheghbkanibj?color=yellow&style=flat-square)
+![Chrome Users](https://img.shields.io/chrome-web-store/users/iejnanaabfgocfjbnmhkfheghbkanibj?color=yellow&style=flat-square)
+![Version for Firefox](https://img.shields.io/amo/v/scombz-utilities?color=red&style=flat-square)
+![Firefox Users](https://img.shields.io/amo/users/scombz-utilities?color=red&style=flat-square)
 
-ScombZ UtilitiesをReactとTypeScriptでモダン化しよう  
-進捗状況: [TODO.md](./TODO.md)
+# ScombZ Utilities
 
-## Plasmoに関する日本語ドキュメントは以下参照
+使いにくい ScombZ のサイドメニューやテストを修正したり、ADFS ボタンの自動スキップができます。よりユーザビリティに優れた ScombZ を提供します。
 
-https://zenn.dev/nado1001/articles/plasmo-browser-extension
+[公式サイト](https://scombz-utilities.com)
 
-## 旧ScombZ環境は以下
+[![Chrome 版のリンク](./chrome.png)](https://chrome.google.com/webstore/detail/scombz-utilities/iejnanaabfgocfjbnmhkfheghbkanibj)
+
+[![Firefox 版のリンク](./firefox.png)](https://addons.mozilla.org/ja/firefox/addon/scombz-utilities/)
+
+## Tips
+
+このプロジェクトは 旧 ScombZ Utilities からのリニューアル版です。
+旧コードは以下のリポジトリにあります。
 
 https://github.com/yudai1204/scombz-utilities
 
