@@ -35,10 +35,26 @@ const hideSideMenu = () => {
 };
 
 document.documentElement.style.visibility = "hidden";
+
+const style = document.createElement("style");
+style.textContent = `
+#pageMain {
+  left: 0 !important;
+  width: 100% !important;
+  transition: none !important;
+}
+#sidemenu {
+  display: none !important;
+}
+`;
+
+document.documentElement.insertBefore(style, document.documentElement.firstChild);
+
 document.addEventListener("DOMContentLoaded", async () => {
   setTimeout(() => {
     document.documentElement.style.visibility = "";
-  }, 500);
+    style.remove();
+  }, 1000);
   const currentData = await chrome.storage.local.get(defaultSaves);
   const settings = currentData.settings as Settings;
   if (settings.hideSideMenu) hideSideMenu();
