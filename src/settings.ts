@@ -31,7 +31,7 @@ export type Settings = {
   forceNarrowTimeTable: boolean;
   displayClassroom: boolean; // 常に教室を表示する
   displayTime: boolean; // 常に開始終了時間を表示する
-  displayTodayDate: boolean; // 今日の日付を表示する
+  timeTableTopDate: "date" | "time" | false; // 時間割の上部に表示する日付
   highlightToday: boolean; // 今日の日付をハイライトする(TimeTable)
   highlightTask: boolean; // タスクを色でハイライトする
   deadlineMode: "relative" | "absolute"; // 締切表示モード
@@ -104,7 +104,7 @@ export const defaultSettings: Settings = {
   forceNarrowTimeTable: false,
   displayClassroom: false,
   displayTime: true,
-  displayTodayDate: true,
+  timeTableTopDate: "date",
   highlightToday: true,
   highlightTask: true,
   deadlineMode: "relative",
