@@ -24,6 +24,15 @@ https://github.com/yudai1204/scombz-utilities
 
 ## 環境構築
 
+環境構築は、ローカルで `Node.js` 環境を構築する方法と、Dockerを使った方法があります。  
+パフォーマンス上の理由からローカルでの開発を推奨しますが、環境構築の手間を省くためにDockerを使うこともできます。  
+WSL・Macを使用中の場合はローカル、Windowsを使用中の場合はDockerを使用することをお勧めします。
+
+### ローカルでの開発
+
+<details>
+<summary> ローカルでの環境構築 </summary>
+
 注意: **Nodeのバージョンは必ず`.node-version`記載のものに合わせること**
 
 ### nodeの準備
@@ -177,15 +186,6 @@ $ node -v
 $ npm i
 ```
 
-### VScodeでの開発
-
-開発においてコーディングルールをeslintに定義しています。
-VScodeでは自動的にルールに合っているか解析+ルールに合ったように整形を行うことができるため、以下の拡張機能をインストールしてください。
-VScodeのユーザー設定は`.vscode`ディレクトリ内に定義済みのため特に変える必要はない(はず)です。
-
-- [prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-- [eslint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-
 ### 開発サーバーの立ち上げ
 
 以下のコマンドで開発サーバーを立ち上げられます。
@@ -205,7 +205,59 @@ ChromeとFireFoxに対応したビルドがそれぞれ生成されます。
 $ npm run build
 ```
 
-### コーディング規則
+</details>
+
+---
+
+### Dockerでの開発
+
+<details>
+<summary> Dockerでの環境構築 </summary>
+
+1. (まだの場合は)[Docker Desktop](https://www.docker.com/get-started/)をインストールしてください。
+1. 以下のコマンドを実行して必要なモジュールをインストールしてください。makeコマンドが使えない場合は、makeをインストールするか、直接docker-composeコマンドを実行してください。
+
+```bash
+$ make i
+or
+$ docker compose run --rm app npm i
+```
+
+### 開発サーバーの立ち上げ
+
+以下のコマンドで開発サーバーを立ち上げられます。
+`build/chrome-mv3-dev`を読み込んでください。
+tsxファイル等を更新するとライブローディングされます。
+
+```bash
+$ make dev
+or
+$ docker compose run --rm app npm run dev
+```
+
+### 配布用のビルド
+
+以下のコマンドでビルドできます。
+ChromeとFireFoxに対応したビルドがそれぞれ生成されます。
+
+```bash
+$ make build
+or
+$ docker compose run --rm app npm run build
+```
+
+</details>
+
+## VScodeでの設定
+
+開発においてコーディングルールをeslintに定義しています。
+VScodeでは自動的にルールに合っているか解析+ルールに合ったように整形を行うことができるため、以下の拡張機能をインストールしてください。
+VScodeのユーザー設定は`.vscode`ディレクトリ内に定義済みのため特に変える必要はない(はず)です。
+
+- [prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- [eslint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+
+## コーディング規則
 
 - 基本的にすべてのコードは`src`、すべての外部ファイルは`assets`内に記載します。
 - content_scriptはなるべくページ単位で`contents`ディレクトリ直下に記載してください。

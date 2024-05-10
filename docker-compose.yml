@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  app:
+    image: node:20.11.1
+    volumes:
+      - .:/usr/src/app
+    working_dir: /usr/src/app
+    tty: true
+    ports:
+      - 1701:1701 # for npx gcp-refresh-token
