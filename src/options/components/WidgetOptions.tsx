@@ -252,12 +252,17 @@ export const WidgetOptions = (props: Props) => {
             value={saves.settings.displayTime}
             onChange={(_e, checked) => setSettings("displayTime", checked)}
           />
-          <CustomSwitch
-            label="時間割 今日の日付表示"
-            caption={`メニュー横ウィジェットの時間割の上部に、今日の日付を表示します。`}
-            id="displayTodayDate"
-            value={saves.settings.displayTodayDate}
-            onChange={(_e, checked) => setSettings("displayTodayDate", checked)}
+          <CustomSelect
+            label="時間割 今日の日付・時刻表示"
+            caption={`メニュー横ウィジェットの時間割の上部に、今日の日付もしくは時刻を表示します。 時刻は秒単位(HH:mm:ss)で表示されます。`}
+            id="timeTableTopDate"
+            value={saves.settings.timeTableTopDate.toString()}
+            options={[
+              { value: "date", label: "日付" },
+              { value: "time", label: "時刻（秒単位）" },
+              { value: "false", label: "非表示" },
+            ]}
+            onChange={(e, _) => setSettings("timeTableTopDate", e.target.value === "false" ? false : e.target.value)}
           />
           <CustomSwitch
             label="時間割 現在の授業を目立たせる"

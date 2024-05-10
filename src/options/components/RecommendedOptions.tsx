@@ -102,6 +102,18 @@ export const RecommendedOptions = (props: Props) => {
             value={saves.settings.displayClassroom}
             onChange={(_e, checked) => setSettings("displayClassroom", checked)}
           />
+          <CustomSelect
+            label={chrome.i18n.getMessage("optionTitleTimeTableTopDate")}
+            caption={chrome.i18n.getMessage("optionDescriptionTimeTableTopDate")}
+            id="timeTableTopDate"
+            value={saves.settings.timeTableTopDate.toString()}
+            options={[
+              { value: "date", label: "日付 / Date" },
+              { value: "time", label: "時刻（秒単位）/ Time in seconds" },
+              { value: "false", label: "非表示 / Hidden" },
+            ]}
+            onChange={(e, _) => setSettings("timeTableTopDate", e.target.value === "false" ? false : e.target.value)}
+          />
         </OptionGroup>
 
         <OptionGroup title="LMS">

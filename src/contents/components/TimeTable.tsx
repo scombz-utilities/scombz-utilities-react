@@ -359,6 +359,8 @@ export const TimeTable = (props: Props) => {
   const [highlightToday, setHighlightToday] = useState<boolean>(true);
   const [today, setToday] = useState<string | false>(false);
 
+  const [timeTableTopDate, setTimeTableTopDate] = useState<typeof defaultSaves.settings.timeTableTopDate>("date");
+
   const [isTimeTableOpen, setIsTimeTableOpen] = useState<boolean>(true);
   const toggleTimeTable = () => {
     setIsTimeTableOpen(!isTimeTableOpen);
@@ -375,15 +377,24 @@ export const TimeTable = (props: Props) => {
     save();
   };
 
+  const setTimeTableTopString = (lang: string, formatType: "date" | "time") => {
+    if (lang === "ja") {
+      const format = formatType === "date" ? "yyyy年MM月dd日(E)" : "M月d日(E) HH:mm:ss";
+      setToday(formatDate(new Date(), format, { locale: ja }));
+    } else {
+      const format = formatType === "date" ? "EEEE, MMMM dd, yyyy" : "EEE, MMM d h:mm:ss a";
+      setToday(formatDate(new Date(), format));
+    }
+  };
+
   useEffect(() => {
     const fetchTimetable = async () => {
       const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
-      if (currentData.settings.displayTodayDate) {
-        if (chrome.i18n.getUILanguage() === "ja") {
-          setToday(formatDate(new Date(), "yyyy年MM月dd日(E)", { locale: ja }));
-        } else {
-          setToday(formatDate(new Date(), "EEEE, MMMM dd, yyyy"));
-        }
+      if (currentData.settings.timeTableTopDate) {
+        setTimeTableTopString(chrome.i18n.getUILanguage(), currentData.settings.timeTableTopDate);
+        setTimeout(() => {
+          setTimeTableTopDate(currentData.settings.timeTableTopDate);
+        }, 1000 - new Date().getMilliseconds());
       }
       setIsWideTimeTable(!currentData.settings.forceNarrowTimeTable);
       setTimetable(currentData.scombzData.timetable);
@@ -393,6 +404,14 @@ export const TimeTable = (props: Props) => {
     };
     fetchTimetable();
   }, []);
+
+  useEffect(() => {
+    if (timeTableTopDate !== "time") return;
+    const interval = setInterval(() => {
+      setTimeTableTopString(chrome.i18n.getUILanguage(), timeTableTopDate);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [timeTableTopDate]);
 
   const { day: nowDay, time: nowClassTime } = useMemo(
     () => (highlightToday ? getTimetablePosFromTime(new Date()) : { day: null, time: null }),

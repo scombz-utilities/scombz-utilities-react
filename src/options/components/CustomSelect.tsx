@@ -22,7 +22,12 @@ export const CustomSelect = (props: Props) => {
   const { label, caption, id = "", options, value, onChange } = props;
   return (
     <CustomContainerParent label={label} caption={caption} id={id}>
-      <Select variant="outlined" size="small" sx={{ width: 450 }} value={value} onChange={onChange}>
+      <Select variant="outlined" size="small" sx={{ width: 450 }} value={value || "unselected"} onChange={onChange}>
+        {(value === null || value === undefined) && (
+          <MenuItem key="none" value="unselected" disabled>
+            <em>{chrome.i18n.getMessage("notSelected")}</em>
+          </MenuItem>
+        )}
         {options.map((option) => (
           <MenuItem key={option.value} value={option.value}>
             {option.label}
