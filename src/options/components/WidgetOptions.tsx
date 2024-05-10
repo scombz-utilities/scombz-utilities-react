@@ -255,7 +255,7 @@ export const WidgetOptions = (props: Props) => {
           <CustomSelect
             label="時間割 今日の日付・時刻表示"
             caption={`メニュー横ウィジェットの時間割の上部に、今日の日付もしくは時刻を表示します。 時刻は秒単位(HH:mm:ss)で表示されます。`}
-            id="displayTodayDate"
+            id="timeTableTopDate"
             value={saves.settings.timeTableTopDate.toString()}
             options={[
               { value: "date", label: "日付" },

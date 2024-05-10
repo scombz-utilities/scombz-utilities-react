@@ -430,5 +430,17 @@
   "optionDescriptionDisplayClassroom": {
     "message": "メニュー横ウィジェットの時間割に、常に各科目の教室情報を表示します。 なお、日別表示の際はこの項目にかかわらず教室情報が表示されます。",
     "description": "メニュー横ウィジェットの時間割に、常に各科目の教室情報を表示します。 なお、日別表示の際はこの項目にかかわらず教室情報が表示されます。"
+  },
+  "optionTitleTimeTableTopDate": {
+    "message": "時間割ウィジェット 今日の日付・時刻表示",
+    "description": "時間割ウィジェット 今日の日付・時刻表示"
+  },
+  "optionDescriptionTimeTableTopDate": {
+    "message": "メニュー横ウィジェットの時間割の上部に、今日の日付もしくは時刻を表示します。 時刻は秒単位(HH:mm:ss)で表示されます。",
+    "description": "メニュー横ウィジェットの時間割の上部に、今日の日付もしくは時刻を表示します。 時刻は秒単位(HH:mm:ss)で表示されます。"
+  },
+  "notSelected": {
+    "message": "未選択",
+    "description": "未選択"
   }
 }
