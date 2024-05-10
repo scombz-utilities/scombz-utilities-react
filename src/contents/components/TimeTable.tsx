@@ -408,7 +408,6 @@ export const TimeTable = (props: Props) => {
   useEffect(() => {
     if (timeTableTopDate !== "time") return;
     const interval = setInterval(() => {
-      console.log(timeTableTopDate);
       setTimeTableTopString(chrome.i18n.getUILanguage(), timeTableTopDate);
     }, 1000);
     return () => clearInterval(interval);
