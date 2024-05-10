@@ -379,7 +379,7 @@ export const TimeTable = (props: Props) => {
 
   const setTimeTableTopString = (lang: string, formatType: "date" | "time") => {
     if (lang === "ja") {
-      const format = formatType === "date" ? "yyyy年MM月dd日(E)" : "MM月dd日(E) HH:mm:ss";
+      const format = formatType === "date" ? "yyyy年MM月dd日(E)" : "M月d日(E) HH:mm:ss";
       setToday(formatDate(new Date(), format, { locale: ja }));
     } else {
       const format = formatType === "date" ? "EEEE, MMMM dd, yyyy" : "EEE, MMM d h:mm:ss a";
