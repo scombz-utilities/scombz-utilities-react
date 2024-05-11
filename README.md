@@ -1,5 +1,5 @@
-[![License](https://img.shields.io/github/license/yudai1204/ScombZ-Utilities?color=white&style=flat-square)](https://github.com/yudai1204/ScombZ-Utilities/blob/dev/LICENSE)
-[![Contributors](https://img.shields.io/github/contributors/yudai1204/ScombZ-Utilities?color=white&style=flat-square)](https://github.com/yudai1204/ScombZ-Utilities/graphs/contributors)
+[![License](https://img.shields.io/github/license/scombz-utilities/scombz-utilities-react?color=white&style=flat-square)](https://github.com/scombz-utilities/scombz-utilities-react/blob/main/LICENSE)
+[![Contributors](https://img.shields.io/github/contributors/scombz-utilities/scombz-utilities-react?color=white&style=flat-square)](https://github.com/scombz-utilities/scombz-utilities-react/graphs/contributors)
 ![Version for Chrome](https://img.shields.io/chrome-web-store/v/iejnanaabfgocfjbnmhkfheghbkanibj?color=yellow&style=flat-square)
 ![Chrome Users](https://img.shields.io/chrome-web-store/users/iejnanaabfgocfjbnmhkfheghbkanibj?color=yellow&style=flat-square)
 ![Version for Firefox](https://img.shields.io/amo/v/scombz-utilities?color=red&style=flat-square)

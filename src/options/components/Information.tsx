@@ -22,7 +22,7 @@ export const Information = () => {
         <Link href="https://docs.google.com/forms/d/e/1FAIpQLSeahBs8kcBB2dVmVA54KIIOxa4DKUE8v4a1E30ncawd9W4vjg/viewform">
           <Typography variant="body1">Google Form</Typography>
         </Link>
-        <Link href="https://github.com/yudai1204/scombz-utilities-react/issues">
+        <Link href="https://github.com/scombz-utilities/scombz-utilities-react/issues">
           <Typography variant="body1">GitHub Issues</Typography>
         </Link>
         <Link href="https://twitter.com/ScombZ_utl">
@@ -39,11 +39,8 @@ export const Information = () => {
         <Link href="https://chromewebstore.google.com/detail/scombz-utilities/iejnanaabfgocfjbnmhkfheghbkanibj?hl=ja">
           <Typography variant="body1">Chrome Web Store</Typography>
         </Link>
-        <Link href="https://github.com/yudai1204/scombz-utilities">
-          <Typography variant="body1">GitHub (~v3.23.3)</Typography>
-        </Link>
-        <Link href="https://github.com/yudai1204/scombz-utilities-react">
-          <Typography variant="body1">GitHub (v4.0.0~)</Typography>
+        <Link href="https://github.com/scombz-utilities/scombz-utilities-react">
+          <Typography variant="body1">GitHub</Typography>
         </Link>
       </Box>
       <Box>
