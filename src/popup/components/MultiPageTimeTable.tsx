@@ -1,5 +1,5 @@
 import { Box, Tab, Tabs } from "@mui/material";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { ListCourse } from "./ListCourse";
 import type { Task } from "~contents/types/task";
 import type { TimeTableData } from "~contents/types/timetable";
@@ -10,13 +10,17 @@ type MultiPageTimeTableProps = {
   shows: TabTypes[];
 };
 
-const tabDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] as const;
+const tabDays = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"] as const;
 type TabDays = (typeof tabDays)[number];
 
-const tabMiscs = ["Tasks"] as const;
+const tabMiscs = ["tasks"] as const;
 type TabMiscs = (typeof tabMiscs)[number];
 
 type TabTypes = TabDays | TabMiscs;
+
+type WeeklyTimeTableData = {
+  [K in TabDays]: TimeTableData[];
+};
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -41,10 +45,53 @@ const a11yProps = (index: number) => {
   };
 };
 
-export const MultiPageTimeTable = (props: MultiPageTimeTableProps) => {
-  const { courses } = props;
+const tabName: {
+  [x: string]: {
+    [K in TabTypes]: string;
+  };
+} = {
+  ja: {
+    sunday: "日",
+    monday: "月",
+    tuesday: "火",
+    wednesday: "水",
+    thursday: "木",
+    friday: "金",
+    saturday: "土",
+    tasks: "課題",
+  },
+  en: {
+    sunday: "Sun",
+    monday: "Mon",
+    tuesday: "Tue",
+    wednesday: "Wed",
+    thursday: "Thu",
+    friday: "Fri",
+    saturday: "Sat",
+    tasks: "Tasks",
+  },
+};
 
-  const [value, setValue] = useState<number>(1);
+export const MultiPageTimeTable = (props: MultiPageTimeTableProps) => {
+  const { courses, shows } = props;
+
+  const [value, setValue] = useState<number>(
+    shows.includes(tabDays[new Date().getDay()]) ? shows.findIndex((item) => item === tabDays[new Date().getDay()]) : 0,
+  );
+
+  const weeklyTimeTableData: WeeklyTimeTableData = useMemo(() => {
+    const data: WeeklyTimeTableData = {
+      sunday: [],
+      monday: [],
+      tuesday: [],
+      wednesday: [],
+      thursday: [],
+      friday: [],
+      saturday: [],
+    };
+    for (const day of tabDays) data[day] = courses.filter((course) => tabDays[course.day] === day);
+    return data;
+  }, [courses]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -64,11 +111,11 @@ export const MultiPageTimeTable = (props: MultiPageTimeTableProps) => {
             }}
             aria-label="tabs"
           >
-            {Array.from({ length: 7 }, (_, day) => (
+            {shows.map((day, index) => (
               <Tab
-                label={day}
-                {...a11yProps(day)}
-                key={day}
+                label={tabName[chrome.i18n.getUILanguage() === "ja" ? "ja" : "en"][day]}
+                {...a11yProps(index)}
+                key={index}
                 sx={{
                   p: 0,
                   minWidth: "unset",
@@ -83,14 +130,15 @@ export const MultiPageTimeTable = (props: MultiPageTimeTableProps) => {
                     color: "primary.main",
                     borderColor: "primary.main",
                   },
+                  textTransform: "none",
                 }}
               />
             ))}
           </Tabs>
         </Box>
-        {tabDays.map((day, index) => (
-          <TabPanel value={value} index={index}>
-            <ListCourse courses={courses.filter((course) => course.day === index)} key={index} />
+        {shows.map((day, index) => (
+          <TabPanel value={value} index={index} key={index}>
+            <ListCourse courses={weeklyTimeTableData[day]} key={index} />
           </TabPanel>
         ))}
       </Box>

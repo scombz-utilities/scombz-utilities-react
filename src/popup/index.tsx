@@ -43,11 +43,9 @@ const IndexPopup = () => {
         {/* 授業一覧 */}
         <Box my={1}>
           <Box>
-            {/* <Typography variant="h6">TimeTable</Typography>
-            <ListCourse courses={saves.scombzData.timetable} /> */}
             <MultiPageTimeTable
               courses={saves.scombzData.timetable}
-              shows={["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Tasks"]}
+              shows={["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "tasks"]}
             />
           </Box>
 
