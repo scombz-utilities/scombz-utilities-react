@@ -1,3 +1,4 @@
+import { LoadingButton } from "@mui/lab";
 import { Box, Typography, Paper, IconButton, ButtonGroup, Collapse } from "@mui/material";
 import { format as formatDate } from "date-fns";
 import { ja } from "date-fns/locale";
@@ -13,6 +14,7 @@ import { getTimetablePosFromTime } from "../util/functions";
 import { defaultSaves } from "../util/settings";
 import type { Saves } from "../util/settings";
 import { CLASS_TIMES } from "~/constants";
+import { fetchLMS } from "~contents/util/getLMS";
 
 type ClassBoxProps = {
   classDataArray: TimeTableType;
@@ -358,6 +360,7 @@ export const TimeTable = (props: Props) => {
   const [displayTime, setDisplayTime] = useState<boolean>(true);
   const [highlightToday, setHighlightToday] = useState<boolean>(true);
   const [today, setToday] = useState<string | false>(false);
+  const [isLoadingTimeTable, setIsLoadingTimeTable] = useState<boolean>(false);
 
   const [timeTableTopDate, setTimeTableTopDate] = useState<typeof defaultSaves.settings.timeTableTopDate>("date");
 
@@ -413,16 +416,20 @@ export const TimeTable = (props: Props) => {
     return () => clearInterval(interval);
   }, [timeTableTopDate]);
 
+  const loadLMS = () => {
+    setIsLoadingTimeTable(true);
+    fetchLMS().then((timetable) => {
+      setTimetable(timetable);
+      setIsLoadingTimeTable(false);
+    });
+  };
+
   const { day: nowDay, time: nowClassTime } = useMemo(
     () => (highlightToday ? getTimetablePosFromTime(new Date()) : { day: null, time: null }),
     [highlightToday],
   );
 
   const specialClassData = useMemo(() => timetable.filter((classData) => classData.day === -1), [timetable]);
-
-  if (timetable.length === 0 || width < 540) {
-    return <></>;
-  }
 
   return (
     <>
@@ -439,48 +446,72 @@ export const TimeTable = (props: Props) => {
           borderRadius: 1,
         }}
       >
-        {width > 880 ? (
-          <WideSelectableTimeTable
-            timetable={timetable}
-            displayClassroom={displayClassroom}
-            displayTime={displayTime}
-            nowDay={nowDay}
-            nowClassTime={nowClassTime}
-            today={today}
-            isTimeTableOpen={isTimeTableOpen}
-            toggleTimeTable={toggleTimeTable}
-            isWideTimeTable={isWideTimeTable}
-            toggleWideTimeTable={toggleWideTimeTable}
-          />
-        ) : (
-          <NarrowTimeTable
-            timetable={timetable}
-            nowDay={nowDay}
-            nowClassTime={nowClassTime}
-            today={today}
-            isTimeTableOpen={isTimeTableOpen}
-            toggleTimeTable={toggleTimeTable}
-          />
-        )}
-        {specialClassData.length > 0 && (
-          <Collapse in={isTimeTableOpen} timeout="auto">
-            <Box
-              mt={1}
-              display="flex"
-              flexDirection="column"
-              sx={{ backgroundColor: "#EEF7F799", borderRadius: 0.5, px: 1.5, py: 1 }}
-            >
-              <Typography variant="caption" sx={{ px: 1, textAlign: width > 880 ? "left" : "center" }}>
-                {chrome.i18n.getMessage("timetableIntensiveCourse")}
+        {timetable.length === 0 ? (
+          <Box sx={{ textAlign: "center" }}>
+            {today && (
+              <Typography variant="h6" sx={{ textAlign: "center", fontSize: "16px" }}>
+                {today}
+                <ButtonGroup sx={{ position: "absolute", top: 8, right: 8 }}>
+                  <IconButton onClick={toggleTimeTable} size="small">
+                    {isTimeTableOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
+                  </IconButton>
+                </ButtonGroup>
               </Typography>
-              <ClassBox
-                classDataArray={specialClassData}
-                direction={width > 880 ? "row" : "column"}
+            )}
+            <Collapse in={isTimeTableOpen} timeout="auto">
+              <Box mt={1}>
+                <LoadingButton variant="outlined" onClick={loadLMS} loading={isLoadingTimeTable}>
+                  {chrome.i18n.getMessage("loadLMS")}
+                </LoadingButton>
+              </Box>
+            </Collapse>
+          </Box>
+        ) : (
+          <>
+            {width > 880 ? (
+              <WideSelectableTimeTable
+                timetable={timetable}
+                displayClassroom={displayClassroom}
+                displayTime={displayTime && timetable.length > 0}
                 nowDay={nowDay}
                 nowClassTime={nowClassTime}
+                today={today}
+                isTimeTableOpen={isTimeTableOpen}
+                toggleTimeTable={toggleTimeTable}
+                isWideTimeTable={isWideTimeTable}
+                toggleWideTimeTable={toggleWideTimeTable}
               />
-            </Box>
-          </Collapse>
+            ) : (
+              <NarrowTimeTable
+                timetable={timetable}
+                nowDay={nowDay}
+                nowClassTime={nowClassTime}
+                today={today}
+                isTimeTableOpen={isTimeTableOpen}
+                toggleTimeTable={toggleTimeTable}
+              />
+            )}
+            {specialClassData.length > 0 && (
+              <Collapse in={isTimeTableOpen} timeout="auto">
+                <Box
+                  mt={1}
+                  display="flex"
+                  flexDirection="column"
+                  sx={{ backgroundColor: "#EEF7F799", borderRadius: 0.5, px: 1.5, py: 1 }}
+                >
+                  <Typography variant="caption" sx={{ px: 1, textAlign: width > 880 ? "left" : "center" }}>
+                    {chrome.i18n.getMessage("timetableIntensiveCourse")}
+                  </Typography>
+                  <ClassBox
+                    classDataArray={specialClassData}
+                    direction={width > 880 ? "row" : "column"}
+                    nowDay={nowDay}
+                    nowClassTime={nowClassTime}
+                  />
+                </Box>
+              </Collapse>
+            )}
+          </>
         )}
       </Box>
     </>

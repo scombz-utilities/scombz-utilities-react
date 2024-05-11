@@ -15,6 +15,10 @@
     "message": "アンケート一覧に戻る",
     "description": "アンケート一覧に戻る"
   },
+  "loadLMS": {
+    "message": "時間割を読み込む",
+    "description": "時間割を読み込む"
+  },
   "timetablePeriod": {
     "message": "時限",
     "description": "時限"

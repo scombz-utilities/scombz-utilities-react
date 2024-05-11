@@ -15,6 +15,10 @@
     "message": "Go back to the survey list",
     "description": "アンケート一覧に戻る"
   },
+  "loadLMS": {
+    "message": "Load your timetable from LMS",
+    "description": "時間割を読み込む"
+  },
   "timetablePeriod": {
     "message": "Period",
     "description": "時限"
