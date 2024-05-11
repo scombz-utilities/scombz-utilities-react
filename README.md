@@ -20,7 +20,7 @@
 このプロジェクトは 旧 ScombZ Utilities からのリニューアル版です。
 旧コードは以下のリポジトリにあります。
 
-https://github.com/yudai1204/scombz-utilities
+https://github.com/scombz-utilities/scombz-utilities-legacy
 
 ## 環境構築
 
