@@ -226,7 +226,7 @@ export const migrateLogic = (oldSaves: any): Saves => {
 export const migrate = (): Promise<Saves | "alreadyMigrated"> => {
   return new Promise((resolve) => {
     chrome.storage.local.get({ ...oldSavesTemp, ...defaultSaves }, (oldSaves) => {
-      if (oldSaves?.scombzData?.doMigration) {
+      if (oldSaves?.scombzData?.doMigration || process.env.PLASMO_PUBLIC_ENVIRONMENT === "development") {
         console.log("Migration already completed");
         resolve("alreadyMigrated");
       } else {
