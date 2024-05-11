@@ -9,7 +9,7 @@
 
 使いにくい ScombZ のサイドメニューやテストを修正したり、ADFS ボタンの自動スキップができます。よりユーザビリティに優れた ScombZ を提供します。
 
-[公式サイト](https://scombz-utilities.com)
+[公式サイト](https://scombz-utilities.github.io/)
 
 [![Chrome 版のリンク](./chrome.png)](https://chrome.google.com/webstore/detail/scombz-utilities/iejnanaabfgocfjbnmhkfheghbkanibj)
 

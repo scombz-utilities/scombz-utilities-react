@@ -6,7 +6,7 @@ import { OpenOptionButton } from "./components/OpenOptionButton";
 import theme from "~/theme";
 
 export const config: PlasmoCSConfig = {
-  matches: ["https://scombz-utilities.com/*"],
+  matches: ["https://scombz-utilities.github.io/*"],
   run_at: "document_end",
 };
 

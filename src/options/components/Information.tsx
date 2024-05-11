@@ -33,7 +33,7 @@ export const Information = () => {
         <Typography variant="h6" mb={0.5}>
           リンク
         </Typography>
-        <Link href="https://scombz-utilities.com">
+        <Link href="https://scombz-utilities.github.io/">
           <Typography variant="body1">公式サイト</Typography>
         </Link>
         <Link href="https://chromewebstore.google.com/detail/scombz-utilities/iejnanaabfgocfjbnmhkfheghbkanibj?hl=ja">
