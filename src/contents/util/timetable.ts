@@ -30,7 +30,7 @@ const centeringTimetable = async () => {
  * 休講の曜日や時間帯を非表示にする
  */
 const hideNoClassDay = async () => {
-  const timetableData = getLMS();
+  const timetableData = getLMS(document);
   if (!timetableData.find((data) => data.day === 6)) {
     const sats = Array.from(document.getElementsByClassName("6-yobicol"));
     for (const sat of sats) sat.remove();

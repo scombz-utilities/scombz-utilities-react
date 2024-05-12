@@ -6,13 +6,14 @@ import React, { useState, useMemo } from "react";
 type Props = {
   options: string[];
   onChange: (value: string) => void;
+  defaultValue?: string;
   required?: boolean;
   placeholder?: string;
   label?: string;
 };
 export const AutoComplete = (props: Props) => {
-  const { options, onChange, placeholder = "", label = "", required = false } = props;
-  const [value, setValue] = useState<string>("");
+  const { options, onChange, placeholder = "", label = "", required = false, defaultValue = "" } = props;
+  const [value, setValue] = useState<string>(defaultValue);
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
   const onInput = async (value: string) => {
