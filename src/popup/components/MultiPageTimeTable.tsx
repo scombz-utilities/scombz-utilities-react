@@ -1,13 +1,17 @@
-import { Box, Tab, Tabs } from "@mui/material";
+import { Box, Chip, Stack, Tab, Tabs } from "@mui/material";
+import { differenceInHours } from "date-fns";
 import React, { useMemo, useState } from "react";
 import { ListCourse } from "./ListCourse";
+import { ListTask } from "./ListTask";
 import type { Task } from "~contents/types/task";
 import type { TimeTableData } from "~contents/types/timetable";
 
 type MultiPageTimeTableProps = {
   courses?: TimeTableData[];
   tasks?: Task[];
-  shows: TabTypes[];
+  days: TabDays[];
+  showTasks?: boolean;
+  overflowTasks?: "auto" | "hidden" | "scroll";
 };
 
 const tabDays = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"] as const;
@@ -72,11 +76,31 @@ const tabName: {
   },
 };
 
+const getTaskTabColor = (
+  tasks: Task[],
+): {
+  chip: "default" | "primary" | "secondary" | "error" | "info" | "success" | "warning";
+  tab: string;
+  indicator: string;
+} => {
+  if (tasks.length > 0 && differenceInHours(new Date(tasks[0].deadline), new Date()) < 24)
+    return {
+      chip: "error",
+      tab: "error.main",
+      indicator: "error.main",
+    };
+  return {
+    chip: "default",
+    tab: "primary.main",
+    indicator: "primary.main",
+  };
+};
+
 export const MultiPageTimeTable = (props: MultiPageTimeTableProps) => {
-  const { courses, shows } = props;
+  const { courses, days, tasks = [], showTasks = false, overflowTasks = "hidden" } = props;
 
   const [value, setValue] = useState<number>(
-    shows.includes(tabDays[new Date().getDay()]) ? shows.findIndex((item) => item === tabDays[new Date().getDay()]) : 0,
+    days.includes(tabDays[new Date().getDay()]) ? days.findIndex((item) => item === tabDays[new Date().getDay()]) : 0,
   );
 
   const weeklyTimeTableData: WeeklyTimeTableData = useMemo(() => {
@@ -97,6 +121,8 @@ export const MultiPageTimeTable = (props: MultiPageTimeTableProps) => {
     setValue(newValue);
   };
 
+  const taskTabColor = getTaskTabColor(tasks);
+
   return (
     <>
       <Box sx={{ width: "100%", py: 1 }}>
@@ -108,10 +134,16 @@ export const MultiPageTimeTable = (props: MultiPageTimeTableProps) => {
             sx={{
               minHeight: 24,
               height: 24,
+              "& .MuiTabs-indicator": {
+                backgroundColor: value === days.length && taskTabColor.indicator,
+              },
+              "& .tab-tasks.Mui-selected": {
+                color: taskTabColor.tab,
+              },
             }}
             aria-label="tabs"
           >
-            {shows.map((day, index) => (
+            {days.map((day, index) => (
               <Tab
                 label={tabName[chrome.i18n.getUILanguage() === "ja" ? "ja" : "en"][day]}
                 {...a11yProps(index)}
@@ -134,13 +166,63 @@ export const MultiPageTimeTable = (props: MultiPageTimeTableProps) => {
                 }}
               />
             ))}
+            {showTasks && (
+              <Tab
+                label={
+                  <>
+                    <Stack direction="row" sx={{ width: "max-content" }}>
+                      {tabName[chrome.i18n.getUILanguage() === "ja" ? "ja" : "en"]["tasks"]}
+                      <Chip
+                        label={tasks.length}
+                        color={taskTabColor.chip}
+                        sx={{
+                          height: "17px",
+                          ml: 0.75,
+                          mt: -0.125,
+                          lineHeight: "inherit",
+                          ".MuiChip-label": {
+                            px: 0.75,
+                            mt: 0.25,
+                          },
+                        }}
+                      />
+                    </Stack>
+                  </>
+                }
+                {...a11yProps(days.length)}
+                className="tab-tasks"
+                key={days.length}
+                sx={{
+                  ml: 1,
+                  p: 0,
+                  minWidth: "max-content",
+                  minHeight: 24,
+                  height: 24,
+                  fontSize: "small",
+                  borderBottom: 1,
+                  borderColor: "divider",
+                  transition:
+                    "border-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+                  ":not(.Mui-selected):not(:active):hover": {
+                    color: taskTabColor.tab,
+                    borderColor: taskTabColor.tab,
+                  },
+                  textTransform: "none",
+                }}
+              />
+            )}
           </Tabs>
         </Box>
-        {shows.map((day, index) => (
+        {days.map((day, index) => (
           <TabPanel value={value} index={index} key={index}>
             <ListCourse courses={weeklyTimeTableData[day]} key={index} />
           </TabPanel>
         ))}
+        {showTasks && (
+          <TabPanel value={value} index={days.length} key={days.length}>
+            <ListTask tasks={tasks} overflowTasks={overflowTasks} key={days.length} />
+          </TabPanel>
+        )}
       </Box>
     </>
   );
