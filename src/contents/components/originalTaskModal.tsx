@@ -11,15 +11,17 @@ type Props = {
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
   onClose: (task?: Task) => void;
+  course?: string;
+  courseURL?: string;
 };
 export const OriginalTaskModal = (props: Props) => {
-  const { isOpen: open, setIsOpen, onClose = () => {} } = props;
+  const { isOpen: open, setIsOpen, onClose = () => {}, course = "", courseURL = "" } = props;
   const [subjects, setSubjects] = useState<string[]>([]);
 
   const [taskName, setTaskName] = useState<string>("");
   const [taskURL, setTaskURL] = useState<string>("");
-  const [subjectName, setSubjectName] = useState<string>("");
-  const [subjectURL, setSubjectURL] = useState<string>("");
+  const [subjectName, setSubjectName] = useState<string>(course);
+  const [subjectURL, setSubjectURL] = useState<string>(courseURL);
   const [taskDate, setTaskDate] = useState<string>("");
   const [taskTime, setTaskTime] = useState<string>("00:00");
 
@@ -83,6 +85,7 @@ export const OriginalTaskModal = (props: Props) => {
     <Modal title={chrome.i18n.getMessage("OriginalTaskAdd")} isOpen={open} setIsOpen={setIsOpen} onClose={onClose}>
       <Box display="flex" flexDirection="column" px={1} sx={{ gap: 1 }}>
         <AutoComplete
+          defaultValue={subjectName}
           options={subjects}
           onChange={onChangeSubject}
           label={chrome.i18n.getMessage("taskListSubject")}
