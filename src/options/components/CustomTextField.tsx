@@ -1,12 +1,11 @@
-import { Box, TextField, IconButton } from "@mui/material";
-import { useId, useState } from "react";
+import { TextField } from "@mui/material";
+import { useId } from "react";
 import type { ChangeEvent } from "react";
-import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { CustomContainerParent } from "./CustomContainerParent";
 
 type Props = {
-  label: string;
-  caption: string;
+  i18nLabel: string;
+  i18nCaption: string;
   optionId?: string;
   type?: string;
   value: string;
@@ -14,34 +13,26 @@ type Props = {
 };
 
 export const CustomTextField = (props: Props) => {
-  const { label, caption, optionId = "", value, onChange } = props;
-  const [showPassword, setShowPassword] = useState(false);
-
-  const width = 450;
+  const { i18nLabel, i18nCaption, optionId = "", value, type, onChange } = props;
 
   const id = useId();
-  console.log([label, id]);
-
-  const toggleShowPassword = () => {
-    setShowPassword((show) => !show);
-  };
 
   return (
-    <CustomContainerParent label={label} caption={caption} optionId={optionId} htmlFor={id}>
-      <Box position="relative" sx={{ width }}>
-        <TextField
-          variant="outlined"
-          size="small"
-          value={value}
-          onChange={onChange}
-          sx={{ width }}
-          type={showPassword ? "text" : "password"}
-          id={id}
-        />
-        <IconButton onClick={toggleShowPassword} sx={{ position: "absolute", right: 0, top: 0 }}>
-          {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
-        </IconButton>
-      </Box>
+    <CustomContainerParent
+      label={chrome.i18n.getMessage(i18nLabel) || i18nLabel}
+      caption={chrome.i18n.getMessage(i18nCaption) || i18nCaption}
+      optionId={optionId}
+      htmlFor={id}
+    >
+      <TextField
+        variant="outlined"
+        size="small"
+        value={value}
+        onChange={onChange}
+        sx={{ width: 450 }}
+        type={type}
+        id={id}
+      />
     </CustomContainerParent>
   );
 };
