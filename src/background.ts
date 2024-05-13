@@ -32,7 +32,7 @@ chrome.runtime.onMessage.addListener((message: RuntimeMessage, _sender, sendResp
 chrome.runtime.onInstalled.addListener(({ reason }) => {
   updateBadgeText();
   onInstalled(reason);
-  if (reason === "update") {
+  if (reason === "update" && chrome.runtime.getManifest().version === "4.0.0") {
     migrate();
   }
 });
