@@ -1,4 +1,4 @@
-import { Box, Button, ThemeProvider } from "@mui/material";
+import { Alert, Box, Button, Snackbar, ThemeProvider } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { ComplexOptions } from "./components/ComplexOptions";
 import { SimpleOptions } from "./components/SimpleOptions";
@@ -10,6 +10,7 @@ import "./index.css";
 const OptionsIndex = () => {
   const [isSimple, setIsSimple] = useState<boolean>(true);
   const [currentLocalStorage, setCurrentLocalStorage] = useState<Saves>(defaultSaves);
+  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
 
   const setSettings = async (key: string, value: unknown) => {
     const newLocalStorage = {
@@ -21,6 +22,7 @@ const OptionsIndex = () => {
     };
     setCurrentLocalStorage(newLocalStorage);
     await chrome.storage.local.set(newLocalStorage);
+    setSnackbarOpen(true);
   };
 
   const setScombzData = async (key: string, value: unknown) => {
@@ -43,6 +45,21 @@ const OptionsIndex = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        open={snackbarOpen}
+        autoHideDuration={2000}
+        onClose={() => setSnackbarOpen(false)}
+      >
+        <Alert
+          onClose={() => setSnackbarOpen(false)}
+          severity="success"
+          variant="filled"
+          sx={{ width: "300px", py: 1 }}
+        >
+          設定を保存しました
+        </Alert>
+      </Snackbar>
       <Box p={0} maxWidth={1000} margin="0 auto">
         <Box pt={2} pb={5} mx={0}>
           <Box textAlign="center" mb={2}>
