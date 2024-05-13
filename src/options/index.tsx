@@ -51,6 +51,20 @@ const OptionsIndex = () => {
               alt="ScombZ Utilities"
               style={{ width: "50%", maxWidth: "250px", margin: "0 auto", display: "block" }}
             />
+            <Button
+              sx={{
+                backgroundColor: "#fff",
+                "&:hover": {
+                  backgroundColor: "#f4f4f4",
+                },
+              }}
+              variant="outlined"
+              onClick={() => {
+                setIsSimple(!isSimple);
+              }}
+            >
+              {isSimple ? "詳細設定へ" : "かんたん設定へ"}
+            </Button>
           </Box>
 
           {isSimple ? (
@@ -63,43 +77,6 @@ const OptionsIndex = () => {
               setSaves={setCurrentLocalStorage}
             />
           )}
-
-          <Box
-            m={1}
-            position="fixed"
-            sx={{
-              bottom: 0,
-              right: 0,
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              backgroundColor: "#fffa",
-              backdropFilter: "blur(3px)",
-              boxShadow: "0 0 6px #0003",
-              margin: 0,
-              padding: 1,
-            }}
-          >
-            <Box position="relative" width="100%" display="flex" alignItems="center" justifyContent="center">
-              <Box position="absolute" left={30} top={0} ml={1}>
-                <Button
-                  sx={{
-                    backgroundColor: "#fff",
-                    "&:hover": {
-                      backgroundColor: "#f4f4f4",
-                    },
-                  }}
-                  variant="outlined"
-                  onClick={() => {
-                    setIsSimple(!isSimple);
-                  }}
-                >
-                  {isSimple ? "詳細設定へ" : "かんたん設定へ"}
-                </Button>
-              </Box>
-            </Box>
-          </Box>
         </Box>
       </Box>
     </ThemeProvider>
