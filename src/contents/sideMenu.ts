@@ -102,7 +102,7 @@ const styleSidemenu = async () => {
     "beforeend",
     `
     <div id="graylayer" onclick="document.getElementById('sidemenuClose').click();"></div>
-    <p class="usFooter">ScombZ Utilities ver.${version}<br><a style="color:#000000;" href="https://github.com/scombz-utilities/scombz-utilities-react" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+    <p class="usFooter">ScombZ Utilities ver.${version}</p>
     `,
   );
   return;
