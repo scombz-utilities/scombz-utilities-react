@@ -1,6 +1,6 @@
-import { TextField } from "@mui/material";
-import { useId } from "react";
-import type { ChangeEvent } from "react";
+import { Save } from "@mui/icons-material";
+import { Button, Stack, TextField } from "@mui/material";
+import { useId, useState } from "react";
 import { CustomContainerParent } from "./CustomContainerParent";
 
 type Props = {
@@ -9,12 +9,13 @@ type Props = {
   optionId?: string;
   type?: string;
   value: string;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onSaveButtonClick: (value: string) => void;
 };
 
 export const CustomTextField = (props: Props) => {
-  const { i18nLabel, i18nCaption, optionId = "", value, type, onChange } = props;
+  const { i18nLabel, i18nCaption, optionId = "", value, type, onSaveButtonClick } = props;
 
+  const [currentValue, setCurrentValue] = useState(value);
   const id = useId();
 
   return (
@@ -24,15 +25,25 @@ export const CustomTextField = (props: Props) => {
       optionId={optionId}
       htmlFor={id}
     >
-      <TextField
-        variant="outlined"
-        size="small"
-        value={value}
-        onChange={onChange}
-        sx={{ width: 450 }}
-        type={type}
-        id={id}
-      />
+      <Stack direction="row" gap={1}>
+        <TextField
+          variant="outlined"
+          size="small"
+          value={currentValue}
+          onChange={(e) => setCurrentValue(e.target.value)}
+          sx={{ width: 450 }}
+          type={type}
+          id={id}
+        />
+        <Button
+          startIcon={<Save />}
+          variant="contained"
+          onClick={() => onSaveButtonClick(currentValue)}
+          disabled={value === currentValue}
+        >
+          保存
+        </Button>
+      </Stack>
     </CustomContainerParent>
   );
 };

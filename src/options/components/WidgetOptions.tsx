@@ -295,7 +295,7 @@ export const WidgetOptions = (props: Props) => {
             i18nCaption="メニュー横ウィジェットの課題一覧で、提出期限の表示形式が絶対表示の時の表示フォーマットを変更します。 yyyy:年 MM:月 E:曜日 dd:日 HH:時 mm:分"
             optionId="deadlineFormat"
             value={saves.settings.deadlineFormat}
-            onChange={(e) => setSettings("deadlineFormat", e.target.value)}
+            onSaveButtonClick={(value) => setSettings("deadlineFormat", value)}
           />
           <CustomTextField
             i18nLabel="課題一覧 表示件数"
@@ -303,7 +303,7 @@ export const WidgetOptions = (props: Props) => {
             i18nCaption="メニュー横ウィジェットの課題一覧で、1ページ内に表示する課題の最大件数を設定します。 課題の数がこれを超えた場合であっても、ページネーションにより全ての課題を確認できます。"
             optionId="taskListRowsPerPage"
             value={saves.settings.taskListRowsPerPage.toString()}
-            onChange={(e) => setSettings("taskListRowsPerPage", parseInt(e.target.value, 10))}
+            onSaveButtonClick={(value) => setSettings("taskListRowsPerPage", parseInt(value, 10))}
           />
           <CustomRemovableList
             i18nLabel="リンク集 リンク削除"

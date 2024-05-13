@@ -40,8 +40,8 @@ export const AdvancedOptions = (props: Props) => {
           i18nCaption="ログイン時に使用する学籍番号を入力してください。"
           optionId="loginData.username"
           value={saves.settings.loginData.username.split("@")[0]}
-          onChange={(e) => {
-            const username = e.target.value.includes("@") ? e.target.value : e.target.value + "@sic";
+          onSaveButtonClick={(value) => {
+            const username = value.includes("@") ? value : value + "@sic";
             setSettings("loginData", { ...saves.settings.loginData, username });
           }}
         />
@@ -51,9 +51,7 @@ export const AdvancedOptions = (props: Props) => {
           i18nCaption="ログイン時に使用するパスワードを入力してください。"
           optionId="loginData.password"
           value={saves.settings.loginData.password}
-          onChange={(_event) =>
-            setSettings("loginData", { ...saves.settings.loginData, password: _event.target.value })
-          }
+          onSaveButtonClick={(value) => setSettings("loginData", { ...saves.settings.loginData, password: value })}
         />
         <CustomRemovableList
           i18nLabel="授業内アンケートの課題表示"
@@ -85,7 +83,7 @@ export const AdvancedOptions = (props: Props) => {
           i18nCaption="レポート提出時に、作成時間を簡易入力するためのスライダーバーの最大値を設定します。"
           optionId="sliderBarMax"
           value={saves.settings.sliderBarMax.toString()}
-          onChange={(e) => setSettings("sliderBarMax", parseInt(e.target.value, 10))}
+          onSaveButtonClick={(value) => setSettings("sliderBarMax", parseInt(value, 10))}
         />
         <CustomSelect
           i18nLabel="提出時間の初期値(分)"
@@ -103,7 +101,7 @@ export const AdvancedOptions = (props: Props) => {
           i18nCaption="レポート提出時にファイル名自動入力ボタンを押した際に入力される文字列を変更します。"
           optionId="defaultInputName"
           value={saves.settings.defaultInputName}
-          onChange={(e) => setSettings("defaultInputName", e.target.value)}
+          onSaveButtonClick={(value) => setSettings("defaultInputName", value)}
         />
 
         <CustomTextField
@@ -112,10 +110,10 @@ export const AdvancedOptions = (props: Props) => {
           i18nCaption="科目別ページの最大幅を設定します。"
           optionId="layout.maxWidthPx.subj"
           value={saves.settings.layout.maxWidthPx.subj.toString()}
-          onChange={(e) =>
+          onSaveButtonClick={(value) =>
             setSettings("layout", {
               ...saves.settings.layout,
-              maxWidthPx: { ...saves.settings.layout.maxWidthPx, subj: parseInt(e.target.value, 10) },
+              maxWidthPx: { ...saves.settings.layout.maxWidthPx, subj: parseInt(value, 10) },
             })
           }
         />
@@ -125,10 +123,10 @@ export const AdvancedOptions = (props: Props) => {
           i18nCaption="LMSページの最大幅を設定します。"
           optionId="layout.maxWidthPx.lms"
           value={saves.settings.layout.maxWidthPx.lms.toString()}
-          onChange={(e) =>
+          onSaveButtonClick={(value) =>
             setSettings("layout", {
               ...saves.settings.layout,
-              maxWidthPx: { ...saves.settings.layout.maxWidthPx, lms: parseInt(e.target.value, 10) },
+              maxWidthPx: { ...saves.settings.layout.maxWidthPx, lms: parseInt(value, 10) },
             })
           }
         />
@@ -138,10 +136,10 @@ export const AdvancedOptions = (props: Props) => {
           i18nCaption="課題提出ページの最大幅を設定します。"
           optionId="layout.maxWidthPx.task"
           value={saves.settings.layout.maxWidthPx.task.toString()}
-          onChange={(e) =>
+          onSaveButtonClick={(value) =>
             setSettings("layout", {
               ...saves.settings.layout,
-              maxWidthPx: { ...saves.settings.layout.maxWidthPx, task: parseInt(e.target.value, 10) },
+              maxWidthPx: { ...saves.settings.layout.maxWidthPx, task: parseInt(value, 10) },
             })
           }
         />

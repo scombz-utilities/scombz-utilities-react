@@ -66,8 +66,8 @@ export const RecommendedOptions = (props: Props) => {
             i18nCaption="optionDescriptionStudentID"
             optionId="loginData.username"
             value={saves.settings.loginData.username.split("@")[0]}
-            onChange={(e) => {
-              const username = e.target.value.includes("@") ? e.target.value : e.target.value + "@sic";
+            onSaveButtonClick={(value) => {
+              const username = value.includes("@") ? value : value + "@sic";
               setSettings("loginData", { ...saves.settings.loginData, username });
             }}
           />
@@ -77,9 +77,7 @@ export const RecommendedOptions = (props: Props) => {
             i18nCaption="optionDescriptionPassword"
             optionId="loginData.password"
             value={saves.settings.loginData.password}
-            onChange={(_event) =>
-              setSettings("loginData", { ...saves.settings.loginData, password: _event.target.value })
-            }
+            onSaveButtonClick={(value) => setSettings("loginData", { ...saves.settings.loginData, password: value })}
           />
         </OptionGroup>
 
