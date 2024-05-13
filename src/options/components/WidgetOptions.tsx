@@ -89,7 +89,7 @@ export const CustomWidgetSort = (props: CustomWidgetSortProps) => {
   return (
     <CustomContainerParent
       label={chrome.i18n.getMessage("optionTitleWidgetOrder")}
-      id="widgetOrder"
+      optionId="widgetOrder"
       caption={chrome.i18n.getMessage("optionDescriptionWidgetOrder")}
     >
       <Box sx={{ display: "flex", gap: 1, mt: 1 }}>
@@ -213,7 +213,7 @@ export const WidgetOptions = (props: Props) => {
             i18nLabel="時間割表示"
             i18nCaption={`サイドメニュー展開時に、右のスペースに簡易的な時間割を表示します。
                       この時間割はLMS以外の画面でも展開できるため、科目ページに直接アクセスできます。`}
-            id="useSubTimeTable"
+            optionId="useSubTimeTable"
             value={saves.settings.useSubTimeTable}
             onChange={(_e, checked) => setSettings("useSubTimeTable", checked)}
           />
@@ -221,14 +221,14 @@ export const WidgetOptions = (props: Props) => {
             i18nLabel="課題表示"
             i18nCaption={`サイドメニュー展開時に、右のスペースに課題一覧を表示します。
                       表示される課題一覧は約15分ごとに更新されます。`}
-            id="useTaskList"
+            optionId="useTaskList"
             value={saves.settings.useTaskList}
             onChange={(_e, checked) => setSettings("useTaskList", checked)}
           />
           <CustomSwitch
             i18nLabel="2カラムレイアウトを有効化"
             i18nCaption={`並び替え可能なウィジェットを2列に並べて表示します。`}
-            id="columnCount"
+            optionId="columnCount"
             value={saves.settings.columnCount === 2}
             onChange={(_e, checked) => setSettings("columnCount", checked ? 2 : 1)}
           />
@@ -240,7 +240,7 @@ export const WidgetOptions = (props: Props) => {
             i18nLabel="時間割 教室表示"
             i18nCaption={`メニュー横ウィジェットの時間割に、常に各科目の教室情報を表示します。
                         なお、日別表示の際はこの項目にかかわらず教室情報が表示されます。`}
-            id="displayClassroom"
+            optionId="displayClassroom"
             value={saves.settings.displayClassroom}
             onChange={(_e, checked) => setSettings("displayClassroom", checked)}
           />
@@ -248,7 +248,7 @@ export const WidgetOptions = (props: Props) => {
             i18nLabel="時間割 授業時間表示"
             i18nCaption={`メニュー横ウィジェットの時間割に、各時限の開始及び終了時刻を表示します。
                         なお、日別表示の際はこの項目にかかわらず時限情報が表示されます。`}
-            id="displayTime"
+            optionId="displayTime"
             value={saves.settings.displayTime}
             onChange={(_e, checked) => setSettings("displayTime", checked)}
           />
@@ -267,7 +267,7 @@ export const WidgetOptions = (props: Props) => {
           <CustomSwitch
             i18nLabel="時間割 現在の授業を目立たせる"
             i18nCaption={`LMSページおよびメニュー横ウィジェットの時間割で、現在の授業時間を目立たせます。`}
-            id="highlightToday"
+            optionId="highlightToday"
             value={saves.settings.highlightToday}
             onChange={(_e, checked) => setSettings("highlightToday", checked)}
           />
@@ -275,7 +275,7 @@ export const WidgetOptions = (props: Props) => {
           <CustomSwitch
             i18nLabel="課題一覧 残り時間で強調表示"
             i18nCaption={`メニュー横ウィジェットの課題一覧で、提出期限に近いものを色をつけて目立たせます。`}
-            id="highlightTask"
+            optionId="highlightTask"
             value={saves.settings.highlightTask}
             onChange={(_e, checked) => setSettings("highlightTask", checked)}
           />
@@ -293,7 +293,7 @@ export const WidgetOptions = (props: Props) => {
           <CustomTextField
             i18nLabel="課題一覧 提出期限表示フォーマット"
             i18nCaption="メニュー横ウィジェットの課題一覧で、提出期限の表示形式が絶対表示の時の表示フォーマットを変更します。 yyyy:年 MM:月 E:曜日 dd:日 HH:時 mm:分"
-            id="deadlineFormat"
+            optionId="deadlineFormat"
             value={saves.settings.deadlineFormat}
             onChange={(e) => setSettings("deadlineFormat", e.target.value)}
           />
@@ -301,14 +301,14 @@ export const WidgetOptions = (props: Props) => {
             i18nLabel="課題一覧 表示件数"
             type="number"
             i18nCaption="メニュー横ウィジェットの課題一覧で、1ページ内に表示する課題の最大件数を設定します。 課題の数がこれを超えた場合であっても、ページネーションにより全ての課題を確認できます。"
-            id="taskListRowsPerPage"
+            optionId="taskListRowsPerPage"
             value={saves.settings.taskListRowsPerPage.toString()}
             onChange={(e) => setSettings("taskListRowsPerPage", parseInt(e.target.value, 10))}
           />
           <CustomRemovableList
             i18nLabel="リンク集 リンク削除"
             i18nCaption="サイドメニューにリンク集を追加できます。リンク集は好きに追加可能です。"
-            id="originalLinks"
+            optionId="originalLinks"
             options={saves.settings.originalLinks.map((link) => link.title + " - " + link.url)}
             onChange={(idx) => {
               const newLinks = saves.settings.originalLinks.filter((_, i) => i !== idx);

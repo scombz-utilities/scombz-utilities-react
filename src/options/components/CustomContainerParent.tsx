@@ -4,7 +4,7 @@ import React from "react";
 type Props = {
   label: string;
   caption: string;
-  htmlFor: string;
+  htmlFor?: string;
   optionId?: string;
   children: React.ReactNode;
 };

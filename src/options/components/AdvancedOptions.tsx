@@ -38,7 +38,7 @@ export const AdvancedOptions = (props: Props) => {
         <CustomTextField
           i18nLabel="学籍番号"
           i18nCaption="ログイン時に使用する学籍番号を入力してください。"
-          id="loginData.username"
+          optionId="loginData.username"
           value={saves.settings.loginData.username.split("@")[0]}
           onChange={(e) => {
             const username = e.target.value.includes("@") ? e.target.value : e.target.value + "@sic";
@@ -49,7 +49,7 @@ export const AdvancedOptions = (props: Props) => {
           i18nLabel="パスワード"
           type="password"
           i18nCaption="ログイン時に使用するパスワードを入力してください。"
-          id="loginData.password"
+          optionId="loginData.password"
           value={saves.settings.loginData.password}
           onChange={(_event) =>
             setSettings("loginData", { ...saves.settings.loginData, password: _event.target.value })
@@ -57,7 +57,7 @@ export const AdvancedOptions = (props: Props) => {
         />
         <CustomRemovableList
           i18nLabel="授業内アンケートの課題表示"
-          id="notifySurveySubjects"
+          optionId="notifySurveySubjects"
           i18nCaption="授業内アンケートを課題として表示する科目を選択します。"
           options={saves.settings.notifySurveySubjects.map((subject) => subject.name)}
           onChange={(idx) => {
@@ -69,7 +69,7 @@ export const AdvancedOptions = (props: Props) => {
 
         <CustomRemovableList
           i18nLabel="非表示課題リスト"
-          id="hiddenTaskIdList"
+          optionId="hiddenTaskIdList"
           i18nCaption="メニュー横ウィジェットの課題一覧に表示されない課題IDを入力します。 リストから削除すると、期限内のものは再度表示されるようになります。"
           options={hiddenTaskList}
           onChange={(idx) => {
@@ -83,7 +83,7 @@ export const AdvancedOptions = (props: Props) => {
           i18nLabel="スライダーバーの最大値(分)"
           type="number"
           i18nCaption="レポート提出時に、作成時間を簡易入力するためのスライダーバーの最大値を設定します。"
-          id="sliderBarMax"
+          optionId="sliderBarMax"
           value={saves.settings.sliderBarMax.toString()}
           onChange={(e) => setSettings("sliderBarMax", parseInt(e.target.value, 10))}
         />
@@ -101,7 +101,7 @@ export const AdvancedOptions = (props: Props) => {
         <CustomTextField
           i18nLabel="ファイル名の自動入力設定"
           i18nCaption="レポート提出時にファイル名自動入力ボタンを押した際に入力される文字列を変更します。"
-          id="defaultInputName"
+          optionId="defaultInputName"
           value={saves.settings.defaultInputName}
           onChange={(e) => setSettings("defaultInputName", e.target.value)}
         />
@@ -110,7 +110,7 @@ export const AdvancedOptions = (props: Props) => {
           i18nLabel="レイアウト変更 科目別ページ最大幅(px)"
           type="number"
           i18nCaption="科目別ページの最大幅を設定します。"
-          id="layout.maxWidthPx.subj"
+          optionId="layout.maxWidthPx.subj"
           value={saves.settings.layout.maxWidthPx.subj.toString()}
           onChange={(e) =>
             setSettings("layout", {
@@ -123,7 +123,7 @@ export const AdvancedOptions = (props: Props) => {
           i18nLabel="レイアウト変更 LMSページ最大幅(px)"
           type="number"
           i18nCaption="LMSページの最大幅を設定します。"
-          id="layout.maxWidthPx.lms"
+          optionId="layout.maxWidthPx.lms"
           value={saves.settings.layout.maxWidthPx.lms.toString()}
           onChange={(e) =>
             setSettings("layout", {
@@ -136,7 +136,7 @@ export const AdvancedOptions = (props: Props) => {
           i18nLabel="レイアウト変更 課題提出ページ最大幅(px)"
           type="number"
           i18nCaption="課題提出ページの最大幅を設定します。"
-          id="layout.maxWidthPx.task"
+          optionId="layout.maxWidthPx.task"
           value={saves.settings.layout.maxWidthPx.task.toString()}
           onChange={(e) =>
             setSettings("layout", {
@@ -159,7 +159,7 @@ export const AdvancedOptions = (props: Props) => {
         />
         <CustomRemovableList
           i18nLabel="科目ページメモ"
-          id="coursePageMemo"
+          optionId="coursePageMemo"
           i18nCaption="科目ページに表示されるメモを設定します。"
           options={saves.scombzData.coursePageMemo.map(
             (memo) => `${memo.course ?? memo.id}: ${memo.memo.slice(0, 30)}`,

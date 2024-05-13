@@ -272,8 +272,8 @@
     "description": "おすすめ設定"
   },
   "IOReset": {
-    "message": "インポート・エクスポート・初期化",
-    "description": "インポート・エクスポート・初期化"
+    "message": "設定の管理",
+    "description": "設定の管理"
   },
   "import": {
     "message": "インポート",
