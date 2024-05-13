@@ -1,20 +1,23 @@
 import { Switch } from "@mui/material";
-import React from "react";
+import React, { useId } from "react";
 import type { ChangeEvent } from "react";
 import { CustomContainerParent } from "./CustomContainerParent";
 
 type Props = {
   label: string;
   caption: string;
-  id?: string;
+  optionId?: string;
   value: boolean;
   onChange: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void;
 };
+
 export const CustomSwitch = (props: Props) => {
-  const { label, caption, id = "", value, onChange } = props;
+  const { label, caption, optionId = "", value, onChange } = props;
+  const id = useId();
+
   return (
-    <CustomContainerParent label={label} caption={caption} id={id}>
-      <Switch checked={value} onChange={onChange} />
+    <CustomContainerParent label={label} caption={caption} optionId={optionId} htmlFor={id}>
+      <Switch checked={value} onChange={onChange} id={id} />
     </CustomContainerParent>
   );
 };

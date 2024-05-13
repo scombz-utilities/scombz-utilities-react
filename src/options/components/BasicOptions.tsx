@@ -17,7 +17,7 @@ export const BasicOptions = (props: Props) => {
       <Box display="flex" flexDirection="column" gap={1} p={1}>
         <CustomSelect
           label="学部"
-          id="faculty"
+          optionId="faculty"
           caption="学部を選択してください。学部情報は、ScombZとシラバス間の連携機能にのみ使用されます。"
           options={[
             { value: "din", label: "大学院" },
@@ -55,7 +55,7 @@ export const BasicOptions = (props: Props) => {
         />
         <CustomSelect
           label="出欠表示削除"
-          id="removeAttendance"
+          optionId="removeAttendance"
           caption="科目ページの最下部にある出欠表示を削除します。 ※表示のみを削除することも可能です。"
           options={[
             { value: "none", label: "削除しない" },

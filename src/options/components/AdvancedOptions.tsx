@@ -90,7 +90,7 @@ export const AdvancedOptions = (props: Props) => {
         <CustomSelect
           label="提出時間の初期値(分)"
           caption="レポート提出時に、作成時間を簡易入力するためのスライダーバーの初期値を設定します。"
-          id="timesBtnValue"
+          optionId="timesBtnValue"
           options={SLIDER_BAR_MINS.map((min, index) => ({
             value: index.toString(),
             label: min.join("分, ") + "分",
@@ -148,7 +148,7 @@ export const AdvancedOptions = (props: Props) => {
         <CustomSelect
           label="ヘッダアイコンのリンク先"
           caption="ヘッダのScombZアイコンをクリックした際のリンク先を設定します。"
-          id="headLinkTo"
+          optionId="headLinkTo"
           options={[
             { value: "/portal/home", label: "ホーム" },
             { value: "/lms/timetable", label: "LMS" },

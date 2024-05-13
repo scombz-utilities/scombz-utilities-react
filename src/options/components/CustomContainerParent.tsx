@@ -1,43 +1,22 @@
-import { Box, Typography, InputLabel } from "@mui/material";
-import grey from "@mui/material/colors/grey";
+import { InputLabel, Stack, FormHelperText } from "@mui/material";
 import React from "react";
 
 type Props = {
   label: string;
   caption: string;
-  id?: string;
+  htmlFor: string;
+  optionId?: string;
   children: React.ReactNode;
 };
+
 export const CustomContainerParent = (props: Props) => {
-  const { label, caption, id = "", children } = props;
+  const { label, caption, htmlFor, children } = props;
+
   return (
-    <Box borderBottom="1px solid #ccc" paddingBottom={2} marginTop={2.5}>
-      <Box display="flex" alignItems="flex-end" gap={1}>
-        <InputLabel sx={{ color: grey[700] }}>{label}</InputLabel>
-        <Typography variant="caption" color={grey[500]}>
-          {id}
-        </Typography>
-      </Box>
-      <Box ml={0.1}>
-        <Typography variant="caption">
-          {/* 日本語だったらスペースで改行 */}
-          {chrome.i18n.getUILanguage() === "ja" ? (
-            caption
-              .replace(/\s+/g, " ")
-              .split(" ")
-              .map((text, index) => (
-                <Typography key={index} variant="body2" color={grey[700]} display="block">
-                  {text}
-                </Typography>
-              ))
-          ) : (
-            <Typography variant="body2" color={grey[700]} display="block">
-              {caption}
-            </Typography>
-          )}
-        </Typography>
-      </Box>
+    <Stack gap={1} py={2} borderBottom="1px solid #ccc">
+      <InputLabel htmlFor={htmlFor}>{label}</InputLabel>
+      <FormHelperText>{caption}</FormHelperText>
       {children}
-    </Box>
+    </Stack>
   );
 };
