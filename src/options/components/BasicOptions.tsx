@@ -16,9 +16,9 @@ export const BasicOptions = (props: Props) => {
       <Typography variant="h5">基本設定</Typography>
       <Box display="flex" flexDirection="column" gap={1} p={1}>
         <CustomSelect
-          i18nLabel="学部"
+          i18nLabel="在籍学部"
           optionId="faculty"
-          i18nCaption="学部を選択してください。学部情報は、ScombZとシラバス間の連携機能にのみ使用されます。"
+          i18nCaption="学部情報をもとに、科目別ページにシラバスへのリンクを表示します。"
           options={[
             { value: "din", label: "大学院" },
             { value: "ko1", label: "工学部" },
@@ -71,13 +71,6 @@ export const BasicOptions = (props: Props) => {
           optionId="autoFillSgsot"
           value={saves.settings.autoFillSgsot}
           onChange={(_e, checked) => setSettings("autoFillSgsot", checked)}
-        />
-        <CustomSwitch
-          i18nLabel="時間割 現在の授業を目立たせる"
-          i18nCaption={`LMSページおよびメニュー横ウィジェットの時間割で、現在の授業時間を目立たせます。`}
-          optionId="highlightToday"
-          value={saves.settings.highlightToday}
-          onChange={(_e, checked) => setSettings("highlightToday", checked)}
         />
         <CustomSwitch
           i18nLabel="サイドメニューを自動で閉じる"

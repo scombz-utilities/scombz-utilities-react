@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { useMemo } from "react";
 import { CustomRemovableList } from "./CustomRemovableList";
 import { CustomSelect } from "./CustomSelect";
@@ -34,7 +34,7 @@ export const AdvancedOptions = (props: Props) => {
   return (
     <Box>
       <Typography variant="h5">詳細設定</Typography>
-      <Box display="flex" flexDirection="column" gap={1} p={1}>
+      <Stack gap={1} p={1}>
         <CustomTextField
           i18nLabel="学籍番号"
           i18nCaption="ログイン時に使用する学籍番号を入力してください。"
@@ -170,7 +170,7 @@ export const AdvancedOptions = (props: Props) => {
           }}
           reset={() => setScombzData("coursePageMemo", [])}
         />
-      </Box>
+      </Stack>
     </Box>
   );
 };

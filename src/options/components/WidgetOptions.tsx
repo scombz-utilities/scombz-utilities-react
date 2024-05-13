@@ -208,7 +208,7 @@ export const WidgetOptions = (props: Props) => {
       </Box>
       <Box display="flex" flexDirection="column" gap={1} p={1}>
         <Box mb={8}>
-          <Typography variant="h6">ウィジェット基本設定</Typography>
+          <Typography variant="h6">基本設定</Typography>
           <CustomSwitch
             i18nLabel="時間割表示"
             i18nCaption={`サイドメニュー展開時に、右のスペースに簡易的な時間割を表示します。
@@ -235,7 +235,7 @@ export const WidgetOptions = (props: Props) => {
           <CustomWidgetSort saves={saves} setSettings={setSettings} />
         </Box>
         <Box my={1}>
-          <Typography variant="h6">ウィジェット詳細設定</Typography>
+          <Typography variant="h6">詳細設定</Typography>
           <CustomSwitch
             i18nLabel="時間割 教室表示"
             i18nCaption={`メニュー横ウィジェットの時間割に、常に各科目の教室情報を表示します。
@@ -265,7 +265,7 @@ export const WidgetOptions = (props: Props) => {
             onChange={(e, _) => setSettings("timeTableTopDate", e.target.value === "false" ? false : e.target.value)}
           />
           <CustomSwitch
-            i18nLabel="時間割 現在の授業を目立たせる"
+            i18nLabel="時間割 現在の授業を強調表示"
             i18nCaption={`LMSページおよびメニュー横ウィジェットの時間割で、現在の授業時間を目立たせます。`}
             optionId="highlightToday"
             value={saves.settings.highlightToday}
@@ -273,7 +273,7 @@ export const WidgetOptions = (props: Props) => {
           />
 
           <CustomSwitch
-            i18nLabel="課題一覧 残り時間で強調表示"
+            i18nLabel="課題一覧 残り時間に応じて強調表示"
             i18nCaption={`メニュー横ウィジェットの課題一覧で、提出期限に近いものを色をつけて目立たせます。`}
             optionId="highlightTask"
             value={saves.settings.highlightTask}
