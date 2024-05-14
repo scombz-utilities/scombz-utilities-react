@@ -51,7 +51,7 @@ export const ComplexOptions = (props: Props) => {
         {tabIndex === 1 && <WidgetOptions saves={saves} setSettings={setSettings} />}
         {tabIndex === 2 && <AdvancedOptions saves={saves} setSettings={setSettings} setScombzData={setScombzData} />}
         {tabIndex === 3 && (
-          <CustomCSS value={saves.settings.customCSS} onChange={(value) => setSettings("customCSS", value)} />
+          <CustomCSS value={saves.settings.customCSS} onSaveButtonClick={(value) => setSettings("customCSS", value)} />
         )}
         {tabIndex === 4 && <DataOperation saves={saves} setSaves={setSaves} />}
         {tabIndex === 5 && <Information />}
