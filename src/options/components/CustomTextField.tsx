@@ -1,49 +1,49 @@
-import { Box, TextField, IconButton } from "@mui/material";
-import { useState } from "react";
-import type { ChangeEvent } from "react";
-import { MdVisibility, MdVisibilityOff } from "react-icons/md";
+import { Save } from "@mui/icons-material";
+import { Button, Stack, TextField } from "@mui/material";
+import { useId, useState } from "react";
 import { CustomContainerParent } from "./CustomContainerParent";
 
 type Props = {
-  label: string;
-  caption: string;
-  id?: string;
+  i18nLabel: string;
+  i18nCaption: string;
+  optionId?: string;
   type?: string;
   value: string;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onSaveButtonClick: (value: string) => void;
 };
 
 export const CustomTextField = (props: Props) => {
-  const { label, caption, id = "", value, onChange, type = "text" } = props;
-  const [showPassword, setShowPassword] = useState(false);
+  const { i18nLabel, i18nCaption, optionId = "", value, type, onSaveButtonClick } = props;
 
-  const width = 450;
-
-  const toggleShowPassword = () => {
-    setShowPassword((show) => !show);
-  };
+  const [currentValue, setCurrentValue] = useState(value);
+  const id = useId();
 
   return (
-    <CustomContainerParent label={label} caption={caption} id={id}>
-      <Box position="relative" sx={{ width }}>
-        {type === "password" ? (
-          <>
-            <TextField
-              variant="outlined"
-              size="small"
-              value={value}
-              onChange={onChange}
-              sx={{ width }}
-              type={showPassword ? "text" : "password"}
-            />
-            <IconButton onClick={toggleShowPassword} sx={{ position: "absolute", right: 0, top: 0 }}>
-              {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
-            </IconButton>
-          </>
-        ) : (
-          <TextField variant="outlined" size="small" value={value} onChange={onChange} sx={{ width }} type={type} />
-        )}
-      </Box>
+    <CustomContainerParent
+      label={chrome.i18n.getMessage(i18nLabel) || i18nLabel}
+      caption={chrome.i18n.getMessage(i18nCaption) || i18nCaption}
+      optionId={optionId}
+      htmlFor={id}
+    >
+      <Stack direction="row" gap={1}>
+        <TextField
+          variant="outlined"
+          size="small"
+          value={currentValue}
+          onChange={(e) => setCurrentValue(e.target.value)}
+          sx={{ width: 450 }}
+          type={type}
+          id={id}
+        />
+        <Button
+          startIcon={<Save />}
+          variant="contained"
+          onClick={() => onSaveButtonClick(currentValue)}
+          disabled={value === currentValue}
+        >
+          保存
+        </Button>
+      </Stack>
     </CustomContainerParent>
   );
 };

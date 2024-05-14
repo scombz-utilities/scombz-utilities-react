@@ -1,18 +1,34 @@
-import { Box, Typography } from "@mui/material";
+import { Save } from "@mui/icons-material";
+import { Box, Button, Typography } from "@mui/material";
+import { useState } from "react";
 import { Editor } from "./Editor";
 
 type Props = {
   value: string;
-  onChange: (value: string) => void;
+  onSaveButtonClick: (value: string) => void;
 };
+
 export const CustomCSS = (props: Props) => {
-  const { value, onChange } = props;
+  const { value, onSaveButtonClick } = props;
+
+  const [currentValue, setCurrentValue] = useState(value);
+
   return (
     <Box>
       <Typography variant="h5" mb={1}>
         カスタムCSS
       </Typography>
-      <Editor value={value} onChange={onChange} />
+      <Editor value={currentValue} onChange={setCurrentValue} />
+      <Box sx={{ textAlign: "right", mt: 1 }}>
+        <Button
+          startIcon={<Save />}
+          variant="contained"
+          onClick={() => onSaveButtonClick(currentValue)}
+          disabled={value === currentValue}
+        >
+          保存
+        </Button>
+      </Box>
     </Box>
   );
 };

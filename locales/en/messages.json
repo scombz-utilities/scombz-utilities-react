@@ -15,6 +15,10 @@
     "message": "Go back to the survey list",
     "description": "アンケート一覧に戻る"
   },
+  "loadLMS": {
+    "message": "Load your timetable from LMS",
+    "description": "時間割を読み込む"
+  },
   "timetablePeriod": {
     "message": "Period",
     "description": "時限"
@@ -430,5 +434,17 @@
   "optionDescriptionDisplayClassroom": {
     "message": "Always display classrooms on the Timetable Widget.",
     "description": "メニュー横ウィジェットの時間割に、常に各科目の教室情報を表示します。 なお、日別表示の際はこの項目にかかわらず教室情報が表示されます。"
+  },
+  "optionTitleTimeTableTopDate": {
+    "message": "Display Date on the Timetable Widget",
+    "description": "時間割ウィジェット 今日の日付・時刻表示"
+  },
+  "optionDescriptionTimeTableTopDate": {
+    "message": "Display today's date or time in seconds at the top of the Timetable Widget.",
+    "description": "メニュー横ウィジェットの時間割の上部に、今日の日付もしくは時刻を表示します。 時刻は秒単位(HH:mm:ss)で表示されます。"
+  },
+  "notSelected": {
+    "message": "Please select",
+    "description": "未選択"
   }
 }

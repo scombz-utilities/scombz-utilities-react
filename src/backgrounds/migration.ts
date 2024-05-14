@@ -172,7 +172,7 @@ export const migrateLogic = (oldSaves: any): Saves => {
   newSaves.settings.forceNarrowTimeTable = defaultSaves.settings.forceNarrowTimeTable;
   newSaves.settings.displayClassroom = defaultSaves.settings.displayClassroom;
   newSaves.settings.displayTime = defaultSaves.settings.displayTime;
-  newSaves.settings.displayTodayDate = defaultSaves.settings.displayTodayDate;
+  newSaves.settings.timeTableTopDate = defaultSaves.settings.timeTableTopDate;
   newSaves.settings.highlightToday = oldSaves?.styleNowPeriod ?? defaultSaves.settings.highlightToday;
   newSaves.settings.highlightTask = oldSaves?.highlightDeadline ?? defaultSaves.settings.highlightTask;
   newSaves.settings.deadlineMode = oldSaves?.deadlinemode?.includes("relative")
@@ -226,7 +226,7 @@ export const migrateLogic = (oldSaves: any): Saves => {
 export const migrate = (): Promise<Saves | "alreadyMigrated"> => {
   return new Promise((resolve) => {
     chrome.storage.local.get({ ...oldSavesTemp, ...defaultSaves }, (oldSaves) => {
-      if (oldSaves?.scombzData?.doMigration) {
+      if (oldSaves?.scombzData?.doMigration || process.env.PLASMO_PUBLIC_ENVIRONMENT === "development") {
         console.log("Migration already completed");
         resolve("alreadyMigrated");
       } else {

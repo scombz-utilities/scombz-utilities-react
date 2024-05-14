@@ -15,6 +15,10 @@
     "message": "アンケート一覧に戻る",
     "description": "アンケート一覧に戻る"
   },
+  "loadLMS": {
+    "message": "時間割を読み込む",
+    "description": "時間割を読み込む"
+  },
   "timetablePeriod": {
     "message": "時限",
     "description": "時限"
@@ -268,8 +272,8 @@
     "description": "おすすめ設定"
   },
   "IOReset": {
-    "message": "インポート・エクスポート・初期化",
-    "description": "インポート・エクスポート・初期化"
+    "message": "設定の管理",
+    "description": "設定の管理"
   },
   "import": {
     "message": "インポート",
@@ -430,5 +434,17 @@
   "optionDescriptionDisplayClassroom": {
     "message": "メニュー横ウィジェットの時間割に、常に各科目の教室情報を表示します。 なお、日別表示の際はこの項目にかかわらず教室情報が表示されます。",
     "description": "メニュー横ウィジェットの時間割に、常に各科目の教室情報を表示します。 なお、日別表示の際はこの項目にかかわらず教室情報が表示されます。"
+  },
+  "optionTitleTimeTableTopDate": {
+    "message": "時間割ウィジェット 今日の日付・時刻表示",
+    "description": "時間割ウィジェット 今日の日付・時刻表示"
+  },
+  "optionDescriptionTimeTableTopDate": {
+    "message": "メニュー横ウィジェットの時間割の上部に、今日の日付もしくは時刻を表示します。 時刻は秒単位(HH:mm:ss)で表示されます。",
+    "description": "メニュー横ウィジェットの時間割の上部に、今日の日付もしくは時刻を表示します。 時刻は秒単位(HH:mm:ss)で表示されます。"
+  },
+  "notSelected": {
+    "message": "未選択",
+    "description": "未選択"
   }
 }

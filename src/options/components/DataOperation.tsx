@@ -166,7 +166,7 @@ export const DataOperation = (props: Props) => {
       <Box>
         <Typography variant="h6" onClick={() => setIsLegacyOpen(!isLegacyOpen)} sx={{ cursor: "pointer" }}>
           <IconButton>{isLegacyOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}</IconButton>
-          ScombZ Utilities v4.0.0未満のデータ移行
+          ScombZ Utilities v4.0.0未満からのデータ移行
         </Typography>
         <Collapse in={isLegacyOpen}>
           <Box mx={5}>
