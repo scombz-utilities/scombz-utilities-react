@@ -11,23 +11,29 @@ import {
   TableContainer,
   Button,
 } from "@mui/material";
-import React from "react";
+import React, { useId } from "react";
 import { MdDelete } from "react-icons/md";
 import { CustomContainerParent } from "./CustomContainerParent";
 
 type Props = {
-  label: string;
-  caption: string;
-  id?: string;
+  i18nLabel: string;
+  i18nCaption: string;
+  optionId?: string;
   options: string[];
   onChange: (removedIndex: number) => void;
   reset: () => void;
 };
 
 export const CustomRemovableList = (props: Props) => {
-  const { label, caption, id = "", options, onChange, reset } = props;
+  const { i18nLabel, i18nCaption, optionId = "", options, onChange, reset } = props;
+  const id = useId();
   return (
-    <CustomContainerParent label={label} caption={caption} id={id}>
+    <CustomContainerParent
+      label={chrome.i18n.getMessage(i18nLabel) || i18nLabel}
+      caption={chrome.i18n.getMessage(i18nCaption) || i18nCaption}
+      optionId={optionId}
+      htmlFor={id}
+    >
       <Box display="flex" gap={1} flexDirection="column" width={450}>
         <Box display="flex" width="100%" justifyContent="flex-end">
           <Button

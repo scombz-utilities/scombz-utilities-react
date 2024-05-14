@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { useMemo } from "react";
 import { CustomRemovableList } from "./CustomRemovableList";
 import { CustomSelect } from "./CustomSelect";
@@ -34,31 +34,29 @@ export const AdvancedOptions = (props: Props) => {
   return (
     <Box>
       <Typography variant="h5">詳細設定</Typography>
-      <Box display="flex" flexDirection="column" gap={1} p={1}>
+      <Stack gap={1} p={1}>
         <CustomTextField
-          label="学籍番号"
-          caption="ログイン時に使用する学籍番号を入力してください。"
-          id="loginData.username"
+          i18nLabel="学籍番号"
+          i18nCaption="ログイン時に使用する学籍番号を入力してください。"
+          optionId="loginData.username"
           value={saves.settings.loginData.username.split("@")[0]}
-          onChange={(e) => {
-            const username = e.target.value.includes("@") ? e.target.value : e.target.value + "@sic";
+          onSaveButtonClick={(value) => {
+            const username = value.includes("@") ? value : value + "@sic";
             setSettings("loginData", { ...saves.settings.loginData, username });
           }}
         />
         <CustomTextField
-          label="パスワード"
+          i18nLabel="パスワード"
           type="password"
-          caption="ログイン時に使用するパスワードを入力してください。"
-          id="loginData.password"
+          i18nCaption="ログイン時に使用するパスワードを入力してください。"
+          optionId="loginData.password"
           value={saves.settings.loginData.password}
-          onChange={(_event) =>
-            setSettings("loginData", { ...saves.settings.loginData, password: _event.target.value })
-          }
+          onSaveButtonClick={(value) => setSettings("loginData", { ...saves.settings.loginData, password: value })}
         />
         <CustomRemovableList
-          label="授業内アンケートの課題表示"
-          id="notifySurveySubjects"
-          caption="授業内アンケートを課題として表示する科目を選択します。"
+          i18nLabel="授業内アンケートの課題表示"
+          optionId="notifySurveySubjects"
+          i18nCaption="授業内アンケートを課題として表示する科目を選択します。"
           options={saves.settings.notifySurveySubjects.map((subject) => subject.name)}
           onChange={(idx) => {
             const newSubjects = saves.settings.notifySurveySubjects.filter((_, i) => i !== idx);
@@ -68,9 +66,9 @@ export const AdvancedOptions = (props: Props) => {
         />
 
         <CustomRemovableList
-          label="非表示課題リスト"
-          id="hiddenTaskIdList"
-          caption="メニュー横ウィジェットの課題一覧に表示されない課題IDを入力します。 リストから削除すると、期限内のものは再度表示されるようになります。"
+          i18nLabel="非表示課題リスト"
+          optionId="hiddenTaskIdList"
+          i18nCaption="メニュー横ウィジェットの課題一覧に表示されない課題IDを入力します。 リストから削除すると、期限内のものは再度表示されるようになります。"
           options={hiddenTaskList}
           onChange={(idx) => {
             const newIds = saves.settings.hiddenTaskIdList.filter((_, i) => i !== idx);
@@ -80,17 +78,17 @@ export const AdvancedOptions = (props: Props) => {
         />
 
         <CustomTextField
-          label="スライダーバーの最大値(分)"
+          i18nLabel="スライダーバーの最大値(分)"
           type="number"
-          caption="レポート提出時に、作成時間を簡易入力するためのスライダーバーの最大値を設定します。"
-          id="sliderBarMax"
+          i18nCaption="レポート提出時に、作成時間を簡易入力するためのスライダーバーの最大値を設定します。"
+          optionId="sliderBarMax"
           value={saves.settings.sliderBarMax.toString()}
-          onChange={(e) => setSettings("sliderBarMax", parseInt(e.target.value, 10))}
+          onSaveButtonClick={(value) => setSettings("sliderBarMax", parseInt(value, 10))}
         />
         <CustomSelect
-          label="提出時間の初期値(分)"
-          caption="レポート提出時に、作成時間を簡易入力するためのスライダーバーの初期値を設定します。"
-          id="timesBtnValue"
+          i18nLabel="提出時間の初期値(分)"
+          i18nCaption="レポート提出時に、作成時間を簡易入力するためのスライダーバーの初期値を設定します。"
+          optionId="timesBtnValue"
           options={SLIDER_BAR_MINS.map((min, index) => ({
             value: index.toString(),
             label: min.join("分, ") + "分",
@@ -99,56 +97,56 @@ export const AdvancedOptions = (props: Props) => {
           onChange={(e, _) => setSettings("timesBtnValue", parseInt(e.target.value, 10))}
         />
         <CustomTextField
-          label="ファイル名の自動入力設定"
-          caption="レポート提出時にファイル名自動入力ボタンを押した際に入力される文字列を変更します。"
-          id="defaultInputName"
+          i18nLabel="ファイル名の自動入力設定"
+          i18nCaption="レポート提出時にファイル名自動入力ボタンを押した際に入力される文字列を変更します。"
+          optionId="defaultInputName"
           value={saves.settings.defaultInputName}
-          onChange={(e) => setSettings("defaultInputName", e.target.value)}
+          onSaveButtonClick={(value) => setSettings("defaultInputName", value)}
         />
 
         <CustomTextField
-          label="レイアウト変更 科目別ページ最大幅(px)"
+          i18nLabel="レイアウト変更 科目別ページ最大幅(px)"
           type="number"
-          caption="科目別ページの最大幅を設定します。"
-          id="layout.maxWidthPx.subj"
+          i18nCaption="科目別ページの最大幅を設定します。"
+          optionId="layout.maxWidthPx.subj"
           value={saves.settings.layout.maxWidthPx.subj.toString()}
-          onChange={(e) =>
+          onSaveButtonClick={(value) =>
             setSettings("layout", {
               ...saves.settings.layout,
-              maxWidthPx: { ...saves.settings.layout.maxWidthPx, subj: parseInt(e.target.value, 10) },
+              maxWidthPx: { ...saves.settings.layout.maxWidthPx, subj: parseInt(value, 10) },
             })
           }
         />
         <CustomTextField
-          label="レイアウト変更 LMSページ最大幅(px)"
+          i18nLabel="レイアウト変更 LMSページ最大幅(px)"
           type="number"
-          caption="LMSページの最大幅を設定します。"
-          id="layout.maxWidthPx.lms"
+          i18nCaption="LMSページの最大幅を設定します。"
+          optionId="layout.maxWidthPx.lms"
           value={saves.settings.layout.maxWidthPx.lms.toString()}
-          onChange={(e) =>
+          onSaveButtonClick={(value) =>
             setSettings("layout", {
               ...saves.settings.layout,
-              maxWidthPx: { ...saves.settings.layout.maxWidthPx, lms: parseInt(e.target.value, 10) },
+              maxWidthPx: { ...saves.settings.layout.maxWidthPx, lms: parseInt(value, 10) },
             })
           }
         />
         <CustomTextField
-          label="レイアウト変更 課題提出ページ最大幅(px)"
+          i18nLabel="レイアウト変更 課題提出ページ最大幅(px)"
           type="number"
-          caption="課題提出ページの最大幅を設定します。"
-          id="layout.maxWidthPx.task"
+          i18nCaption="課題提出ページの最大幅を設定します。"
+          optionId="layout.maxWidthPx.task"
           value={saves.settings.layout.maxWidthPx.task.toString()}
-          onChange={(e) =>
+          onSaveButtonClick={(value) =>
             setSettings("layout", {
               ...saves.settings.layout,
-              maxWidthPx: { ...saves.settings.layout.maxWidthPx, task: parseInt(e.target.value, 10) },
+              maxWidthPx: { ...saves.settings.layout.maxWidthPx, task: parseInt(value, 10) },
             })
           }
         />
         <CustomSelect
-          label="ヘッダアイコンのリンク先"
-          caption="ヘッダのScombZアイコンをクリックした際のリンク先を設定します。"
-          id="headLinkTo"
+          i18nLabel="ヘッダアイコンのリンク先"
+          i18nCaption="ヘッダのScombZアイコンをクリックした際のリンク先を設定します。"
+          optionId="headLinkTo"
           options={[
             { value: "/portal/home", label: "ホーム" },
             { value: "/lms/timetable", label: "LMS" },
@@ -158,9 +156,9 @@ export const AdvancedOptions = (props: Props) => {
           onChange={(e, _) => setSettings("headLinkTo", e.target.value)}
         />
         <CustomRemovableList
-          label="科目ページメモ"
-          id="coursePageMemo"
-          caption="科目ページに表示されるメモを設定します。"
+          i18nLabel="科目ページメモ"
+          optionId="coursePageMemo"
+          i18nCaption="科目ページに表示されるメモを設定します。"
           options={saves.scombzData.coursePageMemo.map(
             (memo) => `${memo.course ?? memo.id}: ${memo.memo.slice(0, 30)}`,
           )}
@@ -170,7 +168,7 @@ export const AdvancedOptions = (props: Props) => {
           }}
           reset={() => setScombzData("coursePageMemo", [])}
         />
-      </Box>
+      </Stack>
     </Box>
   );
 };

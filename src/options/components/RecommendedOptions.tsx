@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { useMemo } from "react";
 import { CustomRemovableList } from "./CustomRemovableList";
 import { CustomSelect } from "./CustomSelect";
@@ -29,15 +29,16 @@ export const RecommendedOptions = (props: Props) => {
     saves.scombzData.originalTasklist,
     saves.settings.hiddenTaskIdList,
   ]);
+
   return (
     <Box>
       <Typography variant="h5">{chrome.i18n.getMessage("RecommendedOptions")}</Typography>
-      <Box display="flex" flexDirection="column" gap={1} p={1}>
-        <OptionGroup title={chrome.i18n.getMessage("OptionGroupSyllabusLinking")}>
+      <Stack gap={1} py={1}>
+        <OptionGroup i18nTitle="OptionGroupSyllabusLinking">
           <CustomSelect
-            label={chrome.i18n.getMessage("optionTitleFaculty")}
-            id="faculty"
-            caption={chrome.i18n.getMessage("optionDescriptionFaculty")}
+            i18nLabel="optionTitleFaculty"
+            optionId="faculty"
+            i18nCaption="optionDescriptionFaculty"
             options={
               chrome.i18n.getUILanguage() === "ja"
                 ? [
@@ -59,35 +60,33 @@ export const RecommendedOptions = (props: Props) => {
             onChange={(e, _) => setSettings("faculty", e.target.value)}
           />
         </OptionGroup>
-        <OptionGroup title={chrome.i18n.getMessage("OptionGroupAutomaticLogin")}>
+        <OptionGroup i18nTitle="OptionGroupAutomaticLogin">
           <CustomTextField
-            label={chrome.i18n.getMessage("optionTitleStudentID")}
-            caption={chrome.i18n.getMessage("optionDescriptionStudentID")}
-            id="loginData.username"
+            i18nLabel="optionTitleStudentID"
+            i18nCaption="optionDescriptionStudentID"
+            optionId="loginData.username"
             value={saves.settings.loginData.username.split("@")[0]}
-            onChange={(e) => {
-              const username = e.target.value.includes("@") ? e.target.value : e.target.value + "@sic";
+            onSaveButtonClick={(value) => {
+              const username = value.includes("@") ? value : value + "@sic";
               setSettings("loginData", { ...saves.settings.loginData, username });
             }}
           />
           <CustomTextField
-            label={chrome.i18n.getMessage("optionTitlePassword")}
+            i18nLabel="optionTitlePassword"
             type="password"
-            caption={chrome.i18n.getMessage("optionDescriptionPassword")}
-            id="loginData.password"
+            i18nCaption="optionDescriptionPassword"
+            optionId="loginData.password"
             value={saves.settings.loginData.password}
-            onChange={(_event) =>
-              setSettings("loginData", { ...saves.settings.loginData, password: _event.target.value })
-            }
+            onSaveButtonClick={(value) => setSettings("loginData", { ...saves.settings.loginData, password: value })}
           />
         </OptionGroup>
 
-        <OptionGroup title={chrome.i18n.getMessage("OptionGroupWidget")}>
+        <OptionGroup i18nTitle="OptionGroupWidget">
           <CustomWidgetSort saves={saves} setSettings={setSettings} />
           <CustomRemovableList
-            label={chrome.i18n.getMessage("optionTitleHiddenTaskList")}
-            id="hiddenTaskIdList"
-            caption={chrome.i18n.getMessage("optionDescriptionHiddenTaskList")}
+            i18nLabel="optionTitleHiddenTaskList"
+            optionId="hiddenTaskIdList"
+            i18nCaption="optionDescriptionHiddenTaskList"
             options={hiddenTaskList}
             onChange={(idx) => {
               const newIds = saves.settings.hiddenTaskIdList.filter((_, i) => i !== idx);
@@ -96,16 +95,16 @@ export const RecommendedOptions = (props: Props) => {
             reset={() => setSettings("hiddenTaskIdList", [])}
           />
           <CustomSwitch
-            label={chrome.i18n.getMessage("optionTitleDisplayClassroom")}
-            caption={chrome.i18n.getMessage("optionDescriptionDisplayClassroom")}
-            id="displayClassroom"
+            i18nLabel="optionTitleDisplayClassroom"
+            i18nCaption="optionDescriptionDisplayClassroom"
+            optionId="displayClassroom"
             value={saves.settings.displayClassroom}
             onChange={(_e, checked) => setSettings("displayClassroom", checked)}
           />
           <CustomSelect
-            label={chrome.i18n.getMessage("optionTitleTimeTableTopDate")}
-            caption={chrome.i18n.getMessage("optionDescriptionTimeTableTopDate")}
-            id="timeTableTopDate"
+            i18nLabel="optionTitleTimeTableTopDate"
+            i18nCaption="optionDescriptionTimeTableTopDate"
+            optionId="timeTableTopDate"
             value={saves.settings.timeTableTopDate.toString()}
             options={[
               { value: "date", label: "日付 / Date" },
@@ -116,74 +115,74 @@ export const RecommendedOptions = (props: Props) => {
           />
         </OptionGroup>
 
-        <OptionGroup title="LMS">
+        <OptionGroup i18nTitle="LMS">
           <CustomSwitch
-            label={chrome.i18n.getMessage("optionTitleLmsShowClassroom")}
-            caption={chrome.i18n.getMessage("optionDescriptionLmsShowClassroom")}
-            id="lms.showClassroom"
+            i18nLabel="optionTitleLmsShowClassroom"
+            i18nCaption="optionDescriptionLmsShowClassroom"
+            optionId="lms.showClassroom"
             value={saves.settings.lms.showClassroom}
             onChange={(_e, checked) => setSettings("lms", { ...saves.settings.lms, showClassroom: checked })}
           />
           <CustomSwitch
-            label={chrome.i18n.getMessage("optionTitleLmsHideNoClassDay")}
-            caption={chrome.i18n.getMessage("optionDescriptionLmsHideNoClassDay")}
-            id="lms.hideNoClassDay"
+            i18nLabel="optionTitleLmsHideNoClassDay"
+            i18nCaption="optionDescriptionLmsHideNoClassDay"
+            optionId="lms.hideNoClassDay"
             value={saves.settings.lms.hideNoClassDay}
             onChange={(_e, checked) => setSettings("lms", { ...saves.settings.lms, hideNoClassDay: checked })}
           />
         </OptionGroup>
 
-        <OptionGroup title={chrome.i18n.getMessage("OptionGroupCoursePage")}>
+        <OptionGroup i18nTitle="OptionGroupCoursePage">
           <CustomSwitch
-            label={chrome.i18n.getMessage("optionTitleDownloadFileBundle")}
-            caption={chrome.i18n.getMessage("optionDescriptionDownloadFileBundle")}
-            id="downloadFileBundle"
+            i18nLabel="optionTitleDownloadFileBundle"
+            i18nCaption="optionDescriptionDownloadFileBundle"
+            optionId="downloadFileBundle"
             value={saves.settings.downloadFileBundle}
             onChange={(_e, checked) => setSettings("downloadFileBundle", checked)}
           />
 
           <CustomSwitch
-            label={chrome.i18n.getMessage("optionTitleLayoutLinkify")}
-            caption={chrome.i18n.getMessage("optionDescriptionLayoutLinkify")}
-            id="layout.linkify"
+            i18nLabel="optionTitleLayoutLinkify"
+            i18nCaption="optionDescriptionLayoutLinkify"
+            optionId="layout.linkify"
             value={saves.settings.layout.linkify}
             onChange={(_e, checked) => setSettings("layout", { ...saves.settings.layout, linkify: checked })}
           />
           <CustomSwitch
-            label={chrome.i18n.getMessage("optionTitleMarkdownNotePad")}
-            caption={chrome.i18n.getMessage("optionDescriptionMarkdownNotePad")}
-            id="markdownNotePad"
+            i18nLabel="optionTitleMarkdownNotePad"
+            i18nCaption="optionDescriptionMarkdownNotePad"
+            optionId="markdownNotePad"
             value={saves.settings.markdownNotePad}
             onChange={(_e, checked) => setSettings("markdownNotePad", checked)}
           />
         </OptionGroup>
 
-        <OptionGroup title={chrome.i18n.getMessage("OptionGroupOthers")}>
+        <OptionGroup i18nTitle="OptionGroupOthers">
           <CustomSwitch
-            label={chrome.i18n.getMessage("optionTitleModifyClickableLinks")}
-            caption={chrome.i18n.getMessage("optionDescriptionModifyClickableLinks")}
-            id="modifyClickableLinks"
+            i18nLabel="optionTitleModifyClickableLinks"
+            i18nCaption="optionDescriptionModifyClickableLinks"
+            optionId="modifyClickableLinks"
             value={saves.settings.modifyClickableLinks}
             onChange={(_e, checked) => setSettings("modifyClickableLinks", checked)}
           />
           <CustomSwitch
-            label={chrome.i18n.getMessage("optionTitleForceDragAndDropSubmit")}
-            caption={chrome.i18n.getMessage("optionDescriptionForceDragAndDropSubmit")}
-            id="forceDragAndDropSubmit"
+            i18nLabel="optionTitleForceDragAndDropSubmit"
+            i18nCaption="optionDescriptionForceDragAndDropSubmit"
+            optionId="forceDragAndDropSubmit"
             value={saves.settings.forceDragAndDropSubmit}
             onChange={(_e, checked) => setSettings("forceDragAndDropSubmit", checked)}
           />
           <CustomSwitch
-            label={chrome.i18n.getMessage("optionTitleLayoutClickToHideName")}
-            caption={chrome.i18n.getMessage("optionDescriptionLayoutClickToHideName")}
-            id="layout.clickToHideName"
+            i18nLabel="optionTitleLayoutClickToHideName"
+            i18nCaption="optionDescriptionLayoutClickToHideName"
+            optionId="layout.clickToHideName"
             value={saves.settings.layout.clickToHideName}
             onChange={(_e, checked) => setSettings("layout", { ...saves.settings.layout, clickToHideName: checked })}
           />
           <CustomSelect
-            label={chrome.i18n.getMessage("optionTitleHeadLinkTo")}
-            caption={chrome.i18n.getMessage("optionDescriptionHeadLinkTo")}
-            id="headLinkTo"
+            i18nLabel="optionTitleHeadLinkTo"
+            i18nCaption="optionDescriptionHeadLinkTo"
+            optionId="headLinkTo"
             options={[
               { value: "/portal/home", label: "ホーム / Top" },
               { value: "/lms/timetable", label: "LMS" },
@@ -193,7 +192,7 @@ export const RecommendedOptions = (props: Props) => {
             onChange={(e, _) => setSettings("headLinkTo", e.target.value)}
           />
         </OptionGroup>
-      </Box>
+      </Stack>
     </Box>
   );
 };
