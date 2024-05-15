@@ -7,7 +7,7 @@ import {
   createSyllabusButton,
   layoutMaterialTitles,
 } from "./util/courseLogic";
-import { sortSubjectByOrder, forceMaterialOrder } from "./util/layoutSubject";
+import { sortSubjectByOrder, forceMaterialOrder, hideMaterial } from "./util/layoutSubject";
 import { defaultSaves } from "./util/settings";
 import type { Saves } from "./util/settings";
 
@@ -38,6 +38,9 @@ const course = async () => {
   }
   if (currentData.settings.materialSortOrder) {
     forceMaterialOrder(currentData);
+  }
+  if (currentData.settings.hideMaterial) {
+    hideMaterial(currentData);
   }
   layoutMaterialTitles();
 };

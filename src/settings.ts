@@ -83,6 +83,8 @@ export type Settings = {
   sortSubjectByOrder: boolean;
   subjectOrder: string[];
   materialSortOrder: "asc" | "desc" | false;
+  hideMaterial: boolean;
+  autoHideMaterial: "all" | "recent" | false;
 };
 
 export const defaultSettings: Settings = {
@@ -170,6 +172,8 @@ export const defaultSettings: Settings = {
     "ltiExternalToolLink",
   ],
   materialSortOrder: "asc",
+  hideMaterial: true,
+  autoHideMaterial: false,
 };
 
 /* ScombzData */

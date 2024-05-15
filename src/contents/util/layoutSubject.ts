@@ -1,4 +1,3 @@
-import { jsxToHtml } from "./functions";
 import type { Saves } from "./settings";
 
 // 要素並び替え
@@ -56,9 +55,55 @@ export const forceMaterialOrder = async (currentData: Saves) => {
 };
 
 // 教材を一部非表示化
-export const hideMaterial = async () => {
+export const hideMaterial = async (currentData: Saves) => {
+  const link = document.createElement("link");
+  link.href = chrome.runtime.getURL("css/hide_material_button.css"); // 新しいCSSファイルのパス
+  link.type = "text/css";
+  link.rel = "stylesheet";
+  document.head.appendChild(link);
+
   const materialList = getListOfElementsPerClass().filter((e) =>
     e?.[0]?.querySelector(".block-title.material-sub-color"),
   );
-  materialList.forEach((e) => {});
+  materialList.forEach((classElements) => {
+    const titleElement = classElements[0] as HTMLElement;
+    titleElement.style.position = "relative";
+    const toggleButton = document.createElement("div");
+    toggleButton.classList.add("scombzUtilitiesHideMaterialButton");
+    if (currentData.settings.autoHideMaterial) {
+      toggleButton.classList.add("openButton");
+      classElements.slice(1).forEach((element) => {
+        element.style.display = "none";
+      });
+    } else {
+      toggleButton.classList.add("closeButton");
+    }
+    toggleButton.onclick = () => {
+      if (toggleButton.classList.contains("closeButton")) {
+        classElements.slice(1).forEach((element) => {
+          element.style.display = "none";
+        });
+        toggleButton.classList.remove("closeButton");
+        toggleButton.classList.add("openButton");
+      } else {
+        classElements.slice(1).forEach((element) => {
+          element.style.display = "";
+        });
+        toggleButton.classList.remove("openButton");
+        toggleButton.classList.add("closeButton");
+      }
+    };
+    titleElement.appendChild(toggleButton);
+  });
+
+  // 最新のみ表示
+  if (currentData.settings.autoHideMaterial === "recent") {
+    materialList.sort((a, b) => {
+      const aNo = a?.[0]?.querySelector(".block-title.material-sub-color")?.textContent?.match(/No\.(\d+)/)?.[1];
+      const bNo = b?.[0]?.querySelector(".block-title.material-sub-color")?.textContent?.match(/No\.(\d+)/)?.[1];
+      // Noが大きいものを最前に
+      return parseInt(bNo) - parseInt(aNo);
+    });
+    (materialList[0][0].querySelector(".scombzUtilitiesHideMaterialButton") as HTMLElement)?.click();
+  }
 };
