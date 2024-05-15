@@ -79,6 +79,10 @@ export type Settings = {
   headLinkTo: string;
   customCSS: string;
   originalLinks: { title: string; url: string }[];
+  createSyllabusButton: boolean;
+  sortSubjectByOrder: boolean;
+  subjectOrder: string[];
+  materialSortOrder: "asc" | "desc" | false;
 };
 
 export const defaultSettings: Settings = {
@@ -152,6 +156,20 @@ export const defaultSettings: Settings = {
   headLinkTo: "/portal/home",
   customCSS: "",
   originalLinks: [],
+  createSyllabusButton: true,
+  sortSubjectByOrder: false,
+  subjectOrder: [
+    "message",
+    "information",
+    "report",
+    "courseContent",
+    "examination",
+    "questionnaire",
+    "discussion",
+    "attendance",
+    "ltiExternalToolLink",
+  ],
+  materialSortOrder: "asc",
 };
 
 /* ScombzData */
