@@ -144,6 +144,18 @@ export const AdvancedOptions = (props: Props) => {
           }
         />
         <CustomSelect
+          i18nLabel="科目ページ 使わない教材を自動非表示"
+          i18nCaption="教材要素にある様々なもののうち、自動的に非表示にするものを選択します。"
+          optionId="autoHideMaterial"
+          options={[
+            { value: "false", label: "自動的に非表示にしない" },
+            { value: "all", label: "全て非表示" },
+            { value: "desc", label: "最新のもの以外を非表示" },
+          ]}
+          value={saves.settings.autoHideMaterial.toString()}
+          onChange={(e, _) => setSettings("autoHideMaterial", e.target.value === "false" ? false : e.target.value)}
+        />
+        <CustomSelect
           i18nLabel="ヘッダアイコンのリンク先"
           i18nCaption="ヘッダのScombZアイコンをクリックした際のリンク先を設定します。"
           optionId="headLinkTo"

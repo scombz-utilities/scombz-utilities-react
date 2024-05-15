@@ -233,6 +233,39 @@ export const BasicOptions = (props: Props) => {
           onChange={(_e, checked) => setSettings("modifyCoursePageTitle", checked)}
         />
         <CustomSwitch
+          i18nLabel="科目ページ シラバス連携ボタンの表示"
+          i18nCaption="科目別のページ内において、シラバスへのリンクを表示します。"
+          optionId="createSyllabusButton"
+          value={saves.settings.createSyllabusButton}
+          onChange={(_e, checked) => setSettings("createSyllabusButton", checked)}
+        />
+        <CustomSwitch
+          i18nLabel="科目ページ 要素入れ替え"
+          i18nCaption="科目ページに存在する「担当教員へのメッセージ」「お知らせ」「課題」「教材」「テスト」「アンケート」「ディスカッション」「出席」の各要素を自由に入れ替えします。順番は詳細設定から変更できます。"
+          optionId="sortSubjectByOrder"
+          value={saves.settings.sortSubjectByOrder}
+          onChange={(_e, checked) => setSettings("sortSubjectByOrder", checked)}
+        />
+        <CustomSelect
+          i18nLabel="科目ページ 教材の順番を統一"
+          optionId="materialSortOrder"
+          i18nCaption="科目によって初回が一番上だったり最新回が一番上だったりする教材の順番を統一します。"
+          options={[
+            { value: "false", label: "統一しない" },
+            { value: "asc", label: "昇順(初回が一番上)" },
+            { value: "desc", label: "降順(最新回が一番上)" },
+          ]}
+          value={saves.settings.materialSortOrder.toString()}
+          onChange={(e, _) => setSettings("materialSortOrder", e.target.value === "false" ? false : e.target.value)}
+        />
+        <CustomSwitch
+          i18nLabel="科目ページ 使わない教材を非表示"
+          i18nCaption="教材要素にある様々なものを非表示にできるようにします。詳細設定から、自動的に非表示にするものも選択できます。"
+          optionId="hideMaterial"
+          value={saves.settings.hideMaterial}
+          onChange={(_e, checked) => setSettings("hideMaterial", checked)}
+        />
+        <CustomSwitch
           i18nLabel="特殊リンクにおけるホイールクリックと右クリックの有効化"
           i18nCaption="LMSページ内の科目ボタン、科目別ページのダウンロードリンクなど、右クリックが通常できないリンクを通常のリンクと同じようにサポートします。"
           optionId="modifyClickableLinks"
