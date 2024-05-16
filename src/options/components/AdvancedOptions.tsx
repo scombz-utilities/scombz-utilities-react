@@ -150,7 +150,7 @@ export const AdvancedOptions = (props: Props) => {
           options={[
             { value: "false", label: "自動的に非表示にしない" },
             { value: "all", label: "全て非表示" },
-            { value: "desc", label: "最新のもの以外を非表示" },
+            { value: "recent", label: "最新のもの以外を非表示" },
           ]}
           value={saves.settings.autoHideMaterial.toString()}
           onChange={(e, _) => setSettings("autoHideMaterial", e.target.value === "false" ? false : e.target.value)}

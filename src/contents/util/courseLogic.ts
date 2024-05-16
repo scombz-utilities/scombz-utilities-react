@@ -271,12 +271,16 @@ export const layoutMaterialTitles = async () => {
   const targets = document.querySelectorAll("#courseTopForm > .block > .block-title");
   const windowHeight = window.innerHeight;
   targets.forEach((target: HTMLDivElement) => {
+    const iconElement = target.querySelector(".block-title-txt.cube-block-title-txt") as HTMLElement;
+    if (!iconElement) return;
     if (target.offsetHeight > windowHeight) {
-      const iconElement = target.querySelector(".block-title-txt.cube-block-title-txt") as HTMLElement;
-      if (!iconElement) return;
       iconElement.style.position = "sticky";
       iconElement.style.top = "50%";
       iconElement.style.margin = "calc(50vh - 32px) 0";
+    } else {
+      iconElement.style.position = "";
+      iconElement.style.top = "";
+      iconElement.style.margin = "";
     }
   });
 };

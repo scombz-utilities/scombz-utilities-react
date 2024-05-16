@@ -1,3 +1,4 @@
+import { layoutMaterialTitles } from "./courseLogic";
 import type { Saves } from "./settings";
 
 // 要素並び替え
@@ -92,15 +93,30 @@ export const hideMaterial = async (currentData: Saves) => {
         toggleButton.classList.remove("openButton");
         toggleButton.classList.add("closeButton");
       }
+      const materialTitleNode = document.getElementById("materialTitle") as HTMLDivElement;
+      const materialContentsNode = document.getElementById("materialContents") as HTMLDivElement;
+      const materialListNode = document.getElementById("materialList") as HTMLDivElement;
+      let newHeight = 0;
+      materialListNode.childNodes.forEach((node: HTMLElement) => {
+        if (!(node instanceof HTMLElement)) return;
+        newHeight += node.offsetHeight;
+      });
+      materialTitleNode.style.height = newHeight + "px";
+      materialContentsNode.style.height = newHeight + "px";
+      layoutMaterialTitles();
     };
     titleElement.appendChild(toggleButton);
   });
 
   // 最新のみ表示
   if (currentData.settings.autoHideMaterial === "recent") {
+    console.log("recent");
     materialList.sort((a, b) => {
       const aNo = a?.[0]?.querySelector(".block-title.material-sub-color")?.textContent?.match(/No\.(\d+)/)?.[1];
       const bNo = b?.[0]?.querySelector(".block-title.material-sub-color")?.textContent?.match(/No\.(\d+)/)?.[1];
+      // 片方がない場合はある方を前にする
+      if (!aNo) return 1;
+      if (!bNo) return -1;
       // Noが大きいものを最前に
       return parseInt(bNo) - parseInt(aNo);
     });
