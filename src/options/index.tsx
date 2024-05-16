@@ -9,7 +9,6 @@ import { WidgetOptions } from "./components/WidgetOptions";
 import theme from "~/theme";
 import { defaultSaves } from "~settings";
 import type { Saves } from "~settings";
-import "./index.css";
 
 const OptionsIndex = () => {
   const [currentLocalStorage, setCurrentLocalStorage] = useState<Saves>(defaultSaves);
@@ -41,7 +40,6 @@ const OptionsIndex = () => {
   };
 
   const currentTab = new URLSearchParams(window.location.search).get("tab");
-  console.log(currentTab);
 
   useEffect(() => {
     chrome.storage.local.get(defaultSaves, (currentData: Saves) => {
