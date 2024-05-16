@@ -1,6 +1,20 @@
 import { layoutMaterialTitles } from "./courseLogic";
 import type { Saves } from "./settings";
 
+/* 
+移行ノート
+
+移行済
+- 要素並び替え (設定はまだ)
+- 教材の順番統一
+- 教材を一部非表示
+- 課題手動追加を科目ページから呼び出す
+
+未移行
+- 期限過ぎ課題を非表示
+- 期限過ぎテストを非表示
+*/
+
 // 要素並び替え
 export const sortSubjectByOrder = async (currentData: Saves) => {
   const orderIds = currentData.settings.subjectOrder;
