@@ -95,12 +95,12 @@ const OptionsIndex = () => {
                 history.pushState(null, "", `?tab=${value}`);
               }}
             >
-              <Tab role="button" value="basic" label="基本設定" />
-              <Tab role="button" value="widget" label="ウィジェット設定" />
-              <Tab role="button" value="advanced" label="詳細設定" />
-              <Tab role="button" value="customcss" label="カスタムCSS" />
-              <Tab role="button" value="data" label={chrome.i18n.getMessage("IOReset")} />
-              <Tab role="button" value="info" label="情報" />
+              <Tab value="basic" label="基本設定" />
+              <Tab value="widget" label="ウィジェット設定" />
+              <Tab value="advanced" label="詳細設定" />
+              <Tab value="customcss" label="カスタムCSS" />
+              <Tab value="data" label={chrome.i18n.getMessage("IOReset")} />
+              <Tab value="info" label="情報" />
             </Tabs>
           </Box>
 
