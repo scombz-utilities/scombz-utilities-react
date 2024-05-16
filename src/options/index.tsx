@@ -11,6 +11,7 @@ import { defaultSaves } from "~settings";
 import type { Saves } from "~settings";
 
 const OptionsIndex = () => {
+  const [currentTab, setCurrentTab] = useState(new URLSearchParams(window.location.search).get("tab") || "basic");
   const [currentLocalStorage, setCurrentLocalStorage] = useState<Saves>(defaultSaves);
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
 
@@ -38,8 +39,6 @@ const OptionsIndex = () => {
     setCurrentLocalStorage(newLocalStorage);
     await chrome.storage.local.set(newLocalStorage);
   };
-
-  const currentTab = new URLSearchParams(window.location.search).get("tab");
 
   useEffect(() => {
     chrome.storage.local.get(defaultSaves, (currentData: Saves) => {
@@ -87,13 +86,21 @@ const OptionsIndex = () => {
               backdropFilter: "blur(3px)",
             }}
           >
-            <Tabs variant="scrollable" scrollButtons="auto" value={currentTab || "basic"}>
-              <Tab component="a" value="basic" href="/options.html?tab=basic" label="基本設定" />
-              <Tab component="a" value="widget" href="/options.html?tab=widget" label="ウィジェット設定" />
-              <Tab component="a" value="advanced" href="/options.html?tab=advanced" label="詳細設定" />
-              <Tab component="a" value="customcss" href="/options.html?tab=customcss" label="カスタムCSS" />
-              <Tab component="a" value="data" href="/options.html?tab=data" label={chrome.i18n.getMessage("IOReset")} />
-              <Tab component="a" value="info" href="/options.html?tab=info" label="情報" />
+            <Tabs
+              variant="scrollable"
+              scrollButtons="auto"
+              value={currentTab || "basic"}
+              onChange={(_, value) => {
+                setCurrentTab(value);
+                history.pushState(null, "", `?tab=${value}`);
+              }}
+            >
+              <Tab role="button" value="basic" label="基本設定" />
+              <Tab role="button" value="widget" label="ウィジェット設定" />
+              <Tab role="button" value="advanced" label="詳細設定" />
+              <Tab role="button" value="customcss" label="カスタムCSS" />
+              <Tab role="button" value="data" label={chrome.i18n.getMessage("IOReset")} />
+              <Tab role="button" value="info" label="情報" />
             </Tabs>
           </Box>
 
