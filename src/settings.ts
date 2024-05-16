@@ -171,7 +171,7 @@ export const defaultSettings: Settings = {
     "attendance",
     "ltiExternalToolLink",
   ],
-  materialSortOrder: "asc",
+  materialSortOrder: false,
   hideMaterial: true,
   autoHideMaterial: false,
 };
