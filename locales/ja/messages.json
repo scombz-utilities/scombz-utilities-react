@@ -353,7 +353,7 @@
   },
   "optionDescriptionLmsHideNoClassDay": {
     "message": "LMSページのカレンダーで、授業のない日を非表示にします。 また、5限以降の授業をとっていない場合はそれらも非表示にします。",
-    "description": "LMSページので、授業のない日を非表示にします。 また、5限以降の授業をとっていない場合はそれらも非表示にします。"
+    "description": "LMSページのカレンダーで、授業のない日を非表示にします。 また、5限以降の授業をとっていない場合はそれらも非表示にします。"
   },
   "optionTitleForceDragAndDropSubmit": {
     "message": "課題ドラッグ&ドロップ提出",
