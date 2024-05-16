@@ -340,7 +340,7 @@
     "description": "ヘッダのScombZアイコンをクリックした際のリンク先を設定します。"
   },
   "optionTitleLmsShowClassroom": {
-    "message": "LMSページのレイアウト変更 教室表示",
+    "message": "教室情報を表示",
     "description": "LMSページのレイアウト変更 教室表示"
   },
   "optionDescriptionLmsShowClassroom": {
@@ -348,12 +348,12 @@
     "description": "LMSページの時間割で、各授業欄に教室情報を常に表示します。"
   },
   "optionTitleLmsHideNoClassDay": {
-    "message": "LMSページのレイアウト変更 休日・放課後非表示",
+    "message": "休日・放課後を非表示",
     "description": "LMSページのレイアウト変更 休日・放課後非表示"
   },
   "optionDescriptionLmsHideNoClassDay": {
-    "message": "LMSページで、授業のない日を非表示にします。 また、5限以降の授業をとっていない場合はそれらも非表示にします。",
-    "description": "LMSページで、授業のない日を非表示にします。 また、5限以降の授業をとっていない場合はそれらも非表示にします。"
+    "message": "LMSページのカレンダーで、授業のない日を非表示にします。 また、5限以降の授業をとっていない場合はそれらも非表示にします。",
+    "description": "LMSページので、授業のない日を非表示にします。 また、5限以降の授業をとっていない場合はそれらも非表示にします。"
   },
   "optionTitleForceDragAndDropSubmit": {
     "message": "課題ドラッグ&ドロップ提出",

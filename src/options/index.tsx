@@ -1,10 +1,10 @@
 import { Alert, Box, Snackbar, Tab, Tabs, ThemeProvider } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { AdvancedOptions } from "./components/AdvancedOptions";
+import { BasicOptions } from "./components/BasicOptions";
 import { CustomCSS } from "./components/CustomCSS";
 import { DataOperation } from "./components/DataOperation";
 import { Information } from "./components/Information";
-import { RecommendedOptions } from "./components/RecommendedOptions";
 import { WidgetOptions } from "./components/WidgetOptions";
 import theme from "~/theme";
 import { defaultSaves } from "~settings";
@@ -87,13 +87,8 @@ const OptionsIndex = () => {
               backdropFilter: "blur(3px)",
             }}
           >
-            <Tabs variant="scrollable" scrollButtons="auto" value={currentTab || "recommended"}>
-              <Tab
-                component="a"
-                value="recommended"
-                href="/options.html?tab=recommended"
-                label={chrome.i18n.getMessage("RecommendedOptions")}
-              />
+            <Tabs variant="scrollable" scrollButtons="auto" value={currentTab || "basic"}>
+              <Tab component="a" value="basic" href="/options.html?tab=basic" label="基本設定" />
               <Tab component="a" value="widget" href="/options.html?tab=widget" label="ウィジェット設定" />
               <Tab component="a" value="advanced" href="/options.html?tab=advanced" label="詳細設定" />
               <Tab component="a" value="customcss" href="/options.html?tab=customcss" label="カスタムCSS" />
@@ -103,8 +98,8 @@ const OptionsIndex = () => {
           </Box>
 
           <Box py={3}>
-            {(currentTab === "recommended" || currentTab === null) && (
-              <RecommendedOptions saves={currentLocalStorage} setSettings={setSettings} />
+            {(currentTab === "basic" || currentTab === null) && (
+              <BasicOptions saves={currentLocalStorage} setSettings={setSettings} />
             )}
             {currentTab === "widget" && <WidgetOptions saves={currentLocalStorage} setSettings={setSettings} />}
             {currentTab === "advanced" && (
