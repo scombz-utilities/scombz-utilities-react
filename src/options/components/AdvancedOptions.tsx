@@ -42,7 +42,7 @@ export const AdvancedOptions = (props: Props) => {
     questionnaire: "アンケート",
     discussion: "ディスカッション",
     attendance: "出席",
-    ltiExternalToolLink: "外部ツールリンク",
+    ltiExternalToolLink: "外部連携",
   };
 
   const [items, setItems] = useState(() => {
