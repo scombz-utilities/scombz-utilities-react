@@ -1,14 +1,17 @@
-import { Alert, Box, Button, Snackbar, ThemeProvider } from "@mui/material";
+import { Alert, Box, Snackbar, Tab, Tabs, ThemeProvider } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { ComplexOptions } from "./components/ComplexOptions";
-import { SimpleOptions } from "./components/SimpleOptions";
+import { AdvancedOptions } from "./components/AdvancedOptions";
+import { CustomCSS } from "./components/CustomCSS";
+import { DataOperation } from "./components/DataOperation";
+import { Information } from "./components/Information";
+import { RecommendedOptions } from "./components/RecommendedOptions";
+import { WidgetOptions } from "./components/WidgetOptions";
 import theme from "~/theme";
 import { defaultSaves } from "~settings";
 import type { Saves } from "~settings";
 import "./index.css";
 
 const OptionsIndex = () => {
-  const [isSimple, setIsSimple] = useState<boolean>(true);
   const [currentLocalStorage, setCurrentLocalStorage] = useState<Saves>(defaultSaves);
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
 
@@ -36,6 +39,9 @@ const OptionsIndex = () => {
     setCurrentLocalStorage(newLocalStorage);
     await chrome.storage.local.set(newLocalStorage);
   };
+
+  const currentTab = new URLSearchParams(window.location.search).get("tab");
+  console.log(currentTab);
 
   useEffect(() => {
     chrome.storage.local.get(defaultSaves, (currentData: Saves) => {
@@ -68,32 +74,53 @@ const OptionsIndex = () => {
               alt="ScombZ Utilities"
               style={{ width: "50%", maxWidth: "250px", margin: "0 auto", display: "block" }}
             />
-            <Button
-              sx={{
-                backgroundColor: "#fff",
-                "&:hover": {
-                  backgroundColor: "#f4f4f4",
-                },
-              }}
-              variant="outlined"
-              onClick={() => {
-                setIsSimple(!isSimple);
-              }}
-            >
-              {isSimple ? "詳細設定へ" : "かんたん設定へ"}
-            </Button>
           </Box>
 
-          {isSimple ? (
-            <SimpleOptions setSettings={setSettings} saves={currentLocalStorage} setSaves={setCurrentLocalStorage} />
-          ) : (
-            <ComplexOptions
-              setSettings={setSettings}
-              saves={currentLocalStorage}
-              setScombzData={setScombzData}
-              setSaves={setCurrentLocalStorage}
-            />
-          )}
+          <Box
+            sx={{
+              borderBottom: 1,
+              borderColor: "divider",
+              position: "sticky",
+              top: 0,
+              left: 0,
+              width: "100%",
+              zIndex: 1,
+              backgroundColor: "#fffa",
+              backdropFilter: "blur(3px)",
+            }}
+          >
+            <Tabs variant="scrollable" scrollButtons="auto" value={currentTab || "recommended"}>
+              <Tab
+                component="a"
+                value="recommended"
+                href="/options.html?tab=recommended"
+                label={chrome.i18n.getMessage("RecommendedOptions")}
+              />
+              <Tab component="a" value="widget" href="/options.html?tab=widget" label="ウィジェット設定" />
+              <Tab component="a" value="advanced" href="/options.html?tab=advanced" label="詳細設定" />
+              <Tab component="a" value="customcss" href="/options.html?tab=customcss" label="カスタムCSS" />
+              <Tab component="a" value="data" href="/options.html?tab=data" label={chrome.i18n.getMessage("IOReset")} />
+              <Tab component="a" value="info" href="/options.html?tab=info" label="情報" />
+            </Tabs>
+          </Box>
+
+          <Box py={3}>
+            {(currentTab === "recommended" || currentTab === null) && (
+              <RecommendedOptions saves={currentLocalStorage} setSettings={setSettings} />
+            )}
+            {currentTab === "widget" && <WidgetOptions saves={currentLocalStorage} setSettings={setSettings} />}
+            {currentTab === "advanced" && (
+              <AdvancedOptions saves={currentLocalStorage} setSettings={setSettings} setScombzData={setScombzData} />
+            )}
+            {currentTab === "customcss" && (
+              <CustomCSS
+                value={currentLocalStorage.settings.customCSS}
+                onSaveButtonClick={(value) => setSettings("customCSS", value)}
+              />
+            )}
+            {currentTab === "data" && <DataOperation saves={currentLocalStorage} setSaves={setCurrentLocalStorage} />}
+            {currentTab === "info" && <Information />}
+          </Box>
         </Box>
       </Box>
     </ThemeProvider>
