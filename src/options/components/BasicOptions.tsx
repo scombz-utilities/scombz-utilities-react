@@ -14,7 +14,7 @@ export const BasicOptions = (props: Props) => {
   const { saves, setSettings } = props;
   return (
     <Box>
-      <Typography variant="h5">基本設定</Typography>
+      <Typography variant="h5">{chrome.i18n.getMessage("basicOptions")}</Typography>
       <Box display="flex" flexDirection="column" gap={1} p={1}>
         <OptionGroup i18nTitle="OptionGroupSyllabusLinking">
           <CustomSelect
@@ -52,7 +52,7 @@ export const BasicOptions = (props: Props) => {
             onSaveButtonClick={(value) => setSettings("loginData", { ...saves.settings.loginData, password: value })}
           />
           <CustomSwitch
-            i18nLabel="ログインボタン自動クリック"
+            i18nLabel="basicOptions_ClickLoginButtonAutomatically"
             i18nCaption="ScombZのログイン画面に遷移した際、学生ログインを自動でクリックします。"
             optionId="clickLogin"
             value={saves.settings.clickLogin}
@@ -62,8 +62,7 @@ export const BasicOptions = (props: Props) => {
             i18nLabel="自動ログイン"
             i18nCaption={`ログイン情報を自動入力し、ADFS二段階認証確認画面の次へボタンを自動でクリックします。
             ログイン後、自動でScombZの画面に入れます。
-            スマートフォンを利用した二段階認証にも対応しています。
-            ※登録した情報は「詳細設定タブ」から確認・変更ができます。`}
+            スマートフォンを利用した二段階認証にも対応しています。`}
             optionId="autoAdfs"
             value={saves.settings.autoAdfs}
             onChange={(_e, checked) => setSettings("autoAdfs", checked)}

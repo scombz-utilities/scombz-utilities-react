@@ -53,7 +53,7 @@ export const AdvancedOptions = (props: Props) => {
 
   return (
     <Box>
-      <Typography variant="h5">詳細設定</Typography>
+      <Typography variant="h5">{chrome.i18n.getMessage("advancedOptions")}</Typography>
       <Stack gap={1} p={1}>
         <OptionGroup i18nTitle="科目ページ">
           <CustomTextField

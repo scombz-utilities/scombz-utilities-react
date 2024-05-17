@@ -1,15 +1,11 @@
 {
-  "extensionName": {
-    "message": "with-locales-i18n-en",
-    "description": "拡張機能名"
-  },
   "extensionDescription": {
     "message": "ScombZを使いやすくカスタムする拡張機能",
     "description": "拡張機能説明"
   },
   "loginUserLabel": {
     "message": "あなたのユーザ名@sic",
-    "description": "あなたのユーザ名@sic"
+    "description": "ログイン画面 - パスワード保存ダイアログ - ユーザ名ラベル"
   },
   "surveyBackToList": {
     "message": "アンケート一覧に戻る",
@@ -124,8 +120,13 @@
     "description": "メモを追加"
   },
   "notepadDeleteConfirm": {
-    "message": "『_NOTE_』を削除しますか？",
-    "description": "メモを削除"
+    "message": "『$target$』を削除しますか？",
+    "description": "メモを削除",
+    "placeholders": {
+      "target": {
+        "content": "$1"
+      }
+    }
   },
   "calendar": {
     "message": "カレンダー",
@@ -164,24 +165,16 @@
     "description": "キャンセル"
   },
   "dialogDescription": {
-    "message": "ScombZ Utilitiesに保存すると自動ログインできます。",
-    "description": "ScombZ Utilitiesに保存すると自動ログインできます。"
-  },
-  "dialogDescription2": {
-    "message": "保存したログイン情報は拡張機能設定から変更できます。",
-    "description": "保存したログイン情報は拡張機能設定から変更できます。"
-  },
-  "dialogDescription3": {
-    "message": "※設定はPC本体のみに保存されます。",
-    "description": "※設定はPC本体のみに保存されます。"
+    "message": "ScombZ Utilitiesに保存すると自動ログインできます。ユーザ名及びパスワードはPC本体のみに保存されます。",
+    "description": "ログイン画面 - パスワード保存ダイアログ - 説明"
   },
   "dialogIncorrectPassword": {
     "message": "学籍番号またはパスワードが正しくありません。",
     "description": "学籍番号またはパスワードが正しくありません。"
   },
   "dialogClickToOpen": {
-    "message": "ここを開いてScombZ Utilitiesに保存",
-    "description": "ここを開いてScombZ Utilitiesに保存"
+    "message": "ScombZ Utilitiesに保存",
+    "description": "ログイン画面 - パスワード保存ダイアログ - 開閉"
   },
   "WidgetLinks": {
     "message": "リンク集",
@@ -200,7 +193,7 @@
     "description": "追加"
   },
   "WidgetLinkAlert": {
-    "message": "Please enter a URL.",
+    "message": "URLを入力してください。",
     "description": "URLを入力してください。"
   },
   "notifications": {
@@ -267,11 +260,23 @@
     "message": "リンク先をダウンロード",
     "description": "リンク先をダウンロード"
   },
-  "RecommendedOptions": {
-    "message": "おすすめ設定",
-    "description": "おすすめ設定"
+  "basicOptions": {
+    "message": "基本設定",
+    "description": "基本設定"
   },
-  "IOReset": {
+  "widgetOptions": {
+    "message": "ウィジェット設定",
+    "description": "ウィジェット設定"
+  },
+  "layoutOptions": {
+    "message": "レイアウト設定",
+    "description": "レイアウト設定"
+  },
+  "advancedOptions": {
+    "message": "詳細設定",
+    "description": "詳細設定"
+  },
+  "manageOptions": {
     "message": "設定の管理",
     "description": "設定の管理"
   },
@@ -286,6 +291,14 @@
   "reset": {
     "message": "初期化",
     "description": "初期化"
+  },
+  "customCSS": {
+    "message": "カスタムCSS",
+    "description": "カスタムCSS"
+  },
+  "info": {
+    "message": "情報",
+    "description": "情報"
   },
   "OptionGroupSyllabusLinking": {
     "message": "シラバス連携",
@@ -446,5 +459,9 @@
   "notSelected": {
     "message": "未選択",
     "description": "未選択"
+  },
+  "basicOptions_ClickLoginButtonAutomatically": {
+    "message": "ログインボタンを自動クリック",
+    "description": "ログインボタンを自動クリック"
   }
 }

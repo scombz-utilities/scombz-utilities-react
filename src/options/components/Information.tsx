@@ -3,7 +3,7 @@ import { Box, Link, Typography } from "@mui/material";
 export const Information = () => {
   return (
     <Box display="flex" flexDirection="column" gap={2}>
-      <Typography variant="h5">情報</Typography>
+      <Typography variant="h5">{chrome.i18n.getMessage("info")}</Typography>
       <Typography variant="body1">
         この拡張機能は、ScombZのユーザビリティの向上を目的としたオープンソースプロジェクトです。
       </Typography>

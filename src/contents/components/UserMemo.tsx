@@ -112,7 +112,7 @@ export const UserMemo = () => {
   }, [userMemo]);
 
   const deleteMemo = (index: number, memo: string) => () => {
-    if (window.confirm(chrome.i18n.getMessage("notepadDeleteConfirm").replace("_NOTE_", memo))) {
+    if (window.confirm(chrome.i18n.getMessage("notepadDeleteConfirm", [memo]))) {
       setUserMemo(userMemo.filter((_, i) => i !== index));
     }
   };

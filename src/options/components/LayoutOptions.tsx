@@ -11,7 +11,7 @@ export const LayoutOptions = (props: Props) => {
   const { saves, setSettings } = props;
   return (
     <Box>
-      <Typography variant="h5">レイアウト設定</Typography>
+      <Typography variant="h5">{chrome.i18n.getMessage("layoutOptions")}</Typography>
       <Box display="flex" flexDirection="column" gap={1} p={1}>
         <CustomSwitch
           i18nLabel="サイドメニューを自動で閉じる"

@@ -132,7 +132,7 @@ export const DataOperation = (props: Props) => {
   return (
     <>
       <Box>
-        <Typography variant="h5">インポート・エクスポート</Typography>
+        <Typography variant="h5">{chrome.i18n.getMessage("manageOptions")}</Typography>
         <Box m={1}>
           <Box my={1}>
             <Typography variant="body1">

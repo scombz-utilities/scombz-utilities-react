@@ -211,7 +211,7 @@ export const WidgetOptions = (props: Props) => {
 
   return (
     <Box>
-      <Typography variant="h5">ウィジェット設定</Typography>
+      <Typography variant="h5">{chrome.i18n.getMessage("widgetOptions")}</Typography>
       <Box p={1}>
         <Typography variant="body2" sx={{ color: "#666" }}>
           ScombZでサイドメニューを開いた時に右側に表示されるウィジェットの設定を行います。

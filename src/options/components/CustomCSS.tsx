@@ -16,7 +16,7 @@ export const CustomCSS = (props: Props) => {
   return (
     <Box>
       <Typography variant="h5" mb={1}>
-        カスタムCSS
+        {chrome.i18n.getMessage("customCSS")}
       </Typography>
       <Editor value={currentValue} onChange={setCurrentValue} />
       <Box sx={{ textAlign: "right", mt: 1 }}>

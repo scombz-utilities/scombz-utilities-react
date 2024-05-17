@@ -96,13 +96,13 @@ const OptionsIndex = () => {
                 history.pushState(null, "", `?tab=${value}`);
               }}
             >
-              <Tab value="basic" label="基本設定" />
-              <Tab value="widget" label="ウィジェット設定" />
-              <Tab value="layout" label="レイアウト設定" />
-              <Tab value="advanced" label="詳細設定" />
-              <Tab value="customcss" label="カスタムCSS" />
-              <Tab value="data" label={chrome.i18n.getMessage("IOReset")} />
-              <Tab value="info" label="情報" />
+              <Tab value="basic" label={chrome.i18n.getMessage("basicOptions")} />
+              <Tab value="widget" label={chrome.i18n.getMessage("widgetOptions")} />
+              <Tab value="layout" label={chrome.i18n.getMessage("layoutOptions")} />
+              <Tab value="advanced" label={chrome.i18n.getMessage("advancedOptions")} />
+              <Tab value="customcss" label={chrome.i18n.getMessage("customCSS")} />
+              <Tab value="data" label={chrome.i18n.getMessage("manageOptions")} />
+              <Tab value="info" label={chrome.i18n.getMessage("info")} />
             </Tabs>
           </Box>
 
