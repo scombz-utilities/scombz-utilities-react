@@ -18,6 +18,36 @@ type Props = {
 export const AdvancedOptions = (props: Props) => {
   const { saves, setSettings, setScombzData } = props;
 
+  const dictionary = {
+    message: "担当教員へのメッセージ",
+    information: "お知らせ",
+    report: "課題",
+    courseContent: "教材",
+    examination: "テスト",
+    questionnaire: "アンケート",
+    discussion: "ディスカッション",
+    attendance: "出席",
+    ltiExternalToolLink: "外部連携",
+  };
+
+  const [items, setItems] = useState(() => {
+    return saves.settings.subjectOrder.map((value, idx) => {
+      return {
+        id: idx + 1,
+        value,
+        displayValue: dictionary[value] ?? value,
+      };
+    });
+  });
+
+  useEffect(() => {
+    if (JSON.stringify(items.map((item) => item.value)) === JSON.stringify(saves.settings.subjectOrder)) return;
+    setSettings(
+      "subjectOrder",
+      items.map((item) => item.value),
+    );
+  }, [items]);
+
   return (
     <Box>
       <Typography variant="h5">詳細設定</Typography>
@@ -190,7 +220,6 @@ export const AdvancedOptions = (props: Props) => {
             onChange={(_e, checked) => setSettings("lms", { ...saves.settings.lms, centering: checked })}
           />
         </OptionGroup>
-
         <OptionGroup i18nTitle="OptionGroupCoursePage">
           <CustomSwitch
             i18nLabel="optionTitleDownloadFileBundle"
@@ -348,6 +377,26 @@ export const AdvancedOptions = (props: Props) => {
             onChange={(_e, checked) => setSettings("autoFillSgsot", checked)}
           />
         </OptionGroup>
+        <CustomSelect
+          i18nLabel="科目ページ 使わない教材を自動非表示"
+          i18nCaption="教材要素にある様々なもののうち、自動的に非表示にするものを選択します。"
+          optionId="autoHideMaterial"
+          options={[
+            { value: "false", label: "自動的に非表示にしない" },
+            { value: "all", label: "全て非表示" },
+            { value: "recent", label: "最新のもの以外を非表示" },
+          ]}
+          value={saves.settings.autoHideMaterial.toString()}
+          onChange={(e, _) => setSettings("autoHideMaterial", e.target.value === "false" ? false : e.target.value)}
+        />
+          <CustomContainerParent
+            label="科目ページ要素入れ替え"
+            optionId="subjectOrder"
+            caption={`科目ページに存在する「担当教員へのメッセージ」「お知らせ」「課題」「教材」「テスト」「アンケート」「ディスカッション」「出席」の各要素を自由に入れ替えします。
+                      存在しない要素がある場合はその要素を抜いた状態での並び替えが行われます。`}
+          >
+            <SortableTable items={items} setItems={setItems} />
+          </CustomContainerParent>
       </Stack>
     </Box>
   );

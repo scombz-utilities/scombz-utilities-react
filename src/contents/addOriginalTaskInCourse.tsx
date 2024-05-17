@@ -3,20 +3,15 @@ import { CacheProvider } from "@emotion/react";
 import { ThemeProvider, Box } from "@mui/material";
 import type { PlasmoCSConfig } from "plasmo";
 import React, { useEffect, useState, useMemo } from "react";
-import ReactDOMServer from "react-dom/server";
 import { MdOutlineNoteAdd } from "react-icons/md";
 import { OriginalTaskModal } from "./components/originalTaskModal";
-import { getCourseTitle } from "./util/functions";
+import { getCourseTitle, jsxToHtml } from "./util/functions";
 import theme from "~/theme";
 import { defaultSaves, type Saves } from "~settings";
 
 export const config: PlasmoCSConfig = {
   matches: ["https://scombz.shibaura-it.ac.jp/lms/course*"],
   run_at: "document_end",
-};
-
-const jsxToHtml = (jsx: React.ReactElement): string => {
-  return ReactDOMServer.renderToStaticMarkup(jsx);
 };
 
 const insertAddTaskButton = async (openModal: () => void) => {
