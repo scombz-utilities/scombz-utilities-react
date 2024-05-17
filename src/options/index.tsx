@@ -1,14 +1,18 @@
-import { Alert, Box, Button, Snackbar, ThemeProvider } from "@mui/material";
+import { Alert, Box, Snackbar, Tab, Tabs, ThemeProvider } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { ComplexOptions } from "./components/ComplexOptions";
-import { SimpleOptions } from "./components/SimpleOptions";
+import { AdvancedOptions } from "./components/AdvancedOptions";
+import { BasicOptions } from "./components/BasicOptions";
+import { CustomCSS } from "./components/CustomCSS";
+import { DataOperation } from "./components/DataOperation";
+import { Information } from "./components/Information";
+import { LayoutOptions } from "./components/LayoutOptions";
+import { WidgetOptions } from "./components/WidgetOptions";
 import theme from "~/theme";
 import { defaultSaves } from "~settings";
 import type { Saves } from "~settings";
-import "./index.css";
 
 const OptionsIndex = () => {
-  const [isSimple, setIsSimple] = useState<boolean>(true);
+  const [currentTab, setCurrentTab] = useState(new URLSearchParams(window.location.search).get("tab") || "basic");
   const [currentLocalStorage, setCurrentLocalStorage] = useState<Saves>(defaultSaves);
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
 
@@ -68,32 +72,58 @@ const OptionsIndex = () => {
               alt="ScombZ Utilities"
               style={{ width: "50%", maxWidth: "250px", margin: "0 auto", display: "block" }}
             />
-            <Button
-              sx={{
-                backgroundColor: "#fff",
-                "&:hover": {
-                  backgroundColor: "#f4f4f4",
-                },
-              }}
-              variant="outlined"
-              onClick={() => {
-                setIsSimple(!isSimple);
-              }}
-            >
-              {isSimple ? "詳細設定へ" : "かんたん設定へ"}
-            </Button>
           </Box>
 
-          {isSimple ? (
-            <SimpleOptions setSettings={setSettings} saves={currentLocalStorage} setSaves={setCurrentLocalStorage} />
-          ) : (
-            <ComplexOptions
-              setSettings={setSettings}
-              saves={currentLocalStorage}
-              setScombzData={setScombzData}
-              setSaves={setCurrentLocalStorage}
-            />
-          )}
+          <Box
+            sx={{
+              borderBottom: 1,
+              borderColor: "divider",
+              position: "sticky",
+              top: 0,
+              left: 0,
+              width: "100%",
+              zIndex: 1,
+              backgroundColor: "#fffa",
+              backdropFilter: "blur(3px)",
+            }}
+          >
+            <Tabs
+              variant="scrollable"
+              scrollButtons="auto"
+              value={currentTab || "basic"}
+              onChange={(_, value) => {
+                setCurrentTab(value);
+                history.pushState(null, "", `?tab=${value}`);
+              }}
+            >
+              <Tab value="basic" label="基本設定" />
+              <Tab value="widget" label="ウィジェット設定" />
+              <Tab value="layout" label="レイアウト設定" />
+              <Tab value="advanced" label="詳細設定" />
+              <Tab value="customcss" label="カスタムCSS" />
+              <Tab value="data" label={chrome.i18n.getMessage("IOReset")} />
+              <Tab value="info" label="情報" />
+            </Tabs>
+          </Box>
+
+          <Box py={3}>
+            {(currentTab === "basic" || currentTab === null) && (
+              <BasicOptions saves={currentLocalStorage} setSettings={setSettings} />
+            )}
+            {currentTab === "widget" && <WidgetOptions saves={currentLocalStorage} setSettings={setSettings} />}
+            {currentTab === "layout" && <LayoutOptions saves={currentLocalStorage} setSettings={setSettings} />}
+            {currentTab === "advanced" && (
+              <AdvancedOptions saves={currentLocalStorage} setSettings={setSettings} setScombzData={setScombzData} />
+            )}
+            {currentTab === "customcss" && (
+              <CustomCSS
+                value={currentLocalStorage.settings.customCSS}
+                onSaveButtonClick={(value) => setSettings("customCSS", value)}
+              />
+            )}
+            {currentTab === "data" && <DataOperation saves={currentLocalStorage} setSaves={setCurrentLocalStorage} />}
+            {currentTab === "info" && <Information />}
+          </Box>
         </Box>
       </Box>
     </ThemeProvider>

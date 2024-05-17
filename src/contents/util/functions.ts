@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import { useLayoutEffect, useState } from "react";
+import ReactDOMServer from "react-dom/server";
 import { CLASS_TIMES } from "~/constants";
 
 export const useWindowSize = (): number[] => {
@@ -63,4 +64,11 @@ export const serializeData = (data): string => {
  */
 export const isFirefox = (): boolean => {
   return navigator.userAgent.toLowerCase().includes("firefox");
+};
+
+/**
+ * JSXをHTMLに変換する関数
+ */
+export const jsxToHtml = (jsx: React.ReactElement): string => {
+  return ReactDOMServer.renderToStaticMarkup(jsx);
 };

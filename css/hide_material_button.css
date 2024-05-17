@@ -1,0 +1,31 @@
+.scombzUtilitiesHideMaterialButton {
+  display: block;
+  position: absolute;
+  right: 2px;
+  bottom: 6px;
+  width: 24px;
+  height: 24px;
+  user-select: none;
+  cursor: pointer;
+  background-size: cover;
+}
+
+.scombzUtilitiesHideMaterialButton.closeButton {
+  background-image: url(../assets/close_button.gif);
+}
+.scombzUtilitiesHideMaterialButton.closeButton:hover {
+  background-color: #fff3;
+  background-blend-mode: lighten;
+}
+
+.scombzUtilitiesHideMaterialButton.openButton {
+  background-image: url(../assets/open_button.gif);
+}
+.scombzUtilitiesHideMaterialButton.openButton:hover {
+  background-color: #fff3;
+  background-blend-mode: lighten;
+}
+
+#materialList .contents-detail.clearfix:hover {
+  filter: brightness(92%);
+}

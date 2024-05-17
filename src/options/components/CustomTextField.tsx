@@ -41,7 +41,7 @@ export const CustomTextField = (props: Props) => {
           onClick={() => onSaveButtonClick(currentValue)}
           disabled={value === currentValue}
         >
-          保存
+          {chrome.i18n.getMessage("dialogSave")}
         </Button>
       </Stack>
     </CustomContainerParent>
