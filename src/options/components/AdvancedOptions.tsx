@@ -1,9 +1,12 @@
 import { Box, Stack, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { CustomContainerParent } from "./CustomContainerParent";
 import { CustomRemovableList } from "./CustomRemovableList";
 import { CustomSelect } from "./CustomSelect";
 import { CustomSwitch } from "./CustomSwitch";
 import { CustomTextField } from "./CustomTextField";
 import { OptionGroup } from "./OptionGroup";
+import { SortableTable } from "./SortableTable";
 import { SLIDER_BAR_MINS } from "~constants";
 
 import type { Saves, Settings } from "~settings";
@@ -389,14 +392,14 @@ export const AdvancedOptions = (props: Props) => {
           value={saves.settings.autoHideMaterial.toString()}
           onChange={(e, _) => setSettings("autoHideMaterial", e.target.value === "false" ? false : e.target.value)}
         />
-          <CustomContainerParent
-            label="科目ページ要素入れ替え"
-            optionId="subjectOrder"
-            caption={`科目ページに存在する「担当教員へのメッセージ」「お知らせ」「課題」「教材」「テスト」「アンケート」「ディスカッション」「出席」の各要素を自由に入れ替えします。
+        <CustomContainerParent
+          label="科目ページ要素入れ替え"
+          optionId="subjectOrder"
+          caption={`科目ページに存在する「担当教員へのメッセージ」「お知らせ」「課題」「教材」「テスト」「アンケート」「ディスカッション」「出席」の各要素を自由に入れ替えします。
                       存在しない要素がある場合はその要素を抜いた状態での並び替えが行われます。`}
-          >
-            <SortableTable items={items} setItems={setItems} />
-          </CustomContainerParent>
+        >
+          <SortableTable items={items} setItems={setItems} />
+        </CustomContainerParent>
       </Stack>
     </Box>
   );
