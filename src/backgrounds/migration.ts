@@ -218,6 +218,14 @@ export const migrateLogic = (oldSaves: any): Saves => {
   newSaves.settings.markdownNotePad = defaultSaves.settings.markdownNotePad;
   newSaves.settings.headLinkTo = oldSaves?.headLinkTo ?? defaultSaves.settings.headLinkTo;
   newSaves.settings.customCSS = oldSaves?.customcss ?? defaultSaves.settings.customCSS;
+  newSaves.settings.materialSortOrder = oldSaves?.materialTop
+    ? oldSaves?.materialTopDetail === "first"
+      ? "asc"
+      : "desc"
+    : false;
+  newSaves.settings.hideMaterial = oldSaves?.materialHide ?? defaultSaves.settings.hideMaterial;
+  newSaves.settings.autoHideMaterial =
+    oldSaves?.materialHideDetail !== "none" ? (oldSaves?.materialHideDetail === "recent" ? "recent" : "all") : false;
 
   newSaves.scombzData.doMigration = true;
   return newSaves;
