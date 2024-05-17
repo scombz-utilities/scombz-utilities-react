@@ -69,6 +69,13 @@ export const AdvancedOptions = (props: Props) => {
               })
             }
           />
+          <CustomSwitch
+            i18nLabel="科目ページメモの有効化"
+            i18nCaption="科目別ページ内において、マークダウン記法に対応したメモ帳を追加します。"
+            optionId="markdownNotePad"
+            value={saves.settings.markdownNotePad}
+            onChange={(_e, checked) => setSettings("markdownNotePad", checked)}
+          />
           <CustomRemovableList
             i18nLabel="科目ページメモ"
             optionId="coursePageMemo"
@@ -115,12 +122,58 @@ export const AdvancedOptions = (props: Props) => {
             value={saves.settings.modifyCoursePageTitle}
             onChange={(_e, checked) => setSettings("modifyCoursePageTitle", checked)}
           />
+          <CustomSelect
+            i18nLabel="科目ページ 使わない教材を自動非表示"
+            i18nCaption="教材要素にある様々なもののうち、自動的に非表示にするものを選択します。"
+            optionId="autoHideMaterial"
+            options={[
+              { value: "false", label: "自動的に非表示にしない" },
+              { value: "all", label: "全て非表示" },
+              { value: "recent", label: "最新のもの以外を非表示" },
+            ]}
+            value={saves.settings.autoHideMaterial.toString()}
+            onChange={(e, _) => setSettings("autoHideMaterial", e.target.value === "false" ? false : e.target.value)}
+          />
           <CustomSwitch
-            i18nLabel="科目ページ マークダウンメモ帳"
-            i18nCaption="科目別ページ内において、マークダウン記法に対応したメモ帳を追加します。"
-            optionId="markdownNotePad"
-            value={saves.settings.markdownNotePad}
-            onChange={(_e, checked) => setSettings("markdownNotePad", checked)}
+            i18nLabel="科目ページ 要素入れ替え"
+            i18nCaption="科目ページに存在する「担当教員へのメッセージ」「お知らせ」「課題」「教材」「テスト」「アンケート」「ディスカッション」「出席」の各要素を自由に入れ替えします。"
+            optionId="sortSubjectByOrder"
+            value={saves.settings.sortSubjectByOrder}
+            onChange={(_e, checked) => setSettings("sortSubjectByOrder", checked)}
+          />
+          <CustomContainerParent
+            label="科目ページ 要素入れ替え"
+            optionId="subjectOrder"
+            caption={`科目ページに存在する「担当教員へのメッセージ」「お知らせ」「課題」「教材」「テスト」「アンケート」「ディスカッション」「出席」の各要素を自由に入れ替えします。
+                      存在しない要素がある場合はその要素を抜いた状態での並び替えが行われます。`}
+          >
+            <SortableTable items={items} setItems={setItems} />
+          </CustomContainerParent>
+          <CustomSwitch
+            i18nLabel="科目ページ シラバス連携ボタンの表示"
+            i18nCaption="科目別のページ内において、シラバスへのリンクを表示します。"
+            optionId="createSyllabusButton"
+            value={saves.settings.createSyllabusButton}
+            onChange={(_e, checked) => setSettings("createSyllabusButton", checked)}
+          />
+          <CustomSelect
+            i18nLabel="科目ページ 教材の順番を統一"
+            optionId="materialSortOrder"
+            i18nCaption="科目によって初回が一番上だったり最新回が一番上だったりする教材の順番を統一します。"
+            options={[
+              { value: "false", label: "統一しない" },
+              { value: "asc", label: "昇順(初回が一番上)" },
+              { value: "desc", label: "降順(最新回が一番上)" },
+            ]}
+            value={saves.settings.materialSortOrder.toString()}
+            onChange={(e, _) => setSettings("materialSortOrder", e.target.value === "false" ? false : e.target.value)}
+          />
+          <CustomSwitch
+            i18nLabel="科目ページ 使わない教材を非表示"
+            i18nCaption="教材要素にある様々なものを非表示にできるようにします。詳細設定から、自動的に非表示にするものも選択できます。"
+            optionId="hideMaterial"
+            value={saves.settings.hideMaterial}
+            onChange={(_e, checked) => setSettings("hideMaterial", checked)}
           />
         </OptionGroup>
 
@@ -380,26 +433,6 @@ export const AdvancedOptions = (props: Props) => {
             onChange={(_e, checked) => setSettings("autoFillSgsot", checked)}
           />
         </OptionGroup>
-        <CustomSelect
-          i18nLabel="科目ページ 使わない教材を自動非表示"
-          i18nCaption="教材要素にある様々なもののうち、自動的に非表示にするものを選択します。"
-          optionId="autoHideMaterial"
-          options={[
-            { value: "false", label: "自動的に非表示にしない" },
-            { value: "all", label: "全て非表示" },
-            { value: "recent", label: "最新のもの以外を非表示" },
-          ]}
-          value={saves.settings.autoHideMaterial.toString()}
-          onChange={(e, _) => setSettings("autoHideMaterial", e.target.value === "false" ? false : e.target.value)}
-        />
-        <CustomContainerParent
-          label="科目ページ要素入れ替え"
-          optionId="subjectOrder"
-          caption={`科目ページに存在する「担当教員へのメッセージ」「お知らせ」「課題」「教材」「テスト」「アンケート」「ディスカッション」「出席」の各要素を自由に入れ替えします。
-                      存在しない要素がある場合はその要素を抜いた状態での並び替えが行われます。`}
-        >
-          <SortableTable items={items} setItems={setItems} />
-        </CustomContainerParent>
       </Stack>
     </Box>
   );
