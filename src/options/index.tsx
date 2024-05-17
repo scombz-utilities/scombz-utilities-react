@@ -5,6 +5,7 @@ import { BasicOptions } from "./components/BasicOptions";
 import { CustomCSS } from "./components/CustomCSS";
 import { DataOperation } from "./components/DataOperation";
 import { Information } from "./components/Information";
+import { LayoutOptions } from "./components/LayoutOptions";
 import { WidgetOptions } from "./components/WidgetOptions";
 import theme from "~/theme";
 import { defaultSaves } from "~settings";
@@ -97,6 +98,7 @@ const OptionsIndex = () => {
             >
               <Tab value="basic" label="基本設定" />
               <Tab value="widget" label="ウィジェット設定" />
+              <Tab value="layout" label="レイアウト設定" />
               <Tab value="advanced" label="詳細設定" />
               <Tab value="customcss" label="カスタムCSS" />
               <Tab value="data" label={chrome.i18n.getMessage("IOReset")} />
@@ -109,6 +111,7 @@ const OptionsIndex = () => {
               <BasicOptions saves={currentLocalStorage} setSettings={setSettings} />
             )}
             {currentTab === "widget" && <WidgetOptions saves={currentLocalStorage} setSettings={setSettings} />}
+            {currentTab === "layout" && <LayoutOptions saves={currentLocalStorage} setSettings={setSettings} />}
             {currentTab === "advanced" && (
               <AdvancedOptions saves={currentLocalStorage} setSettings={setSettings} setScombzData={setScombzData} />
             )}
