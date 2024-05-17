@@ -6,6 +6,7 @@
   "author": "udai",
   "scripts": {
     "dev": "plasmo dev",
+    "dev:firefox": "plasmo dev --target=firefox-mv2",
     "build:chrome": "plasmo build",
     "build:firefox": "plasmo build --target=firefox-mv2",
     "build": "plasmo build && plasmo build --target=firefox-mv2",
