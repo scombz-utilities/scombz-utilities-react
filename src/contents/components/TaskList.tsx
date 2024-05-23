@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Table,
   TableBody,
   TableCell,
@@ -111,6 +112,7 @@ type TaskTableProps = {
   rowsPerPage: number;
   addHiddenTaskId: (id: string) => void;
   isLoading: boolean;
+  reloadTasklist: () => void;
 };
 const TaskTable = (props: TaskTableProps) => {
   const {
@@ -125,6 +127,7 @@ const TaskTable = (props: TaskTableProps) => {
     rowsPerPage,
     addHiddenTaskId,
     isLoading,
+    reloadTasklist,
   } = props;
   const [page, setPage] = useState(0);
 
@@ -204,7 +207,12 @@ const TaskTable = (props: TaskTableProps) => {
             <TableBody>
               {tasklist.length === 0 && (
                 <TableRow>
-                  <TaskTableCell sx={{ width: "100%" }}>{chrome.i18n.getMessage("taskListNoTask")}</TaskTableCell>
+                  <TaskTableCell sx={{ width: "100%" }}>
+                    {chrome.i18n.getMessage("taskListNoTask")}
+                    <Button variant="text" size="small" onClick={reloadTasklist} sx={{ ml: 2 }}>
+                      {chrome.i18n.getMessage("reloadTaskList")}
+                    </Button>
+                  </TaskTableCell>
                 </TableRow>
               )}
               {displayTaskList.map((task, index) => {
@@ -405,7 +413,7 @@ export const TaskList = (props: Props) => {
           </Typography>
           <Typography
             variant="caption"
-            title="Reload"
+            title={chrome.i18n.getMessage("reloadTaskList")}
             sx={{
               px: 0.5,
               textAlign: "left",
@@ -444,6 +452,7 @@ export const TaskList = (props: Props) => {
               rowsPerPage,
               addHiddenTaskId,
               isLoading,
+              reloadTasklist,
             }}
           />
         </Collapse>
