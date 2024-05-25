@@ -19,17 +19,20 @@ const createTimeTempBtn = (currentData: Saves) => {
       targetNode.insertAdjacentHTML(
         "beforeend",
         `
-        <div class="minBtnArea">
-        <input type="button" value="${mins[0]}分" class="minBtn" style="margin-left:25px"/>
-        <input type="button" value="${mins[1]}分" class="minBtn"/>
-        <input type="button" value="${mins[2]}分" class="minBtn"/>
-        <input type="button" value="${mins[3]}分" class="minBtn"/>
-        <input type="button" value="${mins[4]}分" class="minBtn"/>
-        <input type="button" value="${mins[5]}分" class="minBtn"/>
-        <input type="button" value="${mins[6]}分" class="minBtn"/>
-        </div>
-        <div class="minBarArea">
-        <input type="range" min="0" max="${currentData.settings.sliderBarMax}" step="30" class="min-slider-bar">
+        <link rel="stylesheet" href="${chrome.runtime.getURL("css/min_input_buttons.css")}">
+        <div class="minInputBoxArea">
+          <div class="minBtnArea">
+            <input type="button" value="${mins[0]}分" data-value="${mins[0]}" class="minBtn"/>
+            <input type="button" value="${mins[1]}分" data-value="${mins[1]}" class="minBtn"/>
+            <input type="button" value="${mins[2]}分" data-value="${mins[2]}" class="minBtn"/>
+            <input type="button" value="${mins[3]}分" data-value="${mins[3]}" class="minBtn"/>
+            <input type="button" value="${mins[4]}分" data-value="${mins[4]}" class="minBtn"/>
+            <input type="button" value="${mins[5]}分" data-value="${mins[5]}" class="minBtn"/>
+            <input type="button" value="${mins[6]}分" data-value="${mins[6]}" class="minBtn"/>
+          </div>
+          <div class="minBarArea">
+            <input type="range" min="0" max="${currentData.settings.sliderBarMax}" step="30" class="min-slider-bar">
+          </div>
         </div>
         `,
       );
@@ -41,7 +44,7 @@ const createTimeTempBtn = (currentData: Saves) => {
       for (let i = 0; i < $minBtns.length; i++) {
         $minBtns[i].addEventListener("click", () => {
           for (const $minSliderBar of $minSliderBars) {
-            $minSliderBar.value = timeBox.value = mins[i % ($minBtns.length / 2)].toString();
+            $minSliderBar.value = timeBox.value = $minBtns[i].dataset.value;
           }
         });
       }

@@ -403,6 +403,10 @@
     "message": "科目別ページ内において、マークダウン記法に対応したメモ帳を追加します。",
     "description": "科目別ページ内において、マークダウン記法に対応したメモ帳を追加します。"
   },
+  "reloadTaskList": {
+    "message": "更新",
+    "description": "更新"
+  },
   "optionTitleHiddenTaskList": {
     "message": "非表示課題リスト",
     "description": "非表示課題リスト"
