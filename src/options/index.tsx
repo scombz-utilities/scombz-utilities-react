@@ -1,4 +1,13 @@
 import {
+  InfoOutlined,
+  ManageHistoryOutlined,
+  PaletteOutlined,
+  SettingsOutlined,
+  SettingsSuggestOutlined,
+  ViewQuiltOutlined,
+  WidgetsOutlined,
+} from "@mui/icons-material";
+import {
   Alert,
   Box,
   List,
@@ -12,6 +21,7 @@ import {
 } from "@mui/material";
 import { blue, grey } from "@mui/material/colors";
 import React, { useEffect, useState } from "react";
+
 import { AdvancedOptions } from "~/options/components/pages/AdvancedOptions";
 import { BasicOptions } from "~/options/components/pages/BasicOptions";
 import { CustomCSS } from "~/options/components/pages/CustomCSS";
@@ -62,13 +72,13 @@ const OptionsIndex = () => {
   }, []);
 
   const menus: { value: string; label: string; icon?: JSX.Element }[] = [
-    { value: "basic", label: chrome.i18n.getMessage("basicOptions") },
-    { value: "widget", label: chrome.i18n.getMessage("widgetOptions") },
-    { value: "layout", label: chrome.i18n.getMessage("layoutOptions") },
-    { value: "advanced", label: chrome.i18n.getMessage("advancedOptions") },
-    { value: "customcss", label: chrome.i18n.getMessage("customCSS") },
-    { value: "data", label: chrome.i18n.getMessage("manageOptions") },
-    { value: "info", label: chrome.i18n.getMessage("info") },
+    { value: "basic", label: chrome.i18n.getMessage("basicOptions"), icon: <SettingsSuggestOutlined /> },
+    { value: "widget", label: chrome.i18n.getMessage("widgetOptions"), icon: <WidgetsOutlined /> },
+    { value: "layout", label: chrome.i18n.getMessage("layoutOptions"), icon: <ViewQuiltOutlined /> },
+    { value: "advanced", label: chrome.i18n.getMessage("advancedOptions"), icon: <SettingsOutlined /> },
+    { value: "customcss", label: chrome.i18n.getMessage("customCSS"), icon: <PaletteOutlined /> },
+    { value: "data", label: chrome.i18n.getMessage("manageOptions"), icon: <ManageHistoryOutlined /> },
+    { value: "info", label: chrome.i18n.getMessage("info"), icon: <InfoOutlined /> },
   ];
 
   return (
@@ -130,7 +140,11 @@ const OptionsIndex = () => {
                 }}
               >
                 <ListItemButton>
-                  {menu.icon && <ListItemIcon>{menu.icon}</ListItemIcon>}
+                  {menu.icon && (
+                    <ListItemIcon sx={{ color: currentTab === menu.value ? "white" : "black", transition: "all 0.3s" }}>
+                      {menu.icon}
+                    </ListItemIcon>
+                  )}
                   <ListItemText>{menu.label}</ListItemText>
                 </ListItemButton>
               </ListItem>
