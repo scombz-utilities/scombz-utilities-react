@@ -1,7 +1,7 @@
 import { Save } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
 import { useState } from "react";
-import { Editor } from "./Editor";
+import { Editor } from "../blocks/Editor";
 
 type Props = {
   value: string;

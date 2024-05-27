@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { CustomSwitch } from "./CustomSwitch";
+import { CustomSwitch } from "~/options/components/blocks/CustomSwitch";
 import type { Saves, Settings } from "~settings";
 
 type Props = {

@@ -1,11 +1,11 @@
 import { Box, Typography, IconButton, ButtonGroup, Button, Paper } from "@mui/material";
 import { useMemo } from "react";
 import { MdArrowDownward, MdArrowUpward, MdDelete } from "react-icons/md";
-import { CustomContainerParent } from "./CustomContainerParent";
-import { CustomRemovableList } from "./CustomRemovableList";
-import { CustomSelect } from "./CustomSelect";
-import { CustomSwitch } from "./CustomSwitch";
-import { CustomTextField } from "./CustomTextField";
+import { CustomContainerParent } from "~/options/components/blocks/CustomContainerParent";
+import { CustomRemovableList } from "~/options/components/blocks/CustomRemovableList";
+import { CustomSelect } from "~/options/components/blocks/CustomSelect";
+import { CustomSwitch } from "~/options/components/blocks/CustomSwitch";
+import { CustomTextField } from "~/options/components/blocks/CustomTextField";
 
 import type { Widget } from "~contents/types/widget";
 import type { Saves, Settings } from "~settings";

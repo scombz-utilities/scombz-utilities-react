@@ -1,12 +1,12 @@
 import { Box, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { CustomContainerParent } from "./CustomContainerParent";
-import { CustomRemovableList } from "./CustomRemovableList";
-import { CustomSelect } from "./CustomSelect";
-import { CustomSwitch } from "./CustomSwitch";
-import { CustomTextField } from "./CustomTextField";
-import { OptionGroup } from "./OptionGroup";
-import { SortableTable } from "./SortableTable";
+import { OptionGroup } from "../blocks/OptionGroup";
+import { SortableTable } from "../blocks/SortableTable";
+import { CustomContainerParent } from "~/options/components/blocks/CustomContainerParent";
+import { CustomRemovableList } from "~/options/components/blocks/CustomRemovableList";
+import { CustomSelect } from "~/options/components/blocks/CustomSelect";
+import { CustomSwitch } from "~/options/components/blocks/CustomSwitch";
+import { CustomTextField } from "~/options/components/blocks/CustomTextField";
 import { SLIDER_BAR_MINS } from "~constants";
 
 import type { Saves, Settings } from "~settings";

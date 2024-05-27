@@ -1,8 +1,8 @@
 import { Box, Typography } from "@mui/material";
-import { CustomSelect } from "./CustomSelect";
-import { CustomSwitch } from "./CustomSwitch";
-import { CustomTextField } from "./CustomTextField";
-import { OptionGroup } from "./OptionGroup";
+import { CustomSelect } from "~/options/components/blocks/CustomSelect";
+import { CustomSwitch } from "~/options/components/blocks/CustomSwitch";
+import { CustomTextField } from "~/options/components/blocks/CustomTextField";
+import { OptionGroup } from "~/options/components/blocks/OptionGroup";
 import type { Saves, Settings } from "~settings";
 
 type Props = {
