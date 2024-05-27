@@ -233,7 +233,7 @@ export const WidgetOptions = (props: Props) => {
         />
 
         <CustomSwitch
-          i18nLabel="時間割 教室表示"
+          i18nLabel="教室情報表示"
           i18nCaption={`メニュー横ウィジェットの時間割に、常に各科目の教室情報を表示します。
                         なお、日別表示の際はこの項目にかかわらず教室情報が表示されます。`}
           optionId="displayClassroom"
@@ -241,7 +241,7 @@ export const WidgetOptions = (props: Props) => {
           onChange={(_e, checked) => setSettings("displayClassroom", checked)}
         />
         <CustomSwitch
-          i18nLabel="時間割 授業時間表示"
+          i18nLabel="授業時間表示"
           i18nCaption={`メニュー横ウィジェットの時間割に、各時限の開始及び終了時刻を表示します。
                         なお、日別表示の際はこの項目にかかわらず時限情報が表示されます。`}
           optionId="displayTime"
@@ -249,7 +249,7 @@ export const WidgetOptions = (props: Props) => {
           onChange={(_e, checked) => setSettings("displayTime", checked)}
         />
         <CustomSelect
-          i18nLabel="時間割 今日の日付・時刻表示"
+          i18nLabel="現在の日付・時刻表示"
           i18nCaption={`メニュー横ウィジェットの時間割の上部に、今日の日付もしくは時刻を表示します。 時刻は秒単位(HH:mm:ss)で表示されます。`}
           optionId="timeTableTopDate"
           value={saves.settings.timeTableTopDate.toString()}
@@ -261,7 +261,7 @@ export const WidgetOptions = (props: Props) => {
           onChange={(e, _) => setSettings("timeTableTopDate", e.target.value === "false" ? false : e.target.value)}
         />
         <CustomSwitch
-          i18nLabel="時間割 現在の授業を強調表示"
+          i18nLabel="現在の授業を強調表示"
           i18nCaption={`LMSページおよびメニュー横ウィジェットの時間割で、現在の授業時間を目立たせます。`}
           optionId="highlightToday"
           value={saves.settings.highlightToday}
@@ -279,14 +279,14 @@ export const WidgetOptions = (props: Props) => {
           onChange={(_e, checked) => setSettings("useTaskList", checked)}
         />
         <CustomSwitch
-          i18nLabel="課題一覧 残り時間に応じて強調表示"
+          i18nLabel="残り時間に応じて課題を強調表示"
           i18nCaption={`メニュー横ウィジェットの課題一覧で、提出期限に近いものを色をつけて目立たせます。`}
           optionId="highlightTask"
           value={saves.settings.highlightTask}
           onChange={(_e, checked) => setSettings("highlightTask", checked)}
         />
         <CustomSelect
-          i18nLabel="課題一覧 期限表示モード"
+          i18nLabel="期限表示モード"
           i18nCaption="メニュー横ウィジェットの課題一覧で、提出期限の表示形式を選択します。"
           options={[
             { value: "relative", label: "相対表示（残り時間）" },
@@ -297,14 +297,14 @@ export const WidgetOptions = (props: Props) => {
           onChange={(e, _) => setSettings("deadlineMode", e.target.value)}
         />
         <CustomTextField
-          i18nLabel="課題一覧 提出期限表示フォーマット"
+          i18nLabel="提出期限表示フォーマット"
           i18nCaption="メニュー横ウィジェットの課題一覧で、提出期限の表示形式が絶対表示の時の表示フォーマットを変更します。 yyyy:年 MM:月 E:曜日 dd:日 HH:時 mm:分"
           optionId="deadlineFormat"
           value={saves.settings.deadlineFormat}
           onSaveButtonClick={(value) => setSettings("deadlineFormat", value)}
         />
         <CustomTextField
-          i18nLabel="課題一覧 表示件数"
+          i18nLabel="表示件数"
           type="number"
           i18nCaption="メニュー横ウィジェットの課題一覧で、1ページ内に表示する課題の最大件数を設定します。 課題の数がこれを超えた場合であっても、ページネーションにより全ての課題を確認できます。"
           optionId="taskListRowsPerPage"
@@ -322,7 +322,6 @@ export const WidgetOptions = (props: Props) => {
           }}
           reset={() => setSettings("notifySurveySubjects", [])}
         />
-
         <CustomRemovableList
           i18nLabel="非表示課題リスト"
           optionId="hiddenTaskIdList"

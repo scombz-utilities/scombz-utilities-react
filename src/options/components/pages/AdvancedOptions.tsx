@@ -70,14 +70,14 @@ export const AdvancedOptions = (props: Props) => {
             }
           />
           <CustomSwitch
-            i18nLabel="科目ページメモの有効化"
+            i18nLabel="メモの有効化"
             i18nCaption="科目別ページ内において、マークダウン記法に対応したメモ帳を追加します。"
             optionId="markdownNotePad"
             value={saves.settings.markdownNotePad}
             onChange={(_e, checked) => setSettings("markdownNotePad", checked)}
           />
           <CustomRemovableList
-            i18nLabel="科目ページメモ"
+            i18nLabel="メモ"
             optionId="coursePageMemo"
             i18nCaption="科目ページに表示されるメモを設定します。"
             options={saves.scombzData.coursePageMemo.map(
@@ -109,21 +109,21 @@ export const AdvancedOptions = (props: Props) => {
             onChange={(e, _) => setSettings("removeAttendance", e.target.value)}
           />
           <CustomSwitch
-            i18nLabel="科目ページ リンク化"
+            i18nLabel="リンク化"
             i18nCaption="科目別のページ内において、テキスト内のURLをリンク化します。"
             optionId="layout.linkify"
             value={saves.settings.layout.linkify}
             onChange={(_e, checked) => setSettings("layout", { ...saves.settings.layout, linkify: checked })}
           />
           <CustomSwitch
-            i18nLabel="科目ページ タイトル変更"
+            i18nLabel="タイトル変更"
             i18nCaption="科目別のページ内において、ページタイトルをわかりやすいものに変更します。"
             optionId="modifyCoursePageTitle"
             value={saves.settings.modifyCoursePageTitle}
             onChange={(_e, checked) => setSettings("modifyCoursePageTitle", checked)}
           />
           <CustomSelect
-            i18nLabel="科目ページ 使わない教材を自動非表示"
+            i18nLabel="使わない教材を自動非表示"
             i18nCaption="教材要素にある様々なもののうち、自動的に非表示にするものを選択します。"
             optionId="autoHideMaterial"
             options={[
@@ -135,14 +135,14 @@ export const AdvancedOptions = (props: Props) => {
             onChange={(e, _) => setSettings("autoHideMaterial", e.target.value === "false" ? false : e.target.value)}
           />
           <CustomSwitch
-            i18nLabel="科目ページ 要素入れ替え"
+            i18nLabel="要素入れ替えの有効化"
             i18nCaption="科目ページに存在する「担当教員へのメッセージ」「お知らせ」「課題」「教材」「テスト」「アンケート」「ディスカッション」「出席」の各要素を自由に入れ替えします。"
             optionId="sortSubjectByOrder"
             value={saves.settings.sortSubjectByOrder}
             onChange={(_e, checked) => setSettings("sortSubjectByOrder", checked)}
           />
           <CustomContainerParent
-            label="科目ページ 要素入れ替え"
+            label="要素入れ替え"
             optionId="subjectOrder"
             caption={`科目ページに存在する「担当教員へのメッセージ」「お知らせ」「課題」「教材」「テスト」「アンケート」「ディスカッション」「出席」の各要素を自由に入れ替えします。
                       存在しない要素がある場合はその要素を抜いた状態での並び替えが行われます。`}
@@ -150,14 +150,14 @@ export const AdvancedOptions = (props: Props) => {
             <SortableTable items={items} setItems={setItems} />
           </CustomContainerParent>
           <CustomSwitch
-            i18nLabel="科目ページ シラバス連携ボタンの表示"
+            i18nLabel="シラバス連携ボタンの表示"
             i18nCaption="科目別のページ内において、シラバスへのリンクを表示します。"
             optionId="createSyllabusButton"
             value={saves.settings.createSyllabusButton}
             onChange={(_e, checked) => setSettings("createSyllabusButton", checked)}
           />
           <CustomSelect
-            i18nLabel="科目ページ 教材の順番を統一"
+            i18nLabel="教材の順番を統一"
             optionId="materialSortOrder"
             i18nCaption="科目によって初回が一番上だったり最新回が一番上だったりする教材の順番を統一します。"
             options={[
@@ -169,7 +169,7 @@ export const AdvancedOptions = (props: Props) => {
             onChange={(e, _) => setSettings("materialSortOrder", e.target.value === "false" ? false : e.target.value)}
           />
           <CustomSwitch
-            i18nLabel="科目ページ 使わない教材を非表示"
+            i18nLabel="使わない教材を非表示"
             i18nCaption="教材要素にある様々なものを非表示にできるようにします。詳細設定から、自動的に非表示にするものも選択できます。"
             optionId="hideMaterial"
             value={saves.settings.hideMaterial}
