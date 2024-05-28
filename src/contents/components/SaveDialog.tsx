@@ -100,14 +100,7 @@ export const SaveDialog = () => {
             >
               <img src={chrome.runtime.getURL("assets/logo.webp")} width={48} height={48} />
               <Box>
-                <Typography variant="subtitle2">
-                  {chrome.i18n.getMessage("dialogDescription")}
-                  <br />
-                  {chrome.i18n.getMessage("dialogDescription2")}
-                </Typography>
-                <Typography color={"gray"} variant="caption">
-                  {chrome.i18n.getMessage("dialogDescription3")}
-                </Typography>
+                <Typography variant="subtitle2">{chrome.i18n.getMessage("dialogDescription")}</Typography>
               </Box>
             </Box>
             <Stack gap={0.5} mb={2}>

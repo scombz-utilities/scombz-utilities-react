@@ -1,7 +1,7 @@
 import { Save } from "@mui/icons-material";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useState } from "react";
-import { Editor } from "./Editor";
+import { Editor } from "../blocks/Editor";
 
 type Props = {
   value: string;
@@ -14,10 +14,8 @@ export const CustomCSS = (props: Props) => {
   const [currentValue, setCurrentValue] = useState(value);
 
   return (
-    <Box>
-      <Typography variant="h5" mb={1}>
-        カスタムCSS
-      </Typography>
+    <>
+      <h2>{chrome.i18n.getMessage("customCSS")}</h2>
       <Editor value={currentValue} onChange={setCurrentValue} />
       <Box sx={{ textAlign: "right", mt: 1 }}>
         <Button
@@ -29,6 +27,6 @@ export const CustomCSS = (props: Props) => {
           {chrome.i18n.getMessage("dialogSave")}
         </Button>
       </Box>
-    </Box>
+    </>
   );
 };

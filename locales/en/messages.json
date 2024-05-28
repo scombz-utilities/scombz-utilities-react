@@ -164,24 +164,16 @@
     "description": "キャンセル"
   },
   "dialogDescription": {
-    "message": "Save your ID and password in ScombZ Utilities for automatic login.",
+    "message": "Save your ID and password in ScombZ Utilities for automatic login. Settings are saved only on the PC itself.",
     "description": "ScombZ Utilitiesに保存すると自動ログインできます。"
   },
-  "dialogDescription2": {
-    "message": "You can change your saved login information from the Extension Settings.",
-    "description": "保存したログイン情報は拡張機能設定から変更できます。"
-  },
-  "dialogDescription3": {
-    "message": "*Settings are saved only on the PC itself.",
-    "description": "※設定はPC本体のみに保存されます。"
-  },
   "dialogIncorrectPassword": {
-    "message": "Incorrect student ID number or password.",
+    "message": "Student ID or password are incorrect.",
     "description": "学籍番号またはパスワードが正しくありません。"
   },
   "dialogClickToOpen": {
-    "message": "Open here and save to ScombZ Utilities",
-    "description": "ここを開いてScombZ Utilitiesに保存"
+    "message": "Save ID and password to ScombZ Utilities",
+    "description": "ScombZ Utilitiesに保存"
   },
   "WidgetLinks": {
     "message": "Links",
@@ -267,13 +259,25 @@
     "message": "Save link",
     "description": "リンク先をダウンロード"
   },
-  "RecommendedOptions": {
-    "message": "Recommended Options",
-    "description": "おすすめ設定"
+  "basicOptions": {
+    "message": "Basic",
+    "description": "基本設定"
   },
-  "IOReset": {
-    "message": "Import/Export/Reset",
-    "description": "インポート・エクスポート・初期化"
+  "widgetOptions": {
+    "message": "Widget",
+    "description": "ウィジェット設定"
+  },
+  "layoutOptions": {
+    "message": "Layout",
+    "description": "レイアウト設定"
+  },
+  "advancedOptions": {
+    "message": "Advanced",
+    "description": "詳細設定"
+  },
+  "manageOptions": {
+    "message": "Manage",
+    "description": "設定の管理"
   },
   "import": {
     "message": "Import",
@@ -286,6 +290,14 @@
   "reset": {
     "message": "Reset",
     "description": "初期化"
+  },
+  "customCSS": {
+    "message": "Custom CSS",
+    "description": "カスタムCSS"
+  },
+  "info": {
+    "message": "Information",
+    "description": "情報"
   },
   "OptionGroupSyllabusLinking": {
     "message": "Syllabus Linking",
