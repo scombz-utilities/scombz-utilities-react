@@ -108,13 +108,19 @@ const oldSavesTemp = {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const migrateLogic = (oldSaves: any): Saves => {
   const newSaves = {
-    scombzData: oldSaves?.scombzData ?? defaultSaves.scombzData,
-    settings: oldSaves?.settings ?? defaultSaves.settings,
+    scombzData: {
+      ...defaultSaves.scombzData,
+      ...(oldSaves?.scombzData ?? {}),
+    },
+    settings: {
+      ...defaultSaves.settings,
+      ...(oldSaves?.settings ?? {}),
+    },
   } as Saves;
 
   // ScombZDataの移植
-  newSaves.scombzData.lastTaskFetchUnixTime = oldSaves?.TaskGetTime;
-  newSaves.scombzData.timetable = oldSaves?.timetableData;
+  newSaves.scombzData.lastTaskFetchUnixTime = oldSaves?.TaskGetTime ?? defaultSaves.scombzData.lastTaskFetchUnixTime;
+  newSaves.scombzData.timetable = oldSaves?.timetableData ?? defaultSaves.scombzData.timetable;
   newSaves.scombzData.originalTasklist =
     oldSaves?.manualTasklist?.map((task) => {
       task.kind = "originalTask";
@@ -137,20 +143,19 @@ export const migrateLogic = (oldSaves: any): Saves => {
         memo: memo.value ?? "",
       };
     }) ?? [];
-  newSaves.scombzData.busList = defaultSaves.scombzData.busList;
-  newSaves.scombzData.lastBusFetchUnixTime = defaultSaves.scombzData.lastBusFetchUnixTime;
-  newSaves.scombzData.lastCalendarFetchUnixTime = defaultSaves.scombzData.lastCalendarFetchUnixTime;
-  newSaves.scombzData.scombzCalendar = defaultSaves.scombzData.scombzCalendar;
 
   // Settingsの移植
 
-  newSaves.settings.clickLogin = oldSaves?.clickLoginBtn ?? defaultSaves.settings.clickLogin;
+  newSaves.settings.clickLogin =
+    oldSaves?.clickLoginBtn ?? newSaves?.settings?.clickLogin ?? defaultSaves.settings.clickLogin;
   newSaves.settings.loginData = {
     username: oldSaves?.adfs?.username ?? "",
     password: oldSaves?.adfs?.password ?? "",
   };
-  newSaves.settings.popupBadge = oldSaves?.popupBadge ?? defaultSaves.settings.popupBadge;
-  newSaves.settings.removeAttendance = oldSaves?.attendance ?? defaultSaves.settings.removeAttendance;
+  newSaves.settings.popupBadge =
+    oldSaves?.popupBadge ?? newSaves?.settings?.popupBadge ?? defaultSaves.settings.popupBadge;
+  newSaves.settings.removeAttendance =
+    oldSaves?.attendance ?? newSaves?.settings?.removeAttendance ?? defaultSaves.settings.removeAttendance;
   newSaves.settings.notifySurveySubjects =
     oldSaves?.noticeSurvey
       ?.filter((survey) => survey.value === true)
@@ -160,45 +165,59 @@ export const migrateLogic = (oldSaves: any): Saves => {
           url: survey.url,
         } as Subject;
       }) ?? [];
-  newSaves.settings.autoAdfs = oldSaves?.adfsSkip ?? defaultSaves.settings.autoAdfs;
-  newSaves.settings.autoFillSgsot = defaultSaves.settings.autoFillSgsot;
-  newSaves.settings.hideSideMenu = oldSaves?.exitSidemenu ?? defaultSaves.settings.hideSideMenu;
-  newSaves.settings.styleSideMenu = oldSaves?.styleSidemenu ?? defaultSaves.settings.styleSideMenu;
-  newSaves.settings.styleDialog = oldSaves?.styleDialog ?? defaultSaves.settings.styleDialog;
-  newSaves.settings.styleSurveys = oldSaves?.styleExamBtn ?? defaultSaves.settings.styleSurveys;
-  newSaves.settings.styleExam = oldSaves?.styleExamBtn ?? defaultSaves.settings.styleExam;
-  newSaves.settings.useSubTimeTable = oldSaves?.addSubTimetable ?? defaultSaves.settings.useSubTimeTable;
-  newSaves.settings.useTaskList = oldSaves?.tasklistDisplay ?? defaultSaves.settings.useTaskList;
-  newSaves.settings.forceNarrowTimeTable = defaultSaves.settings.forceNarrowTimeTable;
-  newSaves.settings.displayClassroom = defaultSaves.settings.displayClassroom;
-  newSaves.settings.displayTime = defaultSaves.settings.displayTime;
-  newSaves.settings.timeTableTopDate = defaultSaves.settings.timeTableTopDate;
-  newSaves.settings.highlightToday = oldSaves?.styleNowPeriod ?? defaultSaves.settings.highlightToday;
-  newSaves.settings.highlightTask = oldSaves?.highlightDeadline ?? defaultSaves.settings.highlightTask;
+  newSaves.settings.autoAdfs = oldSaves?.adfsSkip ?? newSaves?.settings?.autoAdfs ?? defaultSaves.settings.autoAdfs;
+  newSaves.settings.hideSideMenu =
+    oldSaves?.exitSidemenu ?? newSaves?.settings?.hideSideMenu ?? defaultSaves.settings.hideSideMenu;
+  newSaves.settings.styleSideMenu =
+    oldSaves?.styleSidemenu ?? newSaves?.settings?.styleSideMenu ?? defaultSaves.settings.styleSideMenu;
+  newSaves.settings.styleDialog =
+    oldSaves?.styleDialog ?? newSaves?.settings?.styleDialog ?? defaultSaves.settings.styleDialog;
+  newSaves.settings.styleSurveys =
+    oldSaves?.styleExamBtn ?? newSaves?.settings?.styleSurveys ?? defaultSaves.settings.styleSurveys;
+  newSaves.settings.styleExam =
+    oldSaves?.styleExamBtn ?? newSaves?.settings?.styleExam ?? defaultSaves.settings.styleExam;
+  newSaves.settings.useSubTimeTable =
+    oldSaves?.addSubTimetable ?? newSaves?.settings?.useSubTimeTable ?? defaultSaves.settings.useSubTimeTable;
+  newSaves.settings.useTaskList =
+    oldSaves?.tasklistDisplay ?? newSaves?.settings?.useTaskList ?? defaultSaves.settings.useTaskList;
+  newSaves.settings.highlightToday =
+    oldSaves?.styleNowPeriod ?? newSaves?.settings?.highlightToday ?? defaultSaves.settings.highlightToday;
+  newSaves.settings.highlightTask =
+    oldSaves?.highlightDeadline ?? newSaves?.settings?.highlightTask ?? defaultSaves.settings.highlightTask;
   newSaves.settings.deadlineMode = oldSaves?.deadlinemode?.includes("relative")
     ? "relative"
-    : "absolute" ?? defaultSaves.settings.deadlineMode;
-  newSaves.settings.deadlineFormat = defaultSaves.settings.deadlineFormat;
-  newSaves.settings.changeReportBtn = oldSaves?.changeReportBtn ?? defaultSaves.settings.changeReportBtn;
-  newSaves.settings.hiddenTaskIdList = defaultSaves.settings.hiddenTaskIdList;
-  newSaves.settings.taskListRowsPerPage = defaultSaves.settings.taskListRowsPerPage;
-  newSaves.settings.sliderBarMax = Number(oldSaves?.sliderBarMax) || defaultSaves.settings.sliderBarMax;
+    : "absolute" ?? newSaves?.settings?.deadlineMode ?? defaultSaves.settings.deadlineMode;
+  newSaves.settings.changeReportBtn =
+    oldSaves?.changeReportBtn ?? newSaves?.settings?.changeReportBtn ?? defaultSaves.settings.changeReportBtn;
+  newSaves.settings.sliderBarMax =
+    Number(oldSaves?.sliderBarMax) || newSaves?.settings?.sliderBarMax || defaultSaves.settings.sliderBarMax;
   newSaves.settings.timesBtnValue = oldSaves?.timesBtnValue
     ? Number(oldSaves?.timesBtnValue?.replace(/\D/g, "")) - 1
-    : defaultSaves.settings.timesBtnValue;
-  newSaves.settings.defaultInputName = oldSaves?.defaultInputName ?? defaultSaves.settings.defaultInputName;
-  newSaves.settings.faculty = oldSaves?.fac;
+    : newSaves?.settings?.timesBtnValue ?? defaultSaves.settings.timesBtnValue;
+  newSaves.settings.defaultInputName =
+    oldSaves?.defaultInputName ?? newSaves?.settings?.defaultInputName ?? defaultSaves.settings.defaultInputName;
+  newSaves.settings.faculty = oldSaves?.fac ?? newSaves?.settings?.faculty ?? defaultSaves.settings.faculty;
   newSaves.settings.lms = {
     showClassroom: oldSaves?.adjustTimetableData?.dispClassroom ?? defaultSaves.settings.lms.showClassroom,
     centering: oldSaves?.adjustTimetableData?.timetableCentering ?? defaultSaves.settings.lms.centering,
     hideNoClassDay: defaultSaves.settings.lms.hideNoClassDay,
   };
-  newSaves.settings.updateClear = oldSaves?.updateClear ?? defaultSaves.settings.updateClear;
-  newSaves.settings.dragAndDropBugFix = oldSaves?.dadbugFix ?? defaultSaves.settings.dragAndDropBugFix;
-  newSaves.settings.forceDragAndDropSubmit = oldSaves?.ddSubmission ?? defaultSaves.settings.forceDragAndDropSubmit;
-  newSaves.settings.downloadFileBundle = oldSaves?.downloadFileBundle ?? defaultSaves.settings.downloadFileBundle;
-  newSaves.settings.hideCompletedReports = oldSaves?.hideCompletedReports ?? defaultSaves.settings.hideCompletedReports;
-  newSaves.settings.signOutPageLayout = oldSaves?.changeLogout ?? defaultSaves.settings.signOutPageLayout;
+  newSaves.settings.updateClear =
+    oldSaves?.updateClear ?? newSaves?.settings?.updateClear ?? defaultSaves.settings.updateClear;
+  newSaves.settings.dragAndDropBugFix =
+    oldSaves?.dadbugFix ?? newSaves?.settings?.dragAndDropBugFix ?? defaultSaves.settings.dragAndDropBugFix;
+  newSaves.settings.forceDragAndDropSubmit =
+    oldSaves?.ddSubmission ??
+    newSaves?.settings?.forceDragAndDropSubmit ??
+    defaultSaves.settings.forceDragAndDropSubmit;
+  newSaves.settings.downloadFileBundle =
+    oldSaves?.downloadFileBundle ?? newSaves?.settings?.downloadFileBundle ?? defaultSaves.settings.downloadFileBundle;
+  newSaves.settings.hideCompletedReports =
+    oldSaves?.hideCompletedReports ??
+    newSaves?.settings?.hideCompletedReports ??
+    defaultSaves.settings.hideCompletedReports;
+  newSaves.settings.signOutPageLayout =
+    oldSaves?.changeLogout ?? newSaves?.settings?.signOutPageLayout ?? defaultSaves.settings.signOutPageLayout;
   newSaves.settings.layout = {
     maxWidthPx: {
       subj: Number(oldSaves?.maxWidthPx?.subj) || defaultSaves.settings.layout.maxWidthPx.subj,

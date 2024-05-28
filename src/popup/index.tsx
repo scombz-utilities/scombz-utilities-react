@@ -1,11 +1,9 @@
-import { Box, Button, Typography, ThemeProvider, Link } from "@mui/material";
-import { format } from "date-fns";
+import { Box, Button, Typography, ThemeProvider } from "@mui/material";
 import { useEffect, useState } from "react";
+import { MultiPageTimeTable } from "./components/MultiPageTimeTable";
 import theme from "~/theme";
 import type { Task } from "~contents/types/task";
 import { defaultSaves, type Saves } from "~settings";
-
-const days = ["日", "月", "火", "水", "木", "金", "土"];
 
 const openOptions = () => {
   chrome.runtime.openOptionsPage();
@@ -36,34 +34,18 @@ const IndexPopup = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box width={500} textAlign="center" m={2}>
+      <Box width={360} textAlign="center" m={2}>
         <Typography variant="h5">ScombZ Utilities</Typography>
 
-        {/* 授業一覧 */}
         <Box my={1}>
           <Box>
-            <Typography variant="h6">TimeTable</Typography>
-            {saves.scombzData.timetable.map((d) => (
-              <Box key={d.id} sx={{ display: "flex", gap: 2 }}>
-                <Typography>
-                  {days[d.day]}曜{d.time}限
-                </Typography>
-                <Link href={`https://scombz.shibaura-it.ac.jp/lms/course?idnumber=${d.id}`} target="_blank">
-                  <Typography>{d.name}</Typography>
-                </Link>
-              </Box>
-            ))}
-          </Box>
-
-          {/* 課題一覧 */}
-          <Box>
-            <Typography variant="h6">Task</Typography>
-            {tasklist.map((task) => (
-              <Box key={task.id} sx={{ display: "flex", gap: 2 }}>
-                <Typography>{task.title}</Typography>
-                <Typography>{format(task.deadlineDate, "MM月dd日mm:ss")}</Typography>
-              </Box>
-            ))}
+            <MultiPageTimeTable
+              courses={saves.scombzData.timetable}
+              tasks={tasklist}
+              days={["monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]}
+              showTasks
+              overflowTasks="auto"
+            />
           </Box>
 
           <Button variant="contained" onClick={openOptions}>

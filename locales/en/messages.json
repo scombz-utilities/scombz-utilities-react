@@ -415,6 +415,10 @@
     "message": "In the course pages, add a notepad that supports markdown notation.",
     "description": "科目別ページ内において、マークダウン記法に対応したメモ帳を追加します。"
   },
+  "reloadTaskList": {
+    "message": "Reload",
+    "description": "更新"
+  },
   "optionTitleHiddenTaskList": {
     "message": "Hidden Assignments List",
     "description": "非表示課題リスト"

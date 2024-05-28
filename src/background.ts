@@ -1,6 +1,5 @@
 import { updateBadgeText } from "./backgrounds/badge";
 import { getJson } from "./backgrounds/getJson";
-import { migrate } from "./backgrounds/migration";
 import { onInstalled } from "./backgrounds/onInstalled";
 
 export type RuntimeMessage = {
@@ -32,9 +31,6 @@ chrome.runtime.onMessage.addListener((message: RuntimeMessage, _sender, sendResp
 chrome.runtime.onInstalled.addListener(({ reason }) => {
   updateBadgeText();
   onInstalled(reason);
-  if (reason === "update" && chrome.runtime.getManifest().version === "4.0.0") {
-    migrate();
-  }
 });
 
 //  起動時
