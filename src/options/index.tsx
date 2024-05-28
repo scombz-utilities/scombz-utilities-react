@@ -19,7 +19,7 @@ import {
   Stack,
   ThemeProvider,
 } from "@mui/material";
-import { blue, grey } from "@mui/material/colors";
+import { indigo, grey } from "@mui/material/colors";
 import React, { useEffect, useState } from "react";
 
 import { AdvancedOptions } from "~/options/components/pages/AdvancedOptions";
@@ -130,11 +130,11 @@ const OptionsIndex = () => {
                   history.pushState(null, "", `?tab=${menu.value}`);
                 }}
                 sx={{
-                  backgroundColor: currentTab === menu.value ? blue[500] : "transparent",
+                  backgroundColor: currentTab === menu.value ? indigo[500] : "transparent",
                   color: currentTab === menu.value ? "white" : "black",
                   transition: "all 0.3s",
                   ":hover": {
-                    backgroundColor: currentTab === menu.value ? blue[700] : grey[100],
+                    backgroundColor: currentTab === menu.value ? indigo[700] : grey[100],
                     color: currentTab === menu.value ? "white" : "black",
                   },
                 }}
