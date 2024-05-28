@@ -1,7 +1,6 @@
-import { Box, Button, Typography, styled, IconButton, Collapse } from "@mui/material";
+import { Box, Button, styled } from "@mui/material";
 import { format } from "date-fns";
-import { useState } from "react";
-import { MdDownload, MdUpload, MdDelete, MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
+import { MdDownload, MdUpload, MdDelete } from "react-icons/md";
 import { migrateLogic } from "~backgrounds/migration";
 import type { Saves } from "~settings";
 import { defaultSaves } from "~settings";
@@ -45,8 +44,6 @@ type Props = {
 
 export const DataOperation = (props: Props) => {
   const { saves, setSaves } = props;
-
-  const [isLegacyOpen, setIsLegacyOpen] = useState<boolean>(false);
 
   const importData = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -131,78 +128,37 @@ export const DataOperation = (props: Props) => {
 
   return (
     <>
+      <h2>{chrome.i18n.getMessage("manageOptions")}</h2>
       <Box>
-        <Typography variant="h5">{chrome.i18n.getMessage("manageOptions")}</Typography>
-        <Box m={1}>
-          <Box my={1}>
-            <Typography variant="body1">
-              JSON形式で、設定やメモを一括で書き出したり、外部から読み込むことができます。
-            </Typography>
-            <Typography variant="body1">
-              パスワード及び学籍番号は出力されませんが、それ以外のものは全て出力されるため注意してください。
-            </Typography>
-          </Box>
-          <Box display="flex" flexDirection="column" gap={1}>
-            <Button variant="contained" color="primary" sx={{ width: 200 }} component="label" startIcon={<MdUpload />}>
-              <Box width="100px" textAlign="center">
-                {chrome.i18n.getMessage("import")}
-              </Box>
-              <VisuallyHiddenInput type="file" accept=".json" onChange={importData} />
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={exportData}
-              sx={{ width: 200 }}
-              startIcon={<MdDownload />}
-            >
-              <Box width="100px" textAlign="center">
-                {chrome.i18n.getMessage("export")}
-              </Box>
-            </Button>
-          </Box>
-        </Box>
+        <p>JSON形式で、設定やメモを一括で書き出したり、外部から読み込むことができます。</p>
+        <p>パスワード及び学籍番号は出力されませんが、それ以外のものは全て出力されるため注意してください。</p>
       </Box>
-      <Box>
-        <Typography variant="h6" onClick={() => setIsLegacyOpen(!isLegacyOpen)} sx={{ cursor: "pointer" }}>
-          <IconButton>{isLegacyOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}</IconButton>
-          ScombZ Utilities v4.0.0未満からのデータ移行
-        </Typography>
-        <Collapse in={isLegacyOpen}>
-          <Box mx={5}>
-            <Typography variant="h6">レガシー形式でインポート</Typography>
-            <Box my={1}>
-              <Typography variant="body1">以前のバージョンでエクスポートしたデータを読み込みます。</Typography>
-              <Typography variant="body1">この機能は将来的に削除される予定です。</Typography>
-            </Box>
-            <Button
-              variant="contained"
-              color="secondary"
-              sx={{ width: 200 }}
-              component="label"
-              startIcon={<MdUpload />}
-            >
-              <Box width="100px" textAlign="center">
-                インポート
-              </Box>
-              <VisuallyHiddenInput type="file" accept=".json" onChange={importLegacyData} />
-            </Button>
-          </Box>
-        </Collapse>
-      </Box>
-      <Box mt={5}>
-        <Typography variant="h5">初期化</Typography>
-        <Box m={1}>
-          <Box my={1}>
-            <Typography variant="body1">全ての設定とデータを初期化します。この操作は取り消せません。</Typography>
-            <Typography variant="body1">初期化をする際は、設定をエクスポートしてから行うことを推奨します。</Typography>
-          </Box>
-          <Button variant="contained" color="error" onClick={resetData} sx={{ width: 200 }} startIcon={<MdDelete />}>
-            <Box width="100px" textAlign="center">
-              {chrome.i18n.getMessage("reset")}
-            </Box>
-          </Button>
+      <Box m={1}>
+        <h3>インポート</h3>
+        <Button variant="contained" color="primary" sx={{ width: 200 }} component="label" startIcon={<MdUpload />}>
+          {chrome.i18n.getMessage("import")}
+          <VisuallyHiddenInput type="file" accept=".json" onChange={importData} />
+        </Button>
+
+        <h3>レガシー形式でインポート</h3>
+        <Box my={1}>
+          <p>以前のバージョンでエクスポートしたデータを読み込みます。</p>
+          <p>この機能は将来的に削除される予定です。</p>
         </Box>
+        <Button variant="contained" color="secondary" sx={{ width: 200 }} component="label" startIcon={<MdUpload />}>
+          インポート
+          <VisuallyHiddenInput type="file" accept=".json" onChange={importLegacyData} />
+        </Button>
+
+        <h3>エクスポート</h3>
+        <Button variant="contained" color="primary" onClick={exportData} sx={{ width: 200 }} startIcon={<MdDownload />}>
+          {chrome.i18n.getMessage("export")}
+        </Button>
+
+        <h3>リセット</h3>
+        <Button variant="contained" color="error" onClick={resetData} sx={{ width: 200 }} startIcon={<MdDelete />}>
+          設定を初期化する
+        </Button>
       </Box>
     </>
   );

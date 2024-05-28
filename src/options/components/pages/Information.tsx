@@ -1,23 +1,17 @@
-import { Box, Link, Typography } from "@mui/material";
+import { Box, Link } from "@mui/material";
 
 export const Information = () => {
   return (
-    <Box display="flex" flexDirection="column" gap={2}>
-      <Typography variant="h5">{chrome.i18n.getMessage("info")}</Typography>
-      <Typography variant="body1">
-        この拡張機能は、ScombZのユーザビリティの向上を目的としたオープンソースプロジェクトです。
-      </Typography>
+    <>
+      <h2>{chrome.i18n.getMessage("info")}</h2>
+      <p>この拡張機能は、ScombZのユーザビリティの向上を目的としたオープンソースプロジェクトです。</p>
       <Box>
-        <Typography variant="h6" mb={0.5}>
-          バージョン情報
-        </Typography>
-        <Typography variant="body1">ScombZ Utilities v{chrome.runtime.getManifest().version}</Typography>
+        <h3>バージョン情報</h3>
+        <p>ScombZ Utilities v{chrome.runtime.getManifest().version}</p>
       </Box>
       <Box>
-        <Typography variant="h6" mb={0.5}>
-          バグ報告・要望
-        </Typography>
-        <Typography variant="body1">以下のいずれかの方法でお知らせください。</Typography>
+        <h3>バグ報告・要望</h3>
+        <p>以下のいずれかの方法でお知らせください。</p>
 
         <ul>
           <li>
@@ -46,9 +40,7 @@ export const Information = () => {
         </ul>
       </Box>
       <Box>
-        <Typography variant="h6" mb={0.5}>
-          リンク
-        </Typography>
+        <h3>リンク</h3>
         <ul>
           <li>
             <Link href="https://scombz-utilities.com" target="_blank" rel="noopener noreferrer">
@@ -76,11 +68,9 @@ export const Information = () => {
         </ul>
       </Box>
       <Box>
-        <Typography variant="h6" mb={0.5}>
-          ライセンス
-        </Typography>
-        <Typography variant="body1">MIT License</Typography>
+        <h3>ライセンス</h3>
+        <p>MIT License</p>
       </Box>
-    </Box>
+    </>
   );
 };

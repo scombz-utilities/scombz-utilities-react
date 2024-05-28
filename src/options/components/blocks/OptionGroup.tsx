@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 
 type Props = {
   i18nTitle: string;
@@ -10,8 +10,8 @@ export const OptionGroup = (props: Props) => {
   const { i18nTitle, description, children } = props;
   return (
     <Box sx={{ my: 3 }}>
-      <Typography variant="h6">{chrome.i18n.getMessage(i18nTitle) || i18nTitle}</Typography>
-      <Typography variant="body1">{description}</Typography>
+      <h3>{chrome.i18n.getMessage(i18nTitle) || i18nTitle}</h3>
+      <p>{description}</p>
       <Box sx={{ display: "felx", flexDirection: "column", gap: 1 }}>{children}</Box>
     </Box>
   );

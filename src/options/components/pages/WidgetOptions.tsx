@@ -1,6 +1,7 @@
 import { Box, Typography, IconButton, ButtonGroup, Button, Paper } from "@mui/material";
 import { useMemo } from "react";
 import { MdArrowDownward, MdArrowUpward, MdDelete } from "react-icons/md";
+import { OptionGroup } from "../blocks/OptionGroup";
 import { CustomContainerParent } from "~/options/components/blocks/CustomContainerParent";
 import { CustomRemovableList } from "~/options/components/blocks/CustomRemovableList";
 import { CustomSelect } from "~/options/components/blocks/CustomSelect";
@@ -109,7 +110,7 @@ export const CustomWidgetSort = (props: CustomWidgetSortProps) => {
               backgroundColor: "#fff",
             }}
           >
-            <Typography variant="h6" fontSize="1.1rem">
+            <Typography variant="h3" fontSize="1.1rem">
               {chrome.i18n.getMessage("optionWidgetOrderEnabled")}
             </Typography>
           </Box>
@@ -154,7 +155,7 @@ export const CustomWidgetSort = (props: CustomWidgetSortProps) => {
               backgroundColor: "#fff",
             }}
           >
-            <Typography variant="h6" fontSize="1.1rem">
+            <Typography variant="h3" fontSize="1.1rem">
               {chrome.i18n.getMessage("optionWidgetOrderDisabled")}
             </Typography>
           </Box>
@@ -211,18 +212,13 @@ export const WidgetOptions = (props: Props) => {
 
   return (
     <Box>
-      <Typography variant="h5">{chrome.i18n.getMessage("widgetOptions")}</Typography>
-      <Box p={1}>
-        <Typography variant="body2" sx={{ color: "#666" }}>
-          ScombZでサイドメニューを開いた時に右側に表示されるウィジェットの設定を行います。
-        </Typography>
-        <Typography variant="body2" sx={{ color: "#666" }}>
-          基本ウィジェットである「時間割LMS」と「課題一覧」に加え、「カレンダー」「メモ」「リンク集」「学バス時刻表」の4つのカスタムウィジェットを追加できます。
-          カスタムウィジェットは表示の有無や順番を自由に設定できます。
-        </Typography>
-      </Box>
-      <Box display="flex" flexDirection="column" gap={1} p={1}>
-        <Typography variant="h6">時間割ウィジェット</Typography>
+      <h2>{chrome.i18n.getMessage("widgetOptions")}</h2>
+      <p>ScombZでサイドメニューを開いた時に右側に表示されるウィジェットの設定を行います。</p>
+      <p>
+        基本ウィジェットである「時間割LMS」と「課題一覧」に加え、「カレンダー」「メモ」「リンク集」「学バス時刻表」の4つのカスタムウィジェットを追加できます。
+        カスタムウィジェットは表示の有無や順番を自由に設定できます。
+      </p>
+      <OptionGroup i18nTitle="時間割ウィジェット">
         <CustomSwitch
           i18nLabel="時間割表示"
           i18nCaption={`サイドメニュー展開時に、右のスペースに簡易的な時間割を表示します。
@@ -267,9 +263,8 @@ export const WidgetOptions = (props: Props) => {
           value={saves.settings.highlightToday}
           onChange={(_e, checked) => setSettings("highlightToday", checked)}
         />
-      </Box>
-      <Box display="flex" flexDirection="column" gap={1} p={1}>
-        <Typography variant="h6">課題表示ウィジェット</Typography>
+      </OptionGroup>
+      <OptionGroup i18nTitle="課題表示ウィジェット">
         <CustomSwitch
           i18nLabel="課題表示"
           i18nCaption={`サイドメニュー展開時に、右のスペースに課題一覧を表示します。
@@ -333,9 +328,8 @@ export const WidgetOptions = (props: Props) => {
           }}
           reset={() => setSettings("hiddenTaskIdList", [])}
         />
-      </Box>
-      <Box display="flex" flexDirection="column" gap={1} p={1}>
-        <Typography variant="h6">カスタムウィジェット</Typography>
+      </OptionGroup>
+      <OptionGroup i18nTitle="カスタムウィジェット">
         <CustomSwitch
           i18nLabel="2カラムレイアウトを有効化"
           i18nCaption={`並び替え可能なウィジェットを2列に並べて表示します。`}
@@ -355,7 +349,7 @@ export const WidgetOptions = (props: Props) => {
           }}
           reset={() => setSettings("originalLinks", [])}
         />
-      </Box>
+      </OptionGroup>
     </Box>
   );
 };
