@@ -118,11 +118,12 @@ const onRightClick = (element: HTMLElement, x: number, y: number, url?: string) 
   contextMenu.style.display = "block";
 };
 
-const mousedownClick = (items: NodeListOf<HTMLElement>, openInBackground?: boolean) => {
+const mousedownClick = (isCtrlKeyPressed: boolean, items: NodeListOf<HTMLElement>, openInBackground?: boolean) => {
   for (const item of items) {
     item.addEventListener("mousedown", (event: MouseEvent) => {
-      if (event.button === 1) {
+      if (event.button === 1 || (event.button === 0 && isCtrlKeyPressed)) {
         // ホイールクリック
+        // Ctrl + クリック
         if (openInBackground) {
           openFileOnBackgroundTab(item.parentNode as HTMLElement);
         } else {
@@ -144,7 +145,7 @@ const mousedownClick = (items: NodeListOf<HTMLElement>, openInBackground?: boole
   return;
 };
 
-const mousedownClickLMS = async () => {
+const mousedownClickLMS = async (isCtrlKeyPressed: boolean) => {
   const LMSLinkElements = document.querySelectorAll(".timetable-course-top-btn") as NodeListOf<HTMLDivElement>;
   LMSLinkElements.forEach((linkElement) => {
     linkElement.addEventListener("contextmenu", (e: MouseEvent) => {
@@ -158,8 +159,9 @@ const mousedownClickLMS = async () => {
     });
 
     linkElement.addEventListener("mousedown", (e: MouseEvent) => {
-      if (e.button === 1) {
+      if (e.button === 1 || (e.button === 0 && isCtrlKeyPressed)) {
         // ホイールクリック
+        // Ctrl + クリック
         chrome.runtime.sendMessage({
           action: "openNewTabInBackground",
           url: "https://scombz.shibaura-it.ac.jp/lms/course?idnumber=" + linkElement.getAttribute("id"),
@@ -176,17 +178,30 @@ const mouseDownEvents = async () => {
   const dlFiles = document.querySelectorAll(".downloadFile") as NodeListOf<HTMLElement>;
   const courseInfo = document.querySelectorAll(".course-view-information-name") as NodeListOf<HTMLElement>;
   insertContextMenu();
+
+  let isCtrlKeyPressed = false;
+  document.addEventListener("keydown", (e) => {
+    if (e.ctrlKey || e.metaKey) {
+      isCtrlKeyPressed = true;
+    }
+  });
+  document.addEventListener("keyup", (e) => {
+    if (!e.ctrlKey && !e.metaKey) {
+      isCtrlKeyPressed = false;
+    }
+  });
+
   if (dlLinks) {
-    mousedownClick(dlLinks, true);
+    mousedownClick(isCtrlKeyPressed, dlLinks, true);
   }
   if (dlFiles) {
-    mousedownClick(dlFiles);
+    mousedownClick(isCtrlKeyPressed, dlFiles);
   }
   if (courseInfo) {
-    mousedownClick(courseInfo);
+    mousedownClick(isCtrlKeyPressed, courseInfo);
   }
   if (location.href.startsWith("https://scombz.shibaura-it.ac.jp/lms/timetable")) {
-    mousedownClickLMS();
+    mousedownClickLMS(isCtrlKeyPressed);
   }
 };
 
