@@ -400,7 +400,6 @@ export const TaskList = (props: Props) => {
         }}
       />
       <Box
-        maxWidth="1200px"
         width="calc(100% - 20px)"
         m="0 auto"
         onClick={(e) => e.stopPropagation()}

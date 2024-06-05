@@ -85,6 +85,10 @@ export type Settings = {
   materialSortOrder: "asc" | "desc" | false;
   hideMaterial: boolean;
   autoHideMaterial: "all" | "recent" | false;
+  widgetPosition: "center" | "left" | "right";
+  widgetWidth: number;
+  widgetMaxWidth: number;
+  widgetZoom: number;
 };
 
 export const defaultSettings: Settings = {
@@ -174,6 +178,10 @@ export const defaultSettings: Settings = {
   materialSortOrder: false,
   hideMaterial: true,
   autoHideMaterial: false,
+  widgetPosition: "center",
+  widgetWidth: 100,
+  widgetMaxWidth: 1200,
+  widgetZoom: 1,
 };
 
 /* ScombzData */

@@ -35,6 +35,11 @@ const MenuWidget = () => {
   const [widgetOrder, setWidgetOrder] = useState<Widget[]>([]);
   const [columnCount, setColumnCount] = useState<number>(2);
 
+  const [widgetPosition, setWidgetPosition] = useState<"center" | "left" | "right">("center");
+  const [widgetWidth, setWidgetWidth] = useState<number>(100);
+  const [widgetMaxWidth, setWidgetMaxWidth] = useState<number>(1200);
+  const [zoom, setWidgetZoom] = useState<number>(1);
+
   useEffect(() => {
     const sideMenu = document.getElementById("sidemenu") as HTMLElement;
     setIsMenuOpen(!sideMenu?.classList?.contains("sidemenu-close"));
@@ -54,6 +59,10 @@ const MenuWidget = () => {
       setUseTaskList(items.settings.useTaskList);
       setWidgetOrder(items.settings.widgetOrder);
       setColumnCount(items.settings.columnCount);
+      setWidgetPosition(items.settings.widgetPosition);
+      setWidgetWidth(items.settings.widgetWidth);
+      setWidgetMaxWidth(items.settings.widgetMaxWidth);
+      setWidgetZoom(items.settings.widgetZoom);
     });
   }, []);
 
@@ -71,8 +80,6 @@ const MenuWidget = () => {
   }, [isMenuOpen]);
 
   const useCalender = useMemo(() => widgetOrder.includes("Calender"), [widgetOrder]);
-
-  const zoom: number = 1;
 
   const width = useWindowSize()[0] / zoom;
 
@@ -102,9 +109,12 @@ const MenuWidget = () => {
           {width >= 540 && (
             <Box
               sx={{
-                maxWidth: "1200px",
-                width: `${(100 / zoom).toFixed(1)}%`,
-                transformOrigin: "top left",
+                my: "0",
+                mr: widgetPosition === "right" ? "0" : "auto",
+                ml: widgetPosition === "left" ? "0" : "auto",
+                maxWidth: `${widgetMaxWidth}px`,
+                width: `${(widgetWidth / zoom).toFixed(1)}%`,
+                transformOrigin: `top ${widgetPosition}`,
                 transform: zoom !== 1 ? `scale(${zoom})` : "none",
               }}
             >

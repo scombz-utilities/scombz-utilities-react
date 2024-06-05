@@ -124,7 +124,6 @@ export const UserMemo = () => {
   return (
     <Box
       width="calc(100% - 16px)"
-      maxWidth="1200px"
       m="0 auto"
       onClick={(e) => e.stopPropagation()}
       sx={{
