@@ -218,6 +218,44 @@ export const WidgetOptions = (props: Props) => {
         基本ウィジェットである「時間割LMS」と「課題一覧」に加え、「カレンダー」「メモ」「リンク集」「学バス時刻表」の4つのカスタムウィジェットを追加できます。
         カスタムウィジェットは表示の有無や順番を自由に設定できます。
       </p>
+      <OptionGroup i18nTitle="ウィジェット配置">
+        <CustomSelect
+          i18nLabel="水平表示位置"
+          i18nCaption="画面幅が広い場合に、ウィジェットを左寄せ・中央寄せ・右寄せのいずれにするかを選択します。"
+          optionId="widgetPosition"
+          value={saves.settings.widgetPosition}
+          options={[
+            { value: "left", label: "左寄せ" },
+            { value: "center", label: "中央寄せ" },
+            { value: "right", label: "右寄せ" },
+          ]}
+          onChange={(e, _) => setSettings("widgetPosition", e.target.value)}
+        />
+        <CustomTextField
+          i18nLabel="ウィジェット幅"
+          type="number"
+          i18nCaption="ウィジェットを表示できる領域のうち、どれくらいの幅(%)を割り当てるか指定します。 100%にすると、画面いっぱいに表示されるためメニューを閉じづらくなることがあります。"
+          optionId="widgetWidth"
+          value={saves.settings.widgetWidth.toString()}
+          onSaveButtonClick={(value) => setSettings("widgetWidth", parseInt(value, 10))}
+        />
+        <CustomTextField
+          i18nLabel="ウィジェット最大幅"
+          type="number"
+          i18nCaption="ウィジェットの最大幅(px)を指定します。 この値を超える幅にはなりません。"
+          optionId="widgetMaxWidth"
+          value={saves.settings.widgetMaxWidth.toString()}
+          onSaveButtonClick={(value) => setSettings("widgetMaxWidth", parseInt(value, 10))}
+        />
+        <CustomTextField
+          i18nLabel="ウィジェット拡大率"
+          type="number"
+          i18nCaption="ウィジェットの拡大率を指定します。 1.0で通常表示、1.5で1.5倍表示となります。"
+          optionId="widgetZoom"
+          value={saves.settings.widgetZoom.toString()}
+          onSaveButtonClick={(value) => setSettings("widgetZoom", parseFloat(value))}
+        />
+      </OptionGroup>
       <OptionGroup i18nTitle="時間割ウィジェット">
         <CustomSwitch
           i18nLabel="時間割表示"

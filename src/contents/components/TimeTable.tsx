@@ -119,6 +119,7 @@ const ClassBox = (props: ClassBoxProps) => {
                   display: "block",
                   fontSize: 10,
                   maxWidth: classroomWidth || "calc( 15vw - 50px )",
+                  minWidth: "100px",
                   overflow: "hidden",
                   textOverflow: "ellipsis",
                   whiteSpace: wrapCaption ? "wrap" : "nowrap",
@@ -353,7 +354,6 @@ export const TimeTable = (props: Props) => {
     <>
       <Box
         width="calc(100% - 20px)"
-        maxWidth="1200px"
         minHeight="30px"
         m="0 auto"
         onClick={(e) => e.stopPropagation()}

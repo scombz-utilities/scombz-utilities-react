@@ -234,7 +234,11 @@ const TaskTable = (props: TaskTableProps) => {
                       </TaskTableCell>
                     )}
                     <TaskTableCell
-                      sx={{ ...colors, maxWidth: width > 880 ? "calc(100vw - 610px)" : "calc(100vw - 480px)" }}
+                      sx={{
+                        ...colors,
+                        maxWidth: width > 880 ? "calc(100vw - 610px)" : "calc(100vw - 480px)",
+                        minWidth: "100px",
+                      }}
                       href={task.link}
                     >
                       {task.title}
@@ -396,7 +400,6 @@ export const TaskList = (props: Props) => {
         }}
       />
       <Box
-        maxWidth="1200px"
         width="calc(100% - 20px)"
         m="0 auto"
         onClick={(e) => e.stopPropagation()}
