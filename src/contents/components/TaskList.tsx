@@ -234,7 +234,11 @@ const TaskTable = (props: TaskTableProps) => {
                       </TaskTableCell>
                     )}
                     <TaskTableCell
-                      sx={{ ...colors, maxWidth: width > 880 ? "calc(100vw - 610px)" : "calc(100vw - 480px)" }}
+                      sx={{
+                        ...colors,
+                        maxWidth: width > 880 ? "calc(100vw - 610px)" : "calc(100vw - 480px)",
+                        minWidth: "100px",
+                      }}
                       href={task.link}
                     >
                       {task.title}
