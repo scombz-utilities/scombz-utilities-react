@@ -7,7 +7,7 @@ import {
   createSyllabusButton,
   layoutMaterialTitles,
 } from "./util/courseLogic";
-import { sortSubjectByOrder, forceMaterialOrder, hideMaterial } from "./util/layoutSubject";
+import { sortSubjectByOrder, forceMaterialOrder, hideMaterial, addQuickMenu } from "./util/layoutSubject";
 import { defaultSaves } from "./util/settings";
 import type { Saves } from "./util/settings";
 
@@ -33,9 +33,6 @@ const course = async () => {
   if (currentData.settings.createSyllabusButton) {
     createSyllabusButton();
   }
-  if (currentData.settings.sortSubjectByOrder) {
-    sortSubjectByOrder(currentData);
-  }
   if (currentData.settings.materialSortOrder) {
     forceMaterialOrder(currentData);
   }
@@ -43,6 +40,12 @@ const course = async () => {
     hideMaterial(currentData);
   }
   layoutMaterialTitles();
+
+  // 順番を維持するため、並び替え終了後にクイックメニューを追加
+  if (currentData.settings.sortSubjectByOrder) {
+    sortSubjectByOrder(currentData);
+  }
+  addQuickMenu();
 };
 
 course();

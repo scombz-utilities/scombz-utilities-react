@@ -15,8 +15,32 @@ import type { Saves } from "./settings";
 - 期限過ぎテストを非表示
 */
 
+// 先頭にクイックメニューを追加
+
+export const addQuickMenu = async () => {
+  const link = document.createElement("link");
+  link.href = chrome.runtime.getURL("css/quickmenu.css"); // 新しいCSSファイルのパス
+  link.type = "text/css";
+  link.rel = "stylesheet";
+  document.head.appendChild(link);
+
+  const quickMenu = document.createElement("div");
+  quickMenu.id = "quickMenu";
+  document.querySelectorAll(".block.clearfix:has(> .block-title.block-cube").forEach((node) => {
+    const id = node.id;
+    const title = node.querySelector(".block-title.block-cube .block-title-txt")?.textContent;
+    if (!id || !title) return;
+    const link = document.createElement("a");
+    link.textContent = title;
+    link.href = `#${id}`;
+    quickMenu.appendChild(link);
+  });
+  const targetNode = document.querySelector(".course-header") as HTMLElement;
+  targetNode.insertAdjacentElement("afterend", quickMenu);
+};
+
 // 要素並び替え
-export const sortSubjectByOrder = async (currentData: Saves) => {
+export const sortSubjectByOrder = (currentData: Saves) => {
   const orderIds = currentData.settings.subjectOrder;
 
   const parentContainer = document.getElementById("courseTopForm");

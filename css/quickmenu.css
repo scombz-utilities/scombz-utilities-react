@@ -1,0 +1,22 @@
+#quickMenu {
+  margin: 40px 70px 0 34px;
+  background-color: #fafbfd;
+  padding: 20px 40px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: start;
+}
+#quickMenu a {
+  color: #556cd6;
+  display: block;
+  font-size: 1.4em;
+  font-weight: bold;
+  text-decoration: none;
+}
+#quickMenu a:hover {
+  opacity: 0.8;
+}
+html {
+  scroll-behavior: smooth;
+}
