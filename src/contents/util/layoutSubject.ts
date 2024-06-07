@@ -112,6 +112,10 @@ export const hideMaterial = async (currentData: Saves) => {
     if (currentData.settings.autoHideMaterial) {
       toggleButton.classList.add("openButton");
       classElements.slice(1).forEach((element) => {
+        element.style.overflow = "hidden";
+        element.style.maxHeight = "0";
+        element.style.padding = "0 6px 0 20px";
+        element.style.borderWidth = "0";
         element.style.display = "none";
       });
     } else {
@@ -120,28 +124,44 @@ export const hideMaterial = async (currentData: Saves) => {
     toggleButton.onclick = () => {
       if (toggleButton.classList.contains("closeButton")) {
         classElements.slice(1).forEach((element) => {
-          element.style.display = "none";
+          element.style.transition = "all 0.3s";
+          element.style.overflow = "hidden";
+          element.style.maxHeight = "0";
+          element.style.padding = "0 6px 0 20px";
+          element.style.borderWidth = "0";
+          setTimeout(() => {
+            // element.style.display = "none";
+          }, 300);
         });
         toggleButton.classList.remove("closeButton");
         toggleButton.classList.add("openButton");
       } else {
         classElements.slice(1).forEach((element) => {
           element.style.display = "";
+          element.style.transition = "all 0.3s";
+          element.style.maxHeight = "";
+          element.style.padding = "";
+          element.style.borderWidth = "";
+          setTimeout(() => {
+            element.style.overflow = "";
+          }, 300);
         });
         toggleButton.classList.remove("openButton");
         toggleButton.classList.add("closeButton");
       }
-      const materialTitleNode = document.getElementById("materialTitle") as HTMLDivElement;
-      const materialContentsNode = document.getElementById("materialContents") as HTMLDivElement;
-      const materialListNode = document.getElementById("materialList") as HTMLDivElement;
-      let newHeight = 0;
-      materialListNode.childNodes.forEach((node: HTMLElement) => {
-        if (!(node instanceof HTMLElement)) return;
-        newHeight += node.offsetHeight;
-      });
-      materialTitleNode.style.height = newHeight + "px";
-      materialContentsNode.style.height = newHeight + "px";
-      layoutMaterialTitles();
+      setTimeout(() => {
+        const materialTitleNode = document.getElementById("materialTitle") as HTMLDivElement;
+        const materialContentsNode = document.getElementById("materialContents") as HTMLDivElement;
+        const materialListNode = document.getElementById("materialList") as HTMLDivElement;
+        let newHeight = 0;
+        materialListNode.childNodes.forEach((node: HTMLElement) => {
+          if (!(node instanceof HTMLElement)) return;
+          newHeight += node.offsetHeight;
+        });
+        materialTitleNode.style.height = newHeight + "px";
+        materialContentsNode.style.height = newHeight + "px";
+        layoutMaterialTitles();
+      }, 350);
     };
     titleElement.appendChild(toggleButton);
   });
