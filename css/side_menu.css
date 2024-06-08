@@ -119,6 +119,9 @@ img.scombz-icon {
 .sidemenu-link.sidemenu-lms-link.sidemenu-link-txt:hover {
   background: #f0f0f0;
 }
+a.sidemenu-link.sidemenu-lms-link.sidemenu-link-txt:active {
+  background-color: #e0e0e0;
+}
 #sidemenu {
   box-shadow: none;
   overflow-y: auto;
