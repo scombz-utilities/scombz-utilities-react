@@ -1,6 +1,7 @@
 import { Save } from "@mui/icons-material";
-import { Button, Stack, TextField, Typography } from "@mui/material";
+import { Button, Stack, TextField, Typography, InputAdornment, IconButton } from "@mui/material";
 import { useId, useState, useRef, useEffect } from "react";
+import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { CustomContainerParent } from "./CustomContainerParent";
 
 type Props = {
@@ -33,9 +34,16 @@ export const CustomTextField = (props: Props) => {
   const [currentValue, setCurrentValue] = useState<string>(value);
   const [unitPosition, setUnitPosition] = useState<number>(0);
   const [isError, setIsError] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const id = useId();
 
   const inputRef = useRef(null);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
 
   useEffect(() => {
     const ref = inputRef.current as HTMLInputElement;
@@ -47,8 +55,6 @@ export const CustomTextField = (props: Props) => {
     const width = context.measureText(currentValue || placeholder).width;
     setUnitPosition(width);
   }, [inputRef, currentValue, unit, placeholder]);
-
-  console.log({ value, currentValue });
 
   return (
     <CustomContainerParent
@@ -65,13 +71,31 @@ export const CustomTextField = (props: Props) => {
               size="small"
               value={currentValue}
               onChange={(e) => setCurrentValue(e.target.value)}
-              sx={{ width: 450, zIndex: 1 }}
-              type={type}
+              sx={{
+                width: 450,
+                zIndex: 1,
+                "& *::-ms-reveal": {
+                  display: "none",
+                },
+              }}
+              type={type === "password" ? (showPassword ? "text" : "password") : type}
               id={id}
               placeholder={placeholder}
               inputRef={inputRef}
               error={isError}
-              inputProps={{ pattern }}
+              inputProps={{
+                pattern,
+              }}
+              InputProps={{
+                endAdornment:
+                  type === "password" ? (
+                    <InputAdornment position="end">
+                      <IconButton onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
+                        {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ) : null,
+              }}
             />
             {unit && (
               <Typography
