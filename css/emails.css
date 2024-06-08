@@ -1,0 +1,42 @@
+.scombz-utilities-email-anchor {
+  cursor: pointer;
+  color: #007bff;
+  text-decoration: underline;
+}
+.scombz-utilities-email-anchor:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+#linkList > div > .ml {
+  margin-bottom: 5px;
+  padding-top: 5px;
+  border-top: 1px solid #e5e5e5;
+}
+#linkList > div > .ml:first-child {
+  border-top: none;
+}
+.scombz-utilites-email-button-group {
+  display: flex;
+  align-items: start;
+  gap: 5px;
+  margin: 0;
+  padding-top: 5px;
+}
+.scombz-utilites-email-button-group > button {
+  display: block;
+  margin: 0;
+  padding: 2px 5px;
+  text-align: center;
+  width: 70px;
+  border: 1px solid #15803d;
+  color: #15803d;
+  border-radius: 5px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.scombz-utilites-email-button-group > button:hover {
+  background-color: #dcfce7;
+  border-color: #14532d;
+  color: #14532d;
+}

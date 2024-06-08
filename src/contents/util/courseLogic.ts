@@ -284,3 +284,58 @@ export const layoutMaterialTitles = async () => {
     }
   });
 };
+
+// emailをコピー
+export const copyEmail = () => {
+  const linkList = document.getElementById("linkList") as HTMLDivElement;
+  if (!linkList) return;
+
+  const link = document.createElement("link");
+  link.href = chrome.runtime.getURL("css/emails.css"); // 新しいCSSファイルのパス
+  link.type = "text/css";
+  link.rel = "stylesheet";
+  document.head.appendChild(link);
+
+  linkList.querySelectorAll(":scope > div > .ml").forEach((ml: HTMLDivElement) => {
+    ml.childNodes.forEach((node) => {
+      if (node instanceof Text && node.nodeValue?.match(/.+@.+\..+/)) {
+        const email = node.nodeValue;
+        node.replaceWith(document.createElement("a"));
+
+        const emailLink = ml.querySelector("a") as HTMLAnchorElement;
+        emailLink.classList.add("scombz-utilities-email-anchor");
+        emailLink.href = "mailto:" + email;
+        emailLink.textContent = email;
+
+        const parent = document.createElement("div");
+        parent.classList.add("scombz-utilites-email-button-group");
+
+        // コピー
+        const copyButton = document.createElement("button");
+        copyButton.textContent = "Copy";
+        copyButton.style.marginLeft = "10px";
+        parent.appendChild(copyButton);
+        copyButton.addEventListener("click", (e) => {
+          e.preventDefault();
+          navigator.clipboard.writeText(email);
+          copyButton.textContent = "Copied!";
+          setTimeout(() => {
+            copyButton.textContent = "Copy";
+          }, 1000);
+        });
+
+        // gmail
+        const gmailButton = document.createElement("button");
+        gmailButton.textContent = "Gmail";
+        parent.appendChild(gmailButton);
+        gmailButton.addEventListener("click", (e) => {
+          e.preventDefault();
+          const name = ml.childNodes[0].nodeValue.replace(/\s/g, " ").split("/")[0] + " 先生";
+          window.open(`https://mail.google.com/mail/?view=cm&to=${email}&body=${encodeURIComponent(name)}`);
+        });
+
+        ml.appendChild(parent);
+      }
+    });
+  });
+};
