@@ -15,6 +15,7 @@
   text-decoration: none;
   border-bottom: 2px solid #cbd5e1;
   padding: 4px 14px;
+  margin: 0 6px;
   transition: all 0.3s;
 }
 #quickMenu a::before {
@@ -27,6 +28,7 @@
   border-radius: 2.5px;
   margin: 0 7px 0 0;
   transform: rotate(-90deg);
+  transition: all 0.3s;
 }
 #quickMenu a:hover {
   color: #0f172a;

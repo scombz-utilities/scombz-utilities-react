@@ -1,6 +1,6 @@
 .scombz-utilities-email-anchor {
   cursor: pointer;
-  color: #007bff;
+  color: #666;
   text-decoration: underline;
 }
 .scombz-utilities-email-anchor:hover {
@@ -28,15 +28,15 @@
   padding: 2px 5px;
   text-align: center;
   width: 70px;
-  border: 1px solid #15803d;
-  color: #15803d;
+  border: 1px solid #556cd6;
+  color: #556cd6;
   border-radius: 5px;
   background-color: #fff;
   cursor: pointer;
   transition: all 0.3s;
 }
 .scombz-utilites-email-button-group > button:hover {
-  background-color: #dcfce7;
-  border-color: #14532d;
-  color: #14532d;
+  background-color: #e0e3f8;
+  border-color: #303d79;
+  color: #303d79;
 }
