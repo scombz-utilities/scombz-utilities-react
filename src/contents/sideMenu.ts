@@ -16,16 +16,34 @@ const styleSidemenu = async () => {
     return;
   }
 
+  const anchors = document.querySelectorAll(
+    "a.sidemenu-link.sidemenu-lms-link.sidemenu-link-txt.sidemenu-icon",
+  ) as NodeListOf<HTMLAnchorElement>;
+
   const link = document.createElement("link");
   link.href = chrome.runtime.getURL("css/side_menu.css"); // 新しいCSSファイルのパス
   link.type = "text/css";
   link.rel = "stylesheet";
   document.head.appendChild(link);
 
+  // ページ内リンクをクリックしたときにメニューを閉じる
+  document.querySelectorAll(".sidemenu-list a.sidemenu-list-colomn").forEach((element) => {
+    element.addEventListener("click", () => {
+      document.getElementById("sidemenuClose").click();
+    });
+  });
+  if (location.href.startsWith("https://scombz.shibaura-it.ac.jp/portal/home")) {
+    anchors.forEach((anchor) => {
+      const onclick = anchor.getAttribute("onclick");
+      if (onclick && onclick.startsWith("portalHomeAnchor")) {
+        anchor.addEventListener("click", () => {
+          document.getElementById("sidemenuClose").click();
+        });
+      }
+    });
+  }
+
   // 英語だといくつか改行されてしまう
-  const anchors = document.querySelectorAll(
-    "a.sidemenu-link.sidemenu-lms-link.sidemenu-link-txt.task-color.sidemenu-icon",
-  ) as NodeListOf<HTMLAnchorElement>;
   for (const anchor of anchors) {
     if (anchor.textContent?.length > 19) {
       anchor.style.paddingTop = "2px";
