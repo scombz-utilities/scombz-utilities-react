@@ -286,7 +286,7 @@ export const layoutMaterialTitles = async () => {
 };
 
 // emailをコピー
-export const copyEmail = () => {
+export const copyEmail = async () => {
   const linkList = document.getElementById("linkList") as HTMLDivElement;
   if (!linkList) return;
 
