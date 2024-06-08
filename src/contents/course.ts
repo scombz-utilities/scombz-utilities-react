@@ -6,6 +6,7 @@ import {
   markdownNotePad,
   createSyllabusButton,
   layoutMaterialTitles,
+  copyEmail,
 } from "./util/courseLogic";
 import { sortSubjectByOrder, forceMaterialOrder, hideMaterial, addQuickMenu } from "./util/layoutSubject";
 import { defaultSaves } from "./util/settings";
@@ -40,6 +41,7 @@ const course = async () => {
     hideMaterial(currentData);
   }
   layoutMaterialTitles();
+  copyEmail();
 
   // 順番を維持するため、並び替え終了後にクイックメニューを追加
   if (currentData.settings.sortSubjectByOrder) {
