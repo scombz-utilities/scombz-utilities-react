@@ -1,21 +1,43 @@
 #quickMenu {
   margin: 40px 70px 0 34px;
   background-color: #fafbfd;
-  padding: 20px 40px;
+  padding: 15px 30px;
   display: flex;
-  gap: 15px;
+  gap: 20px;
   align-items: center;
-  justify-content: start;
+  justify-content: center;
 }
 #quickMenu a {
-  color: #556cd6;
+  color: #475569;
   display: block;
-  font-size: 1.4em;
+  font-size: 1.1em;
   font-weight: bold;
   text-decoration: none;
+  border-bottom: 2px solid #cbd5e1;
+  padding: 4px 14px;
+  transition: all 0.3s;
+}
+#quickMenu a::before {
+  content: "";
+  background: #94a3b8;
+  width: 0.7em;
+  height: 0.8em;
+  display: inline-block;
+  clip-path: polygon(0 0, 0 60%, 50% 100%, 100% 60%, 100% 0);
+  border-radius: 2.5px;
+  margin: 0 7px 0 0;
+  transform: rotate(-90deg);
 }
 #quickMenu a:hover {
-  opacity: 0.8;
+  color: #0f172a;
+  border-color: #afbaca;
+  padding: 4px 20px;
+  margin: 0 0;
+  transition: all 0.3s;
+}
+#quickMenu a:hover::before {
+  background: #64748b;
+  transform: rotate(0deg);
 }
 html {
   scroll-behavior: smooth;

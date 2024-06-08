@@ -36,8 +36,11 @@ export const BasicOptions = (props: Props) => {
           i18nCaption="optionDescriptionStudentID"
           optionId="loginData.username"
           value={saves.settings.loginData.username.split("@")[0]}
+          placeholder="XX00000"
+          pattern="^([a-zA-Z]{2}[0-9]{5})$"
+          validateMessage="学籍番号は2文字のアルファベットと5文字の数字の組み合わせで入力してください。"
           onSaveButtonClick={(value) => {
-            const username = value.includes("@") ? value : value + "@sic";
+            const username = value + "@sic";
             setSettings("loginData", { ...saves.settings.loginData, username });
           }}
         />
@@ -47,6 +50,7 @@ export const BasicOptions = (props: Props) => {
           i18nCaption="optionDescriptionPassword"
           optionId="loginData.password"
           value={saves.settings.loginData.password}
+          placeholder="password"
           onSaveButtonClick={(value) => setSettings("loginData", { ...saves.settings.loginData, password: value })}
         />
         <CustomSwitch

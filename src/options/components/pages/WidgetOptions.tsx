@@ -237,6 +237,8 @@ export const WidgetOptions = (props: Props) => {
           i18nCaption="ウィジェットを表示できる領域のうち、どれくらいの幅(%)を割り当てるか指定します。 100%にすると、画面いっぱいに表示されるためメニューを閉じづらくなることがあります。"
           optionId="widgetWidth"
           value={saves.settings.widgetWidth.toString()}
+          placeholder="100"
+          unit="%"
           onSaveButtonClick={(value) => setSettings("widgetWidth", parseInt(value, 10))}
         />
         <CustomTextField
@@ -245,15 +247,19 @@ export const WidgetOptions = (props: Props) => {
           i18nCaption="ウィジェットの最大幅(px)を指定します。 この値を超える幅にはなりません。"
           optionId="widgetMaxWidth"
           value={saves.settings.widgetMaxWidth.toString()}
+          placeholder="1200"
+          unit="px"
           onSaveButtonClick={(value) => setSettings("widgetMaxWidth", parseInt(value, 10))}
         />
         <CustomTextField
           i18nLabel="ウィジェット拡大率"
           type="number"
-          i18nCaption="ウィジェットの拡大率を指定します。 1.0で通常表示、1.5で1.5倍表示となります。"
+          i18nCaption="ウィジェットの拡大率を指定します。 100%で通常表示、150%で1.5倍表示となります。"
           optionId="widgetZoom"
-          value={saves.settings.widgetZoom.toString()}
-          onSaveButtonClick={(value) => setSettings("widgetZoom", parseFloat(value))}
+          value={(saves.settings.widgetZoom * 100).toString()}
+          placeholder="100"
+          unit="%"
+          onSaveButtonClick={(value) => setSettings("widgetZoom", parseFloat(value) / 100)}
         />
       </OptionGroup>
       <OptionGroup i18nTitle="時間割ウィジェット">
@@ -334,6 +340,7 @@ export const WidgetOptions = (props: Props) => {
           i18nCaption="メニュー横ウィジェットの課題一覧で、提出期限の表示形式が絶対表示の時の表示フォーマットを変更します。 yyyy:年 MM:月 E:曜日 dd:日 HH:時 mm:分"
           optionId="deadlineFormat"
           value={saves.settings.deadlineFormat}
+          placeholder="yyyy/MM/dd HH:mm"
           onSaveButtonClick={(value) => setSettings("deadlineFormat", value)}
         />
         <CustomTextField
@@ -342,6 +349,10 @@ export const WidgetOptions = (props: Props) => {
           i18nCaption="メニュー横ウィジェットの課題一覧で、1ページ内に表示する課題の最大件数を設定します。 課題の数がこれを超えた場合であっても、ページネーションにより全ての課題を確認できます。"
           optionId="taskListRowsPerPage"
           value={saves.settings.taskListRowsPerPage.toString()}
+          placeholder="5"
+          unit="件"
+          pattern="^[0-9]+$"
+          validateMessage="整数で入力してください。"
           onSaveButtonClick={(value) => setSettings("taskListRowsPerPage", parseInt(value, 10))}
         />
         <CustomRemovableList

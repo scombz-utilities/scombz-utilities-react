@@ -18,6 +18,7 @@ import {
   Snackbar,
   Stack,
   ThemeProvider,
+  CircularProgress,
 } from "@mui/material";
 import { indigo, grey } from "@mui/material/colors";
 import React, { useEffect, useState } from "react";
@@ -37,7 +38,7 @@ import "./index.css";
 
 const OptionsIndex = () => {
   const [currentTab, setCurrentTab] = useState(new URLSearchParams(window.location.search).get("tab") || "basic");
-  const [currentLocalStorage, setCurrentLocalStorage] = useState<Saves>(defaultSaves);
+  const [currentLocalStorage, setCurrentLocalStorage] = useState<Saves>(null);
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
 
   const setSettings = async (key: string, value: unknown) => {
@@ -164,22 +165,38 @@ const OptionsIndex = () => {
             padding: "1rem",
           }}
         >
-          {(currentTab === "basic" || currentTab === null) && (
-            <BasicOptions saves={currentLocalStorage} setSettings={setSettings} />
+          {currentLocalStorage === null ? (
+            <Box
+              sx={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <CircularProgress size={60} />
+            </Box>
+          ) : (
+            <>
+              {(currentTab === "basic" || currentTab === null) && (
+                <BasicOptions saves={currentLocalStorage} setSettings={setSettings} />
+              )}
+              {currentTab === "widget" && <WidgetOptions saves={currentLocalStorage} setSettings={setSettings} />}
+              {currentTab === "layout" && <LayoutOptions saves={currentLocalStorage} setSettings={setSettings} />}
+              {currentTab === "advanced" && (
+                <AdvancedOptions saves={currentLocalStorage} setSettings={setSettings} setScombzData={setScombzData} />
+              )}
+              {currentTab === "customcss" && (
+                <CustomCSS
+                  value={currentLocalStorage.settings.customCSS}
+                  onSaveButtonClick={(value) => setSettings("customCSS", value)}
+                />
+              )}
+              {currentTab === "data" && <DataOperation saves={currentLocalStorage} setSaves={setCurrentLocalStorage} />}
+              {currentTab === "info" && <Information />}
+            </>
           )}
-          {currentTab === "widget" && <WidgetOptions saves={currentLocalStorage} setSettings={setSettings} />}
-          {currentTab === "layout" && <LayoutOptions saves={currentLocalStorage} setSettings={setSettings} />}
-          {currentTab === "advanced" && (
-            <AdvancedOptions saves={currentLocalStorage} setSettings={setSettings} setScombzData={setScombzData} />
-          )}
-          {currentTab === "customcss" && (
-            <CustomCSS
-              value={currentLocalStorage.settings.customCSS}
-              onSaveButtonClick={(value) => setSettings("customCSS", value)}
-            />
-          )}
-          {currentTab === "data" && <DataOperation saves={currentLocalStorage} setSaves={setCurrentLocalStorage} />}
-          {currentTab === "info" && <Information />}
         </Box>
       </Stack>
     </ThemeProvider>

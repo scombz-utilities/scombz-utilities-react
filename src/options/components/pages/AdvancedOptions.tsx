@@ -60,6 +60,8 @@ export const AdvancedOptions = (props: Props) => {
           i18nCaption="科目別ページの最大幅を設定します。"
           optionId="layout.maxWidthPx.subj"
           value={saves.settings.layout.maxWidthPx.subj.toString()}
+          placeholder="1280"
+          unit="px"
           onSaveButtonClick={(value) =>
             setSettings("layout", {
               ...saves.settings.layout,
@@ -182,6 +184,8 @@ export const AdvancedOptions = (props: Props) => {
           i18nCaption="レポート提出時に、作成時間を簡易入力するためのスライダーバーの最大値を設定します。"
           optionId="sliderBarMax"
           value={saves.settings.sliderBarMax.toString()}
+          unit="分"
+          placeholder="600"
           onSaveButtonClick={(value) => setSettings("sliderBarMax", parseInt(value, 10))}
         />
         <CustomSelect
@@ -200,6 +204,7 @@ export const AdvancedOptions = (props: Props) => {
           i18nCaption="レポート提出時にファイル名自動入力ボタンを押した際に入力される文字列を変更します。"
           optionId="defaultInputName"
           value={saves.settings.defaultInputName}
+          placeholder="AA00000_山田太郎"
           onSaveButtonClick={(value) => setSettings("defaultInputName", value)}
         />
         <CustomTextField
@@ -208,6 +213,8 @@ export const AdvancedOptions = (props: Props) => {
           i18nCaption="課題提出ページの最大幅を設定します。"
           optionId="layout.maxWidthPx.task"
           value={saves.settings.layout.maxWidthPx.task.toString()}
+          placeholder="1280"
+          unit="px"
           onSaveButtonClick={(value) =>
             setSettings("layout", {
               ...saves.settings.layout,
@@ -245,6 +252,8 @@ export const AdvancedOptions = (props: Props) => {
           i18nCaption="LMSページの最大幅を設定します。"
           optionId="layout.maxWidthPx.lms"
           value={saves.settings.layout.maxWidthPx.lms.toString()}
+          placeholder="1280"
+          unit="px"
           onSaveButtonClick={(value) =>
             setSettings("layout", {
               ...saves.settings.layout,
