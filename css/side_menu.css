@@ -6,7 +6,7 @@
   height: 100%;
   position: fixed;
   z-index: 11;
-  background: #0007;
+  background: #0008;
   opacity: 1;
   visibility: visible;
   transition: opacity 300ms;
@@ -16,7 +16,7 @@
   height: 100%;
   position: fixed;
   z-index: 11;
-  background: #0007;
+  background: #0008;
   opacity: 0;
   visibility: hidden;
 }
