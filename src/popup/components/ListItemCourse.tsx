@@ -20,7 +20,7 @@ export const ListItemCourse = (props: ListItemCourseProps) => {
           tabIndex={-1}
           disabled={courses.length == 0}
         >
-          <Stack sx={{ width: 66, pl: 1.25 }}>
+          <Stack sx={{ width: 70, pl: 1.25 }}>
             <ListItemText
               primary={time + "限"}
               secondary={terms[time - 1]}
@@ -37,7 +37,7 @@ export const ListItemCourse = (props: ListItemCourseProps) => {
                 disableGutters
                 sx={{
                   pl: 1,
-                  width: 262,
+                  width: 268,
                   minHeight: 30,
                   position: "relative",
                   ":where(:hover > *):not(:hover):not(:active), :where(:focus-within > *):not(:focus)": {
@@ -64,7 +64,7 @@ export const ListItemCourse = (props: ListItemCourseProps) => {
                 }}
                 key={index}
               >
-                <Typography noWrap={true} sx={{ fontSize: "small", textAlign: "left" }}>
+                <Typography noWrap={true} sx={{ fontSize: "small", textAlign: "left" }} pr={0.5}>
                   {course.name}
                   {course.classroom ? (
                     <Typography component="span" sx={{ ml: 1, fontSize: "small", color: "GrayText" }}>
