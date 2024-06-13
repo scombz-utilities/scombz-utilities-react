@@ -1,4 +1,5 @@
-import { Box, Button, Typography, ThemeProvider } from "@mui/material";
+import SettingsIcon from "@mui/icons-material/Settings";
+import { Box, ThemeProvider, Grid, Stack, Link, IconButton, Divider } from "@mui/material";
 import { useEffect, useState } from "react";
 import { MultiPageTimeTable } from "./components/MultiPageTimeTable";
 import theme from "~/theme";
@@ -34,10 +35,12 @@ const IndexPopup = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box width={360} textAlign="center" m={2}>
-        <Typography variant="h5">ScombZ Utilities</Typography>
+      <Box width={376} textAlign="center" mt={1}>
+        <Grid>
+          <img src={chrome.runtime.getURL("assets/scombz_utilities.svg")} width={240} alt="ScombZ Utilites" />
+        </Grid>
 
-        <Box my={1}>
+        <Box mt={1} mb={2} mx={2}>
           <Box>
             <MultiPageTimeTable
               courses={saves.scombzData.timetable}
@@ -47,11 +50,54 @@ const IndexPopup = () => {
               overflowTasks="auto"
             />
           </Box>
-
-          <Button variant="contained" onClick={openOptions}>
-            設定を開く
-          </Button>
         </Box>
+
+        <Grid
+          container
+          alignItems="center"
+          sx={{
+            background: theme.palette.grey[300],
+          }}
+          width="100vw"
+          px={1.5}
+          py={0.75}
+          m={-1}
+        >
+          <Grid item xs />
+          <Grid item xs={8}>
+            <Stack
+              direction="row"
+              divider={<Divider orientation="vertical" flexItem />}
+              spacing={2}
+              justifyContent="center"
+            >
+              <Link
+                href="https://scombz.shibaura-it.ac.jp"
+                target="_blank"
+                rel="noopener"
+                color={theme.palette.grey[800]}
+              >
+                ScombZ
+              </Link>
+              <Link
+                href="https://github.com/scombz-utilities/scombz-utilities-react"
+                target="_blank"
+                rel="noopener"
+                color={theme.palette.grey[800]}
+              >
+                GitHub
+              </Link>
+              <Link href="https://scombz-utilities.com" target="_blank" rel="noopener" color={theme.palette.grey[800]}>
+                Support
+              </Link>
+            </Stack>
+          </Grid>
+          <Grid item xs textAlign="right">
+            <IconButton aria-label="options" onClick={openOptions}>
+              <SettingsIcon />
+            </IconButton>
+          </Grid>
+        </Grid>
       </Box>
     </ThemeProvider>
   );
