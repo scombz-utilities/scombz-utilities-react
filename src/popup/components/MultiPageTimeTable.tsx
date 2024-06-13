@@ -117,6 +117,10 @@ export const MultiPageTimeTable = (props: MultiPageTimeTableProps) => {
     return data;
   }, [courses]);
 
+  const intensiveCourses: TimeTableData[] = useMemo(() => {
+    return courses.filter((course) => course.day === -1);
+  }, [courses]);
+
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -215,7 +219,7 @@ export const MultiPageTimeTable = (props: MultiPageTimeTableProps) => {
         </Box>
         {days.map((day, index) => (
           <TabPanel value={value} index={index} key={index}>
-            <ListCourse courses={weeklyTimeTableData[day]} key={index} />
+            <ListCourse courses={weeklyTimeTableData[day]} key={index} intensiveCourses={intensiveCourses} />
           </TabPanel>
         ))}
         {showTasks && (
