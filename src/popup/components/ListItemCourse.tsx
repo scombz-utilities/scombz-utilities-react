@@ -14,7 +14,12 @@ export const ListItemCourse = (props: ListItemCourseProps) => {
   return (
     <>
       <ListItem disablePadding sx={{ alignItems: "stretch" }}>
-        <ListItemButton disableGutters sx={{ alignItems: "stretch", p: 0, minHeight: 48 }} tabIndex={-1}>
+        <ListItemButton
+          disableGutters
+          sx={{ alignItems: "stretch", p: 0, minHeight: 48 }}
+          tabIndex={-1}
+          disabled={courses.length == 0}
+        >
           <Stack sx={{ width: 66, pl: 1.25 }}>
             <ListItemText
               primary={time + "限"}
@@ -32,7 +37,7 @@ export const ListItemCourse = (props: ListItemCourseProps) => {
                 disableGutters
                 sx={{
                   pl: 1,
-                  width: 286,
+                  width: 262,
                   minHeight: 30,
                   position: "relative",
                   ":where(:hover > *):not(:hover):not(:active), :where(:focus-within > *):not(:focus)": {
@@ -42,9 +47,9 @@ export const ListItemCourse = (props: ListItemCourseProps) => {
                   ":after": {
                     content: '""',
                     position: "absolute",
-                    width: 76,
+                    width: 60,
                     height: "100%",
-                    left: -76,
+                    left: -60,
                   },
                   ":hover, :focus": {
                     backgroundColor: "unset",

@@ -66,7 +66,7 @@ export const ListItemTask = (props: ListItemTaskProps) => {
                       noWrap
                       sx={{
                         ml: 1,
-                        width: isScrollBarShown ? 220 : 230,
+                        width: isScrollBarShown ? 204 : 214,
                         fontSize: "small",
                         color: taskColor.color,
                         fontWeight: taskColor.fontWeight,
