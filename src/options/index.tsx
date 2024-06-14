@@ -31,6 +31,7 @@ import { Information } from "~/options/components/pages/Information";
 import { LayoutOptions } from "~/options/components/pages/LayoutOptions";
 import { WidgetOptions } from "~/options/components/pages/WidgetOptions";
 import theme from "~/theme";
+import { PopupOptions } from "~options/components/pages/PopupOptions";
 import { defaultSaves } from "~settings";
 import type { Saves } from "~settings";
 
