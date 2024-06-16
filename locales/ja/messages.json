@@ -464,6 +464,55 @@
     "message": "未選択",
     "description": "未選択"
   },
+  "andNMore": {
+    "message": "... 他$num$件",
+    "description": "... 他n件",
+    "placeholders": {
+      "num": {
+        "content": "$1"
+      }
+    }
+  },
+  "showAll": {
+    "message": "すべて表示",
+    "description": "すべて表示"
+  },
+  "popupTabSunday": {
+    "message": "日",
+    "description": "日"
+  },
+  "popupTabMonday": {
+    "message": "月",
+    "description": "月"
+  },
+  "popupTabTuesday": {
+    "message": "火",
+    "description": "火"
+  },
+  "popupTabWednesday": {
+    "message": "水",
+    "description": "水"
+  },
+  "popupTabThursday": {
+    "message": "木",
+    "description": "木"
+  },
+  "popupTabFriday": {
+    "message": "金",
+    "description": "金"
+  },
+  "popupTabSaturday": {
+    "message": "土",
+    "description": "土"
+  },
+  "popupTabTasks": {
+    "message": "課題",
+    "description": "課題"
+  },
+  "popupTimetableIntensiveCourse": {
+    "message": "その他",
+    "description": "集中講義"
+  },
   "basicOptions_ClickLoginButtonAutomatically": {
     "message": "ログインボタンを自動クリック",
     "description": "ログインボタンを自動クリック"

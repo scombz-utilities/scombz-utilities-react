@@ -16,9 +16,9 @@ export type Settings = {
   };
   popupBadge: boolean;
   popupTasksTab: boolean;
-  popupOverflowMode: "hidden" | "scroll";
+  popupOverflowMode: "hidden" | "auto";
   popupTasksRange: number;
-  popupLaterTasks: "normal" | "gray" | "collapse" | "hidden";
+  popupLaterTasks: "normal" | "gray" | "hidden";
   removeAttendance: "none" | "only" | "all";
   notifySurveySubjects: Subject[];
   autoAdfs: boolean;
@@ -103,7 +103,7 @@ export const defaultSettings: Settings = {
   },
   popupBadge: true,
   popupTasksTab: true,
-  popupOverflowMode: "scroll",
+  popupOverflowMode: "auto",
   popupTasksRange: 365,
   popupLaterTasks: "gray",
   removeAttendance: "none",

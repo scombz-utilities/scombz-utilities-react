@@ -14,8 +14,10 @@ const IndexPopup = () => {
   const [saves, setSaves] = useState<Saves>(defaultSaves);
   const [tasklist, setTasklist] = useState<Task[]>([]);
   const [loaded, setLoaded] = useState<boolean>(false);
+  const [overflowTasksMode, setOverflowTasksMode] = useState<"auto" | "hidden" | null>(null);
+  const [isFetching, setIsFetching] = useState<boolean>(false);
 
-  useEffect(() => {
+  const loadFromSaves = () => {
     chrome.storage.local.get(defaultSaves, (items: Saves) => {
       setSaves(items);
 
@@ -32,8 +34,14 @@ const IndexPopup = () => {
       mergedTask.sort((a, b) => a.deadlineDate.getTime() - b.deadlineDate.getTime());
       setTasklist(mergedTask);
 
+      if (!overflowTasksMode) setOverflowTasksMode(items.settings.popupOverflowMode);
+
       setLoaded(true);
     });
+  };
+
+  useEffect(() => {
+    loadFromSaves();
   }, []);
 
   // 時間割内の要素数の変化によって一瞬表示がちらつくのを防止するため
@@ -53,7 +61,12 @@ const IndexPopup = () => {
               tasks={tasklist}
               days={["monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]}
               showTasks={saves.settings.popupTasksTab}
-              overflowTasks="auto"
+              overflowTasks={overflowTasksMode}
+              setOverflowTasksMode={setOverflowTasksMode}
+              isFetching={isFetching}
+              setIsFetching={setIsFetching}
+              loadFromSaves={loadFromSaves}
+              lastTaskFetchUnixTime={saves.scombzData.lastTaskFetchUnixTime}
             />
           </Box>
         </Box>
@@ -66,7 +79,7 @@ const IndexPopup = () => {
           }}
           width="100vw"
           px={1.5}
-          py={0.75}
+          py={0.5}
           m={-1}
         >
           <Grid item xs />
@@ -99,7 +112,7 @@ const IndexPopup = () => {
             </Stack>
           </Grid>
           <Grid item xs textAlign="right">
-            <IconButton aria-label="options" onClick={openOptions}>
+            <IconButton aria-label="options" onClick={openOptions} size="small">
               <SettingsIcon />
             </IconButton>
           </Grid>

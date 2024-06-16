@@ -1,8 +1,9 @@
-import { Box, Chip, Stack, Tab, Tabs } from "@mui/material";
+import { Box, Chip, CircularProgress, Divider, Grid, Stack, Tab, Tabs } from "@mui/material";
 import { differenceInHours } from "date-fns";
 import React, { useMemo, useState } from "react";
 import { ListCourse } from "./ListCourse";
 import { ListTask } from "./ListTask";
+import { TasksBottom } from "./TasksBottom";
 import type { Task } from "~contents/types/task";
 import type { TimeTableData } from "~contents/types/timetable";
 
@@ -11,7 +12,12 @@ type MultiPageTimeTableProps = {
   tasks?: Task[];
   days: TabDays[];
   showTasks?: boolean;
-  overflowTasks?: "auto" | "hidden" | "scroll";
+  overflowTasks?: "auto" | "hidden";
+  setOverflowTasksMode: (value: "auto" | "hidden") => void;
+  isFetching: boolean;
+  setIsFetching: (value: boolean) => void;
+  lastTaskFetchUnixTime: number;
+  loadFromSaves: () => void;
 };
 
 const tabDays = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"] as const;
@@ -49,31 +55,17 @@ const a11yProps = (index: number) => {
   };
 };
 
-const tabName: {
-  [x: string]: {
-    [K in TabTypes]: string;
-  };
+const i18nTabName: {
+  [K in TabTypes]: string;
 } = {
-  ja: {
-    sunday: "日",
-    monday: "月",
-    tuesday: "火",
-    wednesday: "水",
-    thursday: "木",
-    friday: "金",
-    saturday: "土",
-    tasks: "課題",
-  },
-  en: {
-    sunday: "Sun",
-    monday: "Mon",
-    tuesday: "Tue",
-    wednesday: "Wed",
-    thursday: "Thu",
-    friday: "Fri",
-    saturday: "Sat",
-    tasks: "Tasks",
-  },
+  sunday: "popupTabSunday",
+  monday: "popupTabMonday",
+  tuesday: "popupTabTuesday",
+  wednesday: "popupTabWednesday",
+  thursday: "popupTabThursday",
+  friday: "popupTabFriday",
+  saturday: "popupTabSaturday",
+  tasks: "popupTabTasks",
 };
 
 const getTaskTabColor = (
@@ -97,7 +89,18 @@ const getTaskTabColor = (
 };
 
 export const MultiPageTimeTable = (props: MultiPageTimeTableProps) => {
-  const { courses, days, tasks = [], showTasks = false, overflowTasks = "hidden" } = props;
+  const {
+    courses,
+    days,
+    tasks = [],
+    showTasks = false,
+    overflowTasks = "hidden",
+    setOverflowTasksMode,
+    isFetching,
+    setIsFetching,
+    loadFromSaves,
+    lastTaskFetchUnixTime,
+  } = props;
 
   const [value, setValue] = useState<number>(
     days.includes(tabDays[new Date().getDay()]) ? days.findIndex((item) => item === tabDays[new Date().getDay()]) : 0,
@@ -129,7 +132,7 @@ export const MultiPageTimeTable = (props: MultiPageTimeTableProps) => {
 
   return (
     <>
-      <Box sx={{ width: "100%", py: 1 }}>
+      <Box sx={{ width: "100%" }}>
         <Box sx={{}}>
           <Tabs
             value={value}
@@ -149,7 +152,7 @@ export const MultiPageTimeTable = (props: MultiPageTimeTableProps) => {
           >
             {days.map((day, index) => (
               <Tab
-                label={tabName[chrome.i18n.getUILanguage() === "ja" ? "ja" : "en"][day]}
+                label={chrome.i18n.getMessage(i18nTabName[day])}
                 {...a11yProps(index)}
                 key={index}
                 sx={{
@@ -175,7 +178,7 @@ export const MultiPageTimeTable = (props: MultiPageTimeTableProps) => {
                 label={
                   <>
                     <Stack direction="row" sx={{ width: "max-content" }}>
-                      {tabName[chrome.i18n.getUILanguage() === "ja" ? "ja" : "en"]["tasks"]}
+                      {chrome.i18n.getMessage(i18nTabName["tasks"])}
                       <Chip
                         label={tasks.length}
                         color={taskTabColor.chip}
@@ -219,12 +222,45 @@ export const MultiPageTimeTable = (props: MultiPageTimeTableProps) => {
         </Box>
         {days.map((day, index) => (
           <TabPanel value={value} index={index} key={index}>
-            <ListCourse courses={weeklyTimeTableData[day]} key={index} intensiveCourses={intensiveCourses} />
+            <Box sx={{ pb: 1 }}>
+              <ListCourse courses={weeklyTimeTableData[day]} key={index} intensiveCourses={intensiveCourses} />
+            </Box>
           </TabPanel>
         ))}
         {showTasks && (
           <TabPanel value={value} index={days.length} key={days.length}>
-            <ListTask tasks={tasks} overflowTasks={overflowTasks} key={days.length} />
+            <Stack gap={0.5}>
+              {isFetching ? (
+                <>
+                  <Grid container sx={{ height: 93.2 }} justifyContent="center" alignItems="center">
+                    <Grid item xs>
+                      <CircularProgress />
+                    </Grid>
+                  </Grid>
+                  <Divider />
+                </>
+              ) : tasks.length === 0 ? (
+                <>
+                  <Grid container sx={{ height: 93.2 }} justifyContent="center" alignItems="center">
+                    <Grid item xs>
+                      {chrome.i18n.getMessage("taskListNoTask")}
+                    </Grid>
+                  </Grid>
+                  <Divider />
+                </>
+              ) : (
+                <ListTask tasks={tasks} overflowTasks={overflowTasks} key={days.length} />
+              )}
+              <TasksBottom
+                tasks={tasks}
+                overflowTasks={overflowTasks}
+                setOverflowTasksMode={setOverflowTasksMode}
+                loadFromSaves={loadFromSaves}
+                isFetching={isFetching}
+                setIsFetching={setIsFetching}
+                lastTaskFetchUnixTime={lastTaskFetchUnixTime}
+              />
+            </Stack>
           </TabPanel>
         )}
       </Box>

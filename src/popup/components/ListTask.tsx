@@ -12,6 +12,8 @@ const maxItems = 7;
 export const ListTask = (props: ListCourseProps) => {
   const { tasks, overflowTasks = "auto" } = props;
 
+  console.log(overflowTasks);
+
   const slicedTasks = overflowTasks === "hidden" ? tasks.slice(0, maxItems) : tasks;
 
   return (

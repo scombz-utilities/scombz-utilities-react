@@ -462,5 +462,54 @@
   "notSelected": {
     "message": "Please select",
     "description": "未選択"
+  },
+  "andNMore": {
+    "message": "... and $num$ more",
+    "description": "... 他n件",
+    "placeholders": {
+      "num": {
+        "content": "$1"
+      }
+    }
+  },
+  "showAll": {
+    "message": "Show all",
+    "description": "すべて表示"
+  },
+  "popupTabSunday": {
+    "message": "Sun",
+    "description": "日"
+  },
+  "popupTabMonday": {
+    "message": "Mon",
+    "description": "月"
+  },
+  "popupTabTuesday": {
+    "message": "Tue",
+    "description": "火"
+  },
+  "popupTabWednesday": {
+    "message": "Wed",
+    "description": "水"
+  },
+  "popupTabThursday": {
+    "message": "Thu",
+    "description": "木"
+  },
+  "popupTabFriday": {
+    "message": "Fri",
+    "description": "金"
+  },
+  "popupTabSaturday": {
+    "message": "Sat",
+    "description": "土"
+  },
+  "popupTabTasks": {
+    "message": "Tasks",
+    "description": "課題"
+  },
+  "popupTimetableIntensiveCourse": {
+    "message": "Intensive\ncourses",
+    "description": "集中講義"
   }
 }

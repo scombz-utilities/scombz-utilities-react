@@ -37,7 +37,7 @@ export const PopupOptions = (props: Props) => {
           i18nCaption={`課題タブにおいて、課題の数が多いときにあふれた項目を非表示にするかスクロールして表示するか選択できます。`}
           options={[
             { value: "hidden", label: "非表示にする" },
-            { value: "scroll", label: "スクロールして表示する" },
+            { value: "auto", label: "スクロールして表示する" },
           ]}
           optionId="popupOverflowMode"
           value={saves.settings.popupOverflowMode}
@@ -57,7 +57,6 @@ export const PopupOptions = (props: Props) => {
           options={[
             { value: "normal", label: "通常と同様に表示" },
             { value: "gray", label: "薄い灰色で表示" },
-            { value: "collapse", label: "折りたたんで表示" },
             { value: "hidden", label: "非表示" },
           ]}
           optionId="popupLaterTasks"

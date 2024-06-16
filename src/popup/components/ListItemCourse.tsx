@@ -30,8 +30,12 @@ export const ListItemCourse = (props: ListItemCourseProps) => {
         >
           <Stack sx={{ width: 70, pl: 1.25 }}>
             <ListItemText
-              primary={intensive ? "その他" : time + "限"}
-              secondary={intensive ? "曜日時限不定" : terms[time - 1]}
+              primary={
+                intensive
+                  ? chrome.i18n.getMessage("popupTimetableIntensiveCourse")
+                  : time + chrome.i18n.getMessage("timetablePeriodSubscription")
+              }
+              secondary={intensive ? "" : terms[time - 1]}
               primaryTypographyProps={{ fontSize: "small" }}
               secondaryTypographyProps={{ fontSize: "x-small" }}
               sx={{ flex: "0 0 auto", my: "auto" }}
