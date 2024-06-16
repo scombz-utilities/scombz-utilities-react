@@ -67,7 +67,6 @@ const IndexPopup = () => {
             <MultiPageTimeTable
               courses={saves.scombzData.timetable}
               tasks={tasklist}
-              days={["monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]}
               showTasks={saves.settings.popupTasksTab}
               overflowTasks={overflowTasksMode}
               setOverflowTasksMode={setOverflowTasksMode}

@@ -10,7 +10,6 @@ import type { TimeTableData } from "~contents/types/timetable";
 type MultiPageTimeTableProps = {
   courses?: TimeTableData[];
   tasks?: Task[];
-  days: TabDays[];
   showTasks?: boolean;
   overflowTasks?: "auto" | "hidden";
   setOverflowTasksMode: (value: "auto" | "hidden") => void;
@@ -91,7 +90,6 @@ const getTaskTabColor = (
 export const MultiPageTimeTable = (props: MultiPageTimeTableProps) => {
   const {
     courses,
-    days,
     tasks = [],
     showTasks = false,
     overflowTasks = "hidden",
@@ -101,6 +99,21 @@ export const MultiPageTimeTable = (props: MultiPageTimeTableProps) => {
     loadFromSaves,
     lastTaskFetchUnixTime,
   } = props;
+
+  const hasSaturday = useMemo(() => courses.some((day) => day.day === 6), [courses]);
+  const lastPeriod = useMemo(
+    () =>
+      Math.max(
+        courses.reduce((acc, cur) => (cur.time > acc ? cur.time : acc), 0),
+        4,
+      ),
+    [courses],
+  );
+
+  const days = useMemo(() => {
+    const weekdayBase: TabDays[] = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+    return hasSaturday ? weekdayBase : weekdayBase.slice(0, 5);
+  }, [hasSaturday]);
 
   const [value, setValue] = useState<number>(
     days.includes(tabDays[new Date().getDay()]) ? days.findIndex((item) => item === tabDays[new Date().getDay()]) : 0,
@@ -223,7 +236,12 @@ export const MultiPageTimeTable = (props: MultiPageTimeTableProps) => {
         {days.map((day, index) => (
           <TabPanel value={value} index={index} key={index}>
             <Box sx={{ pb: 1 }}>
-              <ListCourse courses={weeklyTimeTableData[day]} key={index} intensiveCourses={intensiveCourses} />
+              <ListCourse
+                courses={weeklyTimeTableData[day]}
+                key={index}
+                intensiveCourses={intensiveCourses}
+                lastPeriod={lastPeriod}
+              />
             </Box>
           </TabPanel>
         ))}
