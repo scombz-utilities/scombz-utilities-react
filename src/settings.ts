@@ -103,7 +103,7 @@ export const defaultSettings: Settings = {
   },
   popupBadge: true,
   popupTasksTab: true,
-  popupOverflowMode: "auto",
+  popupOverflowMode: "hidden",
   popupHideFutureTasks: false,
   popupHideFutureTasksRange: 365,
   removeAttendance: "none",

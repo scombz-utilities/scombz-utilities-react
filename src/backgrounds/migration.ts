@@ -76,7 +76,7 @@ const oldSavesTemp = {
   popupOverflowMode: "hidden",
   popupTasksLinks: true,
   popupTasksTab: true,
-  popupUncountFutureTaskDays: "365",
+  popupUncountFutureTaskDays: "365", //
   quarterCount: 0,
   remomveDirectLink: true,
   reportHide: false,
@@ -154,6 +154,10 @@ export const migrateLogic = (oldSaves: any): Saves => {
   };
   newSaves.settings.popupBadge =
     oldSaves?.popupBadge ?? newSaves?.settings?.popupBadge ?? defaultSaves.settings.popupBadge;
+  newSaves.settings.popupTasksTab = oldSaves?.popupTasksTab ?? newSaves?.settings?.popupTasksTab ?? defaultSaves.settings.popupTasksTab;
+  newSaves.settings.popupOverflowMode = oldSaves?.popupOverflowMode && oldSaves.popupOverflowMode === "scroll" ? "auto" : newSaves?.settings.popupOverflowMode ?? defaultSaves.settings.popupOverflowMode;
+  newSaves.settings.popupHideFutureTasksRange = oldSaves?.popupUncountFutureTaskDays ?? newSaves?.settings?.popupHideFutureTasksRange ?? defaultSaves.settings.popupHideFutureTasksRange;
+  newSaves.settings.popupHideFutureTasks = oldSaves?.popupUncountFutureTaskDays && oldSaves.popupUncountFutureTaskDays < 365 ? true : newSaves?.settings.popupHideFutureTasks ?? defaultSaves.settings.popupHideFutureTasks;
   newSaves.settings.removeAttendance =
     oldSaves?.attendance ?? newSaves?.settings?.removeAttendance ?? defaultSaves.settings.removeAttendance;
   newSaves.settings.notifySurveySubjects =
