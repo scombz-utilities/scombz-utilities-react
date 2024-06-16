@@ -57,12 +57,26 @@ const IndexPopup = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box width={376} textAlign="center" mt={1}>
+      <Box
+        width={376}
+        maxWidth={376}
+        overflow={process.env.PLASMO_BROWSER === "firefox" && "hidden"}
+        textAlign="center"
+        mt={process.env.PLASMO_BROWSER !== "firefox" && 1}
+      >
         <Grid>
-          <img src={chrome.runtime.getURL("assets/scombz_utilities.svg")} width={240} alt="ScombZ Utilites" />
+          <img
+            src={chrome.runtime.getURL("assets/scombz_utilities.svg")}
+            width={process.env.PLASMO_BROWSER === "firefox" ? 200 : 240}
+            alt="ScombZ Utilites"
+          />
         </Grid>
 
-        <Box mt={1} mb={process.env.PLASMO_BROWSER !== "firefox" ? 2 : 1} mx={2}>
+        <Box
+          mt={process.env.PLASMO_BROWSER === "firefox" ? 0.5 : 1}
+          mb={process.env.PLASMO_BROWSER === "firefox" ? 0.5 : 2}
+          mx={2}
+        >
           <Box>
             <MultiPageTimeTable
               courses={saves.scombzData.timetable}
@@ -84,7 +98,7 @@ const IndexPopup = () => {
           sx={{
             background: theme.palette.grey[300],
           }}
-          width={process.env.PLASMO_BROWSER !== "firefox" ? "100vw" : "100%"}
+          width={process.env.PLASMO_BROWSER === "firefox" ? "100%" : "100vw"}
           px={1.5}
           py={0.5}
           m={process.env.PLASMO_BROWSER !== "firefox" && -1}
