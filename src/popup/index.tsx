@@ -29,6 +29,7 @@ const IndexPopup = () => {
 
       const mergedTask = [...items.scombzData.tasklist, ...surveyList, ...items.scombzData.originalTasklist]
         .filter((task) => !items.settings.hiddenTaskIdList.includes(task.id)) // 非表示タスクを除外
+        .filter((task) => Date.parse(task.deadline) >= now)
         .filter(
           (task) =>
             !items.settings.popupHideFutureTasks ||
