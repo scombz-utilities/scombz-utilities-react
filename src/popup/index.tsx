@@ -62,7 +62,7 @@ const IndexPopup = () => {
           <img src={chrome.runtime.getURL("assets/scombz_utilities.svg")} width={240} alt="ScombZ Utilites" />
         </Grid>
 
-        <Box mt={1} mb={2} mx={2}>
+        <Box mt={1} mb={process.env.PLASMO_BROWSER !== "firefox" ? 2 : 1} mx={2}>
           <Box>
             <MultiPageTimeTable
               courses={saves.scombzData.timetable}
@@ -84,10 +84,10 @@ const IndexPopup = () => {
           sx={{
             background: theme.palette.grey[300],
           }}
-          width="100vw"
+          width={process.env.PLASMO_BROWSER !== "firefox" ? "100vw" : "100%"}
           px={1.5}
           py={0.5}
-          m={-1}
+          m={process.env.PLASMO_BROWSER !== "firefox" && -1}
         >
           <Grid item xs />
           <Grid item xs={8}>
