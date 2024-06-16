@@ -55,9 +55,9 @@ export const ListItemCourse = (props: ListItemCourseProps) => {
                   ":after": {
                     content: '""',
                     position: "absolute",
-                    width: isScrollBarShown ? 76 : 60,
+                    width: 76,
                     height: "100%",
-                    left: isScrollBarShown ? -76 : -60,
+                    left: -76,
                   },
                   ":hover, :focus": {
                     backgroundColor: "unset",
@@ -72,8 +72,19 @@ export const ListItemCourse = (props: ListItemCourseProps) => {
                 }}
                 key={index}
               >
-                <Typography noWrap={true} sx={{ fontSize: "small", textAlign: "left" }} pr={0.5}>
-                  {course.name}
+                <Typography noWrap={true} sx={{ textAlign: "left" }} pr={0.5}>
+                  <Typography
+                    component="span"
+                    noWrap={true}
+                    sx={{
+                      fontSize: "small",
+                      display: "inline-block",
+                      overflow: "clip",
+                      maxWidth: isScrollBarShown ? "13em" : "14em",
+                    }}
+                  >
+                    {course.name}
+                  </Typography>
                   {course.classroom ? (
                     <Typography component="span" sx={{ ml: 1, fontSize: "small", color: "GrayText" }}>
                       <span> - </span>

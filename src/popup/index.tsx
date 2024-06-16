@@ -1,6 +1,6 @@
 import SettingsIcon from "@mui/icons-material/Settings";
 import { Box, ThemeProvider, Grid, Stack, Link, IconButton, Divider } from "@mui/material";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MultiPageTimeTable } from "./components/MultiPageTimeTable";
 import theme from "~/theme";
 import type { Task } from "~contents/types/task";
@@ -13,6 +13,7 @@ const openOptions = () => {
 const IndexPopup = () => {
   const [saves, setSaves] = useState<Saves>(defaultSaves);
   const [tasklist, setTasklist] = useState<Task[]>([]);
+  const [loaded, setLoaded] = useState<boolean>(false);
 
   useEffect(() => {
     chrome.storage.local.get(defaultSaves, (items: Saves) => {
@@ -30,8 +31,13 @@ const IndexPopup = () => {
         });
       mergedTask.sort((a, b) => a.deadlineDate.getTime() - b.deadlineDate.getTime());
       setTasklist(mergedTask);
+
+      setLoaded(true);
     });
   }, []);
+
+  // 時間割内の要素数の変化によって一瞬表示がちらつくのを防止するため
+  if (!loaded) return <></>;
 
   return (
     <ThemeProvider theme={theme}>
@@ -46,7 +52,7 @@ const IndexPopup = () => {
               courses={saves.scombzData.timetable}
               tasks={tasklist}
               days={["monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]}
-              showTasks
+              showTasks={saves.settings.popupTasksTab}
               overflowTasks="auto"
             />
           </Box>

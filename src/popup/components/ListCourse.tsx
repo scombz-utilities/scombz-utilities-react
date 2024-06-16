@@ -18,11 +18,15 @@ export const ListCourse = (props: ListCourseProps) => {
   }, [courses, maxHours]);
 
   const height = useMemo(() => {
+    console.log([...timeTableData.slice(0, maxHours), intensiveCourses.length > 0 ? intensiveCourses : null]);
+
     let h = 0;
-    [...timeTableData.slice(0, maxHours), intensiveCourses].forEach((d) => {
+    [...timeTableData.slice(0, maxHours)].forEach((d) => {
       h += d.length > 1 ? d.length * 30 : 48;
     });
-    if (intensiveCourses.length > 0) h += 2;
+    if (intensiveCourses.length > 0) {
+      h += intensiveCourses.length > 1 ? intensiveCourses.length * 30 : 48 + 2;
+    }
     return h;
   }, [courses, intensiveCourses, maxHours]);
 
