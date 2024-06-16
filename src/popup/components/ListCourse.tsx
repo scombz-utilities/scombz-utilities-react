@@ -18,8 +18,6 @@ export const ListCourse = (props: ListCourseProps) => {
   }, [courses, maxHours]);
 
   const height = useMemo(() => {
-    console.log([...timeTableData.slice(0, maxHours), intensiveCourses.length > 0 ? intensiveCourses : null]);
-
     let h = 0;
     [...timeTableData.slice(0, maxHours)].forEach((d) => {
       h += d.length > 1 ? d.length * 30 : 48;
@@ -29,8 +27,6 @@ export const ListCourse = (props: ListCourseProps) => {
     }
     return h;
   }, [courses, intensiveCourses, maxHours]);
-
-  console.log(height);
 
   return (
     <>
