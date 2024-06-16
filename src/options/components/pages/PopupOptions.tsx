@@ -40,9 +40,9 @@ export const PopupOptions = (props: Props) => {
         />
         <CustomSelect
           i18nLabel="課題が多い場合の表示方法"
-          i18nCaption={`課題タブにおいて、課題の数が多いときにあふれた項目を非表示にするかスクロールして表示するか選択できます。`}
+          i18nCaption={`課題タブにおいて、課題の数が多いときにあふれた項目を省略するかスクロールして表示するか選択できます。「省略する」を選択した場合は「… 他◯件」をクリックすることでスクロール表示に切り替えることができます。`}
           options={[
-            { value: "hidden", label: "非表示にする" },
+            { value: "hidden", label: "省略する" },
             { value: "auto", label: "スクロールして表示する" },
           ]}
           optionId="popupOverflowMode"
