@@ -17,8 +17,8 @@ export type Settings = {
   popupBadge: boolean;
   popupTasksTab: boolean;
   popupOverflowMode: "hidden" | "auto";
-  popupTasksRange: number;
-  popupLaterTasks: "normal" | "gray" | "hidden";
+  popupHideFutureTasks: boolean;
+  popupHideFutureTasksRange: number;
   removeAttendance: "none" | "only" | "all";
   notifySurveySubjects: Subject[];
   autoAdfs: boolean;
@@ -104,8 +104,8 @@ export const defaultSettings: Settings = {
   popupBadge: true,
   popupTasksTab: true,
   popupOverflowMode: "auto",
-  popupTasksRange: 365,
-  popupLaterTasks: "gray",
+  popupHideFutureTasks: false,
+  popupHideFutureTasksRange: 365,
   removeAttendance: "none",
   notifySurveySubjects: [],
   autoAdfs: true,

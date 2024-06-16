@@ -15,7 +15,13 @@ export const PopupOptions = (props: Props) => {
   return (
     <Box>
       <Typography variant="h5">ポップアップ</Typography>
+      <Box p={1}>
+        <Typography variant="body2" sx={{ color: "#666" }}>
+          アドレスバー横にあるScombZ Utilitiesをクリックすると表示されるポップアップメニューについての設定を行います。
+        </Typography>
+      </Box>
       <Box display="flex" flexDirection="column" gap={1} p={1}>
+        <Typography variant="h6">基本設定</Typography>
         <CustomSwitch
           i18nLabel="未提出課題数のバッジ表示"
           i18nCaption="未提出の課題の個数をバッジに表示します。"
@@ -43,25 +49,23 @@ export const PopupOptions = (props: Props) => {
           value={saves.settings.popupOverflowMode}
           onChange={(e, _) => setSettings("popupOverflowMode", e.target.value)}
         />
+      </Box>
+      <Box display="flex" flexDirection="column" gap={1} p={1}>
+        <Typography variant="h6">フィルタ機能</Typography>
+        <CustomSwitch
+          i18nLabel="一定日数より先の課題をポップアップから非表示"
+          i18nCaption={`下の「非表示にする日数」で設定した日数よりも提出期限が先の課題について、ポップアップ内の課題一覧に表示されなくなります。また、バッジに表示される未提出の課題の個数のカウントからも除外されます。この設定で非表示になったとしても課題の存在が無くなった訳ではないので注意してください。`}
+          optionId="popupHideFutureTasks"
+          value={saves.settings.popupHideFutureTasks}
+          onChange={(_e, checked) => setSettings("popupHideFutureTasks", checked)}
+        />
         <CustomTextField
-          i18nLabel="期限が一定日数以内の課題をカウント対象とする"
+          i18nLabel="非表示にする日数"
           type="number"
           i18nCaption={``}
-          optionId="popupTasksRange"
-          value={saves.settings.popupTasksRange.toString()}
-          onSaveButtonClick={(value) => setSettings("popupTasksRange", parseInt(value, 10))}
-        />
-        <CustomSelect
-          i18nLabel="一定日数より先の課題の表示方法"
-          i18nCaption={`課題タブにおいて、「期限が一定日数以内の課題をカウント対象とする」設定でカウントの対象外となった課題の表示方法を選択できます。`}
-          options={[
-            { value: "normal", label: "通常と同様に表示" },
-            { value: "gray", label: "薄い灰色で表示" },
-            { value: "hidden", label: "非表示" },
-          ]}
-          optionId="popupLaterTasks"
-          value={saves.settings.popupLaterTasks}
-          onChange={(e, _) => setSettings("popupLaterTasks", e.target.value)}
+          optionId="popupHideFutureTasksRange"
+          value={saves.settings.popupHideFutureTasksRange.toString()}
+          onSaveButtonClick={(value) => setSettings("popupHideFutureTasksRange", parseInt(value, 10))}
         />
       </Box>
     </Box>

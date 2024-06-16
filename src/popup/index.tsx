@@ -21,12 +21,19 @@ const IndexPopup = () => {
     chrome.storage.local.get(defaultSaves, (items: Saves) => {
       setSaves(items);
 
+      const now = new Date().getTime();
+
       // アンケートは通知対象の科目一覧でフィルタリング
       const notifySubjects = items.settings.notifySurveySubjects.map((sbj) => sbj.name);
       const surveyList = items.scombzData.surveyList.filter((d) => notifySubjects.includes(d.course));
 
       const mergedTask = [...items.scombzData.tasklist, ...surveyList, ...items.scombzData.originalTasklist]
         .filter((task) => !items.settings.hiddenTaskIdList.includes(task.id)) // 非表示タスクを除外
+        .filter(
+          (task) =>
+            !items.settings.popupHideFutureTasks ||
+            (Date.parse(task.deadline) - now) / 86400000 < items.settings.popupHideFutureTasksRange,
+        )
         .map((task) => {
           // deadlineをDate型で保持 (formatやsortなどで扱いやすくなるため)
           return { ...task, deadlineDate: new Date(task.deadline) };
