@@ -15,6 +15,10 @@ export type Settings = {
     password: string;
   };
   popupBadge: boolean;
+  popupTasksTab: boolean;
+  popupOverflowMode: "hidden" | "auto";
+  popupHideFutureTasks: boolean;
+  popupHideFutureTasksRange: number;
   removeAttendance: "none" | "only" | "all";
   notifySurveySubjects: Subject[];
   autoAdfs: boolean;
@@ -98,6 +102,10 @@ export const defaultSettings: Settings = {
     password: "",
   },
   popupBadge: true,
+  popupTasksTab: true,
+  popupOverflowMode: "hidden",
+  popupHideFutureTasks: false,
+  popupHideFutureTasksRange: 365,
   removeAttendance: "none",
   notifySurveySubjects: [],
   autoAdfs: true,

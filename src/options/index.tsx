@@ -22,6 +22,7 @@ import {
 } from "@mui/material";
 import { indigo, grey } from "@mui/material/colors";
 import React, { useEffect, useState } from "react";
+import { TbLayersSubtract } from "react-icons/tb";
 
 import { AdvancedOptions } from "~/options/components/pages/AdvancedOptions";
 import { BasicOptions } from "~/options/components/pages/BasicOptions";
@@ -31,6 +32,7 @@ import { Information } from "~/options/components/pages/Information";
 import { LayoutOptions } from "~/options/components/pages/LayoutOptions";
 import { WidgetOptions } from "~/options/components/pages/WidgetOptions";
 import theme from "~/theme";
+import { PopupOptions } from "~options/components/pages/PopupOptions";
 import { defaultSaves } from "~settings";
 import type { Saves } from "~settings";
 
@@ -76,6 +78,7 @@ const OptionsIndex = () => {
     { value: "basic", label: chrome.i18n.getMessage("basicOptions"), icon: <SettingsSuggestOutlined /> },
     { value: "widget", label: chrome.i18n.getMessage("widgetOptions"), icon: <WidgetsOutlined /> },
     { value: "layout", label: chrome.i18n.getMessage("layoutOptions"), icon: <ViewQuiltOutlined /> },
+    { value: "popup", label: chrome.i18n.getMessage("popupOptions"), icon: <TbLayersSubtract size={24} /> },
     { value: "advanced", label: chrome.i18n.getMessage("advancedOptions"), icon: <SettingsOutlined /> },
     { value: "customcss", label: chrome.i18n.getMessage("customCSS"), icon: <PaletteOutlined /> },
     { value: "data", label: chrome.i18n.getMessage("manageOptions"), icon: <ManageHistoryOutlined /> },
@@ -142,7 +145,12 @@ const OptionsIndex = () => {
               >
                 <ListItemButton>
                   {menu.icon && (
-                    <ListItemIcon sx={{ color: currentTab === menu.value ? "white" : "black", transition: "all 0.3s" }}>
+                    <ListItemIcon
+                      sx={{
+                        color: currentTab === menu.value ? "white" : "black",
+                        transition: "all 0.3s",
+                      }}
+                    >
                       {menu.icon}
                     </ListItemIcon>
                   )}
@@ -184,6 +192,7 @@ const OptionsIndex = () => {
               )}
               {currentTab === "widget" && <WidgetOptions saves={currentLocalStorage} setSettings={setSettings} />}
               {currentTab === "layout" && <LayoutOptions saves={currentLocalStorage} setSettings={setSettings} />}
+              {currentTab === "popup" && <PopupOptions saves={currentLocalStorage} setSettings={setSettings} />}
               {currentTab === "advanced" && (
                 <AdvancedOptions saves={currentLocalStorage} setSettings={setSettings} setScombzData={setScombzData} />
               )}

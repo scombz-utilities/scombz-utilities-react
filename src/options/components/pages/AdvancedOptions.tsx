@@ -335,13 +335,6 @@ export const AdvancedOptions = (props: Props) => {
           onChange={(e, _) => setSettings("headLinkTo", e.target.value)}
         />
         <CustomSwitch
-          i18nLabel="未提出課題数のバッジ表示"
-          i18nCaption="未提出の課題の個数をバッジに表示します。"
-          optionId="popupBadge"
-          value={saves.settings.popupBadge}
-          onChange={(_e, checked) => setSettings("popupBadge", checked)}
-        />
-        <CustomSwitch
           i18nLabel="S*gsot学番自動入力"
           i18nCaption="S*gsotのログイン時、ユーザー名入力欄に学籍番号を自動入力します。"
           optionId="autoFillSgsot"

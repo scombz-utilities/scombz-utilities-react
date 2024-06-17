@@ -66,7 +66,7 @@ export const ListItemTask = (props: ListItemTaskProps) => {
                       noWrap
                       sx={{
                         ml: 1,
-                        width: isScrollBarShown ? 220 : 230,
+                        width: isScrollBarShown ? 204 : 214,
                         fontSize: "small",
                         color: taskColor.color,
                         fontWeight: taskColor.fontWeight,
@@ -78,7 +78,7 @@ export const ListItemTask = (props: ListItemTaskProps) => {
                 </>
               }
               secondary={
-                <Stack direction="row" gap={1}>
+                <Stack component="span" direction="row" gap={1}>
                   <span>{getRelativeTime(new Date(task.deadline), new Date())}</span>
                   <span>{format(new Date(task.deadline), "yyyy/MM/dd HH:mm:ss")}</span>
                 </Stack>

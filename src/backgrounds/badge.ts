@@ -37,7 +37,8 @@ export const updateBadgeText = () => {
 
     const filteredTaskList = mergedTaskList
       .filter((task) => Date.parse(task.deadline) >= now)
-      .filter((task) => !currentData.settings.hiddenTaskIdList.includes(task.id));
+      .filter((task) => !currentData.settings.hiddenTaskIdList.includes(task.id))
+      .filter((task) => !currentData.settings.popupHideFutureTasks || (Date.parse(task.deadline) - now) / 86400000 < currentData.settings.popupHideFutureTasksRange);
 
     filteredTaskList.sort((a, b) => Date.parse(a.deadline) - Date.parse(b.deadline));
 

@@ -29,6 +29,7 @@ import { defaultSaves } from "../util/settings";
 import type { Saves } from "../util/settings";
 import { OriginalTaskModal } from "./originalTaskModal";
 import { MAX_HIDDEN_TASKS } from "~/constants";
+import type { RuntimeMessage } from "~background";
 import { fetchTasks } from "~contents/tasks";
 
 const getTaskColor = (
@@ -352,10 +353,10 @@ export const TaskList = (props: Props) => {
     setTasklist(newTaskList);
     const saveHiddenTaskIdList = async () => {
       const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
-      currentData.settings.hiddenTaskIdList = hiddenTaskIdList.filter((id) =>
-        tasklist.map((task) => task.id).includes(id),
-      );
-      chrome.storage.local.set(currentData);
+      currentData.settings.hiddenTaskIdList = hiddenTaskIdList;
+      chrome.storage.local.set(currentData, () => {
+        chrome.runtime.sendMessage({ action: "updateBadgeText" } as RuntimeMessage);
+      });
     };
     saveHiddenTaskIdList();
   }, [hiddenTaskIdList]);
