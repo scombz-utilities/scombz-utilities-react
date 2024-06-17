@@ -374,9 +374,15 @@ export const TaskList = (props: Props) => {
 
   const reloadTasklist = useCallback(() => {
     const fetching = async () => {
-      await fetchTasks(true);
-      await fetchTasklistFromStorage();
-      setIsLoading(false);
+      try {
+        await fetchTasks(true);
+        await fetchTasklistFromStorage();
+      } catch (e) {
+        console.error(e);
+        alert("An Error Occurred: " + e?.message ?? e);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     if (isLoading) return;

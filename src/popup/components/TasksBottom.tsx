@@ -30,9 +30,15 @@ export const TasksBottom = (props: TasksBottomProps) => {
 
   const handleRefresh = useCallback(() => {
     const fetching = async () => {
-      await fetchTasks(true);
-      loadFromSaves();
-      setIsFetching(false);
+      try {
+        await fetchTasks(true);
+        loadFromSaves();
+      } catch (e) {
+        console.error(e);
+        alert("An error occurred:" + e?.message ?? e);
+      } finally {
+        setIsFetching(false);
+      }
     };
 
     if (isFetching) return;

@@ -1,4 +1,4 @@
-import type { CalEvent } from "./contents/types/calender";
+import type { CalEvent } from "./contents/types/calendar";
 import type { Subject } from "./contents/types/subject";
 import type { Task } from "./contents/types/task";
 import type { TimeTable } from "./contents/types/timetable";

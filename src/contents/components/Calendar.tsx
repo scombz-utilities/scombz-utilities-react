@@ -5,7 +5,7 @@ import ICAL from "ical";
 import JapaneseHolidays from "japanese-holidays";
 import { useState, useEffect, useMemo } from "react";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
-import type { CalEvent } from "../types/calender";
+import type { CalEvent } from "../types/calendar";
 import { defaultSaves, type Saves } from "~settings";
 
 const days =
@@ -72,10 +72,10 @@ const Day = (props: DayProps) => {
   );
 };
 
-type MyCalenderProps = {
+type MyCalendarProps = {
   events: CalEvent[];
 };
-const MyCalender = (props: MyCalenderProps) => {
+const MyCalendar = (props: MyCalendarProps) => {
   const { events } = props;
   const today = useMemo(() => new Date(), []);
   const [startDay, setStartDay] = useState(new Date(today.getFullYear(), today.getMonth(), 1).getDay());
@@ -182,16 +182,16 @@ const MyCalender = (props: MyCalenderProps) => {
   );
 };
 
-export const Calender = () => {
-  const [isCalenderOpen, setIsCalenderOpen] = useState(true);
-  const [calenderEvents, setCalenderEvents] = useState<CalEvent[]>([]);
-  const toggleOpen = () => setIsCalenderOpen(!isCalenderOpen);
+export const Calendar = () => {
+  const [isCalendarOpen, setIsCalendarOpen] = useState(true);
+  const [calendarEvents, setCalendarEvents] = useState<CalEvent[]>([]);
+  const toggleOpen = () => setIsCalendarOpen(!isCalendarOpen);
 
   useEffect(() => {
     const fetching = async () => {
       const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
       if (currentData.scombzData.lastCalendarFetchUnixTime + 3600000 * 24 > new Date().getTime()) {
-        setCalenderEvents(
+        setCalendarEvents(
           currentData.scombzData.scombzCalendar.map((d) => {
             return { ...d, startDate: new Date(d.start), endDate: new Date(d.end) };
           }),
@@ -202,7 +202,7 @@ export const Calender = () => {
         const res = await fetch("https://scombz.shibaura-it.ac.jp/portal/calendar/ics/download");
         const data = await res.text();
         const parsed = ICAL.parseICS(data) as ICAL.Component[];
-        const newCalender: CalEvent[] = [];
+        const newCalendar: CalEvent[] = [];
         const date = new Date();
         date.setFullYear(date.getFullYear() - 1);
         const dateNum = date.getTime();
@@ -216,12 +216,12 @@ export const Calender = () => {
             uid: v?.uid,
           };
           if (!event.start || event.start < dateNum) return;
-          newCalender.push(event);
+          newCalendar.push(event);
         });
-        setCalenderEvents(newCalender.map((d) => ({ ...d, startDate: new Date(d.start), endDate: new Date(d.end) })));
+        setCalendarEvents(newCalendar.map((d) => ({ ...d, startDate: new Date(d.start), endDate: new Date(d.end) })));
         chrome.storage.local.set({
           scombzData: {
-            scombzCalendar: newCalender,
+            scombzCalendar: newCalendar,
             lastCalendarFetchUnixTime: new Date().getTime(),
           },
         });
@@ -250,12 +250,12 @@ export const Calender = () => {
         </Typography>
         <ButtonGroup sx={{ position: "absolute", top: 0, right: 0 }}>
           <IconButton onClick={toggleOpen} size="small">
-            {isCalenderOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
+            {isCalendarOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
           </IconButton>
         </ButtonGroup>
       </Box>
-      <Collapse in={isCalenderOpen} timeout="auto">
-        <MyCalender events={calenderEvents} />
+      <Collapse in={isCalendarOpen} timeout="auto">
+        <MyCalendar events={calendarEvents} />
       </Collapse>
     </Box>
   );

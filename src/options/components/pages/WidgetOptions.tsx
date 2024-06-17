@@ -11,7 +11,7 @@ import { CustomTextField } from "~/options/components/blocks/CustomTextField";
 import type { Widget } from "~contents/types/widget";
 import type { Saves, Settings } from "~settings";
 
-const widgets: Widget[] = ["Calender", "UserMemo", "Links", "Bus"];
+const widgets: Widget[] = ["Calendar", "UserMemo", "Links", "Bus"];
 
 type UsingWidgetProps = {
   name: Widget;

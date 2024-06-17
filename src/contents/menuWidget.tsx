@@ -79,7 +79,7 @@ const MenuWidget = () => {
     };
   }, [isMenuOpen]);
 
-  const useCalender = useMemo(() => widgetOrder.includes("Calender"), [widgetOrder]);
+  const useCalendar = useMemo(() => widgetOrder.includes("Calendar"), [widgetOrder]);
 
   const width = useWindowSize()[0] / zoom;
 
@@ -131,7 +131,7 @@ const MenuWidget = () => {
                 {useSubTimeTable && <WidgetWrapper widget="TimeTable" width={width} />}
                 {useTaskList && <WidgetWrapper widget="TaskList" width={width} />}
                 {/* カレンダーがある時は縦幅を占有するのでカレンダーだけ1列にする */}
-                {columnCount === 2 && useCalender && (
+                {columnCount === 2 && useCalendar && (
                   <Box
                     sx={{
                       display: "grid",
@@ -142,16 +142,16 @@ const MenuWidget = () => {
                   >
                     <Box sx={{ display: "grid", gridTemplateColumns: "repeat(1, 1fr)", gap: "10px" }}>
                       {widgetOrder
-                        .filter((widgetName) => widgetName !== "Calender")
+                        .filter((widgetName) => widgetName !== "Calendar")
                         .map((widgetName) => (
                           <WidgetWrapper key={widgetName} widget={widgetName} width={width} />
                         ))}
                     </Box>
-                    <WidgetWrapper widget="Calender" width={width} />
+                    <WidgetWrapper widget="Calendar" width={width} />
                   </Box>
                 )}
                 {/* カレンダーがない時、1列の時はそのまま並べる */}
-                {columnCount === 2 && !useCalender && (
+                {columnCount === 2 && !useCalendar && (
                   <Box
                     sx={{
                       display: "grid",
