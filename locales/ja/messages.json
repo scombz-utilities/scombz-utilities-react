@@ -272,6 +272,10 @@
     "message": "レイアウト設定",
     "description": "レイアウト設定"
   },
+  "popupOptions": {
+    "message": "ポップアップ設定",
+    "description": "ポップアップ設定"
+  },
   "advancedOptions": {
     "message": "詳細設定",
     "description": "詳細設定"
