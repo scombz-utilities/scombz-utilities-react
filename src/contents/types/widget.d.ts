@@ -1,1 +1,1 @@
-export type Widget = "TimeTable" | "TaskList" | "UserMemo" | "Links" | "Calender" | "Bus";
+export type Widget = "TimeTable" | "TaskList" | "UserMemo" | "Links" | "Calendar" | "Bus";
