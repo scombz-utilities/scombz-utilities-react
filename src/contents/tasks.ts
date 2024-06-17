@@ -27,8 +27,13 @@ export const fetchTasks = async (forceExecute?: boolean) => {
     console.log("fetch tasks");
     currentData.scombzData.lastTaskFetchUnixTime = now.getTime();
     chrome.storage.local.set(currentData);
-    console.log(await getTasksByAjax());
-    console.log(await fetchSurveys());
+    try {
+      console.log(await getTasksByAjax());
+      console.log(await fetchSurveys());
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
   }
   return;
 };
