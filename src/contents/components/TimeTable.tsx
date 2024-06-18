@@ -26,6 +26,7 @@ type ClassBoxProps = {
   nowDay: number | null;
   nowClassTime: number;
   wrapCaption?: boolean;
+  isDarkMode?: boolean;
 };
 const ClassBox = (props: ClassBoxProps) => {
   const {
@@ -38,6 +39,7 @@ const ClassBox = (props: ClassBoxProps) => {
     nowDay,
     nowClassTime,
     wrapCaption = false,
+    isDarkMode = false,
   } = props;
   return (
     <Box
@@ -45,7 +47,7 @@ const ClassBox = (props: ClassBoxProps) => {
         display: "flex",
         flexDirection: direction,
         gap: "3px",
-        border: border ? "1px solid #bbb" : "none",
+        border: border ? `1px solid ${isDarkMode ? "#777" : "#bbb"}` : "none",
         p: "2px",
       }}
     >
@@ -72,7 +74,7 @@ const ClassBox = (props: ClassBoxProps) => {
               boxSizing: "border-box",
               "&:hover": {
                 opacity: 0.7,
-                border: "1px solid #000",
+                border: `1px solid ${isDarkMode ? "#bbd" : "#000"}`,
                 padding: "3px",
               },
             }}
@@ -90,7 +92,15 @@ const ClassBox = (props: ClassBoxProps) => {
                 }}
               />
             )}
-            <Typography variant="caption" sx={{ lineHeight: 1.3, letterSpacing: 0, display: "inline-block" }}>
+            <Typography
+              variant="caption"
+              sx={{
+                lineHeight: 1.3,
+                letterSpacing: 0,
+                display: "inline-block",
+                color: isDarkMode ? "#ccc" : "inherit",
+              }}
+            >
               {classData.name}
             </Typography>
             {displayTeacher && classData.teacher && (
@@ -142,9 +152,10 @@ type TimeTableProps = {
   displayClassroom?: boolean;
   nowDay: number | null;
   nowClassTime: number;
+  isDarkMode?: boolean;
 };
 const WideTimeTable = (props: TimeTableProps) => {
-  const { timetable, displayClassroom, displayTime, nowDay, nowClassTime } = props;
+  const { timetable, displayClassroom, displayTime, nowDay, nowClassTime, isDarkMode } = props;
 
   const hasSaturday = useMemo(() => timetable?.some((day) => day.day === 6), [timetable]);
   const lastPeriod = useMemo(() => timetable?.reduce((acc, cur) => (cur.time > acc ? cur.time : acc), 0), [timetable]);
@@ -164,13 +175,19 @@ const WideTimeTable = (props: TimeTableProps) => {
       width="calc(100% - 4px)"
       // 一番左のヘッダだけ50px、あとは120px
       gridTemplateColumns={`50px repeat(${weekdays.length}, 1fr)`}
-      sx={{ columnGap: "2px", rowGap: "5px", backgroundColor: "#EEF7F799", padding: "2px", borderRadius: 0.5 }}
+      sx={{
+        columnGap: "2px",
+        rowGap: "5px",
+        backgroundColor: isDarkMode ? "#44444499" : "#EEF7F799",
+        padding: "2px",
+        borderRadius: 0.5,
+      }}
     >
-      <Box textAlign="center" sx={{ background: "#eda49c" }}>
+      <Box textAlign="center" sx={{ background: isDarkMode ? "#5a3c3c" : "#eda49c" }}>
         <Typography variant="caption">{chrome.i18n.getMessage("timetablePeriod")}</Typography>
       </Box>
       {weekdays.map((day) => (
-        <Box key={day} textAlign="center" sx={{ background: "#f0d6a0" }}>
+        <Box key={day} textAlign="center" sx={{ background: isDarkMode ? "#4f3d21" : "#f0d6a0" }}>
           <Typography variant="caption">{day}</Typography>
         </Box>
       ))}
@@ -183,7 +200,7 @@ const WideTimeTable = (props: TimeTableProps) => {
             justifyContent="center"
             flexDirection="column"
             gap={0}
-            sx={{ background: "#eda49c" }}
+            sx={{ background: isDarkMode ? "#5a3c3c" : "#eda49c" }}
           >
             <Typography variant="caption">
               {period}
@@ -210,6 +227,7 @@ const WideTimeTable = (props: TimeTableProps) => {
               classDataArray={timetable.filter((classData) => classData.day - 1 === index && classData.time === period)}
               nowDay={nowDay}
               nowClassTime={nowClassTime}
+              isDarkMode={isDarkMode}
             />
           ))}
         </>
@@ -219,7 +237,7 @@ const WideTimeTable = (props: TimeTableProps) => {
 };
 
 const NarrowTimeTable = (props: TimeTableProps) => {
-  const { timetable, nowDay, nowClassTime } = props;
+  const { timetable, nowDay, nowClassTime, isDarkMode } = props;
   const dayOfToday = useMemo(() => new Date().getDay(), []);
   const filteredTimetable = useMemo(() => timetable.filter((classData) => classData.day === dayOfToday), []);
   const timeTableData = useMemo(
@@ -235,7 +253,7 @@ const NarrowTimeTable = (props: TimeTableProps) => {
       display="flex"
       flexDirection="column"
       gap={1.5}
-      sx={{ backgroundColor: "#EEF7F799", borderRadius: 0.5, px: 1.5, py: 1 }}
+      sx={{ backgroundColor: isDarkMode ? "#44444499" : "#EEF7F799", borderRadius: 0.5, px: 1.5, py: 1 }}
     >
       {timeTableData.length === 0 && (
         <Typography variant="caption">{chrome.i18n.getMessage("timetableNoClassToday")}</Typography>
@@ -243,7 +261,11 @@ const NarrowTimeTable = (props: TimeTableProps) => {
       {timeTableData.map((classDataArray, index) => (
         <Box
           key={classDataArray[0].time}
-          sx={{ display: "flex", flexDirection: "column", borderTop: index > 0 ? "1px solid #bbb" : "none" }}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            borderTop: index > 0 ? `1px solid ${isDarkMode ? "#555" : "#bbb"}` : "none",
+          }}
         >
           <Box textAlign="center">
             <Typography variant="caption">
@@ -262,6 +284,7 @@ const NarrowTimeTable = (props: TimeTableProps) => {
             nowDay={nowDay}
             nowClassTime={nowClassTime}
             wrapCaption
+            isDarkMode={isDarkMode}
           />
         </Box>
       ))}
@@ -280,6 +303,8 @@ export const TimeTable = (props: Props) => {
   const [highlightToday, setHighlightToday] = useState<boolean>(true);
   const [today, setToday] = useState<string | false>(false);
   const [isLoadingTimeTable, setIsLoadingTimeTable] = useState<boolean>(false);
+
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
 
   const [timeTableTopDate, setTimeTableTopDate] = useState<typeof defaultSaves.settings.timeTableTopDate>("date");
 
@@ -323,6 +348,7 @@ export const TimeTable = (props: Props) => {
       setDisplayClassroom(currentData.settings.displayClassroom);
       setDisplayTime(currentData.settings.displayTime);
       setHighlightToday(currentData.settings.highlightToday);
+      setIsDarkMode(currentData.settings.darkMode);
     };
     fetchTimetable();
   }, []);
@@ -358,10 +384,11 @@ export const TimeTable = (props: Props) => {
         m="0 auto"
         onClick={(e) => e.stopPropagation()}
         sx={{
-          backgroundColor: "#fff7",
+          backgroundColor: isDarkMode ? "#333848cc" : "#fff7",
           backdropFilter: "blur(6px)",
           padding: 1,
           borderRadius: 1,
+          color: isDarkMode ? "#ccccce" : "inherit",
         }}
       >
         <Box mb={0.8} position="relative">
@@ -402,9 +429,15 @@ export const TimeTable = (props: Props) => {
                   displayTime={displayTime && timetable.length > 0}
                   nowDay={nowDay}
                   nowClassTime={nowClassTime}
+                  isDarkMode={isDarkMode}
                 />
               ) : (
-                <NarrowTimeTable timetable={timetable} nowDay={nowDay} nowClassTime={nowClassTime} />
+                <NarrowTimeTable
+                  timetable={timetable}
+                  nowDay={nowDay}
+                  nowClassTime={nowClassTime}
+                  isDarkMode={isDarkMode}
+                />
               )}
               {/* 曜日不定授業 */}
               {specialClassData.length > 0 && (
@@ -412,7 +445,7 @@ export const TimeTable = (props: Props) => {
                   mt={1}
                   display="flex"
                   flexDirection="column"
-                  sx={{ backgroundColor: "#EEF7F799", borderRadius: 0.5, px: 1.5, py: 1 }}
+                  sx={{ backgroundColor: isDarkMode ? "#44444499" : "#EEF7F799", borderRadius: 0.5, px: 1.5, py: 1 }}
                 >
                   <Typography variant="caption" sx={{ px: 1, textAlign: width > 880 ? "left" : "center" }}>
                     {chrome.i18n.getMessage("timetableIntensiveCourse")}
@@ -422,6 +455,7 @@ export const TimeTable = (props: Props) => {
                     direction={width > 880 ? "row" : "column"}
                     nowDay={nowDay}
                     nowClassTime={nowClassTime}
+                    isDarkMode={isDarkMode}
                   />
                 </Box>
               )}

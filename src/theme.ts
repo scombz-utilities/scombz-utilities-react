@@ -16,4 +16,19 @@ const theme = createTheme({
   },
 });
 
+export const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+    primary: {
+      main: "#4051a1",
+    },
+    secondary: {
+      main: "#0d433e",
+    },
+    error: {
+      main: "#9e2c23",
+    },
+  },
+});
+
 export default theme;

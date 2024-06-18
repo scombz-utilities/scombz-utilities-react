@@ -92,12 +92,14 @@ const NewUserMemoRow = (props: NewUserMemoRowProps) => {
 export const UserMemo = () => {
   const [isUserMemoOpen, setIsUserMemoOpen] = useState<boolean>(true);
   const [userMemo, setUserMemo] = useState<string[]>([]);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
 
   useEffect(() => {
     const fetching = async () => {
       const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
       setUserMemo(currentData.scombzData.sideMenuMemo);
       currentData.scombzData.sideMenuMemo = userMemo;
+      setIsDarkMode(currentData.settings.darkMode);
     };
     fetching();
   }, []);
@@ -127,7 +129,8 @@ export const UserMemo = () => {
       m="0 auto"
       onClick={(e) => e.stopPropagation()}
       sx={{
-        backgroundColor: "#fff9",
+        backgroundColor: isDarkMode ? "#333848cc" : "#fff7",
+        color: isDarkMode ? "#ccccce" : "inherit",
         backdropFilter: "blur(6px)",
         padding: 1,
         borderRadius: 1,

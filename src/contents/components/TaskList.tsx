@@ -114,6 +114,7 @@ type TaskTableProps = {
   addHiddenTaskId: (id: string) => void;
   isLoading: boolean;
   reloadTasklist: () => void;
+  isDarkMode: boolean;
 };
 const TaskTable = (props: TaskTableProps) => {
   const {
@@ -129,6 +130,7 @@ const TaskTable = (props: TaskTableProps) => {
     addHiddenTaskId,
     isLoading,
     reloadTasklist,
+    isDarkMode,
   } = props;
   const [page, setPage] = useState(0);
 
@@ -156,7 +158,7 @@ const TaskTable = (props: TaskTableProps) => {
   if (isLoading)
     return (
       <Paper sx={{ px: 2, py: 0.5, mt: "5px" }}>
-        <Typography variant="body2" color="grey">
+        <Typography variant="body2" color={isDarkMode ? "#ccc" : "#666"}>
           Loading...
         </Typography>
       </Paper>
@@ -188,14 +190,34 @@ const TaskTable = (props: TaskTableProps) => {
           <Table size="small">
             <TableHead>
               <TableRow>
-                {width > 880 && <TaskTableCell>{chrome.i18n.getMessage("taskListSubject")}</TaskTableCell>}
-                <TaskTableCell>{chrome.i18n.getMessage("taskListTaskName")}</TaskTableCell>
+                {width > 880 && (
+                  <TaskTableCell
+                    sx={{
+                      color: isDarkMode ? "#ccc" : "inherit",
+                    }}
+                  >
+                    {chrome.i18n.getMessage("taskListSubject")}
+                  </TaskTableCell>
+                )}
+                <TaskTableCell
+                  sx={{
+                    color: isDarkMode ? "#ccc" : "inherit",
+                  }}
+                >
+                  {chrome.i18n.getMessage("taskListTaskName")}
+                </TaskTableCell>
                 <TaskTableCell>
                   <Box
                     onClick={toggleRelativeTime}
                     sx={{ cursor: "pointer", userSelect: "none", display: "flex", alignItems: "center", gap: "2px" }}
                   >
-                    <Typography display="block" fontSize="0.75rem">
+                    <Typography
+                      display="block"
+                      fontSize="0.75rem"
+                      sx={{
+                        color: isDarkMode ? "#ccc" : "inherit",
+                      }}
+                    >
                       {chrome.i18n.getMessage("taskListDeadline")}
                     </Typography>
                     <Box display="flex" fontSize="0.75rem" alignItems="center" sx={{ opacity: 0.5 }}>
@@ -285,6 +307,8 @@ export const TaskList = (props: Props) => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [hiddenTaskIdList, setHiddenTaskIdList] = useState<string[]>([]);
 
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [isOpenAddModal, setIsOpenAddModal] = useState<boolean>(false);
@@ -311,6 +335,8 @@ export const TaskList = (props: Props) => {
     setHighlightTask(currentData.settings.highlightTask);
     setLastUpdate(new Date(currentData.scombzData.lastTaskFetchUnixTime ?? 0));
     setRowsPerPage(currentData.settings.taskListRowsPerPage);
+
+    setIsDarkMode(currentData.settings.darkMode);
 
     const normalTaskList = currentData.scombzData.tasklist;
 
@@ -411,7 +437,8 @@ export const TaskList = (props: Props) => {
         m="0 auto"
         onClick={(e) => e.stopPropagation()}
         sx={{
-          backgroundColor: "#fff9",
+          backgroundColor: isDarkMode ? "#333848cc" : "#fff7",
+          color: isDarkMode ? "#ccccce" : "inherit",
           backdropFilter: "blur(6px)",
           padding: 1,
           borderRadius: 1,
@@ -463,6 +490,7 @@ export const TaskList = (props: Props) => {
               addHiddenTaskId,
               isLoading,
               reloadTasklist,
+              isDarkMode,
             }}
           />
         </Collapse>

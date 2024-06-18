@@ -99,6 +99,13 @@ export const LayoutOptions = (props: Props) => {
         value={saves.settings.layout.topPageLayout}
         onChange={(_e, checked) => setSettings("layout", { ...saves.settings.layout, topPageLayout: checked })}
       />
+      <CustomSwitch
+        i18nLabel="ダークモード"
+        i18nCaption="ScombZにおいて自作のダークモードを有効にします。拡張機能により変更を行うため、一部の表示がうまく動作しない可能性があります。"
+        optionId="darkMode"
+        value={saves.settings.darkMode}
+        onChange={(_e, checked) => setSettings("darkMode", checked)}
+      />
     </>
   );
 };
