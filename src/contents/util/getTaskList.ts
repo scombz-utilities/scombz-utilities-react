@@ -20,8 +20,20 @@ const getTasks = (doc: Document): Task[] => {
     if (task.link.includes("idnumber=")) {
       task.id = task.link.slice(task.link.indexOf("idnumber=") + 9).replace(/&|Id=/g, "");
     }
-    if (!task.link.startsWith("https://scombz.shibaura-it.ac.jp")) {
-      task.link = "https://scombz.shibaura-it.ac.jp" + task.link;
+    const taskLinkObj = new URL(task.link);
+    if (taskLinkObj.origin !== "https://scombz.shibaura-it.ac.jp") {
+      switch (taskLinkObj.pathname) {
+        case "/lms/course/report/submission":
+        case "/lms/course/surveys/take":
+        case "/portal/surveys/take":
+        case "/lms/course/examination/take":
+          taskLinkObj.protocol = "https:";
+          taskLinkObj.hostname = "scombz.shibaura-it.ac.jp";
+          task.link = taskLinkObj.toString();
+          break;
+        default:
+          task.link = "";
+      }
     }
     taskList.push(task);
   }
