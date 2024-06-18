@@ -16,6 +16,11 @@ if (location.href === "https://scombz.shibaura-it.ac.jp/lms/task") {
 
 // タスクを取得
 export const fetchTasks = async (forceExecute?: boolean) => {
+  // Firefoxかつpopupからの場合CORSの関係上動作しないので除外
+  if (process.env.PLASMO_BROWSER === "firefox" && !location.href.startsWith("https://scombz.shibaura-it.ac.jp/")) {
+    return;
+  }
+
   // TOPページを除外する
   if (location.href.startsWith("https://scombz.shibaura-it.ac.jp/login")) {
     return;

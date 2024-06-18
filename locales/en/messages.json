@@ -517,6 +517,10 @@
     "message": "Intensive\ncourses",
     "description": "集中講義"
   },
+  "popupOpenTasksPage": {
+    "message": "Open assignments list",
+    "description": "課題一覧を開く"
+  },
   "basicOptions_ClickLoginButtonAutomatically": {
     "message": "Automatically click the login button",
     "description": "ログインボタンを自動クリック"
