@@ -6,7 +6,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import { MdOutlineNoteAdd } from "react-icons/md";
 import { OriginalTaskModal } from "./components/originalTaskModal";
 import { getCourseTitle, jsxToHtml } from "./util/functions";
-import theme from "~/theme";
+import theme, { darkTheme } from "~/theme";
 import { defaultSaves, type Saves } from "~settings";
 
 export const config: PlasmoCSConfig = {
@@ -46,17 +46,21 @@ export const getStyle = () => styleElement;
 
 const AddTask = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
 
   const course = useMemo(() => getCourseTitle(), []);
   const courseURL = useMemo(() => window.location.href, []);
 
   useEffect(() => {
     insertAddTaskButton(() => setIsModalOpen(true));
+    chrome.storage.local.get(defaultSaves, (currentData: Saves) => {
+      setIsDarkMode(currentData.settings.darkMode);
+    });
   }, []);
 
   return (
     <CacheProvider value={styleCache}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={isDarkMode ? darkTheme : theme}>
         <Box>
           <OriginalTaskModal
             isOpen={isModalOpen}

@@ -68,6 +68,7 @@ export const Links = () => {
   const [isLinksOpen, setIsLinksOpen] = useState<boolean>(true);
   const [isAddLinkModalOpen, setIsAddLinkModalOpen] = useState<boolean>(false);
   const [links, setLinks] = useState<{ title: string; url: string }[]>([]);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   const toggleOpen = () => {
     setIsLinksOpen(!isLinksOpen);
   };
@@ -75,6 +76,7 @@ export const Links = () => {
     const fetching = async () => {
       const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
       setLinks(currentData.settings.originalLinks);
+      setIsDarkMode(currentData.settings.darkMode);
     };
     fetching();
   }, []);
@@ -85,7 +87,8 @@ export const Links = () => {
         m="0 auto"
         onClick={(e) => e.stopPropagation()}
         sx={{
-          backgroundColor: "#fff9",
+          backgroundColor: isDarkMode ? "#333848cc" : "#fff7",
+          color: isDarkMode ? "#ccccce" : "inherit",
           backdropFilter: "blur(6px)",
           padding: 1,
           borderRadius: 1,

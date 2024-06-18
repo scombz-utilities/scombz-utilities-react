@@ -93,6 +93,7 @@ export type Settings = {
   widgetWidth: number;
   widgetMaxWidth: number;
   widgetZoom: number;
+  darkMode: boolean;
 };
 
 export const defaultSettings: Settings = {
@@ -190,6 +191,7 @@ export const defaultSettings: Settings = {
   widgetWidth: 100,
   widgetMaxWidth: 1200,
   widgetZoom: 1,
+  darkMode: false,
 };
 
 /* ScombzData */

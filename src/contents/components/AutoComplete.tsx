@@ -46,7 +46,7 @@ export const AutoComplete = (props: Props) => {
             <List sx={{ maxHeight: 240, overflow: "auto" }}>
               {suggestOptions.map((option) => (
                 <ListItem
-                  sx={{ cursor: "pointer", userSelect: "none", "&:hover": { backgroundColor: "#eee" } }}
+                  sx={{ cursor: "pointer", userSelect: "none", "&:hover": { backgroundColor: "#9996" } }}
                   onClick={(e) => {
                     e.preventDefault();
                     onInput(option);

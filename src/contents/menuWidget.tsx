@@ -8,7 +8,7 @@ import type { Widget } from "./types/widget";
 import { useWindowSize } from "./util/functions";
 import { defaultSaves } from "./util/settings";
 import type { Saves } from "./util/settings";
-import theme from "~/theme";
+import theme, { darkTheme } from "~/theme";
 
 export const config: PlasmoCSConfig = {
   matches: ["https://scombz.shibaura-it.ac.jp/*"],
@@ -40,6 +40,8 @@ const MenuWidget = () => {
   const [widgetMaxWidth, setWidgetMaxWidth] = useState<number>(1200);
   const [zoom, setWidgetZoom] = useState<number>(1);
 
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+
   useEffect(() => {
     const sideMenu = document.getElementById("sidemenu") as HTMLElement;
     setIsMenuOpen(!sideMenu?.classList?.contains("sidemenu-close"));
@@ -63,6 +65,7 @@ const MenuWidget = () => {
       setWidgetWidth(items.settings.widgetWidth);
       setWidgetMaxWidth(items.settings.widgetMaxWidth);
       setWidgetZoom(items.settings.widgetZoom);
+      setIsDarkMode(items.settings.darkMode);
     });
   }, []);
 
@@ -85,7 +88,7 @@ const MenuWidget = () => {
 
   return document.getElementById("sidemenu") && document.getElementById("sidemenuClose") && styleSideMenu ? (
     <CacheProvider value={styleCache}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={isDarkMode ? darkTheme : theme}>
         <Box
           onClick={() => {
             document.getElementById("sidemenuClose")?.click();

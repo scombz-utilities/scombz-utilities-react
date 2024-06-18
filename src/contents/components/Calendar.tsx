@@ -22,18 +22,20 @@ type DayProps = {
   onClick?: (date: number) => void;
   isSelected?: boolean;
   holiday?: undefined | string;
+  isDarkMode: boolean;
 };
 const Day = (props: DayProps) => {
-  const { isToday, isSunday, isSaturday, events, date, onClick, isSelected, holiday } = props;
+  const { isToday, isSunday, isSaturday, events, date, onClick, isSelected, holiday, isDarkMode } = props;
+  const bgColors = isDarkMode ? ["#b68456", "#889", "#555"] : ["#f2c973", "#dfdfdf", "#fff"];
   return (
     <Box
-      bgcolor={isToday ? "#f2c973" : isSelected ? "#dfdfdf" : "#fff"}
+      bgcolor={isToday ? bgColors[0] : isSelected ? bgColors[1] : bgColors[2]}
       p={0.2}
       sx={{
         cursor: date ? "pointer" : "default",
         opacity: date ? 1 : 0,
         position: "relative",
-        "&:hover": { bgcolor: isToday || isSelected ? undefined : "#f2f2f2" },
+        "&:hover": { bgcolor: isToday || isSelected ? undefined : isDarkMode ? "#667" : "#f2f2f2" },
       }}
       onClick={() => onClick?.(date)}
     >
@@ -74,9 +76,10 @@ const Day = (props: DayProps) => {
 
 type MyCalendarProps = {
   events: CalEvent[];
+  isDarkMode: boolean;
 };
 const MyCalendar = (props: MyCalendarProps) => {
-  const { events } = props;
+  const { events, isDarkMode } = props;
   const today = useMemo(() => new Date(), []);
   const [startDay, setStartDay] = useState(new Date(today.getFullYear(), today.getMonth(), 1).getDay());
   const [month, setMonth] = useState(today.getMonth());
@@ -131,18 +134,18 @@ const MyCalendar = (props: MyCalendarProps) => {
         borderRadius={1}
         maxWidth="100%"
         sx={{
-          backgroundColor: "#fff6",
+          backgroundColor: isDarkMode ? "#667c" : "#fff6",
           justifyContent: "center",
         }}
       >
         {/* Head */}
         {Array.from({ length: 7 }, (_, i) => (
-          <Box key={i} p={0.5} bgcolor="#eee">
+          <Box key={i} p={0.5} bgcolor={isDarkMode ? "#667c" : "#eee"}>
             <Typography>{days[i]}</Typography>
           </Box>
         ))}
         {Array.from({ length: startDay }, (_, i) => (
-          <Day key={i} />
+          <Day key={i} isDarkMode={isDarkMode} />
         ))}
         {/* Body */}
         {Array.from({ length: lastDayOfMonth(new Date(year, month)).getDate() }, (_, i) => {
@@ -161,6 +164,7 @@ const MyCalendar = (props: MyCalendarProps) => {
               isSelected={
                 targetDay.getDate() === i + 1 && targetDay.getMonth() === month && targetDay.getFullYear() === year
               }
+              isDarkMode={isDarkMode}
             />
           );
         })}
@@ -171,7 +175,7 @@ const MyCalendar = (props: MyCalendarProps) => {
           {events
             .filter((d) => format(d.startDate, "yyyy-MM-dd") === format(targetDay, "yyyy-MM-dd"))
             .map((d) => (
-              <Box key={d.uid} bgcolor="#eee" p={0.5} display="flex" flexDirection="column">
+              <Box key={d.uid} bgcolor={isDarkMode ? "#667c" : "#eee"} p={0.5} display="flex" flexDirection="column">
                 <Typography variant="body2">{d.summary}</Typography>
                 <Typography variant="body2">{d.description.split("教員名:")[0]}</Typography>
               </Box>
@@ -185,11 +189,13 @@ const MyCalendar = (props: MyCalendarProps) => {
 export const Calendar = () => {
   const [isCalendarOpen, setIsCalendarOpen] = useState(true);
   const [calendarEvents, setCalendarEvents] = useState<CalEvent[]>([]);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const toggleOpen = () => setIsCalendarOpen(!isCalendarOpen);
 
   useEffect(() => {
     const fetching = async () => {
       const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
+      setIsDarkMode(currentData.settings.darkMode);
       if (currentData.scombzData.lastCalendarFetchUnixTime + 3600000 * 24 > new Date().getTime()) {
         setCalendarEvents(
           currentData.scombzData.scombzCalendar.map((d) => {
@@ -238,7 +244,8 @@ export const Calendar = () => {
       m="0 auto"
       onClick={(e) => e.stopPropagation()}
       sx={{
-        backgroundColor: "#fff9",
+        backgroundColor: isDarkMode ? "#333848cc" : "#fff7",
+        color: isDarkMode ? "#ccccce" : "inherit",
         backdropFilter: "blur(6px)",
         padding: 1,
         borderRadius: 1,
@@ -255,7 +262,7 @@ export const Calendar = () => {
         </ButtonGroup>
       </Box>
       <Collapse in={isCalendarOpen} timeout="auto">
-        <MyCalendar events={calendarEvents} />
+        <MyCalendar events={calendarEvents} isDarkMode={isDarkMode} />
       </Collapse>
     </Box>
   );
