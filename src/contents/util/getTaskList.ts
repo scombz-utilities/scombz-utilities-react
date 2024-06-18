@@ -17,6 +17,9 @@ const getTasks = (doc: Document): Task[] => {
       deadline: taskNode.querySelector(".tasklist-deadline .deadline").innerHTML,
       id: null,
     };
+    if (task.link.includes("idnumber=")) {
+      task.id = task.link.slice(task.link.indexOf("idnumber=") + 9).replace(/&|Id=/g, "");
+    }
     const taskLinkObj = new URL(task.link);
     if (taskLinkObj.origin !== "https://scombz.shibaura-it.ac.jp") {
       switch (taskLinkObj.pathname) {
