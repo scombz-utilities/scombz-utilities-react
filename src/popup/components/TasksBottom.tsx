@@ -41,6 +41,15 @@ export const TasksBottom = (props: TasksBottomProps) => {
       }
     };
 
+    // FirefoxだとCORSの関係上popupからのfetchが使えないので代わりに課題一覧を開く
+    if (process.env.PLASMO_BROWSER === "firefox") {
+      const newWindow = window.open("https://scombz.shibaura-it.ac.jp/lms/task", "_blank");
+      if (newWindow) {
+        window.close();
+      }
+      return;
+    }
+
     if (isFetching) return;
     setIsFetching(true);
 
@@ -58,7 +67,13 @@ export const TasksBottom = (props: TasksBottomProps) => {
           </Tooltip>
         )}
       </Box>
-      <Tooltip title={chrome.i18n.getMessage("reloadTaskList")}>
+      <Tooltip
+        title={
+          process.env.PLASMO_BROWSER === "firefox"
+            ? chrome.i18n.getMessage("popupOpenTasksPage")
+            : chrome.i18n.getMessage("reloadTaskList")
+        }
+      >
         <Button variant="text" size="small" color="inherit" disabled={isFetching} onClick={handleRefresh}>
           {chrome.i18n.getMessage("taskListLastUpdate")}: {format(new Date(lastTaskFetchUnixTime), "yyyy/MM/dd HH:mm")}
         </Button>

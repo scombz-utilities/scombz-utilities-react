@@ -517,6 +517,10 @@
     "message": "その他",
     "description": "集中講義"
   },
+  "popupOpenTasksPage": {
+    "message": "課題一覧を開く",
+    "description": "課題一覧を開く"
+  },
   "basicOptions_ClickLoginButtonAutomatically": {
     "message": "ログインボタンを自動クリック",
     "description": "ログインボタンを自動クリック"
