@@ -1,5 +1,6 @@
 import type { PlasmoCSConfig } from "plasmo";
 import type { RuntimeMessage } from "../background";
+import darkModeCSS from "./util/darkModeCSS";
 import { defaultSaves } from "./util/settings";
 import type { Settings } from "./util/settings";
 
@@ -135,6 +136,9 @@ const layout = async () => {
   if (settings.layout.clickToHideName) clickToHideName();
   if (settings.customCSS.length > 0) {
     document.head.insertAdjacentHTML("beforeend", `<style>${settings.customCSS}</style>`);
+  }
+  if (settings.darkMode) {
+    document.body.insertAdjacentHTML("afterbegin", `<style>${darkModeCSS}</style>`);
   }
   fixHeadShadow();
   addExtensionSettingsBtn();

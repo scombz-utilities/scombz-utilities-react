@@ -25,6 +25,8 @@ export const Bus = () => {
   const [busList, setBusList] = useState<List[]>([]);
   const [displayList, setDisplayList] = useState<List[]>([]);
 
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
   const [busDirection, setBusDirection] = useState<"bus_right" | "bus_left">("bus_right");
 
   const toggleOpen = () => {
@@ -38,6 +40,7 @@ export const Bus = () => {
   useEffect(() => {
     const fetchBusData = async () => {
       const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
+      setIsDarkMode(currentData.settings.darkMode);
       if (currentData.scombzData.lastBusFetchUnixTime + 3600000 * 4 > new Date().getTime()) {
         setBusList(currentData.scombzData.busList);
         return;
@@ -90,7 +93,8 @@ export const Bus = () => {
       m="0 auto"
       onClick={(e) => e.stopPropagation()}
       sx={{
-        backgroundColor: "#fff9",
+        backgroundColor: isDarkMode ? "#333848cc" : "#fff7",
+        color: isDarkMode ? "#ccccce" : "inherit",
         backdropFilter: "blur(6px)",
         padding: 1,
         borderRadius: 1,
@@ -157,7 +161,7 @@ export const Bus = () => {
                               </Typography>
                             ))}
                           </Box>
-                          <Typography fontSize="14px" variant="body1" color={red[800]}>
+                          <Typography fontSize="14px" variant="body1" color={isDarkMode ? red[500] : red[800]}>
                             {memo}
                           </Typography>
                         </TableCell>
