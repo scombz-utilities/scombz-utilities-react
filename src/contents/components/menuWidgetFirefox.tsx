@@ -1,12 +1,14 @@
-import { format as formatDate } from "date-fns";
+import { grey, red } from "@mui/material/colors";
+import { format as formatDate, differenceInMinutes, differenceInHours } from "date-fns";
 import { ja } from "date-fns/locale";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import type { Subject } from "../types/subject";
 import type { Task } from "../types/task";
 import type { TimeTable as TimeTableType } from "../types/timetable";
 import { defaultSaves, type Saves } from "../util/settings";
 import * as style from "./firefoxWidgetStyle.module.css";
 import { CLASS_TIMES } from "~/constants";
+import { fetchTasks } from "~contents/tasks";
 
 type WidgetContainerProps = {
   children: React.ReactNode;
@@ -129,42 +131,162 @@ const TimeTable = (props: TimeTableProps) => {
   );
 };
 
+const getRelativeTime = (date: Date, now: Date): string => {
+  const diff = differenceInMinutes(date, now);
+  if (diff < 180)
+    return `${chrome.i18n.getMessage("taskListAbout")}${diff}${chrome.i18n.getMessage("taskListMinsLeft")}`;
+  if (diff < 1440)
+    return `${chrome.i18n.getMessage("taskListAbout")}${Math.floor(diff / 60)}${chrome.i18n.getMessage("taskListHoursLeft")}`;
+  return `${chrome.i18n.getMessage("taskListAbout")}${Math.floor(diff / 1440)}${chrome.i18n.getMessage("taskListDaysLeft")}`;
+};
+
+const getTaskColor = (
+  task: Task,
+): {
+  backgroundColor: string;
+  color: string;
+  fontWeight: number;
+} => {
+  const deadlineInHours = differenceInHours(new Date(task.deadline), new Date());
+  if (deadlineInHours < 6) return { backgroundColor: red[200], color: red[900], fontWeight: 600 };
+  if (deadlineInHours < 12) return { backgroundColor: red[200], color: red[900], fontWeight: 600 };
+  if (deadlineInHours < 24) return { backgroundColor: red[100], color: red[900], fontWeight: 600 };
+  if (deadlineInHours < 72) return { backgroundColor: "inherit", color: red[900], fontWeight: 400 };
+  if (deadlineInHours < 24 * 7) return { backgroundColor: "inherit", color: "inherit", fontWeight: 400 };
+  return { backgroundColor: "inherit", color: grey[500], fontWeight: 400 };
+};
+
 type TaskListProps = {
   isRelativeTime: boolean;
   tasklist: Task[];
   subjects: Subject[];
   lastUpdate: Date;
-  hiddenTaskIdList: string[];
+  fetchTasklistFromStorage: () => void;
 };
 const TaskList = (props: TaskListProps) => {
-  const { isRelativeTime, subjects, tasklist, lastUpdate, hiddenTaskIdList } = props;
+  const { isRelativeTime, subjects, tasklist, lastUpdate, fetchTasklistFromStorage } = props;
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const reloadTasklist = () => {
+    const fetching = async () => {
+      try {
+        await fetchTasks(true);
+        await fetchTasklistFromStorage();
+      } catch (e) {
+        console.error(e);
+        alert("An Error Occurred: " + e?.message ?? e);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (isLoading) return;
+    setIsLoading(true);
+
+    fetching();
+  };
 
   return (
-    <div>
-      {tasklist.length === 0 ? (
-        <div>NO TASKS</div>
-      ) : (
-        <div>
-          {tasklist.map((task) => {
-            const courseUrl = subjects.find((subject) => subject.name === task.course)?.url;
-            return (
-              <div key={task.id} className={style.taskList}>
-                <div className={style.taskListCourse}>
-                  <a href={task.courseURL || courseUrl || ""} className={style.taskListLink}>
-                    {task.course}{" "}
-                  </a>
-                </div>
-                <div className={style.taskListTitle}>
-                  <a href={task.link} className={style.taskListLink}>
-                    {task.title}
-                  </a>
-                </div>
-                <div className={style.taskListDeadline}>{task.deadline}</div>
-              </div>
-            );
-          })}
+    <div className={style.taskListContainer}>
+      <h6 className={style.widgetTitle}>
+        {chrome.i18n.getMessage("taskList")}
+        <span className={style.lastUpdate}>
+          ({chrome.i18n.getMessage("taskListLastUpdate")}: {formatDate(lastUpdate, "MM/dd hh:mm", { locale: ja })})
+        </span>
+      </h6>
+      <div className={style.taskListGrid}>
+        <div className={`${style.taskListCourse} ${style.taskListHeader}`}>
+          {chrome.i18n.getMessage("taskListSubject")}
         </div>
-      )}
+        <div className={`${style.taskListTitle} ${style.taskListHeader}`}>
+          {chrome.i18n.getMessage("taskListTaskName")}
+        </div>
+        <div className={`${style.taskListDeadline} ${style.taskListHeader}`}>
+          {chrome.i18n.getMessage("taskListDeadline")}
+        </div>
+        {tasklist.length === 0 ? (
+          <>
+            {isLoading ? (
+              <div className={style.taskListNoTask}>Loading...</div>
+            ) : (
+              <>
+                <div className={style.taskListNoTask}>{chrome.i18n.getMessage("taskListNoTask")}</div>
+                <button onClick={reloadTasklist} className={style.taskListReloadButton}>
+                  {chrome.i18n.getMessage("reloadTaskList")}
+                </button>
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            {tasklist.map((task) => {
+              const courseUrl = subjects.find((subject) => subject.name === task.course)?.url;
+              return (
+                <>
+                  <div className={style.taskListCourse} style={getTaskColor(task)}>
+                    <a href={task.courseURL || courseUrl || ""} className={style.taskListLink}>
+                      {task.course}
+                    </a>
+                  </div>
+                  <div className={style.taskListTitle} style={getTaskColor(task)}>
+                    <a href={task.link} className={style.taskListLink}>
+                      {task.title}
+                    </a>
+                  </div>
+                  <div className={style.taskListDeadline} style={getTaskColor(task)}>
+                    {isRelativeTime
+                      ? getRelativeTime(task.deadlineDate, new Date())
+                      : formatDate(task.deadlineDate, "yyyy/MM/dd HH:mm", { locale: ja })}
+                  </div>
+                </>
+              );
+            })}
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
+
+type UserMemoProps = {
+  addMemo: (memo: string) => void;
+  memos: string[];
+};
+const UserMemo = (props: UserMemoProps) => {
+  const { addMemo, memos } = props;
+  const inputRef = useRef<HTMLInputElement>(null);
+  return (
+    <div className={style.userMemoContainer}>
+      <h6 className={style.widgetTitle}>{chrome.i18n.getMessage("notepad")}</h6>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          const memo = inputRef.current?.value ?? "";
+          if (memo.trim() === "") return;
+          addMemo(memo);
+          inputRef.current!.value = "";
+        }}
+      >
+        <div className={style.userMemoBox}>
+          {memos.map((memo, idx) => (
+            <div key={idx} className={style.userMemoRow}>
+              <div
+                className={style.userMemoText}
+                dangerouslySetInnerHTML={{ __html: memo.replace(/(https?:\/\/\S+)/g, "<a href='$1'>$1</a>") }}
+              />
+            </div>
+          ))}
+          <div className={style.userMemoRow}>
+            <input
+              type="text"
+              className={style.userMemoInput}
+              placeholder={chrome.i18n.getMessage("notepadAdd")}
+              ref={inputRef}
+            />
+          </div>
+        </div>
+      </form>
     </div>
   );
 };
@@ -178,12 +300,16 @@ const menuWidgetFirefox = () => {
   const [tasklist, setTasklist] = useState<Task[]>([]);
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
-  const [hiddenTaskIdList, setHiddenTaskIdList] = useState<string[]>([]);
 
-  const fetchTasklistFromStorage = async (currentData: Saves) => {
+  const [memos, setMemos] = useState<string[]>([]);
+
+  const fetchTasklistFromStorage = async () => {
+    const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
+    setTimetable(currentData.scombzData.timetable);
     setSubjects(currentData.settings.notifySurveySubjects);
     setIsRelativeTime(currentData.settings.deadlineMode === "relative");
     setLastUpdate(new Date(currentData.scombzData.lastTaskFetchUnixTime ?? 0));
+    setMemos(currentData.scombzData.sideMenuMemo);
 
     const normalTaskList = currentData.scombzData.tasklist;
 
@@ -191,18 +317,7 @@ const menuWidgetFirefox = () => {
     const allSurveyList = currentData.scombzData.surveyList;
     const surveyList = allSurveyList.filter((task) => notifySurveySubjectsName.includes(task.course));
 
-    // const originalTasklist = currentData.scombzData.originalTasklist;
-    const originalTasklist = [
-      {
-        course: "卒業研究１",
-        courseURL: "https://scombz.shibaura-it.ac.jp/lms/course?idnumber=202401SU0119041001",
-        deadline: "2024-06-28 00:00",
-        id: "1718785771771",
-        kind: "originalTask",
-        link: "https://kadai.url.com",
-        title: "test",
-      },
-    ];
+    const originalTasklist = currentData.scombzData.originalTasklist;
 
     const now = new Date();
 
@@ -219,8 +334,15 @@ const menuWidgetFirefox = () => {
     });
 
     setTasklist(combinedTaskList);
-    setHiddenTaskIdList(currentData.settings.hiddenTaskIdList);
     return;
+  };
+
+  const addMemo = (memo: string) => {
+    setMemos([...memos, memo]);
+    chrome.storage.local.get(defaultSaves, (data: Saves) => {
+      data.scombzData.sideMenuMemo = [...data.scombzData.sideMenuMemo, memo];
+      chrome.storage.local.set(data);
+    });
   };
 
   useEffect(() => {
@@ -244,11 +366,7 @@ const menuWidgetFirefox = () => {
       const format = "EEEE, MMMM dd, yyyy";
       setToday(formatDate(new Date(), format));
     }
-
-    chrome.storage.local.get(defaultSaves, (items: Saves) => {
-      setTimetable(items.scombzData.timetable);
-      fetchTasklistFromStorage(items);
-    });
+    fetchTasklistFromStorage();
   }, []);
 
   return (
@@ -258,11 +376,18 @@ const menuWidgetFirefox = () => {
       onClick={() => document.getElementById("sidemenuClose")?.click()}
     >
       <WidgetContainer>
-        {today && <h6 className={style.timetableTopDate}>{today}</h6>}
+        {today && (
+          <h6 className={style.widgetTitle} style={{ textAlign: "center" }}>
+            {today}
+          </h6>
+        )}
         <TimeTable timetable={timetable} nowDay={null} nowClassTime={0} />
       </WidgetContainer>
       <WidgetContainer>
-        <TaskList {...{ isRelativeTime, tasklist, subjects, lastUpdate, hiddenTaskIdList }} />
+        <TaskList {...{ isRelativeTime, tasklist, subjects, lastUpdate, fetchTasklistFromStorage }} />
+      </WidgetContainer>
+      <WidgetContainer>
+        <UserMemo addMemo={addMemo} memos={memos} />
       </WidgetContainer>
     </div>
   );

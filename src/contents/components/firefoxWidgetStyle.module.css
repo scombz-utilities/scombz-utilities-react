@@ -19,7 +19,7 @@
   margin: 10px auto 0 auto;
   display: none;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 830px) {
   .widgetContainer {
     display: block;
   }
@@ -66,9 +66,8 @@
   display: flex;
   flex-direction: column;
   gap: 3px;
-  border: 1px solid #bbb;
+  border: 1px solid #b0b0b0;
   padding: 2px;
-  border: 1px solid #999;
 }
 
 .timetableClassroom {
@@ -113,11 +112,10 @@
   padding: 2px;
 }
 
-.timetableTopDate {
+.widgetTitle {
   font-size: 16px;
-  text-align: center;
-  margin: 2px 0 7px 0;
-  font-weight: normal;
+  margin: 2px 8px 7px 8px;
+  font-weight: bold;
 }
 
 .intensiveCourses {
@@ -127,4 +125,76 @@
 
 .taskList {
   display: flex;
+}
+
+.taskListGrid {
+  display: grid;
+  grid-template-columns: 2fr 5fr 2fr;
+  gap: 0;
+  background-color: #fff;
+  border-radius: 2px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.taskListCourse,
+.taskListTitle,
+.taskListDeadline {
+  border-bottom: 1px solid #999;
+  padding: 4px 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.taskListHeader {
+  font-size: 92%;
+  border-bottom: 1px solid #666;
+}
+
+.taskListLink {
+  text-decoration: none;
+  color: inherit;
+}
+
+.taskListLink:hover {
+  text-decoration: underline;
+}
+
+.lastUpdate {
+  font-size: 12px;
+  font-weight: normal;
+  color: #666;
+  text-align: left;
+  margin: 0 0 3px 10px;
+}
+
+.taskListNoTask {
+  margin-left: 10px;
+  padding: 5px;
+}
+
+.taskListReloadButton {
+  display: block;
+  width: fit-content;
+  height: fit-content;
+  padding: 4px 10px;
+  margin: 3px 0 0 10px;
+}
+
+.userMemoInput {
+  width: calc(100% - 16px);
+  border: none;
+  outline: none;
+  padding: 4px 8px;
+}
+
+.userMemoBox {
+  background-color: #fff;
+  border-radius: 2px;
+}
+
+.userMemoText {
+  border-bottom: 1px solid #999;
+  padding: 4px 8px;
 }
