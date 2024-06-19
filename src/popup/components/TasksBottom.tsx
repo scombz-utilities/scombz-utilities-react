@@ -43,8 +43,10 @@ export const TasksBottom = (props: TasksBottomProps) => {
 
     // FirefoxだとCORSの関係上popupからのfetchが使えないので代わりに課題一覧を開く
     if (process.env.PLASMO_BROWSER === "firefox") {
-      window.open("https://scombz.shibaura-it.ac.jp/lms/task", "_blank");
-      window.close();
+      const newWindow = window.open("https://scombz.shibaura-it.ac.jp/lms/task", "_blank");
+      if (newWindow) {
+        window.close();
+      }
       return;
     }
 
