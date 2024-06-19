@@ -8,11 +8,6 @@
   z-index: 9999;
   color: #000;
 }
-@media (max-width: 700px) {
-  .utlContainer {
-    display: none;
-  }
-}
 
 .widgetContainer {
   width: calc(100% - 20px);
@@ -22,6 +17,12 @@
   padding: 8px;
   border-radius: 4px;
   margin: 10px auto 0 auto;
+  display: none;
+}
+@media screen and (min-width: 768px) {
+  .widgetContainer {
+    display: block;
+  }
 }
 
 .timetableBody {
@@ -31,7 +32,7 @@
   column-gap: 2px;
   row-gap: 5px;
   padding: 2px;
-  border-radius: 5px;
+  border-radius: 2px;
 }
 
 .timetablePeriod {
@@ -117,4 +118,13 @@
   text-align: center;
   margin: 2px 0 7px 0;
   font-weight: normal;
+}
+
+.intensiveCourses {
+  display: block;
+  margin: 5px 0 0 10px;
+}
+
+.taskList {
+  display: flex;
 }
