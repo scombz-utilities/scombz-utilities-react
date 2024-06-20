@@ -88,6 +88,9 @@ const darkModeCSS = `
         .sidemenu-link.sidemenu-lms-link.sidemenu-link-txt:hover{
         background-color:#505154;
         }
+        .sidemenu-link.sidemenu-lms-link.sidemenu-link-txt:active{
+        background-color:#5e5e62 !important;
+        }
         .sidemenu-head{
         background-color:#303134;
         border-bottom:1px solid #444c;
@@ -389,6 +392,13 @@ const darkModeCSS = `
         background-color:#9f6215;
         }
         /*課題提出*/
+        .minBtn {
+        border-color: rgb(98, 102, 105) !important;
+        background-color: rgb(31, 34, 35) !important;
+        }
+        .minBtn:hover {
+        background-color: #000 !important;
+        }
         .input-checkbox:checked:after {
         border-color: #ccc;
         opacity: 1.0;
