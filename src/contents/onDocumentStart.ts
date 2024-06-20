@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   setTimeout(() => {
     document.documentElement.style.visibility = "";
     style.remove();
-  }, 750);
+  }, 1000);
   const currentData = await chrome.storage.local.get(defaultSaves);
   const settings = currentData.settings as Settings;
   if (settings.hideSideMenu) hideSideMenu();
