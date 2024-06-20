@@ -36,7 +36,7 @@ https://github.com/scombz-utilities/scombz-utilities-legacy
 
 ### nodeの準備
 
-nodeのバージョンをは`20.11.1`で固定とします。
+nodeのバージョンは`20.11.1`で固定とします。
 
 `.node-version`ファイルでバージョンを指定しているため、対応したバージョン管理ツールを使ってインストールしてください。
 [asdf](https://asdf-vm.com/)や[nodenv](https://github.com/nodenv/nodenv)などのバージョン管理ツールを使うとよいでしょう。
@@ -84,14 +84,14 @@ $ source ~/.zshrc
 
 ④ `.node-version`に記載されているnodeのバージョンを確認して下さい。
 
-(記事確認時点では `v20.9.0`)
+(記事確認時点では `v20.11.1`)
 
 確認したバージョンをnodenvでインストールします。
 
-( `.node-version`に記載されているのがv20.9.0でない場合はコマンドを適切に変更してください)
+( `.node-version`に記載されているのがv20.11.1でない場合はコマンドを適切に変更してください)
 
 ```bash
-$ nodenv install 20.9.0
+$ nodenv install 20.11.1
 ```
 
 ⑤ nodenvをリフレッシュします
@@ -119,7 +119,7 @@ $ node -v
 $ sudo apt install build-essential
 ```
 
-② 公式の手順でnodenvのインストールを行います(公式: https://github.com/nodenv/nodenv)。さらに、 `nodenv install` を有効にするため、node-buildもインストールします(野良記事: https://omohikane.com/ubuntu_intall_nodenv/)。
+② 公式の手順でnodenvのインストールを行います(公式: https://github.com/nodenv/nodenv )。さらに、 `nodenv install` を有効にするため、node-buildもインストールします(野良記事: https://omohikane.com/ubuntu_intall_nodenv/ )。
 
 ```bash
 $ git clone https://github.com/nodenv/nodenv.git ~/.nodenv
@@ -149,15 +149,15 @@ $ source ~/.bashrc
 
 ④ `.node-version`に記載されているnodeのバージョンを確認して下さい。
 
-(記事確認時点では `v20.9.0`)
+(記事確認時点では `v20.11.1`)
 
 確認したバージョンをnodenvでインストールします。
 
-( `.node-version`に記載されているのがv20.9.0でない場合はコマンドを適切に変更してください)
+( `.node-version`に記載されているのがv20.11.1でない場合はコマンドを適切に変更してください)
 
 ```bash
-$ nodenv install 20.9.0
-$ nodenv global 20.9.0
+$ nodenv install 20.11.1
+$ nodenv global 20.11.1
 ```
 
 ⑤ nodenvをリフレッシュします
