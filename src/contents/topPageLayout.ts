@@ -1,6 +1,6 @@
 import type { PlasmoCSConfig } from "plasmo";
 import { defaultSaves } from "./util/settings";
-import type { Settings } from "./util/settings";
+import type { Saves } from "./util/settings";
 
 export const config: PlasmoCSConfig = {
   matches: ["https://scombz.shibaura-it.ac.jp/portal/home*"],
@@ -29,11 +29,36 @@ const styleTopPage = () => {
   }
 };
 
+const beforeLoginInformation = async (currentData: Saves) => {
+  if (currentData.scombzData.beforeLoginOshirase?.length < 130) return;
+  const newInfoContainer = document.createElement("div");
+  newInfoContainer.classList.add("portal-subblock");
+
+  const newInfoTitle = document.createElement("div");
+  newInfoTitle.classList.add("portal-subblock-title", "portal-top-subblock-title", "top_etc_pull");
+  newInfoTitle.textContent = "ScombZからのお知らせ";
+  newInfoContainer.appendChild(newInfoTitle);
+
+  const newInfoContent = document.createElement("div");
+  newInfoContent.style.maxHeight = "200px";
+  newInfoContent.style.overflow = "auto";
+  newInfoContent.innerHTML = currentData.scombzData.beforeLoginOshirase;
+  newInfoContainer.appendChild(newInfoContent);
+
+  const insertBefore = document.getElementById("top_information3");
+  if (insertBefore) {
+    insertBefore.parentNode.insertBefore(newInfoContainer, insertBefore);
+  }
+};
+
 const topPageLayout = async () => {
-  const currentData = await chrome.storage.local.get(defaultSaves);
-  const settings = currentData.settings as Settings;
+  const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
+  const settings = currentData.settings;
   if (settings.hideCompletedReports) hideCompletedReports();
-  if (settings.layout.topPageLayout) styleTopPage();
+  if (settings.layout.topPageLayout) {
+    styleTopPage();
+    beforeLoginInformation(currentData);
+  }
 };
 
 topPageLayout();
