@@ -119,7 +119,7 @@ $ node -v
 $ sudo apt install build-essential
 ```
 
-② 公式の手順でnodenvのインストールを行います(公式: https://github.com/nodenv/nodenv )。さらに、 `nodenv install` を有効にするため、node-buildもインストールします(野良記事: https://omohikane.com/ubuntu_intall_nodenv/ )。
+② 公式の手順でnodenvのインストールを行います([公式](https://github.com/nodenv/nodenv))。さらに、 `nodenv install` を有効にするため、node-buildもインストールします([野良記事]( https://omohikane.com/ubuntu_intall_nodenv/))。
 
 ```bash
 $ git clone https://github.com/nodenv/nodenv.git ~/.nodenv
