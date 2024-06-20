@@ -101,7 +101,7 @@ export const LayoutOptions = (props: Props) => {
       />
       <CustomSwitch
         i18nLabel="ダークモード"
-        i18nCaption="ScombZにおいて自作のダークモードを有効にします。拡張機能により変更を行うため、一部の表示がうまく動作しない可能性があります。"
+        i18nCaption="ScombZにおいて自作のダークモードを有効にします。拡張機能により変更を行うため、一部の表示がうまく動作しない可能性があります。強い希望がない場合、ライトモードの使用を推奨します。"
         optionId="darkMode"
         value={saves.settings.darkMode}
         onChange={(_e, checked) => setSettings("darkMode", checked)}
