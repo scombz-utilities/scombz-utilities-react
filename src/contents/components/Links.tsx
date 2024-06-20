@@ -87,7 +87,7 @@ export const Links = () => {
         m="0 auto"
         onClick={(e) => e.stopPropagation()}
         sx={{
-          backgroundColor: isDarkMode ? "#333848cc" : "#fff7",
+          backgroundColor: isDarkMode ? "#333840cc" : "#fff7",
           color: isDarkMode ? "#ccccce" : "inherit",
           backdropFilter: "blur(6px)",
           padding: 1,
