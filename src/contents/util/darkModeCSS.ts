@@ -553,6 +553,18 @@ const darkModeCSS = `
             background: #444c;
             color: #dfdfdf;
         }
+        .scombz-utilites-email-button-group > button {
+            background: #333;
+        }
+        .scombz-utilites-email-button-group > button:hover {
+        background-color: #2a2b2f;
+        border-color: #646e9b;
+        color: #646e9b;
+        }
+        a.utilities-anchor {
+            color: #66f !important;
+            text-decoration: underline !important;
+        }
 `;
 
 export default darkModeCSS;
