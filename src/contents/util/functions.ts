@@ -63,7 +63,7 @@ export const serializeData = (data): string => {
  *
  */
 export const isFirefox = (): boolean => {
-  return navigator.userAgent.toLowerCase().includes("firefox");
+  return process.env.PLASMO_BROWSER === "firefox";
 };
 
 /**
