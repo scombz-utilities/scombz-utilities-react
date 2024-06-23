@@ -18,6 +18,7 @@ import type { Saves } from "./settings";
 // 先頭にクイックメニューを追加
 
 export const addQuickMenu = async () => {
+  if (!document.querySelector(".block.clearfix:has(> .block-title.block-cube")) return;
   const link = document.createElement("link");
   link.href = chrome.runtime.getURL("css/quickmenu.css"); // 新しいCSSファイルのパス
   link.type = "text/css";
