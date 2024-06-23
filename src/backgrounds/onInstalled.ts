@@ -19,8 +19,6 @@ const confirmMigrated = async (reason: string) => {
 export const onInstalled = (reason: string) => {
   if (process.env.PLASMO_PUBLIC_ENVIRONMENT === "development") return;
   if (reason === "install" || reason === "update") {
-    if (chrome.runtime.getManifest().version === "4.1.0") {
-      confirmMigrated(reason);
-    }
+    confirmMigrated(reason);
   }
 };
