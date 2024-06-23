@@ -48,14 +48,18 @@ export const getLMS = (d: Document): TimeTable => {
           $timetableClassData.time = -1; // 曜日時限不定履修
         }
       }
+      if (!$course.getAttribute("id")) {
+        continue;
+      }
       $timetableClassData.id = $course.getAttribute("id");
       $timetableClassData.name = $course.innerHTML;
-      $timetableClassData.classroom = $course.nextElementSibling.firstElementChild.getAttribute("title");
-      const $courseTeacherList = $course.nextElementSibling.querySelectorAll("div[data-toggle='tooltip'] > span");
+      $timetableClassData.classroom = $course.nextElementSibling?.firstElementChild?.getAttribute("title") ?? "";
+      const $courseTeacherList =
+        $course.nextElementSibling?.querySelectorAll("div[data-toggle='tooltip'] > span") || [];
       const $courseTeachers = [];
       for (const $teacher of $courseTeacherList) {
         if (!$teacher.hasAttribute("class")) {
-          $courseTeachers.push($teacher.innerHTML.replace(",  ", ""));
+          $courseTeachers.push($teacher.innerText.replace(",  ", ""));
         }
       }
       $timetableClassData.teacher = $courseTeachers;
