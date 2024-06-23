@@ -2,7 +2,6 @@ import createCache from "@emotion/cache";
 import { CacheProvider } from "@emotion/react";
 import styleText from "data-text:./components/firefoxWidgetStyle.module.css";
 import type { PlasmoCSConfig } from "plasmo";
-import { isFirefox } from "./util/functions";
 
 export const config: PlasmoCSConfig = {
   matches: ["https://scombz.shibaura-it.ac.jp/*"],
@@ -18,7 +17,7 @@ const styleCache = createCache({
 });
 
 export const getStyle = () => {
-  if (isFirefox()) {
+  if (process.env.PLASMO_BROWSER === "firefox") {
     const style = document.createElement("style");
     style.textContent = styleText;
     return style;
@@ -28,7 +27,7 @@ export const getStyle = () => {
 };
 
 const MenuWidget = () => {
-  if (isFirefox()) {
+  if (process.env.PLASMO_BROWSER === "firefox") {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const MenuWidgetFirefox = require("./components/menuWidgetFirefox").default;
     return (
