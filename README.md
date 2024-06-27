@@ -1,9 +1,17 @@
 [![License](https://img.shields.io/github/license/scombz-utilities/scombz-utilities-react?color=white&style=flat-square)](https://github.com/scombz-utilities/scombz-utilities-react/blob/main/LICENSE)
 [![Contributors](https://img.shields.io/github/contributors/scombz-utilities/scombz-utilities-react?color=white&style=flat-square)](https://github.com/scombz-utilities/scombz-utilities-react/graphs/contributors)
+
 ![Version for Chrome](https://img.shields.io/chrome-web-store/v/iejnanaabfgocfjbnmhkfheghbkanibj?color=yellow&style=flat-square)
+![Chrome Web Store Rating](https://img.shields.io/chrome-web-store/rating/iejnanaabfgocfjbnmhkfheghbkanibj?color=yellow&style=flat-square)
 ![Chrome Users](https://img.shields.io/chrome-web-store/users/iejnanaabfgocfjbnmhkfheghbkanibj?color=yellow&style=flat-square)
+
 ![Version for Firefox](https://img.shields.io/amo/v/scombz-utilities?color=red&style=flat-square)
+![Firefox Rating](https://img.shields.io/amo/rating/scombz-utilities?color=red&style=flat-square)
 ![Firefox Users](https://img.shields.io/amo/users/scombz-utilities?color=red&style=flat-square)
+
+[![Version for Edge](https://img.shields.io/badge/dynamic/json?label=edge%20add-on&prefix=v&query=%24.version&url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Feoddaffbjpphchhdhhfigcijjjbgjhcp)](https://microsoftedge.microsoft.com/addons/detail/arxivutils/eoddaffbjpphchhdhhfigcijjjbgjhcp)
+[![Edge Rating](https://img.shields.io/badge/dynamic/json?label=rating&suffix=/5&query=%24.averageRating&url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Feoddaffbjpphchhdhhfigcijjjbgjhcp)](https://microsoftedge.microsoft.com/addons/detail/arxivutils/eoddaffbjpphchhdhhfigcijjjbgjhcp)
+[![Edge Users](https://img.shields.io/badge/dynamic/json?label=users&query=%24.activeInstallCount&url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Feoddaffbjpphchhdhhfigcijjjbgjhcp)](https://microsoftedge.microsoft.com/addons/detail/arxivutils/eoddaffbjpphchhdhhfigcijjjbgjhcp)
 
 # ScombZ Utilities
 
@@ -119,7 +127,7 @@ $ node -v
 $ sudo apt install build-essential
 ```
 
-② 公式の手順でnodenvのインストールを行います([公式](https://github.com/nodenv/nodenv))。さらに、 `nodenv install` を有効にするため、node-buildもインストールします([野良記事]( https://omohikane.com/ubuntu_intall_nodenv/))。
+② 公式の手順でnodenvのインストールを行います([公式](https://github.com/nodenv/nodenv))。さらに、 `nodenv install` を有効にするため、node-buildもインストールします([野良記事](https://omohikane.com/ubuntu_intall_nodenv/))。
 
 ```bash
 $ git clone https://github.com/nodenv/nodenv.git ~/.nodenv
