@@ -1,27 +1,29 @@
 [![License](https://img.shields.io/github/license/scombz-utilities/scombz-utilities-react?color=white&style=flat-square)](https://github.com/scombz-utilities/scombz-utilities-react/blob/main/LICENSE)
 [![Contributors](https://img.shields.io/github/contributors/scombz-utilities/scombz-utilities-react?color=white&style=flat-square)](https://github.com/scombz-utilities/scombz-utilities-react/graphs/contributors)
 
-![Version for Chrome](https://img.shields.io/chrome-web-store/v/iejnanaabfgocfjbnmhkfheghbkanibj?color=yellow&style=flat-square)
-![Chrome Web Store Rating](https://img.shields.io/chrome-web-store/rating/iejnanaabfgocfjbnmhkfheghbkanibj?color=yellow&style=flat-square)
-![Chrome Users](https://img.shields.io/chrome-web-store/users/iejnanaabfgocfjbnmhkfheghbkanibj?color=yellow&style=flat-square)
+# ScombZ Utilities
 
-![Version for Firefox](https://img.shields.io/amo/v/scombz-utilities?color=red&style=flat-square)
-![Firefox Rating](https://img.shields.io/amo/rating/scombz-utilities?color=red&style=flat-square)
-![Firefox Users](https://img.shields.io/amo/users/scombz-utilities?color=red&style=flat-square)
+使いにくい ScombZ のサイドメニューやテストを修正したり、ADFS ボタンの自動スキップができます。よりユーザビリティに優れた ScombZ を提供します。
+
+[![ScombZ Utilities](./docs/thumbnail.png)](https://scombz-utilities.com)
+
+[![Version for Chrome](https://img.shields.io/chrome-web-store/v/iejnanaabfgocfjbnmhkfheghbkanibj?color=yellow&style=flat-square)](https://chromewebstore.google.com/detail/scombz-utilities/iejnanaabfgocfjbnmhkfheghbkanibj)
+[![Chrome Web Store Rating](https://img.shields.io/chrome-web-store/rating/iejnanaabfgocfjbnmhkfheghbkanibj?color=yellow&style=flat-square)](https://chromewebstore.google.com/detail/scombz-utilities/iejnanaabfgocfjbnmhkfheghbkanibj)
+[![Chrome Users](https://img.shields.io/chrome-web-store/users/iejnanaabfgocfjbnmhkfheghbkanibj?color=yellow&style=flat-square)](https://chromewebstore.google.com/detail/scombz-utilities/iejnanaabfgocfjbnmhkfheghbkanibj)
+
+[![Version for Firefox](https://img.shields.io/amo/v/scombz-utilities?color=red&style=flat-square)](https://addons.mozilla.org/ja/firefox/addon/scombz-utilities/)
+[![Firefox Rating](https://img.shields.io/amo/rating/scombz-utilities?color=red&style=flat-square)](https://addons.mozilla.org/ja/firefox/addon/scombz-utilities/)
+[![Firefox Users](https://img.shields.io/amo/users/scombz-utilities?color=red&style=flat-square)](https://addons.mozilla.org/ja/firefox/addon/scombz-utilities/)
 
 [![Version for Edge](https://img.shields.io/badge/dynamic/json?label=edge%20add-on&prefix=v&query=%24.version&url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Feoddaffbjpphchhdhhfigcijjjbgjhcp)](https://microsoftedge.microsoft.com/addons/detail/arxivutils/eoddaffbjpphchhdhhfigcijjjbgjhcp)
 [![Edge Rating](https://img.shields.io/badge/dynamic/json?label=rating&suffix=/5&query=%24.averageRating&url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Feoddaffbjpphchhdhhfigcijjjbgjhcp)](https://microsoftedge.microsoft.com/addons/detail/arxivutils/eoddaffbjpphchhdhhfigcijjjbgjhcp)
 [![Edge Users](https://img.shields.io/badge/dynamic/json?label=users&query=%24.activeInstallCount&url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Feoddaffbjpphchhdhhfigcijjjbgjhcp)](https://microsoftedge.microsoft.com/addons/detail/arxivutils/eoddaffbjpphchhdhhfigcijjjbgjhcp)
 
-# ScombZ Utilities
-
-使いにくい ScombZ のサイドメニューやテストを修正したり、ADFS ボタンの自動スキップができます。よりユーザビリティに優れた ScombZ を提供します。
-
 [公式サイト](https://scombz-utilities.com)
 
-[![Chrome 版のリンク](./chrome.png)](https://chrome.google.com/webstore/detail/scombz-utilities/iejnanaabfgocfjbnmhkfheghbkanibj)
-
-[![Firefox 版のリンク](./firefox.png)](https://addons.mozilla.org/ja/firefox/addon/scombz-utilities/)
+[![Chrome 版のリンク](./docs/chrome.png)](https://chrome.google.com/webstore/detail/scombz-utilities/iejnanaabfgocfjbnmhkfheghbkanibj)
+[![Firefox 版のリンク](./docs/firefox.png)](https://addons.mozilla.org/ja/firefox/addon/scombz-utilities/)
+[![Edge 版のリンク](./docs/edge.png)](https://microsoftedge.microsoft.com/addons/detail/arxivutils/eoddaffbjpphchhdhhfigcijjjbgjhcp)
 
 ## Tips
 
