@@ -1,5 +1,6 @@
 import { differenceInMinutes } from "date-fns";
 import type { PlasmoCSConfig } from "plasmo";
+import type { Task } from "./types/task";
 import { getTasksOnTaskPage, getTasksByAjax, fetchSurveys } from "./util/getTaskList";
 import { defaultSaves } from "./util/settings";
 import type { Saves } from "./util/settings";
@@ -13,6 +14,11 @@ export const config: PlasmoCSConfig = {
 if (location.href === "https://scombz.shibaura-it.ac.jp/lms/task") {
   getTasksOnTaskPage();
 }
+
+const resetOriginalTaskList = (originalTasklist: Task[]) => {
+  const now = new Date();
+  return originalTasklist.filter((task) => new Date(task.deadline) >= now);
+};
 
 // タスクを取得
 export const fetchTasks = async (forceExecute?: boolean) => {
@@ -31,7 +37,8 @@ export const fetchTasks = async (forceExecute?: boolean) => {
   if (forceExecute || differenceInMinutes(now, lastTaskFetch) >= FETCH_INTERVAL) {
     console.log("fetch tasks");
     currentData.scombzData.lastTaskFetchUnixTime = now.getTime();
-    chrome.storage.local.set(currentData);
+    currentData.scombzData.originalTasklist = resetOriginalTaskList(currentData.scombzData?.originalTasklist || []);
+    await chrome.storage.local.set(currentData);
     try {
       console.log(await getTasksByAjax());
       console.log(await fetchSurveys());

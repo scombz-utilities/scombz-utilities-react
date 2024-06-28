@@ -33,3 +33,4 @@ dist/
 .tsbuildinfo
 
 key.json
+.env.submit
