@@ -257,6 +257,18 @@ $ docker compose run --rm app npm run build
 
 </details>
 
+## ストアへの公開
+
+ScombZ utilitiesでは、Chrome Web Store、Firefox Add-ons、Microsoft Edge Add-onsにて一般用に配布しています。
+全てのストアで自動的に公開するために、[publish-browser-extension](https://github.com/aklinker1/publish-browser-extension)を利用しています。
+
+### ストアへの公開手順
+
+1. `.env.submit.template`ファイルをコピーして`.env.submit`ファイルを作成します。
+1. 開発リーダーに`.env.submit`ファイルの内容を共有してもらい、必要な情報を入力します。
+1. 以下のコマンドを実行して、ストアへの公開を行います。
+1. `npm run publish`を実行すると、各ストアに自動的に公開されます。
+
 ## VScodeでの設定
 
 開発においてコーディングルールをeslintに定義しています。
