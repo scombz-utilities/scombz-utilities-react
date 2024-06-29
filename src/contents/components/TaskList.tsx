@@ -34,18 +34,28 @@ import { fetchTasks } from "~contents/tasks";
 
 const getTaskColor = (
   task: Task,
+  isDarkMode?: boolean,
 ): {
   backgroundColor: string;
   color: string;
   fontWeight: number;
 } => {
   const deadlineInHours = differenceInHours(new Date(task.deadline), new Date());
-  if (deadlineInHours < 6) return { backgroundColor: red[200], color: red[900], fontWeight: 600 };
-  if (deadlineInHours < 12) return { backgroundColor: red[200], color: red[900], fontWeight: 600 };
-  if (deadlineInHours < 24) return { backgroundColor: red[100], color: red[900], fontWeight: 600 };
-  if (deadlineInHours < 72) return { backgroundColor: "inherit", color: red[900], fontWeight: 400 };
-  if (deadlineInHours < 24 * 7) return { backgroundColor: "inherit", color: "inherit", fontWeight: 400 };
-  return { backgroundColor: "inherit", color: grey[500], fontWeight: 400 };
+  if (isDarkMode) {
+    if (deadlineInHours < 6) return { backgroundColor: red[800], color: red[400], fontWeight: 600 };
+    if (deadlineInHours < 12) return { backgroundColor: red[800], color: red[400], fontWeight: 600 };
+    if (deadlineInHours < 24) return { backgroundColor: red[900], color: red[600], fontWeight: 600 };
+    if (deadlineInHours < 72) return { backgroundColor: "inherit", color: red[600], fontWeight: 400 };
+    if (deadlineInHours < 24 * 7) return { backgroundColor: "inherit", color: "inherit", fontWeight: 400 };
+    return { backgroundColor: "inherit", color: grey[600], fontWeight: 400 };
+  } else {
+    if (deadlineInHours < 6) return { backgroundColor: red[200], color: red[900], fontWeight: 600 };
+    if (deadlineInHours < 12) return { backgroundColor: red[200], color: red[900], fontWeight: 600 };
+    if (deadlineInHours < 24) return { backgroundColor: red[100], color: red[900], fontWeight: 600 };
+    if (deadlineInHours < 72) return { backgroundColor: "inherit", color: red[900], fontWeight: 400 };
+    if (deadlineInHours < 24 * 7) return { backgroundColor: "inherit", color: "inherit", fontWeight: 400 };
+    return { backgroundColor: "inherit", color: grey[500], fontWeight: 400 };
+  }
 };
 
 const TaskTypography = styled(Typography)(() => ({
@@ -240,7 +250,7 @@ const TaskTable = (props: TaskTableProps) => {
               )}
               {displayTaskList.map((task, index) => {
                 const courseUrl = subjects.find((subject) => subject.name === task.course)?.url;
-                const colors = highlightTask ? getTaskColor(task) : {};
+                const colors = highlightTask ? getTaskColor(task, isDarkMode) : {};
                 return (
                   <TableRow
                     key={task.id + index}
