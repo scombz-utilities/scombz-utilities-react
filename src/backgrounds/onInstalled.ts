@@ -2,7 +2,7 @@ import { migrate } from "./migration";
 
 const confirmMigrated = async (reason: string) => {
   const result = await migrate();
-  if (reason === "update" && result !== "alreadyMigrated") {
+  if ((reason === "update" && result !== "alreadyMigrated") || reason === "install") {
     chrome.tabs.create({
       url: `https://scombz-utilities.com/lp/4.0.0`,
       active: true,
