@@ -7,7 +7,7 @@ const darkModeCSS = `
         color:#aaa;
         }
         #pageMain,.login-view,.login{
-        background-color: rgb(30, 32, 33);
+        background-color: #001a;
         }
         .btn,.btn-color{
         border:1px solid #666;

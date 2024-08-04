@@ -15,7 +15,7 @@ import {
   Pagination,
   Collapse,
 } from "@mui/material";
-import { grey, red } from "@mui/material/colors";
+import { grey, red, pink } from "@mui/material/colors";
 import type { SxProps } from "@mui/system";
 import { differenceInHours, differenceInMinutes, format } from "date-fns";
 import { ja } from "date-fns/locale";
@@ -42,9 +42,9 @@ const getTaskColor = (
 } => {
   const deadlineInHours = differenceInHours(new Date(task.deadline), new Date());
   if (isDarkMode) {
-    if (deadlineInHours < 6) return { backgroundColor: red[800], color: red[400], fontWeight: 600 };
-    if (deadlineInHours < 12) return { backgroundColor: red[800], color: red[400], fontWeight: 600 };
-    if (deadlineInHours < 24) return { backgroundColor: red[900], color: red[600], fontWeight: 600 };
+    if (deadlineInHours < 6) return { backgroundColor: pink[900], color: red[400], fontWeight: 600 };
+    if (deadlineInHours < 12) return { backgroundColor: pink[900], color: red[400], fontWeight: 600 };
+    if (deadlineInHours < 24) return { backgroundColor: pink[900], color: red[600], fontWeight: 400 };
     if (deadlineInHours < 72) return { backgroundColor: "inherit", color: red[600], fontWeight: 400 };
     if (deadlineInHours < 24 * 7) return { backgroundColor: "inherit", color: "inherit", fontWeight: 400 };
     return { backgroundColor: "inherit", color: grey[600], fontWeight: 400 };
