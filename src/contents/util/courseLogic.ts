@@ -339,3 +339,21 @@ export const copyEmail = async () => {
     });
   });
 };
+
+//LMSページ飛び出る問題
+export const attachOverflowContents = async () => {
+  const contentsDetails = document.querySelectorAll(".contents-detail");
+  for (const contentsDetail of contentsDetails) {
+    const targetNode: HTMLElement = contentsDetail.parentNode as HTMLElement;
+    const targetNodeParent: HTMLElement = targetNode.parentNode as HTMLElement;
+
+    if (targetNodeParent?.classList?.contains("block") && targetNodeParent?.classList?.contains("clearfix")) {
+      await new Promise((resolve) => setTimeout(resolve, 300));
+
+      targetNode.style.height = contentsDetail.clientHeight + "px";
+      if (targetNode.previousElementSibling) {
+        (targetNode.previousElementSibling as HTMLElement).style.height = contentsDetail.clientHeight + "px";
+      }
+    }
+  }
+};

@@ -7,6 +7,7 @@ import {
   createSyllabusButton,
   layoutMaterialTitles,
   copyEmail,
+  attachOverflowContents,
 } from "./util/courseLogic";
 import { sortSubjectByOrder, forceMaterialOrder, hideMaterial, addQuickMenu } from "./util/layoutSubject";
 import { defaultSaves } from "./util/settings";
@@ -42,6 +43,8 @@ const course = async () => {
   }
   layoutMaterialTitles();
   copyEmail();
+
+  attachOverflowContents();
 
   // 順番を維持するため、並び替え終了後にクイックメニューを追加
   if (currentData.settings.sortSubjectByOrder) {
