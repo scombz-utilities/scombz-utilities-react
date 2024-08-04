@@ -50,21 +50,6 @@ const styleSidemenu = async () => {
     }
   }
 
-  //LMSページ飛び出る問題
-  if (location.href.includes("https://scombz.shibaura-it.ac.jp/lms/course?")) {
-    const contentsDetails = document.querySelectorAll(".contents-detail");
-    for (const contentsDetail of contentsDetails) {
-      const targetNode: HTMLElement = contentsDetail.parentNode as HTMLElement;
-      const targetNodeParent: HTMLElement = targetNode.parentNode as HTMLElement;
-      if (targetNodeParent?.classList?.contains("block") && targetNodeParent?.classList?.contains("clearfix")) {
-        setTimeout(() => {
-          targetNode.style.height = contentsDetail.clientHeight + "px";
-          if (targetNode.previousElementSibling)
-            (targetNode.previousElementSibling as HTMLElement).style.height = contentsDetail.clientHeight + "px";
-        }, 300);
-      }
-    }
-  }
   //ヘッダ中心にアイコンを表示 ヘッダをクリックで一番上へ
   const pageHead = document.getElementById("page_head");
   if (pageHead) {
