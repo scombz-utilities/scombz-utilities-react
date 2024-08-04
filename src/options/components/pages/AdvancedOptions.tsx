@@ -69,13 +69,6 @@ export const AdvancedOptions = (props: Props) => {
             })
           }
         />
-        <CustomSwitch
-          i18nLabel="メモの有効化"
-          i18nCaption="科目別ページ内において、マークダウン記法に対応したメモ帳を追加します。"
-          optionId="markdownNotePad"
-          value={saves.settings.markdownNotePad}
-          onChange={(_e, checked) => setSettings("markdownNotePad", checked)}
-        />
         <CustomRemovableList
           i18nLabel="メモ"
           optionId="coursePageMemo"
