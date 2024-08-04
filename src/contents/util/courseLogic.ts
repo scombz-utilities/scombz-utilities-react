@@ -342,6 +342,9 @@ export const copyEmail = async () => {
 
 //LMSページ飛び出る問題
 export const attachOverflowContents = async () => {
+  // レポート提出画面等では除く
+  if (location.pathname !== "/lms/course" && location.pathname !== "/lms/course/") return;
+
   const contentsDetails = document.querySelectorAll(".contents-detail");
   for (const contentsDetail of contentsDetails) {
     const targetNode: HTMLElement = contentsDetail.parentNode as HTMLElement;
