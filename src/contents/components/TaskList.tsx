@@ -15,9 +15,8 @@ import {
   Pagination,
   Collapse,
 } from "@mui/material";
-import { grey, red, pink } from "@mui/material/colors";
 import type { SxProps } from "@mui/system";
-import { differenceInHours, differenceInMinutes, format } from "date-fns";
+import { format } from "date-fns";
 import { ja } from "date-fns/locale";
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { HiOutlineSwitchHorizontal } from "react-icons/hi";
@@ -31,32 +30,8 @@ import { OriginalTaskModal } from "./originalTaskModal";
 import { MAX_HIDDEN_TASKS } from "~/constants";
 import type { RuntimeMessage } from "~background";
 import { fetchTasks } from "~contents/tasks";
-
-const getTaskColor = (
-  task: Task,
-  isDarkMode?: boolean,
-): {
-  backgroundColor: string;
-  color: string;
-  fontWeight: number;
-} => {
-  const deadlineInHours = differenceInHours(new Date(task.deadline), new Date());
-  if (isDarkMode) {
-    if (deadlineInHours < 6) return { backgroundColor: pink[900], color: red[400], fontWeight: 600 };
-    if (deadlineInHours < 12) return { backgroundColor: pink[900], color: red[400], fontWeight: 600 };
-    if (deadlineInHours < 24) return { backgroundColor: pink[900], color: red[600], fontWeight: 400 };
-    if (deadlineInHours < 72) return { backgroundColor: "inherit", color: red[600], fontWeight: 400 };
-    if (deadlineInHours < 24 * 7) return { backgroundColor: "inherit", color: "inherit", fontWeight: 400 };
-    return { backgroundColor: "inherit", color: grey[600], fontWeight: 400 };
-  } else {
-    if (deadlineInHours < 6) return { backgroundColor: red[200], color: red[900], fontWeight: 600 };
-    if (deadlineInHours < 12) return { backgroundColor: red[200], color: red[900], fontWeight: 600 };
-    if (deadlineInHours < 24) return { backgroundColor: red[100], color: red[900], fontWeight: 600 };
-    if (deadlineInHours < 72) return { backgroundColor: "inherit", color: red[900], fontWeight: 400 };
-    if (deadlineInHours < 24 * 7) return { backgroundColor: "inherit", color: "inherit", fontWeight: 400 };
-    return { backgroundColor: "inherit", color: grey[500], fontWeight: 400 };
-  }
-};
+import { getTaskColor } from "~contents/util/color";
+import { getRelativeTime } from "~contents/util/getRelativeTime";
 
 const TaskTypography = styled(Typography)(() => ({
   display: "block",
@@ -100,15 +75,6 @@ const TaskTableCell = (props: TaskTableCellProps) => {
       </TaskTypography>
     </TableCell>
   );
-};
-
-const getRelativeTime = (date: Date, now: Date): string => {
-  const diff = differenceInMinutes(date, now);
-  if (diff < 180)
-    return `${chrome.i18n.getMessage("taskListAbout")}${diff}${chrome.i18n.getMessage("taskListMinsLeft")}`;
-  if (diff < 1440)
-    return `${chrome.i18n.getMessage("taskListAbout")}${Math.floor(diff / 60)}${chrome.i18n.getMessage("taskListHoursLeft")}`;
-  return `${chrome.i18n.getMessage("taskListAbout")}${Math.floor(diff / 1440)}${chrome.i18n.getMessage("taskListDaysLeft")}`;
 };
 
 type TaskTableProps = {
