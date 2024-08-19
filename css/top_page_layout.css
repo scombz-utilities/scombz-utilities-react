@@ -44,3 +44,53 @@
 #top_links {
   overflow: visible;
 }
+
+#utilities_top_information > p {
+  margin: 8px 20px;
+}
+#utilities_top_information > p:first-child {
+  margin: 0 20px;
+}
+
+.utilities-portal-task-title::before {
+  position: absolute;
+  content: " ";
+  height: 45px;
+  width: 45px;
+  border-radius: 22px;
+  background: url(https://scombz.shibaura-it.ac.jp/img/side_ico_task.svg) top left no-repeat;
+  background-position: 9px 12px;
+  background-size: 26px 26px;
+  background-color: #00c8be;
+  left: 15px;
+  top: 15px;
+  display: block;
+}
+.utilities-portal-task-title::after {
+  position: absolute;
+  content: " ";
+  display: block;
+  border-bottom: solid 4px #7fcca0;
+  bottom: -4px;
+  width: 30%;
+  top: 0;
+  left: 0;
+}
+.utilities-taskListNode {
+  padding: 0 10px 10px 10px;
+}
+.utilities-taskListNode > div {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  border-bottom: 1px solid #ddd;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.utilities-taskListNode > div a {
+  color: inherit;
+  text-decoration: none;
+}
+.utilities-taskListNode > div a:hover {
+  text-decoration: underline;
+}

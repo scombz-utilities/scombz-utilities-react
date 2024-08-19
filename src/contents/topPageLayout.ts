@@ -42,6 +42,7 @@ const beforeLoginInformation = async (currentData: Saves) => {
   const newInfoContent = document.createElement("div");
   newInfoContent.style.maxHeight = "200px";
   newInfoContent.style.overflow = "auto";
+  newInfoContent.setAttribute("id", "utilities_top_information");
   newInfoContent.innerHTML = currentData.scombzData.beforeLoginOshirase;
   newInfoContainer.appendChild(newInfoContent);
 
