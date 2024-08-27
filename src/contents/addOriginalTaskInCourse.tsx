@@ -20,7 +20,7 @@ const insertAddTaskButton = async (openModal: () => void) => {
   const button = (
     <>
       <link href={chrome.runtime.getURL("css/addTaskButton.css")} rel="stylesheet" />
-      <div className="scombzUtilitiesAddTaskButton">
+      <div className="scombzUtilitiesAddTaskButton" title={chrome.i18n.getMessage("OriginalTaskAdd")}>
         <MdOutlineNoteAdd />
       </div>
     </>

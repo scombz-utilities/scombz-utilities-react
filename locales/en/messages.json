@@ -80,7 +80,7 @@
     "description": "課題を追加しました"
   },
   "OriginalTaskAdd": {
-    "message": "Add Assignment",
+    "message": "Add a self-made assignment",
     "description": "自作課題追加"
   },
   "OriginalTaskURL": {
