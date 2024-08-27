@@ -1,7 +1,7 @@
 .scombzUtilitiesAddTaskButton {
   position: absolute;
   display: flex;
-  left: 5px;
+  right: 5px;
   bottom: 5px;
   cursor: pointer;
   font-size: 24px;
