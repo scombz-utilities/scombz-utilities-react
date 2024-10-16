@@ -237,7 +237,7 @@ export const createSyllabusButton = async () => {
   
   const year = location.href.split("idnumber=")[1].slice(0, 4);
   const facNumber = location.href.split("idnumber=")[1].slice(4, 6);
-  let fac = "din";
+  let fac = "";
   if (facNumber === "01") {
     fac = "ko1";
   } else if (facNumber === "02") {
