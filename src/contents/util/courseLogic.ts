@@ -237,6 +237,7 @@ export const createSyllabusButton = async () => {
   
   const year = location.href.split("idnumber=")[1].slice(0, 4);
   const facNumber = location.href.split("idnumber=")[1].slice(4, 6);
+  
   let fac = "";
   if (facNumber === "01") {
     fac = "ko1";
@@ -248,9 +249,14 @@ export const createSyllabusButton = async () => {
     fac = "dsn";
   } else if (facNumber === "05") {
     fac = "din";
+  } else {
+    // 博士の番号が違う場合でもシラバス検索は変わらない？
+    console.log("createSyllabusButton: 学部特定失敗");
+    console.log();
+    fac = "din";
   }
-  
-  
+
+
   const rawCourseTitle = getCourseTitle().replace(/！-／：-＠［-｀｛-～、-〜”’・]+/g, " ");
   const courseTitle = splitByNumbers(rawCourseTitle).join(" ");
   const searchStr = courseTitle.includes(" ") ? courseTitle : `+subject:"${courseTitle}"`;
