@@ -8,11 +8,13 @@ import {
   MdKeyboardArrowUp,
   MdOutlineCalendarViewWeek,
   MdOutlineCalendarViewDay,
+  MdEditCalendar,
 } from "react-icons/md";
 import type { TimeTable as TimeTableType } from "../types/timetable";
 import { getTimetablePosFromTime } from "../util/functions";
 import { defaultSaves } from "../util/settings";
 import type { Saves } from "../util/settings";
+import { OriginalClassModal } from "./originalClassModal";
 import { CLASS_TIMES } from "~/constants";
 import { fetchLMS } from "~contents/util/getLMS";
 
@@ -304,6 +306,8 @@ export const TimeTable = (props: Props) => {
   const [today, setToday] = useState<string | false>(false);
   const [isLoadingTimeTable, setIsLoadingTimeTable] = useState<boolean>(false);
 
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
 
   const [timeTableTopDate, setTimeTableTopDate] = useState<typeof defaultSaves.settings.timeTableTopDate>("date");
@@ -378,6 +382,12 @@ export const TimeTable = (props: Props) => {
 
   return (
     <>
+      <OriginalClassModal
+        isOpen={isOpenModal}
+        setIsOpen={setIsOpenModal}
+        onClose={() => console.log("CLOSED")}
+        isDarkMode={isDarkMode}
+      />
       <Box
         width="calc(100% - 20px)"
         minHeight="30px"
@@ -399,9 +409,14 @@ export const TimeTable = (props: Props) => {
           )}
           <ButtonGroup sx={{ position: "absolute", top: 0, right: 0 }}>
             {width > 880 && (
-              <IconButton onClick={toggleWideTimeTable} size="small">
-                {isWideTimeTable ? <MdOutlineCalendarViewDay /> : <MdOutlineCalendarViewWeek />}
-              </IconButton>
+              <>
+                <IconButton size="small" onClick={() => setIsOpenModal(true)}>
+                  <MdEditCalendar />
+                </IconButton>
+                <IconButton onClick={toggleWideTimeTable} size="small">
+                  {isWideTimeTable ? <MdOutlineCalendarViewDay /> : <MdOutlineCalendarViewWeek />}
+                </IconButton>
+              </>
             )}
             <IconButton onClick={toggleTimeTable} size="small">
               {isTimeTableOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
