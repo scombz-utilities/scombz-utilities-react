@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  padding: 16px 24px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"],
+select {
+  width: 300px;
+}
+
+.option-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #aaa;
+  padding: 10px 20px;
+  margin: 10px 20px;
+  width: fit-content;
+}
+.option-item h3 {
+  margin-top: 10px;
+}
