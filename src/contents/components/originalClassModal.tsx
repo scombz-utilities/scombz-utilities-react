@@ -134,7 +134,6 @@ export const OriginalClassModal = (props: Props) => {
     fetchLMS().then((timetable) => {
       setIsLoadingTimeTable(false);
       setCurrentData((prev) => ({ ...prev, scombzData: { ...prev.scombzData, timetable } }));
-      console.log(timetable);
     });
   };
 

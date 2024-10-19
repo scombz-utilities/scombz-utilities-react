@@ -369,7 +369,6 @@ export const TimeTable = (props: Props) => {
     const newTimeTable = [...timetable, ...originalTimeTable].filter(
       (classData) => !hiddenTimeTable.includes(classData.id),
     );
-    console.log(newTimeTable);
     setFilteredTimeTable(newTimeTable);
   }, [timetable, hiddenTimeTable, originalTimeTable]);
 

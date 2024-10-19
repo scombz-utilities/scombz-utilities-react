@@ -169,7 +169,6 @@ export const hideMaterial = async (currentData: Saves) => {
 
   // 最新のみ表示
   if (currentData.settings.autoHideMaterial === "recent") {
-    console.log("recent");
     materialList.sort((a, b) => {
       const aNo = a?.[0]?.querySelector(".block-title.material-sub-color")?.textContent?.match(/No\.(\d+)/)?.[1];
       const bNo = b?.[0]?.querySelector(".block-title.material-sub-color")?.textContent?.match(/No\.(\d+)/)?.[1];
