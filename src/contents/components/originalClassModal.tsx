@@ -1,9 +1,11 @@
+import { LoadingButton } from "@mui/lab";
 import { Button, Box, Typography, Grid, Paper, IconButton, ButtonGroup, Card, TextField, Stack } from "@mui/material";
 import { useState, useEffect } from "react";
 import { MdVisibility, MdVisibilityOff, MdDelete } from "react-icons/md";
 import { Modal } from "./Modal";
 import { CLASS_TIMES } from "~constants";
 import type { TimeTable, TimeTableData } from "~contents/types/timetable";
+import { fetchLMS } from "~contents/util/getLMS";
 import { type Saves, defaultSaves } from "~settings";
 
 type AddCourseModalProps = {
@@ -125,6 +127,17 @@ export const OriginalClassModal = (props: Props) => {
   const [selectedDay, setSelectedDay] = useState<number>(1);
   const [selectedPeriod, setSelectedPeriod] = useState<number>(0);
 
+  const [isLoadingTimeTable, setIsLoadingTimeTable] = useState<boolean>(false);
+
+  const loadLMS = () => {
+    setIsLoadingTimeTable(true);
+    fetchLMS().then((timetable) => {
+      setIsLoadingTimeTable(false);
+      setCurrentData((prev) => ({ ...prev, scombzData: { ...prev.scombzData, timetable } }));
+      console.log(timetable);
+    });
+  };
+
   useEffect(() => {
     chrome.storage.local.get(defaultSaves, (currentData: Saves) => {
       setCurrentData(currentData);
@@ -171,6 +184,16 @@ export const OriginalClassModal = (props: Props) => {
 
   return (
     <Modal title="時間割編集" isOpen={open} setIsOpen={setIsOpen} onClose={onClose} width={960}>
+      <Box display="flex" flexDirection="column" px={1} mb={2} sx={{ gap: 1 }}>
+        <Typography variant="caption">
+          時間割表の表示を自由に編集できます。自動取得した科目は、目のアイコンをクリックすることで表示/非表示を切り替えることができます。
+          また、+ボタンから手動で科目を追加することもできます。
+        </Typography>
+        <LoadingButton variant="outlined" onClick={loadLMS} loading={isLoadingTimeTable} size="small">
+          {chrome.i18n.getMessage("loadLMS")}
+        </LoadingButton>
+      </Box>
+
       <AddCourseModal
         isOpen={isOpenAddCourseModal}
         close={() => setIsOpenAddCourseModal(false)}

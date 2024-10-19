@@ -406,6 +406,7 @@ export const TimeTable = (props: Props) => {
         setIsOpen={setIsOpenModal}
         onClose={() => {
           chrome.storage.local.get(defaultSaves, (currentData: Saves) => {
+            setTimetable(currentData.scombzData.timetable);
             setHiddenTimeTable(currentData.settings.editableTimeTable.hidden);
             setOriginalTimeTable(currentData.settings.editableTimeTable.original);
           });
