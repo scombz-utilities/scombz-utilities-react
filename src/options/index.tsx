@@ -1,5 +1,5 @@
 const OptionIndex = () => {
-  if (process.env.PLASMO_BROWSER === "firefox") {
+  if (process.env.PLASMO_BROWSER === "firefox" || true) {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const OptionsIndexFirefox = require("./container/firefox").default;
     return <OptionsIndexFirefox />;
