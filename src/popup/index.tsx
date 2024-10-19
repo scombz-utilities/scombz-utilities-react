@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { MultiPageTimeTable } from "./components/MultiPageTimeTable";
 import theme from "~/theme";
 import type { Task } from "~contents/types/task";
+import type { TimeTable } from "~contents/types/timetable";
 import { isFirefox } from "~contents/util/functions";
 import { defaultSaves, type Saves } from "~settings";
 
@@ -17,6 +18,7 @@ const IndexPopup = () => {
   const [loaded, setLoaded] = useState<boolean>(false);
   const [overflowTasksMode, setOverflowTasksMode] = useState<"auto" | "hidden" | null>(null);
   const [isFetching, setIsFetching] = useState<boolean>(false);
+  const [courses, setCourses] = useState<TimeTable>([]);
 
   const loadFromSaves = () => {
     chrome.storage.local.get(defaultSaves, (items: Saves) => {
@@ -45,6 +47,12 @@ const IndexPopup = () => {
 
       if (!overflowTasksMode) setOverflowTasksMode(items.settings.popupOverflowMode);
 
+      // 時間割データを取得
+      const timetable = [...items.scombzData.timetable, ...items.settings.editableTimeTable.original].filter(
+        (classData) => !items.settings.editableTimeTable.hidden.includes(classData.id),
+      );
+      setCourses(timetable);
+
       setLoaded(true);
     });
   };
@@ -70,7 +78,7 @@ const IndexPopup = () => {
         <Box mt={isFirefox() ? 0.5 : 1} mb={isFirefox() ? 0.5 : 2} mx={2}>
           <Box>
             <MultiPageTimeTable
-              courses={saves.scombzData.timetable}
+              courses={courses}
               tasks={tasklist}
               showTasks={saves.settings.popupTasksTab}
               overflowTasks={overflowTasksMode}
