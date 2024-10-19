@@ -70,7 +70,7 @@ export const ListItemCourse = (props: ListItemCourseProps) => {
                 onClick={() => {
                   if (course.id) {
                     chrome.tabs.create({
-                      url: `https://scombz.shibaura-it.ac.jp/lms/course?idnumber=${course.id}`,
+                      url: course.url ?? `https://scombz.shibaura-it.ac.jp/lms/course?idnumber=${course.id}`,
                     });
                   }
                 }}
