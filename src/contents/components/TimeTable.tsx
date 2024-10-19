@@ -55,7 +55,7 @@ const ClassBox = (props: ClassBoxProps) => {
     >
       {classDataArray.map((classData, idx) => (
         <a
-          href={`https://scombz.shibaura-it.ac.jp/lms/course?idnumber=${classData.id}`}
+          href={classData.url ?? `https://scombz.shibaura-it.ac.jp/lms/course?idnumber=${classData.id}`}
           style={{ textDecoration: "none", width: "100%" }}
           key={classData.id + classData.time + idx}
         >
@@ -306,6 +306,11 @@ export const TimeTable = (props: Props) => {
   const [today, setToday] = useState<string | false>(false);
   const [isLoadingTimeTable, setIsLoadingTimeTable] = useState<boolean>(false);
 
+  const [hiddenTimeTable, setHiddenTimeTable] = useState<string[]>([]);
+  const [originalTimeTable, setOriginalTimeTable] = useState<TimeTableType>([]);
+
+  const [filteredTimeTable, setFilteredTimeTable] = useState<TimeTableType>([]);
+
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
@@ -353,9 +358,20 @@ export const TimeTable = (props: Props) => {
       setDisplayTime(currentData.settings.displayTime);
       setHighlightToday(currentData.settings.highlightToday);
       setIsDarkMode(currentData.settings.darkMode);
+      setHiddenTimeTable(currentData.settings.editableTimeTable.hidden);
+      setOriginalTimeTable(currentData.settings.editableTimeTable.original);
     };
     fetchTimetable();
   }, []);
+
+  // 表示する時間割は、フィルタを通す
+  useEffect(() => {
+    const newTimeTable = [...timetable, ...originalTimeTable].filter(
+      (classData) => !hiddenTimeTable.includes(classData.id),
+    );
+    console.log(newTimeTable);
+    setFilteredTimeTable(newTimeTable);
+  }, [timetable, hiddenTimeTable, originalTimeTable]);
 
   useEffect(() => {
     if (timeTableTopDate !== "time") return;
@@ -385,8 +401,12 @@ export const TimeTable = (props: Props) => {
       <OriginalClassModal
         isOpen={isOpenModal}
         setIsOpen={setIsOpenModal}
-        onClose={() => console.log("CLOSED")}
-        isDarkMode={isDarkMode}
+        onClose={() => {
+          chrome.storage.local.get(defaultSaves, (currentData: Saves) => {
+            setHiddenTimeTable(currentData.settings.editableTimeTable.hidden);
+            setOriginalTimeTable(currentData.settings.editableTimeTable.original);
+          });
+        }}
       />
       <Box
         width="calc(100% - 20px)"
@@ -426,7 +446,7 @@ export const TimeTable = (props: Props) => {
 
         <Collapse in={isTimeTableOpen} timeout="auto">
           {/* 時間割がない場合は取得ボタンを設置 */}
-          {timetable.length === 0 ? (
+          {filteredTimeTable.length === 0 ? (
             <Box sx={{ textAlign: "center" }}>
               <Box mt={1}>
                 <LoadingButton variant="outlined" onClick={loadLMS} loading={isLoadingTimeTable}>
@@ -439,16 +459,16 @@ export const TimeTable = (props: Props) => {
               {/* 通常時間割 */}
               {width > 880 && isWideTimeTable ? (
                 <WideTimeTable
-                  timetable={timetable}
+                  timetable={filteredTimeTable}
                   displayClassroom={displayClassroom}
-                  displayTime={displayTime && timetable.length > 0}
+                  displayTime={displayTime && filteredTimeTable.length > 0}
                   nowDay={nowDay}
                   nowClassTime={nowClassTime}
                   isDarkMode={isDarkMode}
                 />
               ) : (
                 <NarrowTimeTable
-                  timetable={timetable}
+                  timetable={filteredTimeTable}
                   nowDay={nowDay}
                   nowClassTime={nowClassTime}
                   isDarkMode={isDarkMode}
