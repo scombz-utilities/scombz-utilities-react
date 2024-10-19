@@ -394,7 +394,10 @@ export const TimeTable = (props: Props) => {
     [highlightToday],
   );
 
-  const specialClassData = useMemo(() => timetable.filter((classData) => classData.day === -1), [timetable]);
+  const specialClassData = useMemo(
+    () => filteredTimeTable.filter((classData) => classData.day === -1),
+    [filteredTimeTable],
+  );
 
   return (
     <>

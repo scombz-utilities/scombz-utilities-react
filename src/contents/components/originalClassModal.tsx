@@ -65,7 +65,9 @@ const AddCourseModal = (props: AddCourseModalProps) => {
             </Typography>
             <Stack direction="column" spacing={1}>
               <Typography>
-                {weekdays[selectedDay]} {selectedPeriod + 1}限
+                {selectedDay < 0
+                  ? chrome.i18n.getMessage("timetableIntensiveCourse")
+                  : `${weekdays[selectedDay]} ${selectedPeriod + 1}限`}
               </Typography>
               <TextField
                 label="科目名"
@@ -269,6 +271,72 @@ export const OriginalClassModal = (props: Props) => {
               ))}
             </>
           ))}
+          <Grid item xs={1}>
+            <Typography variant="caption">{chrome.i18n.getMessage("timetableIntensiveCourse")}</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            {/* 自動取得された時間割 */}
+            {currentData.scombzData.timetable
+              .filter((d) => d.day === -1)
+              .map((d) => {
+                const isHidden = hidden.some((x) => x === d.id ?? d.name) || false;
+                return (
+                  <Paper sx={{ p: 0.5, my: 0.5, textAlign: "center" }} variant="outlined" key={d.id ?? d.name + d.time}>
+                    <Typography
+                      variant="caption"
+                      fontWeight="bold"
+                      sx={{ opacity: isHidden ? 0.6 : 1, textDecoration: isHidden ? "line-through" : "none" }}
+                    >
+                      {d.name}
+                    </Typography>
+                    <ButtonGroup size="small">
+                      {isHidden ? (
+                        <IconButton size="small" onClick={() => onToggleHidden(d.id ?? d.name)}>
+                          <MdVisibilityOff />
+                        </IconButton>
+                      ) : (
+                        <IconButton size="small" onClick={() => onToggleHidden(d.id ?? d.name)}>
+                          <MdVisibility />
+                        </IconButton>
+                      )}
+                    </ButtonGroup>
+                  </Paper>
+                );
+              })}
+            {/* 手動追加した時間割 */}
+            {originalTimeTable
+              .filter((d) => d.day === -1)
+              .map((d) => (
+                <Paper sx={{ p: 0.5, my: 0.5, textAlign: "center" }} variant="outlined">
+                  <Typography variant="caption" fontWeight="bold">
+                    {d.name}
+                  </Typography>
+                  <ButtonGroup size="small">
+                    <IconButton
+                      size="small"
+                      onClick={() => {
+                        setOriginalTimeTable((prev) => prev.filter((x) => x.id !== d.id));
+                      }}
+                    >
+                      <MdDelete />
+                    </IconButton>
+                  </ButtonGroup>
+                </Paper>
+              ))}
+            {/* 追加ボタン */}
+            <Button
+              variant="outlined"
+              fullWidth
+              size="small"
+              onClick={() => {
+                setSelectedDay(-2);
+                setSelectedPeriod(-2);
+                setIsOpenAddCourseModal(true);
+              }}
+            >
+              +
+            </Button>
+          </Grid>
         </Grid>
         <Button variant="contained" color="primary" onClick={submit}>
           完了
