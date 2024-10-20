@@ -175,6 +175,133 @@ const OptionsIndexFirefox = () => {
         </div>
       </div>
       <div className="option-item">
+        <h2>レイアウト設定</h2>
+        <h3>サイドメニューを自動で閉じる</h3>
+        <p>
+          ScombZの左側に表示されるサイドメニューを、常に閉じた状態でページ読み込みします。
+          メニューボタンを押すことで展開できます。
+          左メニュースタイル変更をオンにしている場合は、本項目もオンにすることが推奨されます。
+        </p>
+        <div>
+          <input
+            type="checkbox"
+            checked={currentLocalStorage?.settings.hideSideMenu ?? false}
+            onChange={(e) => setSettings("hideSideMenu", e.target.checked)}
+          />
+        </div>
+        <h3>サイドメニューのスタイル変更</h3>
+        <p>
+          ScombZの左側に表示されるサイドメニューを、ユーザビリティに配慮したスタイルに変更します。
+          表示だけでなく、グレーの部分をクリックすることによっても、メニューを閉じられるようになります。
+        </p>
+        <div>
+          <input
+            type="checkbox"
+            checked={currentLocalStorage?.settings.styleSideMenu ?? false}
+            onChange={(e) => setSettings("styleSideMenu", e.target.checked)}
+          />
+        </div>
+        <h3>お知らせダイアログを大きくする</h3>
+        <p>
+          ScombZのお知らせなどのダイアログを、ウィンドウのサイズまで拡張して見やすくします。
+          また、ダイアログの外をクリックすることでもダイアログを閉じられるようになります。
+        </p>
+        <div>
+          <input
+            type="checkbox"
+            checked={currentLocalStorage?.settings.styleDialog ?? false}
+            onChange={(e) => setSettings("styleDialog", e.target.checked)}
+          />
+        </div>
+        <h3>アンケートのレイアウト最適化</h3>
+        <p>アンケート画面のレイアウトを最適化し、アンケートの回答がしやすくなります。</p>
+        <div>
+          <input
+            type="checkbox"
+            checked={currentLocalStorage?.settings.styleSurveys ?? false}
+            onChange={(e) => setSettings("styleSurveys", e.target.checked)}
+          />
+        </div>
+        <h3>テストのレイアウト最適化</h3>
+        <p>
+          テスト画面のレイアウトを最適化し、テストの回答がしやすくなります。また、テスト中に間違えて別のページへ移動することを防げます。
+        </p>
+        <div>
+          <input
+            type="checkbox"
+            checked={currentLocalStorage?.settings.styleExam ?? false}
+            onChange={(e) => setSettings("styleExam", e.target.checked)}
+          />
+        </div>
+        <h3>更新通知全削除ボタン追加</h3>
+        <p>
+          ページ上部に表示されるバナーにある更新通知ボタンの右側に、全ての更新通知を一括で削除するボタンを追加します。
+        </p>
+        <div>
+          <input
+            type="checkbox"
+            checked={currentLocalStorage?.settings.updateClear ?? false}
+            onChange={(e) => setSettings("updateClear", e.target.checked)}
+          />
+        </div>
+        <h3>提出済み課題を非表示</h3>
+        <p>ScombZのホーム画面に表示されるカレンダーにおいて、既に提出済みである課題を非表示にします。</p>
+        <div>
+          <input
+            type="checkbox"
+            checked={currentLocalStorage?.settings.hideCompletedReports ?? false}
+            onChange={(e) => setSettings("hideCompletedReports", e.target.checked)}
+          />
+        </div>
+        <h3>最大幅を有効化</h3>
+        <p>科目ページ、LMSページ、課題提出ページに対して最大幅を設定します。</p>
+        <div>
+          <input
+            type="checkbox"
+            checked={currentLocalStorage?.settings.layout.setMaxWidth ?? false}
+            onChange={(e) => setSettings("layout.setMaxWidth", e.target.checked)}
+          />
+        </div>
+        <h3>ページトップボタン非表示</h3>
+        <p>ページ最上部へのボタンを非表示にします。</p>
+        <div>
+          <input
+            type="checkbox"
+            checked={currentLocalStorage?.settings.layout.removePageTop ?? false}
+            onChange={(e) => setSettings("layout.removePageTop", e.target.checked)}
+          />
+        </div>
+        <h3>ダイレクトリンク非表示</h3>
+        <p>ページ最下部に表示されるダイレクトリンクを非表示にします。</p>
+        <div>
+          <input
+            type="checkbox"
+            checked={currentLocalStorage?.settings.layout.removeDirectLink ?? false}
+            onChange={(e) => setSettings("layout.removeDirectLink", e.target.checked)}
+          />
+        </div>
+        <h3>トップページレイアウト変更</h3>
+        <p>トップページのレイアウトを変更します。</p>
+        <div>
+          <input
+            type="checkbox"
+            checked={currentLocalStorage?.settings.layout.topPageLayout ?? false}
+            onChange={(e) => setSettings("layout.topPageLayout", e.target.checked)}
+          />
+        </div>
+        <h3>ダークモード</h3>
+        <p>
+          ScombZにおいて自作のダークモードを有効にします。拡張機能により変更を行うため、一部の表示がうまく動作しない可能性があります。強い希望がない場合、ライトモードの使用を推奨します。
+        </p>
+        <div>
+          <input
+            type="checkbox"
+            checked={currentLocalStorage?.settings.darkMode ?? false}
+            onChange={(e) => setSettings("darkMode", e.target.checked)}
+          />
+        </div>
+      </div>
+      <div className="option-item">
         <h2>ポップアップ設定</h2>
         <h3>未提出課題数のバッジ表示</h3>
         <p>未提出の課題の個数をバッジに表示します。</p>
