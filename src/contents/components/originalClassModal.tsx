@@ -202,7 +202,12 @@ export const OriginalClassModal = (props: Props) => {
           setOriginalTimeTable((prev) => [...prev, newCourse]);
         }}
       />
-      <Box display="flex" flexDirection="column" px={1} sx={{ gap: 1 }}>
+      <Box
+        display="flex"
+        flexDirection="column"
+        px={1}
+        sx={{ gap: 1, overflowY: "auto", maxHeight: "calc(100vh - 200px)" }}
+      >
         <Grid container spacing={1} columns={13}>
           {/* タイトル */}
           <Grid item xs={1} />
