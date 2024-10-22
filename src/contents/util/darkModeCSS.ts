@@ -281,6 +281,9 @@ const darkModeCSS = `
         border-bottom-color: rgb(67, 72, 75);
         }
         /*科目別ページ関連*/
+        .scombz-util-survey-button-help-popup{
+            background-color:#333;
+        }
         .ql-editor > p > span{
         color:#aaa !important;
         }

@@ -28,7 +28,10 @@ const IndexPopup = () => {
 
       // アンケートは通知対象の科目一覧でフィルタリング
       const notifySubjects = items.settings.notifySurveySubjects.map((sbj) => sbj.name);
-      const surveyList = items.scombzData.surveyList.filter((d) => notifySubjects.includes(d.course));
+      const isDisplayAllSurvey = items.settings.displayAllSurvey;
+      const surveyList = isDisplayAllSurvey
+        ? items.scombzData.surveyList
+        : items.scombzData.surveyList.filter((d) => notifySubjects.includes(d.course));
 
       const mergedTask = [...items.scombzData.tasklist, ...surveyList, ...items.scombzData.originalTasklist]
         .filter((task) => !items.settings.hiddenTaskIdList.includes(task.id)) // 非表示タスクを除外

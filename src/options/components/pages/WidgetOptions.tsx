@@ -355,6 +355,13 @@ export const WidgetOptions = (props: Props) => {
           validateMessage="整数で入力してください。"
           onSaveButtonClick={(value) => setSettings("taskListRowsPerPage", parseInt(value, 10))}
         />
+        <CustomSwitch
+          i18nLabel="全てのアンケートを課題として表示"
+          i18nCaption="授業ごとのアンケート表示の設定の有無に関わらず、回答期限内の全てのアンケートを課題として表示します。"
+          optionId="displayAllSurvey"
+          value={saves.settings.displayAllSurvey}
+          onChange={(_e, checked) => setSettings("displayAllSurvey", checked)}
+        />
         <CustomRemovableList
           i18nLabel="授業内アンケートの課題表示"
           optionId="notifySurveySubjects"
