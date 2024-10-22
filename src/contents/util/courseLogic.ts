@@ -23,6 +23,11 @@ export const insertSurveyBtnOnSubj = async () => {
             <input class="ItemBox-CheckBox-Input" type="checkbox" id="noticeSurvey"></input>
             <label class="ItemBox-CheckBox-Label" for="noticeSurvey"></label>
             <span>${chrome.i18n.getMessage("displayThisSurveyForTaskList")}</span>
+            <span class="scombz-util-survey-button-help">?</span>
+            <div class="scombz-util-survey-button-help-popup">
+              <p>メニュー画面内の課題一覧・ScombZトップページなどに表示される課題一覧に、この科目のアンケートを表示するかどうかを設定します。</p>
+              <p>科目によらず全てのアンケートを課題一覧に表示する場合は、基本設定の「全てのアンケートを課題として表示」を有効にしてください。</p>
+            </div>
           </div>`,
       );
       const pageUrl = location.href;

@@ -300,6 +300,15 @@ const OptionsIndexFirefox = () => {
             onChange={(e) => setSettings("darkMode", e.target.checked)}
           />
         </div>
+        <h3>全てのアンケートを課題として表示</h3>
+        <p>授業ごとのアンケート表示の設定の有無に関わらず、回答期限内の全てのアンケートを課題として表示します。</p>
+        <div>
+          <input
+            type="checkbox"
+            checked={currentLocalStorage?.settings.displayAllSurvey ?? false}
+            onChange={(e) => setSettings("displayAllSurvey", e.target.checked)}
+          />
+        </div>
       </div>
       <div className="option-item">
         <h2>ポップアップ設定</h2>

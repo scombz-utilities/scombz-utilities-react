@@ -98,6 +98,7 @@ export type Settings = {
     hidden: string[];
     original: TimeTable;
   };
+  displayAllSurvey: boolean;
 };
 
 export const defaultSettings: Settings = {
@@ -200,6 +201,7 @@ export const defaultSettings: Settings = {
     hidden: [],
     original: [],
   },
+  displayAllSurvey: false,
 };
 
 /* ScombzData */
