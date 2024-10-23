@@ -19,9 +19,10 @@ type UsingWidgetProps = {
   deleteWidget: (name: Widget) => void;
   moveUp: (name: Widget) => void;
   moveDown: (name: Widget) => void;
+  darkMode?: boolean;
 };
 const UsingWidget = (props: UsingWidgetProps) => {
-  const { name, displayName, deleteWidget, moveUp, moveDown } = props;
+  const { name, displayName, deleteWidget, moveUp, moveDown, darkMode = false } = props;
   return (
     <Box
       sx={{
@@ -31,7 +32,7 @@ const UsingWidget = (props: UsingWidgetProps) => {
         border: "1px solid #ccc",
         p: 0.5,
         borderRadius: 1,
-        backgroundColor: "#fff",
+        backgroundColor: darkMode ? "#333" : "#fff",
         height: "45px",
       }}
     >
@@ -55,9 +56,10 @@ type UnUsingWidgetProps = {
   name: Widget;
   displayName: string;
   addWidget: (name: Widget) => void;
+  darkMode?: boolean;
 };
 const UnUsingWidget = (props: UnUsingWidgetProps) => {
-  const { name, displayName, addWidget } = props;
+  const { name, displayName, addWidget, darkMode = false } = props;
   return (
     <Box
       sx={{
@@ -68,11 +70,11 @@ const UnUsingWidget = (props: UnUsingWidgetProps) => {
         py: 0.5,
         px: 2,
         borderRadius: 1,
-        backgroundColor: "#fff",
+        backgroundColor: darkMode ? "#333" : "#fff",
         height: "45px",
         cursor: "pointer",
         "&:hover": {
-          backgroundColor: "#eee",
+          backgroundColor: darkMode ? "#444" : "#eee",
         },
       }}
       onClick={() => addWidget(name)}
@@ -98,7 +100,7 @@ export const CustomWidgetSort = (props: CustomWidgetSortProps) => {
         <Paper
           elevation={5}
           sx={{
-            backgroundColor: "#eee",
+            backgroundColor: saves.settings.darkMode ? "#000" : "#eee",
           }}
         >
           <Box
@@ -107,7 +109,7 @@ export const CustomWidgetSort = (props: CustomWidgetSortProps) => {
               borderBottom: "1px solid #ccc",
               width: "300px",
               p: 0.8,
-              backgroundColor: "#fff",
+              backgroundColor: saves.settings.darkMode ? "#333" : "#fff",
             }}
           >
             <Typography variant="h3" fontSize="1.1rem">
@@ -120,6 +122,7 @@ export const CustomWidgetSort = (props: CustomWidgetSortProps) => {
                 key={name}
                 name={name}
                 displayName={name}
+                darkMode={saves.settings.darkMode}
                 deleteWidget={(name) => {
                   const newOrder = saves.settings.widgetOrder.filter((n) => n !== name);
                   setSettings("widgetOrder", newOrder);
@@ -143,7 +146,7 @@ export const CustomWidgetSort = (props: CustomWidgetSortProps) => {
         <Paper
           elevation={5}
           sx={{
-            backgroundColor: "#eee",
+            backgroundColor: saves.settings.darkMode ? "#000" : "#eee",
           }}
         >
           <Box
@@ -152,7 +155,7 @@ export const CustomWidgetSort = (props: CustomWidgetSortProps) => {
               borderBottom: "1px solid #ccc",
               width: "300px",
               p: 0.8,
-              backgroundColor: "#fff",
+              backgroundColor: saves.settings.darkMode ? "#333" : "#fff",
             }}
           >
             <Typography variant="h3" fontSize="1.1rem">
@@ -175,6 +178,7 @@ export const CustomWidgetSort = (props: CustomWidgetSortProps) => {
                   key={name}
                   name={name}
                   displayName={name}
+                  darkMode={saves.settings.darkMode}
                   addWidget={(name) => {
                     const newOrder = [...saves.settings.widgetOrder, name];
                     setSettings("widgetOrder", newOrder);
