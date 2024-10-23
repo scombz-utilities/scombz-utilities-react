@@ -240,26 +240,10 @@ export const createSyllabusButton = async () => {
   const insertArea =
     document.querySelector(".contents-question-template-area") || document.querySelector(".course-title-txt");
 
-  const year = location.href.split("idnumber=")[1].slice(0, 4);
-  const facNumber = location.href.split("idnumber=")[1].slice(4, 6);
-
-  let fac = "";
-  if (facNumber === "01") {
-    fac = "ko1";
-  } else if (facNumber === "02") {
-    fac = "arc";
-  } else if (facNumber === "03") {
-    fac = "sys";
-  } else if (facNumber === "04") {
-    fac = "dsn";
-  } else if (facNumber === "05") {
-    fac = "din";
-  } else {
-    // 博士の番号が違う場合でもシラバス検索は変わらない？
-    console.log("createSyllabusButton: 学部特定失敗");
-    console.log();
-    fac = "din";
-  }
+  const year: string = location.search.split("idnumber=")[1].slice(0, 4);
+  const facNumber: number = parseInt(location.search.split("idnumber=")[1].slice(4, 6), 10);
+  const facArray = ["ko1", "arc", "sys", "dsn", "din"];
+  const fac = Number.isNaN(facNumber) ? undefined : facArray[facNumber - 1];
 
   const rawCourseTitle = getCourseTitle().replace(/！-／：-＠［-｀｛-～、-〜”’・]+/g, " ");
   const courseTitle = splitByNumbers(rawCourseTitle).join(" ");
