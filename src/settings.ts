@@ -94,6 +94,11 @@ export type Settings = {
   widgetMaxWidth: number;
   widgetZoom: number;
   darkMode: boolean;
+  editableTimeTable: {
+    hidden: string[];
+    original: TimeTable;
+  };
+  displayAllSurvey: boolean;
 };
 
 export const defaultSettings: Settings = {
@@ -192,6 +197,11 @@ export const defaultSettings: Settings = {
   widgetMaxWidth: 1200,
   widgetZoom: 1,
   darkMode: false,
+  editableTimeTable: {
+    hidden: [],
+    original: [],
+  },
+  displayAllSurvey: false,
 };
 
 /* ScombzData */

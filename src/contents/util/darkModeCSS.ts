@@ -68,7 +68,7 @@ const darkModeCSS = `
         /*サイドメニュー関連*/
 
         .sidemenu-logo > a > img{
-        filter: drop-shadow(0 0px 1px #fff) drop-shadow(0 0px 1px #aaa) drop-shadow(0 0px 1px #aaa);
+        filter: invert(1) grayscale(40%) hue-rotate(180deg);
         }
         .hamburger-icon .hamburger-line {
         background-color: #ecedea;
@@ -281,6 +281,9 @@ const darkModeCSS = `
         border-bottom-color: rgb(67, 72, 75);
         }
         /*科目別ページ関連*/
+        .scombz-util-survey-button-help-popup{
+            background-color:#333;
+        }
         .ql-editor > p > span{
         color:#aaa !important;
         }

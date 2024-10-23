@@ -69,6 +69,13 @@ export const BasicOptions = (props: Props) => {
           value={saves.settings.autoAdfs}
           onChange={(_e, checked) => setSettings("autoAdfs", checked)}
         />
+        <CustomSwitch
+          i18nLabel="全てのアンケートを課題として表示"
+          i18nCaption="授業ごとのアンケート表示の設定の有無に関わらず、回答期限内の全てのアンケートを課題として表示します。"
+          optionId="displayAllSurvey"
+          value={saves.settings.displayAllSurvey}
+          onChange={(_e, checked) => setSettings("displayAllSurvey", checked)}
+        />
       </OptionGroup>
     </>
   );

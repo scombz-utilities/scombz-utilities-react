@@ -31,7 +31,7 @@ import { DataOperation } from "~/options/components/pages/DataOperation";
 import { Information } from "~/options/components/pages/Information";
 import { LayoutOptions } from "~/options/components/pages/LayoutOptions";
 import { WidgetOptions } from "~/options/components/pages/WidgetOptions";
-import theme from "~/theme";
+import theme, { darkTheme } from "~/theme";
 import { PopupOptions } from "~options/components/pages/PopupOptions";
 import { defaultSaves } from "~settings";
 import type { Saves } from "~settings";
@@ -42,6 +42,7 @@ const OptionsIndexChrome = () => {
   const [currentTab, setCurrentTab] = useState(new URLSearchParams(window.location.search).get("tab") || "basic");
   const [currentLocalStorage, setCurrentLocalStorage] = useState<Saves>(null);
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
 
   const setSettings = async (key: string, value: unknown) => {
     const newLocalStorage = {
@@ -54,6 +55,7 @@ const OptionsIndexChrome = () => {
     setCurrentLocalStorage(newLocalStorage);
     await chrome.storage.local.set(newLocalStorage);
     setSnackbarOpen(true);
+    setIsDarkMode(newLocalStorage.settings.darkMode);
   };
 
   const setScombzData = async (key: string, value: unknown) => {
@@ -71,6 +73,7 @@ const OptionsIndexChrome = () => {
   useEffect(() => {
     chrome.storage.local.get(defaultSaves, (currentData: Saves) => {
       setCurrentLocalStorage(currentData);
+      setIsDarkMode(currentData.settings.darkMode);
     });
   }, []);
 
@@ -86,7 +89,7 @@ const OptionsIndexChrome = () => {
   ];
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={isDarkMode ? darkTheme : theme}>
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={snackbarOpen}
@@ -102,7 +105,14 @@ const OptionsIndexChrome = () => {
           設定を保存しました
         </Alert>
       </Snackbar>
-      <Stack direction="row" spacing={1}>
+      <Stack
+        direction="row"
+        spacing={1}
+        sx={{
+          backgroundColor: isDarkMode ? "#1F1F27" : "#fff",
+          color: isDarkMode ? "#CCC" : undefined,
+        }}
+      >
         <Box
           gap="1rem"
           py="1rem"
@@ -111,7 +121,7 @@ const OptionsIndexChrome = () => {
             top: 0,
             left: 0,
             bottom: 0,
-            backgroundColor: "white",
+            backgroundColor: "inherit",
             borderRightColor: grey[300],
             borderRightWidth: "1px",
             borderRightStyle: "solid",
@@ -121,7 +131,13 @@ const OptionsIndexChrome = () => {
             <img
               src={chrome.runtime.getURL("assets/scombz_utilities.svg")}
               alt="ScombZ Utilities"
-              style={{ width: "50%", maxWidth: "250px", margin: "0 auto", display: "block" }}
+              style={{
+                width: "50%",
+                maxWidth: "250px",
+                margin: "0 auto",
+                display: "block",
+                filter: "invert(1) grayscale(60%) hue-rotate(180deg)",
+              }}
             />
           </Box>
           <List>
@@ -135,11 +151,11 @@ const OptionsIndexChrome = () => {
                 }}
                 sx={{
                   backgroundColor: currentTab === menu.value ? indigo[500] : "transparent",
-                  color: currentTab === menu.value ? "white" : "black",
+                  color: currentTab === menu.value ? "white" : "inherit",
                   transition: "all 0.3s",
                   ":hover": {
-                    backgroundColor: currentTab === menu.value ? indigo[700] : grey[100],
-                    color: currentTab === menu.value ? "white" : "black",
+                    backgroundColor: currentTab === menu.value ? indigo[700] : isDarkMode ? "#36363B" : grey[100],
+                    color: currentTab === menu.value ? "white" : "inherit",
                   },
                 }}
               >
@@ -147,7 +163,7 @@ const OptionsIndexChrome = () => {
                   {menu.icon && (
                     <ListItemIcon
                       sx={{
-                        color: currentTab === menu.value ? "white" : "black",
+                        color: currentTab === menu.value ? "white" : "inherit",
                         transition: "all 0.3s",
                       }}
                     >
@@ -169,8 +185,10 @@ const OptionsIndexChrome = () => {
             top: 0,
             right: 0,
             bottom: 0,
+            overflowY: "auto",
             width: "calc(100% - 250px - 2rem)",
             padding: "1rem",
+            backgroundColor: "inherit",
           }}
         >
           {currentLocalStorage === null ? (
@@ -181,6 +199,7 @@ const OptionsIndexChrome = () => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                backgroundColor: "inherit",
               }}
             >
               <CircularProgress size={60} />

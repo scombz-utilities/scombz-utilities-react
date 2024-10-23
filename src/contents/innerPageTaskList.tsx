@@ -23,7 +23,10 @@ const insertTasklist = async (currentData: Saves) => {
 
   const notifySurveySubjectsName = currentData.settings.notifySurveySubjects.map((subject) => subject.name);
   const allSurveyList = currentData.scombzData.surveyList;
-  const surveyList = allSurveyList.filter((task) => notifySurveySubjectsName.includes(task.course));
+  const isDisplayAllSurvey = currentData.settings.displayAllSurvey;
+  const surveyList = isDisplayAllSurvey
+    ? allSurveyList
+    : allSurveyList.filter((task) => notifySurveySubjectsName.includes(task.course));
 
   const originalTasklist = currentData.scombzData.originalTasklist;
 

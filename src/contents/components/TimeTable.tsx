@@ -8,11 +8,13 @@ import {
   MdKeyboardArrowUp,
   MdOutlineCalendarViewWeek,
   MdOutlineCalendarViewDay,
+  MdEditCalendar,
 } from "react-icons/md";
 import type { TimeTable as TimeTableType } from "../types/timetable";
 import { getTimetablePosFromTime } from "../util/functions";
 import { defaultSaves } from "../util/settings";
 import type { Saves } from "../util/settings";
+import { OriginalClassModal } from "./originalClassModal";
 import { CLASS_TIMES } from "~/constants";
 import { fetchLMS } from "~contents/util/getLMS";
 
@@ -53,7 +55,7 @@ const ClassBox = (props: ClassBoxProps) => {
     >
       {classDataArray.map((classData, idx) => (
         <a
-          href={`https://scombz.shibaura-it.ac.jp/lms/course?idnumber=${classData.id}`}
+          href={classData.url ?? `https://scombz.shibaura-it.ac.jp/lms/course?idnumber=${classData.id}`}
           style={{ textDecoration: "none", width: "100%" }}
           key={classData.id + classData.time + idx}
         >
@@ -304,6 +306,13 @@ export const TimeTable = (props: Props) => {
   const [today, setToday] = useState<string | false>(false);
   const [isLoadingTimeTable, setIsLoadingTimeTable] = useState<boolean>(false);
 
+  const [hiddenTimeTable, setHiddenTimeTable] = useState<string[]>([]);
+  const [originalTimeTable, setOriginalTimeTable] = useState<TimeTableType>([]);
+
+  const [filteredTimeTable, setFilteredTimeTable] = useState<TimeTableType>([]);
+
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
 
   const [timeTableTopDate, setTimeTableTopDate] = useState<typeof defaultSaves.settings.timeTableTopDate>("date");
@@ -349,9 +358,19 @@ export const TimeTable = (props: Props) => {
       setDisplayTime(currentData.settings.displayTime);
       setHighlightToday(currentData.settings.highlightToday);
       setIsDarkMode(currentData.settings.darkMode);
+      setHiddenTimeTable(currentData.settings.editableTimeTable.hidden);
+      setOriginalTimeTable(currentData.settings.editableTimeTable.original);
     };
     fetchTimetable();
   }, []);
+
+  // 表示する時間割は、フィルタを通す
+  useEffect(() => {
+    const newTimeTable = [...timetable, ...originalTimeTable].filter(
+      (classData) => !hiddenTimeTable.includes(classData.id),
+    );
+    setFilteredTimeTable(newTimeTable);
+  }, [timetable, hiddenTimeTable, originalTimeTable]);
 
   useEffect(() => {
     if (timeTableTopDate !== "time") return;
@@ -374,10 +393,24 @@ export const TimeTable = (props: Props) => {
     [highlightToday],
   );
 
-  const specialClassData = useMemo(() => timetable.filter((classData) => classData.day === -1), [timetable]);
+  const specialClassData = useMemo(
+    () => filteredTimeTable.filter((classData) => classData.day === -1),
+    [filteredTimeTable],
+  );
 
   return (
     <>
+      <OriginalClassModal
+        isOpen={isOpenModal}
+        setIsOpen={setIsOpenModal}
+        onClose={() => {
+          chrome.storage.local.get(defaultSaves, (currentData: Saves) => {
+            setTimetable(currentData.scombzData.timetable);
+            setHiddenTimeTable(currentData.settings.editableTimeTable.hidden);
+            setOriginalTimeTable(currentData.settings.editableTimeTable.original);
+          });
+        }}
+      />
       <Box
         width="calc(100% - 20px)"
         minHeight="30px"
@@ -399,9 +432,14 @@ export const TimeTable = (props: Props) => {
           )}
           <ButtonGroup sx={{ position: "absolute", top: 0, right: 0 }}>
             {width > 880 && (
-              <IconButton onClick={toggleWideTimeTable} size="small">
-                {isWideTimeTable ? <MdOutlineCalendarViewDay /> : <MdOutlineCalendarViewWeek />}
-              </IconButton>
+              <>
+                <IconButton size="small" onClick={() => setIsOpenModal(true)}>
+                  <MdEditCalendar />
+                </IconButton>
+                <IconButton onClick={toggleWideTimeTable} size="small">
+                  {isWideTimeTable ? <MdOutlineCalendarViewDay /> : <MdOutlineCalendarViewWeek />}
+                </IconButton>
+              </>
             )}
             <IconButton onClick={toggleTimeTable} size="small">
               {isTimeTableOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
@@ -411,7 +449,7 @@ export const TimeTable = (props: Props) => {
 
         <Collapse in={isTimeTableOpen} timeout="auto">
           {/* 時間割がない場合は取得ボタンを設置 */}
-          {timetable.length === 0 ? (
+          {filteredTimeTable.length === 0 ? (
             <Box sx={{ textAlign: "center" }}>
               <Box mt={1}>
                 <LoadingButton variant="outlined" onClick={loadLMS} loading={isLoadingTimeTable}>
@@ -424,16 +462,16 @@ export const TimeTable = (props: Props) => {
               {/* 通常時間割 */}
               {width > 880 && isWideTimeTable ? (
                 <WideTimeTable
-                  timetable={timetable}
+                  timetable={filteredTimeTable}
                   displayClassroom={displayClassroom}
-                  displayTime={displayTime && timetable.length > 0}
+                  displayTime={displayTime && filteredTimeTable.length > 0}
                   nowDay={nowDay}
                   nowClassTime={nowClassTime}
                   isDarkMode={isDarkMode}
                 />
               ) : (
                 <NarrowTimeTable
-                  timetable={timetable}
+                  timetable={filteredTimeTable}
                   nowDay={nowDay}
                   nowClassTime={nowClassTime}
                   isDarkMode={isDarkMode}

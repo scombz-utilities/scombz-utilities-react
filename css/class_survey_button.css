@@ -39,11 +39,11 @@
 }
 .noticeSurveyBox {
   margin-left: 42px;
+  position: relative;
 }
 .noticeSurveyBox > span {
   position: relative;
   top: -12px;
-  margin-right: 5px;
 }
 
 .course-title-txt.course-view-header-txt {
@@ -54,4 +54,29 @@
   .noticeSurveyBox {
     margin-left: 0;
   }
+}
+
+.scombz-util-survey-button-help {
+  display: inline-block;
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.scombz-util-survey-button-help-popup {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  left: 352px;
+  top: 0;
+  overflow: auto;
+  background-color: #fff;
+  border: 1px solid #000;
+  padding: 3px 5px;
+  font-size: 12px;
+}
+.scombz-util-survey-button-help-popup p {
+  margin: 2px;
+}
+.scombz-util-survey-button-help:hover + .scombz-util-survey-button-help-popup {
+  display: block;
 }

@@ -8,9 +8,10 @@ type Props = {
   setIsOpen: (value: boolean) => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onClose?: (res?: any) => void;
+  width?: number | string;
 };
 export const Modal = (props: Props) => {
-  const { title, children, isOpen: open, setIsOpen, onClose = () => {} } = props;
+  const { title, children, isOpen: open, setIsOpen, onClose = () => {}, width = 720 } = props;
 
   useEffect(() => {
     const onEscape = (e: KeyboardEvent) => {
@@ -48,7 +49,7 @@ export const Modal = (props: Props) => {
       }}
       onClick={close}
     >
-      <Card sx={{ width: 720, padding: 1, overflow: "visible" }} onClick={(e) => e.stopPropagation()}>
+      <Card sx={{ width: width, padding: 1, overflow: "visible" }} onClick={(e) => e.stopPropagation()}>
         <Box display="flex" justifyContent="center" sx={{ position: "relative", p: 0.5 }}>
           <IconButton onClick={close} sx={{ position: "absolute", right: 0, top: 0 }}>
             <MdClose />
