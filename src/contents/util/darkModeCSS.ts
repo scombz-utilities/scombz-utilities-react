@@ -68,7 +68,7 @@ const darkModeCSS = `
         /*サイドメニュー関連*/
 
         .sidemenu-logo > a > img{
-        filter: drop-shadow(0 0px 1px #fff) drop-shadow(0 0px 1px #aaa) drop-shadow(0 0px 1px #aaa);
+        filter: invert(1) grayscale(40%) hue-rotate(180deg);
         }
         .hamburger-icon .hamburger-line {
         background-color: #ecedea;
