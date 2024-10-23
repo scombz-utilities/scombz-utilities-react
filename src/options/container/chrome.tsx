@@ -136,7 +136,7 @@ const OptionsIndexChrome = () => {
                 maxWidth: "250px",
                 margin: "0 auto",
                 display: "block",
-                filter: "invert(1) grayscale(60%) hue-rotate(180deg)",
+                filter: isDarkMode ? "invert(1) grayscale(60%) hue-rotate(180deg)" : "none",
               }}
             />
           </Box>
