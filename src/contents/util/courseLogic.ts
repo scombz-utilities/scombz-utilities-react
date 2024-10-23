@@ -244,13 +244,15 @@ export const createSyllabusButton = async () => {
   const facNumber: number = parseInt(location.search.split("idnumber=")[1].slice(4, 6), 10);
   const facArray = ["ko1", "arc", "sys", "dsn", "din"];
   const fac = Number.isNaN(facNumber) ? undefined : facArray[facNumber - 1];
+  const idxnameArray = facArray.map((fac) => `&idxname=${fac}${year}`);
+  const idxname = fac ? idxnameArray[facArray.indexOf(fac)] : idxnameArray.join("");
 
   const rawCourseTitle = getCourseTitle().replace(/！-／：-＠［-｀｛-～、-〜”’・]+/g, " ");
   const courseTitle = splitByNumbers(rawCourseTitle).join(" ");
   const searchStr = courseTitle.includes(" ") ? courseTitle : `+subject:"${courseTitle}"`;
   const date = new Date();
   date.setMonth(date.getMonth() - 4);
-  const urlParam = `ajaxmode=true&query=${toEscapedEUCJP(searchStr)}&whence=0&idxname=${year}%2F${fac}&max=20&result=normal&sort=score&scombzutilities=true`;
+  const urlParam = `ajaxmode=true&query=${toEscapedEUCJP(searchStr)}&whence=0${idxname}&max=20&result=normal&sort=score&scombzutilities=true`;
 
   insertArea.insertAdjacentHTML(
     "afterend",
