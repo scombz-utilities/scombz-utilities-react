@@ -1,4 +1,5 @@
 import type { PlasmoCSConfig } from "plasmo";
+import { toEscapedEUCJP } from "./util/encoding";
 import { defaultSaves } from "./util/settings";
 import type { Saves } from "./util/settings";
 
@@ -44,7 +45,8 @@ const fixDisplayBug = async () => {
     const correctURL = anchor.outerHTML.match(/href="(http[^"]*)"/);
     if (correctURL && correctURL.length > 1) {
       anchor.setAttribute("href", correctURL[1]);
-      anchor.innerHTML = anchor.innerHTML.replace(/href="http[^"]*"(&gt;)?/, "");
+      anchor.innerHTML = anchor.innerHTML.replace(/href="http[^"]*"(&gt;)?/, "").replace(/^\"/, "");
+      anchor.parentElement?.querySelector("a:not([href])")?.remove();
     }
   });
 };
@@ -62,7 +64,9 @@ const linkToManualSearch = async () => {
       博士の方は<a href="http://syllabus.sic.shibaura-it.ac.jp/dcr.html?f=din&b=6">こちら</a>
       `;
   } else {
-    const url = `http://syllabus.sic.shibaura-it.ac.jp/${fac}.html?f=${fac}&b=${bArray.indexOf(fac) + 1}`;
+    const url = fac
+      ? `http://syllabus.sic.shibaura-it.ac.jp/${fac}.html?f=${fac}&b=${bArray.indexOf(fac) + 1}`
+      : "http://syllabus.sic.shibaura-it.ac.jp/";
     paragraph = `うまく検索できない場合は<a href="${url}">こちらから</a>手動で探してみて下さい。`;
   }
   header.insertAdjacentHTML(
@@ -82,6 +86,99 @@ const linkToManualSearch = async () => {
   </div>
   `,
   );
+};
+
+/**
+ * 科目名完全一致があれば、その科目のみ表示する
+ */
+const filterMatchesBySubjectName = async (rawCourseTitle: string) => {
+  const matchedArray = [...document.querySelectorAll(".container > dl > dt a[href]")].filter(
+    (a: HTMLElement) => a.innerText.trim() === rawCourseTitle,
+  );
+  if (matchedArray.length === 0) return;
+  matchedArray.forEach((a: HTMLAnchorElement) => {
+    a.classList.add("scombz-utilities-matched-course");
+  });
+  document.head.insertAdjacentHTML(
+    "beforeend",
+    `
+    <style>
+      .container > dl > dt:has(a[href]) {
+        display: none;
+      }
+      .container > dl > dt:has(a[href]) + dd, .container > dl > dt:has(a[href]) + dd + dd {
+        display: none;
+      }
+      .container > dl > dt:has(a.scombz-utilities-matched-course) {
+        display: block;
+      }
+      .container > dl > dt:has(a.scombz-utilities-matched-course) + dd, .container > dl > dt:has(a.scombz-utilities-matched-course) + dd + dd {
+        display: block;
+      }
+    </style>
+    `,
+  );
+};
+
+const autoRedirect = async () => {
+  const matchedCourse = document.querySelectorAll(
+    ".container > dl > dt a[href][class='scombz-utilities-matched-course']",
+  );
+  if (matchedCourse.length === 1) {
+    const url = matchedCourse[0].getAttribute("href");
+    location.href = url as string;
+  } else if (matchedCourse.length > 1) {
+    for (const course of matchedCourse) {
+      const url = course.getAttribute("href");
+      if (url) {
+        try {
+          await new Promise((resolve) => setTimeout(resolve, 100));
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          const data = await response.text();
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(data, "text/html");
+          const kamokuCD = doc.querySelector("#KamokuCD") as HTMLDivElement;
+          const teachers = [...doc.querySelectorAll("td.teacher")] as HTMLDivElement[];
+          course.insertAdjacentHTML(
+            "afterend",
+            `
+            <div style="font-size: 1.5rem; margin-top: .2rem; margin-left: .5rem; display: grid; grid-template-columns: 85px 1fr; font-weight: normal;">
+              <div>学科コード:</div><div style="font-weight: bold;">${kamokuCD?.innerText?.match(/^[A-Z]+/)?.[0] ?? "-"}</div>
+              <div>担当教員:</div><div>${teachers?.map((teacher) => teacher.innerText)?.join(", ")}</div>
+            <div>
+          `,
+          );
+        } catch (error) {
+          console.error(`Fetch error for URL: ${url}`, error);
+        }
+      }
+    }
+  }
+};
+
+const onNoMatch = async (rawCourseTitle: string, retryCount: number) => {
+  const matchedCourse = document.querySelectorAll(".container > dl > dt a[href]");
+  if (matchedCourse.length === 0 && retryCount === 0) {
+    const newCourseTitle = rawCourseTitle
+      .replace(/[！-／：-＠［-｀｛-～、-〜”’・&]+/g, " ")
+      .replace(/[Ａ-Ｚａ-ｚ０-９]/g, "");
+    location.href = location.href.replace(/query=[^&]+/, `query=${toEscapedEUCJP(newCourseTitle)}`) + "&retryCount=1";
+  }
+  if (matchedCourse.length === 0 && retryCount === 1) {
+    const searchResult = (document.querySelector(".namazu-result-header h2 + p") as HTMLParagraphElement).innerText
+      .replace(/\s/g, "")
+      .match(/\[[^\]]+\]/g);
+    const filteredSearchWord = searchResult
+      ?.filter((result) => result.match(/:([0-9]+)\]/)?.[1] !== "0")
+      .map((result) => result.replace(/^\[(.+):[0-9]+\]$/, "$1"));
+    const newCourseTitle = filteredSearchWord?.join(" ") || "";
+    location.href = location.href
+      .replace(/query=[^&]+/, `query=${toEscapedEUCJP(newCourseTitle)}`)
+      .replace(/retryCount=1/, "retryCount=2");
+  }
 };
 
 const loadFaculty = async () => {
@@ -150,9 +247,14 @@ const linkSyllabus = async () => {
     const url = new URL(location.href);
     const params = url.searchParams;
     if (!params.has("scombzutilities")) return;
+    const rawCourseTitle = params.get("scombzutilities");
+    const retryCount = parseInt(params.get("retryCount") || "0", 10);
     hideSearchBox();
-    fixDisplayBug();
     linkToManualSearch();
+    await fixDisplayBug();
+    await filterMatchesBySubjectName(rawCourseTitle);
+    autoRedirect();
+    onNoMatch(rawCourseTitle, retryCount);
   }
 
   if (location.href.match(locationRegEx)) {
