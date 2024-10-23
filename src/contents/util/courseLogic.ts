@@ -3,7 +3,6 @@ import { toEscapedEUCJP } from "./encoding";
 import { getCourseTitle } from "./functions";
 import { defaultSaves } from "./settings";
 import type { Saves } from "./settings";
-import type { RuntimeMessage } from "~background";
 
 //アンケートを取得するかどうかの設定を科目別ページに挿入
 export const insertSurveyBtnOnSubj = async () => {
@@ -237,31 +236,21 @@ const splitByNumbers = (input: string): string[] => {
 
 export const createSyllabusButton = async () => {
   if (!location.href.startsWith("https://scombz.shibaura-it.ac.jp/lms/course?")) return;
-  const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
-  const fac = currentData.settings.faculty;
+
   const insertArea =
     document.querySelector(".contents-question-template-area") || document.querySelector(".course-title-txt");
-  if (!fac) {
-    insertArea.insertAdjacentHTML(
-      "afterend",
-      `<span style="color:red;padding: 12px 30px 10px 34px">
-        ${chrome.i18n.getMessage("openExtensionOptionDescription1")}
-        <a href="javascript:void(0);" id="link_to_extention_syll">${chrome.i18n.getMessage("extensionOption")}</a>
-        ${chrome.i18n.getMessage("openExtensionOptionDescription2")}
-        </span>
-    `,
-    );
-    document.getElementById("link_to_extention_syll")?.addEventListener("click", () => {
-      chrome.runtime.sendMessage({ action: "openOption" } as RuntimeMessage);
-    });
-    return;
-  }
+
+  const year: string = location.search.split("idnumber=")[1].slice(0, 4);
+  const facNumber: number = parseInt(location.search.split("idnumber=")[1].slice(4, 6), 10);
+  const facArray = ["ko1", "arc", "sys", "dsn", "din"];
+  const fac = facArray[facNumber - 1];
+  const idxnameArray = facArray.map((f) => `&idxname=${year}%2F${f}`);
+  const idxname = fac ? idxnameArray[facNumber - 1] : idxnameArray.join("");
+
   const rawCourseTitle = getCourseTitle().replace(/！-／：-＠［-｀｛-～、-〜”’・]+/g, " ");
   const courseTitle = splitByNumbers(rawCourseTitle).join(" ");
   const searchStr = courseTitle.includes(" ") ? courseTitle : `+subject:"${courseTitle}"`;
-  const date = new Date();
-  date.setMonth(date.getMonth() - 4);
-  const urlParam = `ajaxmode=true&query=${toEscapedEUCJP(searchStr)}&whence=0&idxname=${date.getFullYear()}%2F${fac}&max=20&result=normal&sort=score&scombzutilities=true`;
+  const urlParam = `ajaxmode=true&query=${toEscapedEUCJP(searchStr)}&whence=0${idxname}&max=20&result=normal&sort=score&scombzutilities=true`;
 
   insertArea.insertAdjacentHTML(
     "afterend",
