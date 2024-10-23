@@ -247,10 +247,10 @@ export const createSyllabusButton = async () => {
   const idxnameArray = facArray.map((f) => `&idxname=${year}%2F${f}`);
   const idxname = fac ? idxnameArray[facNumber - 1] : idxnameArray.join("");
 
-  const rawCourseTitle = getCourseTitle().replace(/！-／：-＠［-｀｛-～、-〜”’・]+/g, " ");
+  const rawCourseTitle = getCourseTitle();
   const courseTitle = splitByNumbers(rawCourseTitle).join(" ");
   const searchStr = courseTitle.includes(" ") ? courseTitle : `+subject:"${courseTitle}"`;
-  const urlParam = `ajaxmode=true&query=${toEscapedEUCJP(searchStr)}&whence=0${idxname}&max=20&result=normal&sort=score&scombzutilities=true`;
+  const urlParam = `query=${toEscapedEUCJP(searchStr)}&whence=0${idxname}&max=100&result=normal&sort=score&scombzutilities=${encodeURIComponent(rawCourseTitle)}`;
 
   insertArea.insertAdjacentHTML(
     "afterend",
