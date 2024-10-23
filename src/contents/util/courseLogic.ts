@@ -234,10 +234,10 @@ export const createSyllabusButton = async () => {
 
   const insertArea =
     document.querySelector(".contents-question-template-area") || document.querySelector(".course-title-txt");
-  
+
   const year = location.href.split("idnumber=")[1].slice(0, 4);
   const facNumber = location.href.split("idnumber=")[1].slice(4, 6);
-  
+
   let fac = "";
   if (facNumber === "01") {
     fac = "ko1";
@@ -255,7 +255,6 @@ export const createSyllabusButton = async () => {
     console.log();
     fac = "din";
   }
-
 
   const rawCourseTitle = getCourseTitle().replace(/！-／：-＠［-｀｛-～、-〜”’・]+/g, " ");
   const courseTitle = splitByNumbers(rawCourseTitle).join(" ");
