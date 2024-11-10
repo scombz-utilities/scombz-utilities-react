@@ -87,7 +87,7 @@ const insertTasklist = async (currentData: Saves) => {
   );
 
   const buttonHtml = jsxToHtml(taskListNode);
-  const target = document.getElementById("top_information3");
+  const target = document.querySelector(".portal-subblock");
   if (!target) return;
   const container = document.createElement("div");
   container.classList.add("portal-subblock");
