@@ -14,6 +14,7 @@ type Props = {
   unit?: string;
   pattern?: string;
   validateMessage?: string;
+  canIgnoreError?: boolean;
   onSaveButtonClick: (value: string) => void;
 };
 
@@ -28,6 +29,7 @@ export const CustomTextField = (props: Props) => {
     unit,
     pattern,
     validateMessage = "Invalid input",
+    canIgnoreError = false,
     onSaveButtonClick,
   } = props;
 
@@ -112,14 +114,26 @@ export const CustomTextField = (props: Props) => {
               </Typography>
             )}
           </Stack>
-          <Button
-            startIcon={<Save />}
-            variant="contained"
-            onClick={() => onSaveButtonClick(currentValue)}
-            disabled={value === currentValue || isError}
-          >
-            {chrome.i18n.getMessage("dialogSave")}
-          </Button>
+          {canIgnoreError && isError ? (
+            <Button
+              startIcon={<Save />}
+              color="error"
+              variant="contained"
+              onClick={() => onSaveButtonClick(currentValue)}
+              disabled={value === currentValue}
+            >
+              {chrome.i18n.getMessage("dialogForceSave")}
+            </Button>
+          ) : (
+            <Button
+              startIcon={<Save />}
+              variant="contained"
+              onClick={() => onSaveButtonClick(currentValue)}
+              disabled={value === currentValue || isError}
+            >
+              {chrome.i18n.getMessage("dialogSave")}
+            </Button>
+          )}
         </Stack>
         {isError && (
           <Typography variant="caption" color="error" sx={{ ml: 1.5 }}>

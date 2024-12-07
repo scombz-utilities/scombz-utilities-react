@@ -160,6 +160,10 @@
     "message": "保存",
     "description": "保存"
   },
+  "dialogForceSave": {
+    "message": "強制的に保存",
+    "description": "強制的に保存"
+  },
   "dialogCancel": {
     "message": "キャンセル",
     "description": "キャンセル"

@@ -122,9 +122,10 @@ const OptionsIndexChrome = () => {
             left: 0,
             bottom: 0,
             backgroundColor: "inherit",
-            borderRightColor: grey[300],
+            borderRightColor: isDarkMode ? grey[800] : grey[300],
             borderRightWidth: "1px",
             borderRightStyle: "solid",
+            zIndex: 10,
           }}
         >
           <Box textAlign="center" mb={2}>
