@@ -39,6 +39,7 @@ export const BasicOptions = (props: Props) => {
           placeholder="XX00000"
           pattern="^([a-zA-Z]{2}[0-9]{5})$"
           validateMessage="学籍番号は2文字のアルファベットと5文字の数字の組み合わせで入力してください。"
+          canIgnoreError
           onSaveButtonClick={(value) => {
             const username = value + "@sic";
             setSettings("loginData", { ...saves.settings.loginData, username });
