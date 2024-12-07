@@ -26,10 +26,12 @@ export const adfsLogic = async () => {
     } else if (hasAdfsButton) {
       adfsButton.click();
     } else if (userId && password && submit && settings.loginData.username && settings.loginData.password) {
-      if (document.getElementById("error") && document.getElementById("error").textContent.trim().length > 0) return;
       userId.value = settings.loginData.username;
       password.value = settings.loginData.password;
-      submit.click();
+      setTimeout(() => {
+        if (document.getElementById("error") && document.getElementById("error").textContent.trim().length > 0) return;
+        submit.click();
+      }, 200);
     }
   }
 };

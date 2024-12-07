@@ -43,13 +43,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     let oshiraseHTML = "";
 
     for (const oshirase of oshiraseArray) {
-      if (oshirase.attributes) {
+      if (oshirase.insert?.trim()) {
         const bold = oshirase?.attributes?.bold ? "font-weight: bold;" : "";
         const background = oshirase?.attributes?.background ? `background: ${oshirase.attributes.background};` : "";
         const color = oshirase?.attributes?.color ? `color: ${oshirase.attributes.color};` : "";
         const large = oshirase?.attributes?.size === "large" ? "font-size: 1.5em;" : "";
+        const strike = oshirase?.attributes?.strike ? "text-decoration: line-through;" : "";
         const content = oshirase.insert;
-        oshiraseHTML += `<p style="${bold} ${color} ${large} ${background}">${content}</p>`;
+        oshiraseHTML += `<p style="${bold} ${color} ${large} ${background} ${strike}">${content}</p>`;
       }
     }
 
