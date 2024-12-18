@@ -3,7 +3,7 @@ import { defaultSaves } from "./util/settings";
 import type { Saves } from "./util/settings";
 
 export const config: PlasmoCSConfig = {
-  matches: ["https://sgsot.sic.shibaura-it.ac.jp/*"],
+  matches: ["https://sgsot.sic.shibaura-it.ac.jp/*", "http://sgsot.sic.shibaura-it.ac.jp/*"],
   run_at: "document_end",
 };
 
