@@ -202,22 +202,39 @@ const loadFaculty = async () => {
     // selectイベントを発火させる
     const event = new Event("change", { bubbles: true });
     enterYear.value = currentData.settings.syllabus.enterYear;
-    await setTimeout(() => {}, 300);
+    await new Promise((resolve) => setTimeout(resolve, 200));
     enterYear.dispatchEvent(event);
     division.value = currentData.settings.syllabus.division;
-    await setTimeout(() => {}, 300);
+    await new Promise((resolve) => setTimeout(resolve, 200));
     // keiretu.value = currentData.settings.syllabus.keiretu;
   }
+
+  return;
 };
 
-const saveFaculty = async () => {
+const saveFaculty = async (): Promise<HTMLDivElement | undefined> => {
   const enterYear = document.querySelector("select#enterYear") as HTMLSelectElement;
   const division = document.querySelector("select#division") as HTMLSelectElement;
   const keiretu = document.querySelector("select#keiretu") as HTMLSelectElement;
 
-  const buttonGroup = document.querySelector(".container > .panel > .panel-body > [align='right']");
+  const buttonGroup = document.querySelector(".container > .panel > .panel-body > [align='right']") as HTMLDivElement;
 
   if (enterYear && division && keiretu && buttonGroup) {
+    // loading animation
+    buttonGroup.style.position = "relative";
+    const loading = document.createElement("div");
+    loading.style.position = "absolute";
+    loading.style.top = "0";
+    loading.style.left = "0";
+    loading.style.width = "100%";
+    loading.style.height = "100%";
+    loading.style.backgroundColor = "rgba(255, 255, 255, 0.8)";
+    loading.style.display = "flex";
+    loading.style.justifyContent = "center";
+    loading.style.alignItems = "center";
+    buttonGroup.appendChild(loading);
+
+    // Insert a save button
     const button = document.createElement("a");
     button.textContent = "検索条件をScombZ Utilitiesに保存";
     button.classList.add("btn");
@@ -239,6 +256,7 @@ const saveFaculty = async () => {
       await chrome.storage.local.set(currentData);
       alert("検索条件を保存しました。\n次回からシラバスを開くときに自動で入力されます。");
     });
+    return loading;
   }
 };
 
@@ -258,8 +276,15 @@ const linkSyllabus = async () => {
   }
 
   if (location.href.match(locationRegEx)) {
-    saveFaculty();
-    setTimeout(() => loadFaculty(), 300);
+    let loadingLayer: HTMLDivElement | undefined;
+    try {
+      loadingLayer = await saveFaculty();
+      await new Promise((resolve) => setTimeout(resolve, 300));
+      await loadFaculty();
+    } finally {
+      // remove loading animation
+      if (loadingLayer) loadingLayer.remove();
+    }
   }
 };
 
