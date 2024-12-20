@@ -3,7 +3,7 @@ import { getJson } from "./backgrounds/getJson";
 import { onInstalled } from "./backgrounds/onInstalled";
 
 export type RuntimeMessage = {
-  action: "openOption" | "updateBadgeText" | "openNewTabInBackground" | "getJson";
+  action: "openOption" | "updateBadgeText" | "openNewTabInBackground" | "getJson" | "openNewTab" | "clearCache";
   url?: string;
 };
 
@@ -15,12 +15,24 @@ chrome.runtime.onMessage.addListener((message: RuntimeMessage, _sender, sendResp
     case "openNewTabInBackground":
       chrome.tabs.create({ url: message.url, active: false });
       break;
+    case "openNewTab":
+      chrome.tabs.create({ url: message.url, active: true });
+      break;
     case "updateBadgeText":
       updateBadgeText();
       break;
     case "getJson":
       getJson(message, sendResponse);
       break;
+    case "clearCache":
+      chrome.browsingData.removeCache(
+        {
+          since: 0,
+        },
+        () => {
+          sendResponse("全てのキャッシュをクリアしました。");
+        },
+      );
     default:
       break;
   }
