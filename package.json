@@ -70,7 +70,8 @@
       }
     ],
     "permissions": [
-      "storage"
+      "storage",
+      "browsingData"
     ],
     "host_permissions": [
       "http://bus.shibaura-it.ac.jp/"
