@@ -57,6 +57,9 @@ const IndexPopup = () => {
       setCourses(timetable);
 
       setLoaded(true);
+
+      // タスクのバッジ更新
+      chrome.runtime.sendMessage({ action: "updateBadgeText" });
     });
   };
 

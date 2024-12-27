@@ -38,7 +38,11 @@ export const updateBadgeText = () => {
     const filteredTaskList = mergedTaskList
       .filter((task) => Date.parse(task.deadline) >= now)
       .filter((task) => !currentData.settings.hiddenTaskIdList.includes(task.id))
-      .filter((task) => !currentData.settings.popupHideFutureTasks || (Date.parse(task.deadline) - now) / 86400000 < currentData.settings.popupHideFutureTasksRange);
+      .filter(
+        (task) =>
+          !currentData.settings.popupHideFutureTasks ||
+          (Date.parse(task.deadline) - now) / 86400000 < currentData.settings.popupHideFutureTasksRange,
+      );
 
     filteredTaskList.sort((a, b) => Date.parse(a.deadline) - Date.parse(b.deadline));
 
@@ -46,6 +50,8 @@ export const updateBadgeText = () => {
       const rd = (Date.parse(filteredTaskList[0].deadline) - now) / 60000;
       if (rd < 60 * 24) {
         setBadgeBackgroundColor("#ee3333");
+      } else if (rd < 60 * 24 * 2) {
+        setBadgeBackgroundColor("#ff8800");
       } else {
         setBadgeBackgroundColor("#1a73e8");
       }
