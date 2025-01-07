@@ -1,14 +1,31 @@
 import { updateBadgeText } from "./backgrounds/badge";
 import { getJson } from "./backgrounds/getJson";
+import { getClasses, logoutGoogle } from "./backgrounds/google";
 import { onInstalled } from "./backgrounds/onInstalled";
 
 export type RuntimeMessage = {
-  action: "openOption" | "updateBadgeText" | "openNewTabInBackground" | "getJson" | "openNewTab" | "clearCache";
+  action:
+    | "openOption"
+    | "updateBadgeText"
+    | "openNewTabInBackground"
+    | "getJson"
+    | "openNewTab"
+    | "clearCache"
+    | "getClasses"
+    | "logoutGoogle";
   url?: string;
 };
 
 chrome.runtime.onMessage.addListener((message: RuntimeMessage, _sender, sendResponse) => {
   switch (message.action) {
+    case "getClasses":
+      if (process.env.PLASMO_BROWSER === "chrome") {
+        getClasses(sendResponse);
+      }
+      break;
+    case "logoutGoogle":
+      logoutGoogle();
+      break;
     case "openOption":
       chrome.runtime.openOptionsPage();
       break;

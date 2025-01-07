@@ -1,5 +1,5 @@
 export type Task = {
-  kind: "task" | "originalTask" | "survey";
+  kind: "task" | "originalTask" | "survey" | "classroomTask";
   course: string;
   title: string;
   link: string;

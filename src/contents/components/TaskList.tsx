@@ -324,10 +324,11 @@ export const TaskList = (props: Props) => {
       : allSurveyList.filter((task) => notifySurveySubjectsName.includes(task.course));
 
     const originalTasklist = currentData.scombzData.originalTasklist;
+    const classroomTasklist = currentData.scombzData.classroomTasklist;
 
     const now = new Date();
 
-    const combinedTaskList = [...normalTaskList, ...surveyList, ...originalTasklist]
+    const combinedTaskList = [...normalTaskList, ...surveyList, ...originalTasklist, ...classroomTasklist]
       .map((task) => {
         return { ...task, deadlineDate: new Date(task.deadline) };
       })

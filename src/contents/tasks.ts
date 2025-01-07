@@ -4,6 +4,7 @@ import type { Task } from "./types/task";
 import { getTasksOnTaskPage, getTasksByAjax, fetchSurveys } from "./util/getTaskList";
 import { defaultSaves } from "./util/settings";
 import type { Saves } from "./util/settings";
+import type { RuntimeMessage } from "~/background";
 import { FETCH_INTERVAL } from "~/constants";
 
 export const config: PlasmoCSConfig = {
@@ -42,6 +43,9 @@ export const fetchTasks = async (forceExecute?: boolean) => {
     try {
       console.log(await getTasksByAjax());
       console.log(await fetchSurveys());
+      if (currentData.settings.googleClassroom.isSignedIn) {
+        chrome.runtime.sendMessage({ action: "getClasses" } as RuntimeMessage);
+      }
     } catch (e) {
       console.error(e);
       throw e;

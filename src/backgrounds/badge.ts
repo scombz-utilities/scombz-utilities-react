@@ -30,8 +30,9 @@ export const updateBadgeText = () => {
     const surveyList = allSurveyList.filter((task) => notifySurveySubjectsName.includes(task.course));
 
     const originalTasklist = currentData.scombzData.originalTasklist;
+    const classroomTasklist = currentData.scombzData.classroomTasklist;
 
-    const mergedTaskList = [...tasklist, ...surveyList, ...originalTasklist];
+    const mergedTaskList = [...tasklist, ...surveyList, ...originalTasklist, ...classroomTasklist];
 
     const now = new Date().getTime();
 

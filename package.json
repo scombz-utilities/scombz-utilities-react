@@ -1,7 +1,7 @@
 {
   "name": "scombz-utilities",
   "displayName": "ScombZ Utilities",
-  "version": "4.3.4",
+  "version": "4.3.5",
   "description": "__MSG_extensionDescription__",
   "author": "udai",
   "scripts": {
@@ -71,10 +71,21 @@
     ],
     "permissions": [
       "storage",
-      "browsingData"
+      "browsingData",
+      "identity"
     ],
     "host_permissions": [
       "http://bus.shibaura-it.ac.jp/"
-    ]
+    ],
+    "key": "$CRX_PUBLIC_KEY",
+    "oauth2": {
+      "client_id": "674854842294-2foqvpq1io2mecbfs0onasqq4t76dht7.apps.googleusercontent.com",
+      "scopes": [
+        "https://www.googleapis.com/auth/classroom.courses.readonly",
+        "https://www.googleapis.com/auth/classroom.course-work.readonly",
+        "https://www.googleapis.com/auth/classroom.student-submissions.me.readonly",
+        "https://www.googleapis.com/auth/userinfo.email"
+      ]
+    }
   }
 }
