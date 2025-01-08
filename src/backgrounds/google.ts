@@ -6,14 +6,18 @@ export const getClasses = async (sendResponse?: (response: any) => void) => {
   try {
     console.log("getClasses Start");
 
+    // 毎回ログイン画面になるのは嫌なので、ログイン済みかどうかをstorageから取得
     // トークンを取得
     const token = await new Promise((resolve, reject) => {
-      chrome.identity.getAuthToken({ interactive: true }, (token) => {
-        if (chrome.runtime.lastError || !token) {
-          reject(chrome.runtime.lastError || "トークン取得に失敗しました。");
-        } else {
-          resolve(token);
-        }
+      chrome.storage.local.get(defaultSaves, (currentData: Saves) => {
+        const interactive = !currentData.settings.googleClassroom.isSignedIn;
+        chrome.identity.getAuthToken({ interactive }, (token) => {
+          if (chrome.runtime.lastError || !token) {
+            reject(chrome.runtime.lastError || "トークン取得に失敗しました。");
+          } else {
+            resolve(token);
+          }
+        });
       });
     });
 
