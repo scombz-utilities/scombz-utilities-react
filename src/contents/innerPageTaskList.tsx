@@ -29,10 +29,11 @@ const insertTasklist = async (currentData: Saves) => {
     : allSurveyList.filter((task) => notifySurveySubjectsName.includes(task.course));
 
   const originalTasklist = currentData.scombzData.originalTasklist;
+  const classroomTasklist = currentData.scombzData.classroomTasklist;
 
   const now = new Date();
 
-  const tasklist = [...normalTaskList, ...surveyList, ...originalTasklist]
+  const tasklist = [...normalTaskList, ...surveyList, ...originalTasklist, ...classroomTasklist]
     .map((task) => {
       return { ...task, deadlineDate: new Date(task.deadline) };
     })

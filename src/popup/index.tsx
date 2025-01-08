@@ -33,7 +33,12 @@ const IndexPopup = () => {
         ? items.scombzData.surveyList
         : items.scombzData.surveyList.filter((d) => notifySubjects.includes(d.course));
 
-      const mergedTask = [...items.scombzData.tasklist, ...surveyList, ...items.scombzData.originalTasklist]
+      const mergedTask = [
+        ...items.scombzData.tasklist,
+        ...surveyList,
+        ...items.scombzData.originalTasklist,
+        ...items.scombzData.classroomTasklist,
+      ]
         .filter((task) => !items.settings.hiddenTaskIdList.includes(task.id)) // 非表示タスクを除外
         .filter((task) => Date.parse(task.deadline) >= now)
         .filter(

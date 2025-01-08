@@ -99,6 +99,10 @@ export type Settings = {
     original: TimeTable;
   };
   displayAllSurvey: boolean;
+  googleClassroom: {
+    isSignedIn: boolean;
+    email: string | undefined;
+  };
 };
 
 export const defaultSettings: Settings = {
@@ -202,6 +206,10 @@ export const defaultSettings: Settings = {
     original: [],
   },
   displayAllSurvey: false,
+  googleClassroom: {
+    isSignedIn: false,
+    email: undefined,
+  },
 };
 
 /* ScombzData */
@@ -212,6 +220,7 @@ export type ScombzData = {
   tasklist: Task[];
   surveyList: Task[];
   originalTasklist: Task[];
+  classroomTasklist: Task[];
   sideMenuMemo: string[];
   coursePageMemo: { id: string; memo: string; course?: string }[];
   doMigration: boolean;
@@ -227,6 +236,7 @@ export const defaultScombzData: ScombzData = {
   tasklist: [],
   surveyList: [],
   originalTasklist: [],
+  classroomTasklist: [],
   sideMenuMemo: [],
   coursePageMemo: [],
   doMigration: false,

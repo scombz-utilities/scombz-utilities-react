@@ -1,3 +1,4 @@
+import { LoginToGoogle } from "../blocks/LoginToGoogle";
 import { CustomSelect } from "~/options/components/blocks/CustomSelect";
 import { CustomSwitch } from "~/options/components/blocks/CustomSwitch";
 import { CustomTextField } from "~/options/components/blocks/CustomTextField";
@@ -77,6 +78,7 @@ export const BasicOptions = (props: Props) => {
           value={saves.settings.displayAllSurvey}
           onChange={(_e, checked) => setSettings("displayAllSurvey", checked)}
         />
+        <LoginToGoogle saves={saves} onChange={(value) => setSettings("googleClassroom", value)} />
       </OptionGroup>
     </>
   );
