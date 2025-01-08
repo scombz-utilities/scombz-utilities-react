@@ -8,4 +8,6 @@ export type Task = {
   startline?: string;
   id: string | null;
   courseURL?: string;
+  courseId?: string;
+  isSubmitted?: boolean;
 };

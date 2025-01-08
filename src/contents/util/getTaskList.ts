@@ -59,7 +59,7 @@ export const getTasksByAjax = async () => {
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, "text/html");
   if (doc.querySelector("[property='og:url']")?.getAttribute("content") === "https://scombz.shibaura-it.ac.jp/login") {
-    throw new Error("ログインしていません");
+    throw new Error("ScombZにログインしてください");
   }
   const taskList = getTasks(doc);
   const currentData = (await chrome.storage.local.get(defaultSaves)) as Saves;
@@ -79,7 +79,7 @@ export const fetchSurveys = async () => {
   const doc = parser.parseFromString(html, "text/html");
 
   if (doc.querySelector("[property='og:url']")?.getAttribute("content") === "https://scombz.shibaura-it.ac.jp/login") {
-    throw new Error("ログインしていません");
+    throw new Error("ScombZにログインしてください。");
   }
 
   const taskListsObj = [];

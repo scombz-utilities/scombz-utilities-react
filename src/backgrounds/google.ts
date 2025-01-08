@@ -1,3 +1,4 @@
+import type { Task } from "~contents/types/task";
 import type { Saves } from "~settings";
 import { defaultSaves } from "~settings";
 
@@ -28,10 +29,6 @@ export const getClasses = async (sendResponse?: (response: any) => void) => {
     const profile = await profileResponse.json();
     console.log("profile", profile);
 
-    if (sendResponse) {
-      sendResponse({ profile });
-    }
-
     // クラス一覧を取得
     const coursesResponse = await fetch("https://classroom.googleapis.com/v1/courses", {
       headers: { Authorization: `Bearer ${token}` },
@@ -50,7 +47,7 @@ export const getClasses = async (sendResponse?: (response: any) => void) => {
     console.log("wait courseWorkResponses");
     const courseWorks = await Promise.all(courseWorkResponses.map((response) => response.json()));
 
-    const tasks = [];
+    const tasks: Task[] = [];
     const now = new Date();
 
     courseWorks.forEach((courseWork, index) => {
@@ -58,7 +55,13 @@ export const getClasses = async (sendResponse?: (response: any) => void) => {
       console.log(courseWork);
 
       courseWork.courseWork.forEach(async (work) => {
-        if (!work.dueDate) return;
+        if (!work.dueDate) {
+          work.dueDate = {
+            year: now.getFullYear() + 1,
+            month: now.getMonth() + 1,
+            day: now.getDate(),
+          };
+        }
         const dueDate = new Date(
           work.dueDate.year,
           work.dueDate.month,
@@ -100,7 +103,7 @@ export const getClasses = async (sendResponse?: (response: any) => void) => {
     const noSubmittedTasks = tasks.map((task, index) => {
       return {
         isSubmitted: !submissions[index]
-          .map((submission) => ["CREATED", "RECLAIMED_BY_STUDENT"].includes(submission.state))
+          .map((submission) => ["CREATED", "RECLAIMED_BY_STUDENT", "NEW"].includes(submission.state))
           .some(Boolean),
         ...task,
       };
@@ -112,12 +115,14 @@ export const getClasses = async (sendResponse?: (response: any) => void) => {
       currentData.scombzData.classroomTasklist = noSubmittedTasks.filter((task) => !task.isSubmitted);
       chrome.storage.local.set(currentData, () => {
         console.log("classroomTasklist saved");
+        if (sendResponse) {
+          sendResponse({ profile, tasks: noSubmittedTasks.filter((task) => !task.isSubmitted) });
+        }
       });
     });
-    console.log("getClasses End");
   } catch (error) {
     console.error("課題取得エラー:", error);
-    sendResponse({ error });
+    sendResponse({ error, tasks: [] });
   }
 };
 
