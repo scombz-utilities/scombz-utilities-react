@@ -17,8 +17,15 @@ export const LoginToGoogle = (props: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const isChrome = useMemo(() => {
+    // 環境変数で判定
+    if (process.env.PLASMO_BROWSER !== "chrome") return false;
+    // UAで判定
     const ua = window.navigator.userAgent.toLowerCase();
-    return ua.indexOf("chrome") !== -1 && ua.indexOf("edge") === -1;
+    const chrome = ua.indexOf("chrome") !== -1 && ua.indexOf("edge") === -1;
+    // @ts-ignore braveはwindow.navigatorに存在する
+    const brave = window.navigator.brave?.isBrave();
+    const arc = getComputedStyle(document.documentElement)?.getPropertyValue("--arc-palette-title");
+    return chrome && !brave && !arc;
   }, []);
 
   const handleCloseLogin = useCallback(() => {
@@ -50,6 +57,7 @@ export const LoginToGoogle = (props: Props) => {
             Google Classroomの課題を取得するためには、
             <span style={{ fontWeight: "bold" }}>学番アドレスでログイン</span>する必要があります。
           </DialogContentText>
+          <DialogContentText>※Google Chrome以外のブラウザでは正常に動作しない場合があります。</DialogContentText>
           <LoadingButton
             loading={isLoading}
             variant="contained"

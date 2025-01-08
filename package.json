@@ -7,12 +7,14 @@
   "scripts": {
     "dev": "plasmo dev",
     "dev:firefox": "plasmo dev --target=firefox-mv2",
-    "build:chrome": "plasmo build",
-    "build:firefox": "plasmo build --target=firefox-mv2",
-    "build": "plasmo build && plasmo build --target=firefox-mv2",
-    "package": "plasmo package && plasmo package --target=firefox-mv2",
+    "build:chrome": "plasmo build --target=chrome-mv3",
+    "build:edge": "plasmo build --target=edge-mv3 && npm run afterBuild",
+    "build:firefox": "plasmo build --target=firefox-mv2 && npm run afterBuild",
+    "build": "plasmo build --target=chrome-mv3 && plasmo build --target=edge-mv3 && plasmo build --target=firefox-mv2 && npm run afterBuild",
+    "package": "plasmo package --target=chrome-mv3 && plasmo package --target=edge-mv3 && plasmo package --target=firefox-mv2",
     "eslint": "eslint '**/*.ts?(x)' --fix",
-    "publish": "plasmo build && plasmo build --target=firefox-mv2 && plasmo package && plasmo package --target=firefox-mv2 && zip -r build/sources.zip src assets css locales package.json .env.production tsconfig.json README.md && publish-extension --chrome-zip build/chrome-mv3-prod.zip --firefox-zip build/firefox-mv2-prod.zip --firefox-sources-zip build/sources.zip --edge-zip build/chrome-mv3-prod.zip"
+    "afterBuild": "python ./afterBuild.py",
+    "publish": "npm run build && npm run package && zip -r build/sources.zip src assets css locales package.json .env.production tsconfig.json README.md && publish-extension --chrome-zip build/chrome-mv3-prod.zip --firefox-zip build/firefox-mv2-prod.zip --firefox-sources-zip build/sources.zip --edge-zip build/edge-mv3-prod.zip"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.1.0",
