@@ -21,6 +21,14 @@ const resetOriginalTaskList = (originalTasklist: Task[]) => {
   return originalTasklist.filter((task) => new Date(task.deadline) >= now);
 };
 
+const getClassesBySocialWorker = async () => {
+  return new Promise<Task[]>((resolve) => {
+    chrome.runtime.sendMessage({ action: "getClasses" } as RuntimeMessage, (response) => {
+      resolve(response.tasks);
+    });
+  });
+};
+
 // タスクを取得
 export const fetchTasks = async (forceExecute?: boolean) => {
   // Firefoxかつpopupからの場合CORSの関係上動作しないので除外
@@ -44,7 +52,7 @@ export const fetchTasks = async (forceExecute?: boolean) => {
       console.log(await getTasksByAjax());
       console.log(await fetchSurveys());
       if (currentData.settings.googleClassroom.isSignedIn) {
-        chrome.runtime.sendMessage({ action: "getClasses" } as RuntimeMessage);
+        console.log(await getClassesBySocialWorker());
       }
     } catch (e) {
       console.error(e);
