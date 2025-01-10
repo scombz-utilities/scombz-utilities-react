@@ -11,7 +11,7 @@
     "build:edge": "plasmo build --target=edge-mv3 && npm run afterBuild",
     "build:firefox": "plasmo build --target=firefox-mv2 && npm run afterBuild",
     "build": "plasmo build --target=chrome-mv3 && plasmo build --target=edge-mv3 && plasmo build --target=firefox-mv2 && npm run afterBuild",
-    "package": "plasmo package --target=chrome-mv3 && plasmo package --target=edge-mv3 && plasmo package --target=firefox-mv2",
+    "package": "plasmo package --target=chrome-mv3 && plasmo package --target=chromium-mv3 && plasmo package --target=edge-mv3 && plasmo package --target=firefox-mv2",
     "eslint": "eslint '**/*.ts?(x)' --fix",
     "afterBuild": "python ./afterBuild.py",
     "publish": "npm run build && npm run package && zip -r build/sources.zip src assets css locales package.json .env.production tsconfig.json README.md && publish-extension --chrome-zip build/chrome-mv3-prod.zip --firefox-zip build/firefox-mv2-prod.zip --firefox-sources-zip build/sources.zip --edge-zip build/edge-mv3-prod.zip"
