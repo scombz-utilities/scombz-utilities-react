@@ -51,7 +51,7 @@ export const fetchTasks = async (forceExecute?: boolean) => {
     try {
       console.log(await getTasksByAjax());
       console.log(await fetchSurveys());
-      if (currentData.settings.googleClassroom.isSignedIn) {
+      if (currentData.settings?.googleClassroom?.isSignedIn) {
         console.log(await getClassesBySocialWorker());
       }
     } catch (e) {
