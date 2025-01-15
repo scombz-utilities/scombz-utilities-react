@@ -77,7 +77,7 @@ export const urlToLink = (): void => {
           textNodes.push(n);
         }
       } else {
-        n.childNodes.forEach(getTextNodes);
+        n.childNodes?.forEach(getTextNodes);
       }
     };
 
@@ -291,7 +291,7 @@ export const copyEmail = async () => {
   document.head.appendChild(link);
 
   linkList.querySelectorAll(":scope > div > .ml").forEach((ml: HTMLDivElement) => {
-    ml.childNodes.forEach((node) => {
+    ml.childNodes?.forEach((node) => {
       if (node instanceof Text && node.nodeValue?.match(/.+@.+\..+/)) {
         const email = node.nodeValue;
         node.replaceWith(document.createElement("a"));
@@ -324,6 +324,7 @@ export const copyEmail = async () => {
         parent.appendChild(gmailButton);
         gmailButton.addEventListener("click", (e) => {
           e.preventDefault();
+          if (!ml.childNodes) return;
           const name = ml.childNodes[0].nodeValue.replace(/\s/g, " ").split("/")[0] + " 先生";
           window.open(`https://mail.google.com/mail/?view=cm&to=${email}&body=${encodeURIComponent(name)}`);
         });

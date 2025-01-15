@@ -1,0 +1,50 @@
+#scombzUtilitiesMultiFileInputArea {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 0;
+  height: 100px;
+  max-width: 900px;
+  width: 85%;
+  background-color: #cde4ff;
+  border: 1px solid #2658ff;
+  box-shadow: 2px 2px 5px #2658ff22;
+  border-radius: 5px;
+  text-align: center;
+  color: #2c70ff;
+  font-weight: bold;
+  margin: 30px auto 0px;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+  user-select: none;
+  box-sizing: border-box;
+  position: relative;
+}
+#scombzUtilitiesMultiFileInputArea:hover {
+  background-color: #b6d8ff;
+  color: #2658ff;
+}
+#scombzUtilitiesMultiFileInputArea:active {
+  background-color: #8dc1ff;
+}
+
+#scombzUtilitiesMultiFileInputArea.isDragover {
+  background-color: #6db1ff;
+  border: 3px dashed #2658ff;
+  color: #2658ff;
+}
+
+#fileDadArea {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px dashed #cde4ff;
+}
+#fileDadArea.isDragover {
+  background-color: #6db1ff;
+  border: 3px dashed #2658ff;
+  color: #000000;
+}

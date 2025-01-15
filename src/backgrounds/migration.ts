@@ -220,10 +220,6 @@ export const migrateLogic = (oldSaves: any): Saves => {
     oldSaves?.updateClear ?? newSaves?.settings?.updateClear ?? defaultSaves.settings.updateClear;
   newSaves.settings.dragAndDropBugFix =
     oldSaves?.dadbugFix ?? newSaves?.settings?.dragAndDropBugFix ?? defaultSaves.settings.dragAndDropBugFix;
-  newSaves.settings.forceDragAndDropSubmit =
-    oldSaves?.ddSubmission ??
-    newSaves?.settings?.forceDragAndDropSubmit ??
-    defaultSaves.settings.forceDragAndDropSubmit;
   newSaves.settings.downloadFileBundle =
     oldSaves?.downloadFileBundle ?? newSaves?.settings?.downloadFileBundle ?? defaultSaves.settings.downloadFileBundle;
   newSaves.settings.hideCompletedReports =

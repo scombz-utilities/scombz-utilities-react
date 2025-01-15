@@ -46,6 +46,16 @@
 .ui-dialog-buttonset.commonDialogButtonArea {
   transform: translateX(6px);
 }
+.report-submission-area {
+  position: relative;
+}
+.report-submission-area a.clearfile {
+  display: block;
+  width: fit-content;
+  position: absolute;
+  top: 8px;
+  right: 10px;
+}
 .report-submission-area,
 .dadSubmissionBlock {
   padding: 8px 6px 6px 20px;

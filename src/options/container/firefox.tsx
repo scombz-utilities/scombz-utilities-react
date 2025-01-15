@@ -443,15 +443,6 @@ const OptionsIndexFirefox = () => {
             onChange={(e) => setSettings("dragAndDropBugFix", e.target.checked)}
           />
         </div>
-        <h3>課題ドラッグ&ドロップ提出</h3>
-        <p>課題提出画面の成果物提出欄をクリックなしで最初からドラッグ&ドロップにします。</p>
-        <div>
-          <input
-            type="checkbox"
-            checked={currentLocalStorage?.settings.forceDragAndDropSubmit ?? false}
-            onChange={(e) => setSettings("forceDragAndDropSubmit", e.target.checked)}
-          />
-        </div>
         <h3>レポート提出ボタンの変更</h3>
         <p>
           レポート提出画面に、制作時間の簡易入力ボタンを追加します。また、提出ボタンをユーザビリティに配慮した色や配置にします。
