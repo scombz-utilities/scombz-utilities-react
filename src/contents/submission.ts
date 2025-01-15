@@ -214,8 +214,10 @@ const clearButton = async () => {
 
   if (settings.dragAndDropBugFix) submissionBugFix();
 
-  dragAndDropStyling();
-  makeMultipleFileInput();
+  if (document.querySelector("#report_dad")) {
+    dragAndDropStyling();
+    makeMultipleFileInput();
+  }
 };
 
 clearButton();
