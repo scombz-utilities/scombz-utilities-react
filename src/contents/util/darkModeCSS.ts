@@ -568,6 +568,36 @@ const darkModeCSS = `
             color: #66f !important;
             text-decoration: underline !important;
         }
+
+        #scombzUtilitiesMultiFileInputArea {
+            background-color: #2b2b2b;
+            border-color: #5c5c5c;
+            box-shadow: 2px 2px 5px #5a9bff22;
+            color: #5a9bff;
+        }
+        #scombzUtilitiesMultiFileInputArea:hover {
+            background-color: #333333;
+            color: #6aabff;
+        }
+        #scombzUtilitiesMultiFileInputArea:active {
+            background-color: #444444;
+        }
+
+        #scombzUtilitiesMultiFileInputArea.isDragover {
+            background-color: #1e3b5a;
+            border-color: #5a9bff;
+            color: #5a9bff;
+        }
+
+        #fileDadArea {
+            border-color: #5a9bff;
+        }
+        #fileDadArea.isDragover {
+            background-color: #1e3b5a;
+            border-color: #5a9bff;
+            color: #ffffff;
+        }
+
 `;
 
 export default darkModeCSS;
