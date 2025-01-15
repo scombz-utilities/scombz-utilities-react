@@ -6,6 +6,7 @@ import { ListTask } from "./ListTask";
 import { TasksBottom } from "./TasksBottom";
 import type { Task } from "~contents/types/task";
 import type { TimeTableData } from "~contents/types/timetable";
+import type { Settings } from "~settings";
 
 type MultiPageTimeTableProps = {
   courses?: TimeTableData[];
@@ -17,6 +18,7 @@ type MultiPageTimeTableProps = {
   setIsFetching: (value: boolean) => void;
   lastTaskFetchUnixTime: number;
   loadFromSaves: () => void;
+  initialTab?: Settings["popupInitialTab"];
 };
 
 const tabDays = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"] as const;
@@ -98,6 +100,7 @@ export const MultiPageTimeTable = (props: MultiPageTimeTableProps) => {
     setIsFetching,
     loadFromSaves,
     lastTaskFetchUnixTime,
+    initialTab = "tasks",
   } = props;
 
   const hasSaturday = useMemo(() => courses.some((day) => day.day === 6), [courses]);
@@ -116,7 +119,11 @@ export const MultiPageTimeTable = (props: MultiPageTimeTableProps) => {
   }, [hasSaturday]);
 
   const [value, setValue] = useState<number>(
-    days.includes(tabDays[new Date().getDay()]) ? days.findIndex((item) => item === tabDays[new Date().getDay()]) : 0,
+    initialTab === "tasks"
+      ? days.length
+      : days.includes(tabDays[new Date().getDay()])
+        ? days.findIndex((item) => item === tabDays[new Date().getDay()])
+        : 0,
   );
 
   const weeklyTimeTableData: WeeklyTimeTableData = useMemo(() => {

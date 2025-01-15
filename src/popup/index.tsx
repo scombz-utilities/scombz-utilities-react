@@ -81,7 +81,7 @@ const IndexPopup = () => {
         <Grid>
           <img
             src={chrome.runtime.getURL("assets/scombz_utilities.svg")}
-            width={isFirefox() ? 200 : 240}
+            width={isFirefox() ? 160 : 180}
             alt="ScombZ Utilites"
           />
         </Grid>
@@ -98,6 +98,7 @@ const IndexPopup = () => {
               setIsFetching={setIsFetching}
               loadFromSaves={loadFromSaves}
               lastTaskFetchUnixTime={saves.scombzData.lastTaskFetchUnixTime}
+              initialTab={saves.settings.popupInitialTab}
             />
           </Box>
         </Box>

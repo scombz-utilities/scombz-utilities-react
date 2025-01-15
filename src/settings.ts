@@ -14,6 +14,7 @@ export type Settings = {
     username: string;
     password: string;
   };
+  popupInitialTab: "timetable" | "tasks";
   popupBadge: boolean;
   popupTasksTab: boolean;
   popupOverflowMode: "hidden" | "auto";
@@ -111,6 +112,7 @@ export const defaultSettings: Settings = {
     username: "",
     password: "",
   },
+  popupInitialTab: "timetable",
   popupBadge: true,
   popupTasksTab: true,
   popupOverflowMode: "hidden",
