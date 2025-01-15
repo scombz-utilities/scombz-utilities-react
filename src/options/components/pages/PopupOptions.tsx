@@ -22,6 +22,17 @@ export const PopupOptions = (props: Props) => {
       </Box>
       <Box display="flex" flexDirection="column" gap={1} p={1}>
         <Typography variant="h6">基本設定</Typography>
+        <CustomSelect
+          i18nLabel="初期タブ"
+          i18nCaption="ポップアップを開いたときに最初に表示されるタブを選択します。"
+          options={[
+            { value: "timetable", label: "時間割" },
+            { value: "tasks", label: "課題" },
+          ]}
+          optionId="popupInitialTab"
+          value={saves.settings.popupInitialTab}
+          onChange={(e, _) => setSettings("popupInitialTab", e.target.value)}
+        />
         <CustomSwitch
           i18nLabel="未提出課題数のバッジ表示"
           i18nCaption="未提出の課題の個数をバッジに表示します。"
