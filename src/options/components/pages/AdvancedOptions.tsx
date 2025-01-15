@@ -223,13 +223,6 @@ export const AdvancedOptions = (props: Props) => {
           onChange={(_e, checked) => setSettings("dragAndDropBugFix", checked)}
         />
         <CustomSwitch
-          i18nLabel="課題ドラッグ&ドロップ提出"
-          i18nCaption="課題提出画面の成果物提出欄をクリックなしで最初からドラッグ&ドロップにします。"
-          optionId="forceDragAndDropSubmit"
-          value={saves.settings.forceDragAndDropSubmit}
-          onChange={(_e, checked) => setSettings("forceDragAndDropSubmit", checked)}
-        />
-        <CustomSwitch
           i18nLabel="レポート提出ボタンの変更"
           i18nCaption="レポート提出画面に、制作時間の簡易入力ボタンを追加します。また、提出ボタンをユーザビリティに配慮した色や配置にします。"
           optionId="changeReportBtn"

@@ -55,7 +55,6 @@ export type Settings = {
   };
   updateClear: boolean;
   dragAndDropBugFix: boolean;
-  forceDragAndDropSubmit: boolean;
   downloadFileBundle: boolean;
   hideCompletedReports: boolean;
   signOutPageLayout: boolean;
@@ -153,7 +152,6 @@ export const defaultSettings: Settings = {
   },
   updateClear: false,
   dragAndDropBugFix: true,
-  forceDragAndDropSubmit: false,
   downloadFileBundle: true,
   hideCompletedReports: true,
   signOutPageLayout: true,
