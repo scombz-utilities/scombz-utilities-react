@@ -76,12 +76,6 @@ const AcademicGuidesJa = () => {
           url: `https://shibaura-it.notion.site/13f80feff3d1804cb8cae22d3bafe5d5?v=13f80feff3d18187964a000c34d47d73`,
         });
       }
-      if (faculty === "d") {
-        newButtons.push({
-          name: `建築学部2025年度入学`,
-          url: `https://www.shibaura-it.ac.jp/extra/tebiki2025/architecture/index.html`,
-        });
-      }
       setButtons(newButtons);
       return;
     }
@@ -98,6 +92,12 @@ const AcademicGuidesJa = () => {
         newButtons.push({
           name: `システム理工学部20${year}年度入学`,
           url: `https://www.shibaura-it.ac.jp/extra/tebiki20${year}/systems/index.html`,
+        });
+      }
+      if (faculty === "d") {
+        newButtons.push({
+          name: `建築学部20${year}年度入学`,
+          url: `https://www.shibaura-it.ac.jp/extra/tebiki20${year}/architecture/index.html`,
         });
       }
     } else {
