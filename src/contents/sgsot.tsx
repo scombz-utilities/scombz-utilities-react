@@ -36,18 +36,26 @@ const inputUser = async () => {
 };
 
 const AcademicGuidesEn = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(true);
   return (
     <>
-      <Button
-        href="https://www.shibaura-it.ac.jp/en/campus_life/academic_life/academic_guide.html"
-        variant="contained"
-        target="_blank"
-      >
-        Open Academic Guides (English)
-      </Button>
-      <Button href="https://www.shibaura-it.ac.jp/campus_life/class/class.html" target="_blank" variant="text">
-        Open Academic Guides (Japanese)
-      </Button>
+      {isOpen && (
+        <>
+          <Button
+            href="https://www.shibaura-it.ac.jp/en/campus_life/academic_life/academic_guide.html"
+            variant="contained"
+            target="_blank"
+          >
+            Open Academic Guides (English)
+          </Button>
+          <Button href="https://www.shibaura-it.ac.jp/campus_life/class/class.html" target="_blank" variant="text">
+            Open Academic Guides (Japanese)
+          </Button>
+          <Button variant="text" onClick={() => setIsOpen(!isOpen)}>
+            Close
+          </Button>
+        </>
+      )}
     </>
   );
 };
@@ -153,6 +161,7 @@ const Sgsot = () => {
     () => location.href.match(/^https?:\/\/sgsot[0-9]+[a-z]+\.sic\.shibaura-it\.ac\.jp\/[A-z]{2}[0-9]{5}\/?$/),
     [],
   );
+  const [isOpen, setIsOpen] = useState<boolean>(true);
 
   useEffect(() => {
     const subDomain = location.origin.split(".")[0].split("//")[1];
@@ -165,9 +174,14 @@ const Sgsot = () => {
     <CacheProvider value={styleCache}>
       <ThemeProvider theme={theme}>
         <Stack position={"fixed"} bottom={20} right={20}>
-          <ButtonGroup orientation="vertical" aria-label="Open Academic Guide" size="small">
-            {chrome.i18n.getUILanguage() === "ja" ? <AcademicGuidesJa /> : <AcademicGuidesEn />}
-          </ButtonGroup>
+          {isOpen && (
+            <ButtonGroup orientation="vertical" aria-label="Open Academic Guide" size="small">
+              {chrome.i18n.getUILanguage() === "ja" ? <AcademicGuidesJa /> : <AcademicGuidesEn />}
+              <Button variant="text" onClick={() => setIsOpen(!isOpen)}>
+                Close
+              </Button>
+            </ButtonGroup>
+          )}
         </Stack>
       </ThemeProvider>
     </CacheProvider>
