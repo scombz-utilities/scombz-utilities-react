@@ -11,10 +11,10 @@ const getTasks = (doc: Document): Task[] => {
   for (const taskNode of taskNodeList) {
     const task: Task = {
       kind: "task",
-      course: taskNode.querySelector(".course").innerHTML,
-      title: taskNode.querySelector(".tasklist-title a:nth-child(1)").innerHTML,
+      course: (taskNode.querySelector(".course") as HTMLElement).innerText,
+      title: (taskNode.querySelector(".tasklist-title a:nth-child(1)") as HTMLElement).innerText,
       link: (taskNode.querySelector(".tasklist-title a:nth-child(1)") as HTMLAnchorElement).href,
-      deadline: taskNode.querySelector(".tasklist-deadline .deadline").innerHTML,
+      deadline: (taskNode.querySelector(".tasklist-deadline .deadline") as HTMLElement).innerText,
       id: null,
     };
     if (task.link.includes("idnumber=")) {
@@ -88,7 +88,7 @@ export const fetchSurveys = async () => {
   while (doc.querySelector(`#portalSurveysForm .result-list:nth-of-type(${i + 1})`)) {
     const titleElement = doc.querySelector(
       `#portalSurveysForm .result-list:nth-of-type(${i + 1}) .survey-list-title .template-name`,
-    );
+    ) as HTMLElement;
     const endColorElement = doc.querySelector(
       `#portalSurveysForm .result-list:nth-of-type(${i + 1}) .survey-list-title .portal-surveys-status-end-color`,
     );
@@ -109,16 +109,22 @@ export const fetchSurveys = async () => {
       deadline: "",
       id: "",
     };
-    taskObj.title = titleElement.innerHTML;
-    taskObj.course = doc.querySelector(
-      `#portalSurveysForm .result-list:nth-of-type(${i + 1}) .survey-list-address span`,
-    ).innerHTML;
-    taskObj.startline = doc.querySelector(
-      `#portalSurveysForm .result-list:nth-of-type(${i + 1}) .survey-list-update span:nth-of-type(1)`,
-    ).innerHTML;
-    taskObj.deadline = doc.querySelector(
-      `#portalSurveysForm .result-list:nth-of-type(${i + 1}) .survey-list-update span:nth-of-type(3)`,
-    ).innerHTML;
+    taskObj.title = titleElement.innerText;
+    taskObj.course = (
+      doc.querySelector(
+        `#portalSurveysForm .result-list:nth-of-type(${i + 1}) .survey-list-address span`,
+      ) as HTMLElement
+    ).innerText;
+    taskObj.startline = (
+      doc.querySelector(
+        `#portalSurveysForm .result-list:nth-of-type(${i + 1}) .survey-list-update span:nth-of-type(1)`,
+      ) as HTMLElement
+    ).innerText;
+    taskObj.deadline = (
+      doc.querySelector(
+        `#portalSurveysForm .result-list:nth-of-type(${i + 1}) .survey-list-update span:nth-of-type(3)`,
+      ) as HTMLElement
+    ).innerText;
     taskObj.id = (
       doc.querySelector(`#portalSurveysForm .result-list:nth-of-type(${i + 1}) #listSurveyId`) as HTMLInputElement
     ).value;

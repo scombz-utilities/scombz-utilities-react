@@ -6,7 +6,7 @@ export const config: PlasmoCSConfig = {
   run_at: "document_end",
 };
 
-const fileId = document.body.innerHTML;
+const fileId = document.body.innerText;
 const url = new URL(location.href);
 const params = url.searchParams;
 

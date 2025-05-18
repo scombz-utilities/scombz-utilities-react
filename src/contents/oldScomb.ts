@@ -5,9 +5,9 @@ export const config: PlasmoCSConfig = {
   run_at: "document_end",
 };
 
-const scombLoginBtns = document.querySelectorAll("strong");
+const scombLoginBtns = document.querySelectorAll("strong") as NodeListOf<HTMLElement>;
 for (const scombLoginBtn of scombLoginBtns) {
-  if (scombLoginBtn.innerHTML.includes("ScombZ")) {
+  if (scombLoginBtn.innerText.includes("ScombZ")) {
     (scombLoginBtn.parentNode.parentNode.parentNode as HTMLElement).insertAdjacentHTML(
       "afterbegin",
       `
