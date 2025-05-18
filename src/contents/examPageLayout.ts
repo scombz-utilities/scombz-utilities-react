@@ -11,10 +11,7 @@ export const config: PlasmoCSConfig = {
 const styleExam = () => {
   if (location.href.startsWith("https://scombz.shibaura-it.ac.jp/lms/course/examination/take")) {
     //テストを受ける前の画面
-    if (
-      document.querySelector(".block-under-area-btn") &&
-      document.querySelector(".block-under-area-btn").innerHTML.includes("受験する")
-    ) {
+    if ((document.querySelector(".block-under-area-btn") as HTMLDivElement)?.innerText.includes("受験する")) {
       document.head.insertAdjacentHTML(
         "beforeend",
         `
@@ -69,10 +66,7 @@ const styleExam = () => {
       if (document.querySelector(".page-directlink")) document.querySelector(".page-directlink").remove();
     }
     //テスト中の画面
-    if (
-      document.querySelector(".block-under-area-btn") &&
-      document.querySelector(".block-under-area-btn").innerHTML.includes("一時保存する")
-    ) {
+    if ((document.querySelector(".block-under-area-btn") as HTMLDivElement)?.innerText.includes("一時保存する")) {
       const $examTimer = document.getElementById("examTimer");
       window.onbeforeunload = function (e) {
         if (

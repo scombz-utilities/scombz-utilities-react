@@ -19,7 +19,7 @@ export const getLMS = (d: Document): TimeTable => {
     return [];
   }
   // データ取得
-  const $courseList = d.querySelectorAll(".timetable-course-top-btn");
+  const $courseList = d.querySelectorAll(".timetable-course-top-btn") as NodeListOf<HTMLElement>;
   if ($courseList[0]) {
     //JSON生成
     const $timetableData = [];
@@ -32,14 +32,13 @@ export const getLMS = (d: Document): TimeTable => {
       };
       for (let $yobicolNum = 1; $yobicolNum < 7; $yobicolNum++) {
         if (($course.parentNode.parentNode as HTMLElement).className.indexOf($yobicolNum + "-yobicol") != -1) {
-          ($timetableClassData.day = $yobicolNum),
-            ($timetableClassData.time = Number(
-              jigenInt($course.parentNode.parentNode.parentNode.firstElementChild.innerHTML),
-            ));
+          const jigenNode = $course.parentNode.parentNode.parentNode.firstElementChild as HTMLElement;
+
+          $timetableClassData.day = $yobicolNum;
+          $timetableClassData.time = Number(jigenInt(jigenNode.innerText));
+
           if (!$timetableClassData.time) {
-            $timetableClassData.time = Number(
-              $course.parentNode.parentNode.parentNode.firstElementChild.innerHTML.slice(-1),
-            );
+            $timetableClassData.time = Number(jigenNode.innerText.slice(-1));
           }
           break;
         }
@@ -52,7 +51,7 @@ export const getLMS = (d: Document): TimeTable => {
         continue;
       }
       $timetableClassData.id = $course.getAttribute("id");
-      $timetableClassData.name = $course.innerHTML;
+      $timetableClassData.name = $course.innerText;
       $timetableClassData.classroom = $course.nextElementSibling?.firstElementChild?.getAttribute("title") ?? "";
       const $courseTeacherList =
         $course.nextElementSibling?.querySelectorAll("div[data-toggle='tooltip'] > span") || [];
