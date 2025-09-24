@@ -183,7 +183,7 @@ export const AdvancedOptions = (props: Props) => {
         />
         <CustomSelect
           i18nLabel="提出時間の初期値(分)"
-          i18nCaption="レポート提出時に、作成時間を簡易入力するためのスライダーバーの初期値を設定します。"
+          i18nCaption="レポート提出時に、作成時間を簡易入力するためのボタンの初期値を設定します。"
           optionId="timesBtnValue"
           options={SLIDER_BAR_MINS.map((min, index) => ({
             value: index.toString(),
