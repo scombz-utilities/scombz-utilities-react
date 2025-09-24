@@ -1,3 +1,4 @@
+import he from "he";
 import type { Task } from "../types/task";
 import { defaultSaves } from "./settings";
 import type { Saves } from "./settings";
@@ -109,10 +110,10 @@ export const fetchSurveys = async () => {
       deadline: "",
       id: "",
     };
-    taskObj.title = titleElement.innerHTML;
-    taskObj.course = doc.querySelector(
-      `#portalSurveysForm .result-list:nth-of-type(${i + 1}) .survey-list-address span`,
-    ).innerHTML;
+    taskObj.title = he.decode(titleElement.innerHTML);
+    taskObj.course = he.decode(
+      doc.querySelector(`#portalSurveysForm .result-list:nth-of-type(${i + 1}) .survey-list-address span`).innerHTML,
+    );
     taskObj.startline = doc.querySelector(
       `#portalSurveysForm .result-list:nth-of-type(${i + 1}) .survey-list-update span:nth-of-type(1)`,
     ).innerHTML;

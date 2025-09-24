@@ -1,3 +1,4 @@
+import he from "he";
 import type { TimeTable, TimeTableData } from "../types/timetable";
 import { isFirefox } from "../util/functions";
 import type { Saves } from "./settings";
@@ -52,8 +53,10 @@ export const getLMS = (d: Document): TimeTable => {
         continue;
       }
       $timetableClassData.id = $course.getAttribute("id");
-      $timetableClassData.name = $course.innerHTML;
-      $timetableClassData.classroom = $course.nextElementSibling?.firstElementChild?.getAttribute("title") ?? "";
+      $timetableClassData.name = he.decode($course.innerHTML);
+      $timetableClassData.classroom = he.decode(
+        $course.nextElementSibling?.firstElementChild?.getAttribute("title") ?? "",
+      );
       const $courseTeacherList =
         $course.nextElementSibling?.querySelectorAll("div[data-toggle='tooltip'] > span") || [];
       const $courseTeachers = [];
