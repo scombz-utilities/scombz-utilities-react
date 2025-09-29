@@ -414,7 +414,7 @@ const OptionsIndexFirefox = () => {
           onSaveButtonClick={(value) => setSettings("sliderBarMax", parseInt(value, 10))}
         />
         <h3>提出時間の初期値(分)</h3>
-        <p>レポート提出時に、作成時間を簡易入力するためのスライダーバーの初期値を設定します。</p>
+        <p>レポート提出時に、作成時間を簡易入力するためのボタンの初期値を設定します。</p>
         <select
           onChange={(e) => setSettings("timesBtnValue", e.target.value)}
           value={currentLocalStorage?.settings.timesBtnValue}
